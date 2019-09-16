@@ -155,6 +155,15 @@ class DummyModelObject(val aabb: AxisAlignedBB,
 
     override fun getDrawMode(): Int = 4
 
+    override fun getSize(): FloatArray = floatArrayOf(
+        aabb.minX.toFloat(),
+        aabb.minY.toFloat(),
+        aabb.minZ.toFloat(),
+        aabb.maxX.toFloat(),
+        aabb.maxY.toFloat(),
+        aabb.maxZ.toFloat()
+    )
+
     companion object {
         val resourceLocation = ResourceLocation("fix-rtm", "textures/ajwm5.png")
         lateinit var baseImage: BufferedImage

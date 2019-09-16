@@ -30,4 +30,25 @@ class MultiModelObject(vararg val bases: IModelNGT) : IModelNGT {
     override fun getType(): FileType = type
 
     override fun getDrawMode(): Int = 4
+
+    private val _size by lazy {
+        var nx: Float = Float.POSITIVE_INFINITY
+        var ny: Float = Float.POSITIVE_INFINITY
+        var nz: Float = Float.POSITIVE_INFINITY
+        var px: Float = Float.NEGATIVE_INFINITY
+        var py: Float = Float.NEGATIVE_INFINITY
+        var pz: Float = Float.NEGATIVE_INFINITY
+
+        for (size in bases.map { it.size }) {
+            nx = minOf(nx, size[0])
+            ny = minOf(ny, size[1])
+            nz = minOf(nz, size[2])
+            px = maxOf(px, size[3])
+            py = maxOf(py, size[4])
+            pz = maxOf(pz, size[5])
+        }
+
+        floatArrayOf(nx, ny, nz, px, py, pz)
+    }
+    override fun getSize(): FloatArray = _size
 }
