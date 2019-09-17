@@ -2,15 +2,22 @@
 
 package com.anatawa12.fixRtm
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.ByteBufAllocator
+import io.netty.buffer.Unpooled
+import io.netty.util.ByteProcessor
 import jp.ngt.ngtlib.event.TickProcessEntry
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
-import java.io.DataOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.PrintStream
+import java.io.*
 import java.lang.Exception
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.channels.FileChannel
+import java.nio.channels.GatheringByteChannel
 import java.nio.channels.InterruptedByTimeoutException
+import java.nio.channels.ScatteringByteChannel
+import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
 import java.text.SimpleDateFormat
@@ -18,6 +25,7 @@ import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.zip.GZIPOutputStream
+import java.util.zip.Inflater
 import kotlin.concurrent.thread
 import kotlin.math.log
 
@@ -67,4 +75,33 @@ fun eraseNullForAddTickProcessEntry(addEntry: TickProcessEntry?, inEntry: TickPr
     requireNotNull(inEntry) {
         "TickProcessQueue.add's first argument is null. fixRtm (made by anataqa12) found a bug! this is a bug from RTM and anatawa12 think this is good trace for fix bug."
     }
+}
+
+fun wrapWithDeflate(byteBuf: ByteBuf): ByteBuf {
+    return DeflateByteBuf(byteBuf)
+}
+
+fun writeToDeflate(byteBuf: ByteBuf) {
+    (byteBuf as DeflateByteBuf).writeDeflated()
+}
+
+fun readFromDeflate(byteBuf: ByteBuf): ByteBuf {
+    val inf = Inflater()
+
+    var readBuf: ByteArray? = ByteArray(byteBuf.readableBytes())
+    byteBuf.readBytes(readBuf)
+    inf.setInput(readBuf)
+    println("received packet size: ${readBuf?.size}")
+    readBuf = null
+
+    val result = Unpooled.buffer()
+    val buf = ByteArray(1024)
+    while (true) {
+        val len = inf.inflate(buf)
+        if (len == 0) break
+        result.writeBytes(buf, 0, len)
+    }
+    println("real packet size: ${result.readableBytes()}")
+    println("real packet: $result")
+    return result
 }
