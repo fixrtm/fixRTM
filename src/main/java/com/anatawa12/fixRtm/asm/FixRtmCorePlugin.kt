@@ -11,7 +11,6 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
             arrayOf("com.anatawa12.fixRtm.asm.NPEInGetResourceSetTransform"
                     , "com.anatawa12.fixRtm.asm.NPEInTickProcessQueueTransformer"
                     , "com.anatawa12.fixRtm.asm.DummyModelSetTransform"
-                    , "com.anatawa12.fixRtm.asm.PacketCollisionObjTooBigTransformer"
                     //, "com.anatawa12.fixRtm.asm.ConstructDummisTransformer"
             )
 
