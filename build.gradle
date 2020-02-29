@@ -120,7 +120,7 @@ task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
     from jar.archivePath
     into new File(projectDir, "../fixRtmTest/mods")
 }
-build.dependsOn += CopyJarToTest
+//build.dependsOn += CopyJarToTest
 compileKotlin {
     kotlinOptions {
         //freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
