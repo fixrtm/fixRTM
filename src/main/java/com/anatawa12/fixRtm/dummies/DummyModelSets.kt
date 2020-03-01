@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm.dummies
 
 import com.anatawa12.fixRtm.DummyModelPackManager
+import com.anatawa12.fixRtm.ExModelPackManager
 import com.anatawa12.fixRtm.asm.MultiModelObject
 import jp.ngt.ngtlib.io.ResourceLocationCustom
 import jp.ngt.ngtlib.renderer.model.IModelNGT
@@ -22,6 +23,7 @@ import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 import java.lang.reflect.Field
+import java.util.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -29,8 +31,9 @@ fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT) {
     val name = this.config.name
     modelObj = ModelObject(model,
             arrayOf(
-                    TextureSet(DummyModelObject.material, 0, false)
-            ), this)
+                    TextureSet(DummyModelObject.material, 0, false, false)
+            ))
+    modelObj.renderer.init(this, modelObj)
     buttonTexture = ButtonResourcePack.addImage(createButtonTexture(name))
 }
 
@@ -227,9 +230,11 @@ class DummyModelSetTrain(name: String) : ModelSetTrain( // ok
                 -1.375, -1.1875, -1.375,
                 1.375, 0.0, 1.375), config.name, setOf(*EnumFacing.VALUES)))
         this.bogieModels = arrayOfNulls(2)
-        val tex = TextureSet(Material(0.toByte(), ModelPackManager.INSTANCE.getResource("textures/train/hoge.png")), 0, false)
-        this.bogieModels[1] = ModelObject(ModelBogie(), arrayOf(tex), this)
-        this.bogieModels[0] = this.bogieModels[1]
+        val tex = TextureSet(Material(0.toByte(), ModelPackManager.INSTANCE.getResource("textures/train/hoge.png")), 0, false, false)
+        val model = ModelObject(ModelBogie(), arrayOf(tex))
+        model.renderer.init(this, model)
+        this.bogieModels[1] = model
+        this.bogieModels[0] = model
     }
 
     override fun constructOnServer() {}
