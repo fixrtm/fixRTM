@@ -1,9 +1,7 @@
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.dummies.*
-import jp.ngt.rtm.modelpack.cfg.RRSConfig
-import jp.ngt.rtm.modelpack.modelset.ResourceSet
-import jp.ngt.rtm.modelpack.modelset.TextureSetRRS
+import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IResourcePack
@@ -12,7 +10,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
-
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -21,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 
-@Mod(modid = FixRtm.MODID)
+@Mod(modid = FixRtm.MODID, dependencies = "required:${RTMCore.MODID}@${RTMCore.VERSION};")
 object FixRtm {
     const val MODID = "fix-rtm"
     lateinit var modMetadata: ModMetadata
@@ -78,6 +75,8 @@ object FixRtm {
     @NetworkCheckHandler
     fun networkCheck(mods: Map<String, String>, side: Side): Boolean {
         if (side == Side.SERVER) return true
+        if (mods[RTMCore.MODID] != RTMCore.VERSION)
+            return false
         return mods.containsKey(MODID)
     }
 
