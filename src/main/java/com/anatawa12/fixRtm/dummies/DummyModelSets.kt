@@ -58,7 +58,7 @@ class DummyModelSetConnector(name: String) : ModelSetConnector( // ex
         ConnectorConfig.getDummy().apply { this.exName = name }) {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
             -0.5, -0.25, -0.25,
-            0.25, 0.25, 0.25), config.name, setOf(*EnumFacing.VALUES), Vec3d(0.0, 0.0, 1.0), 90.0))
+            0.25, 0.25, 0.25), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST), Vec3d(0.0, 0.0, 1.0), 90.0))
 
     override fun constructOnServer() {}
 
@@ -266,7 +266,7 @@ class DummyModelSetWire(name: String) : ModelSetWire( // ok
         constructOnClientDummy(DummyModelObject(AxisAlignedBB(
                 -0.0, -0.0625, -0.0625,
                 1.0, 0.0625, 0.0625),
-                config.name, setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH), Vec3d(0.0, 0.0, 1.0),
+                config.name, setOf(), Vec3d(0.0, 0.0, 1.0),
                 90.0))
         val f = modelObj::class.java.getField("renderer")
         f.isAccessible = true

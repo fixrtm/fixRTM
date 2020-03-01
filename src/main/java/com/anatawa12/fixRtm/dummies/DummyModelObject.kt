@@ -7,20 +7,12 @@ import jp.ngt.ngtlib.renderer.model.GroupObject
 import jp.ngt.ngtlib.renderer.model.IModelNGT
 import jp.ngt.ngtlib.renderer.model.Material
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
-import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.OpenGlHelper
-import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.Vec3d
 import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL12
 import java.awt.image.BufferedImage
-import java.nio.ByteBuffer
-import java.nio.IntBuffer
-import java.nio.ShortBuffer
 import javax.imageio.ImageIO
 
 class DummyModelObject(val aabb: AxisAlignedBB,
@@ -30,6 +22,8 @@ class DummyModelObject(val aabb: AxisAlignedBB,
                        val rotate1: Double = 0.0,
                        val nameOnly: Boolean = false) : IModelNGT {
     override fun getMaterials() = Companion.materials
+
+    val aabbGlListId by lazy { getGlListId(aabb) }
 
     override fun renderAll(smoothing: Boolean) {
         GL11.glPushMatrix()
@@ -44,39 +38,7 @@ class DummyModelObject(val aabb: AxisAlignedBB,
             Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocation)
 
             if (!nameOnly) {
-                GL11.glBegin(GL11.GL_QUADS)
-
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
-
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
-
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
-
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
-
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
-
-                GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
-                GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
-                GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
-
-                GL11.glEnd()
+                GL11.glCallList(aabbGlListId)
             }
 
             if (EnumFacing.DOWN in drawFaces) {
@@ -133,10 +95,8 @@ class DummyModelObject(val aabb: AxisAlignedBB,
             }
         }
 
-        if (smoothing) {
-            GL11.glShadeModel(GL11.GL_SMOOTH)
-        }
         GL11.glPopMatrix()
+        return
     }
 
     override fun renderPart(smoothing: Boolean, partName: String) {
@@ -172,5 +132,52 @@ class DummyModelObject(val aabb: AxisAlignedBB,
         }
         val material = Material(0, resourceLocation)
         val materials = mapOf(DummyModelPackManager.getDummyName("") to Material(0, null))
+
+        val glListIds = mutableMapOf<AxisAlignedBB, Int>()
+        fun getGlListId(aabb: AxisAlignedBB): Int {
+            if (glListIds[aabb] != null) return glListIds[aabb]!!
+
+            val id = GL11.glGenLists(1)
+            GL11.glNewList(id, GL11.GL_COMPILE)
+
+            GL11.glBegin(GL11.GL_QUADS)
+
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
+
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
+
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.minZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
+
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.minZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
+
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.minZ)
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.minZ)
+
+            GL11.glTexCoord2d(1.0, 0.0); GL11.glVertex3d(aabb.maxX, aabb.minY, aabb.maxZ)
+            GL11.glTexCoord2d(1.0, 1.0); GL11.glVertex3d(aabb.maxX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 1.0); GL11.glVertex3d(aabb.minX, aabb.maxY, aabb.maxZ)
+            GL11.glTexCoord2d(0.0, 0.0); GL11.glVertex3d(aabb.minX, aabb.minY, aabb.maxZ)
+
+            GL11.glEnd()
+
+            GL11.glEndList()
+
+            glListIds[aabb] = id
+            return id
+        }
     }
 }
