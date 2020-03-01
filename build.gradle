@@ -143,6 +143,8 @@ task linkToModsDir() {
     outputs.files(rtmInMods, ngtLibInMods)
 
     doLast {
+        rtmInMods.delete()
+        ngtLibInMods.delete()
         Files.createSymbolicLink(rtmInMods.toPath(), downloadRTM.to.toPath())
         Files.createSymbolicLink(ngtLibInMods.toPath(), downloadNgtLib.to.toPath())
     }
