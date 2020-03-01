@@ -173,3 +173,5 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/linux,macos,gradle,windows,forgegradle,intellij+iml
+
+/mods

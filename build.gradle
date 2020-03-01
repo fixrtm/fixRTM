@@ -64,16 +64,9 @@ dependencies {
 
     shade "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     shade group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.0'
-    /*
-    compile files(new File(projectDir, "mods/RTM2.4.7-26_forge-1.12.2-14.23.2.2611.jar"),
-            new File(projectDir, "mods/NGTLib2.4.6-23_forge-1.12.2-14.23.2.2611.jar"))
-    //* /
-    compileOnly files(new File(projectDir, "mods/RTM2.4.5-24_forge-1.12.2-14.23.2.2611.jar"),
-            new File(projectDir, "mods/NGTLib2.4.4-21_forge-1.12.2-14.23.2.2611.jar"))
-    //*/
-    compileOnly files(new File(projectDir, "mods/RTM2.4.10-29_forge-1.12.2-14.23.2.2611.jar"),
-            new File(projectDir, "mods/NGTLib2.4.9-26_forge-1.12.2-14.23.2.2611.jar"))
-    // */
+
+    compileOnly files(new File(projectDir, "mods/rtm.jar"),
+            new File(projectDir, "mods/ngtlib.jar"))
 }
 
 processResources {
@@ -124,5 +117,33 @@ task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
 compileKotlin {
     kotlinOptions {
         //freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}
+
+task downloadRTM (type: DownloadModJar) {
+    projectId = 288988
+    to = new File(projectDir, "mods/rtm.jar")
+}
+
+task downloadNgtLib (type: DownloadModJar) {
+    projectId = 288989
+    to = new File(projectDir, "mods/ngtlib.jar")
+}
+
+import java.nio.file.Files
+
+task linkToModsDir() {
+    def modsDir = new File(projectDir, "run/mods")
+
+    dependsOn downloadRTM, downloadNgtLib
+
+    def rtmInMods = new File(modsDir, downloadRTM.to.name)
+    def ngtLibInMods = new File(modsDir, downloadNgtLib.to.name)
+
+    outputs.files(rtmInMods, ngtLibInMods)
+
+    doLast {
+        Files.createSymbolicLink(rtmInMods.toPath(), downloadRTM.to.toPath())
+        Files.createSymbolicLink(ngtLibInMods.toPath(), downloadNgtLib.to.toPath())
     }
 }
