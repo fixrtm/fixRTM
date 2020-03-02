@@ -3,31 +3,12 @@
 package com.anatawa12.fixRtm
 
 import io.netty.buffer.ByteBuf
-import io.netty.buffer.ByteBufAllocator
 import io.netty.buffer.Unpooled
-import io.netty.util.ByteProcessor
 import jp.ngt.ngtlib.event.TickProcessEntry
+import jp.ngt.ngtlib.renderer.model.ModelFormatException
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
-import java.io.*
-import java.lang.Exception
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.channels.FileChannel
-import java.nio.channels.GatheringByteChannel
-import java.nio.channels.InterruptedByTimeoutException
-import java.nio.channels.ScatteringByteChannel
-import java.nio.charset.Charset
-import java.nio.file.Files
-import java.nio.file.attribute.BasicFileAttributes
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.Executors
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.zip.GZIPOutputStream
 import java.util.zip.Inflater
-import kotlin.concurrent.thread
-import kotlin.math.log
 
 object ExModelPackManager {
     var dummyMap: Map<String, ResourceSet<*>>
@@ -104,4 +85,10 @@ fun readFromDeflate(byteBuf: ByteBuf): ByteBuf {
     println("real packet size: ${result.readableBytes()}")
     println("real packet: $result")
     return result
+}
+
+fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: String): Map<K, V> {
+    if (map == null)
+        throw ModelFormatException("sound.json for $domain is invalid.")
+    return map
 }
