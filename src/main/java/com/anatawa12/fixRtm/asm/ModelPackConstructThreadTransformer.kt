@@ -13,7 +13,8 @@ class ModelPackConstructThreadTransformer : IClassTransformer {
     val ModelPackLoadThread = Type.getObjectType("jp/ngt/rtm/modelpack/init/ModelPackLoadThread")!!
     val ExModelPackConstructThread = Type.getObjectType("com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread")!!
 
-    override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+    override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+        if (basicClass == null) return basicClass
         if (transformedName == ModelPackLoadThread.className) {
             val cr = ClassReader(basicClass)
             val cw = ClassWriter(0)

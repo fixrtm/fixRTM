@@ -15,7 +15,8 @@ class NPEInTickProcessQueueTransformer : IClassTransformer {
     val List = Type.getObjectType("java/util/List")
     val Object = Type.getObjectType("java/lang/Object")
 
-    override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+    override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+        if (basicClass == null) return basicClass
         if (transformedName == TickProcessQueue.className) {
             val cr = ClassReader(basicClass)
             val cw = ClassWriter(0)

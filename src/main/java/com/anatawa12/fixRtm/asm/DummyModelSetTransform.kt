@@ -15,7 +15,8 @@ class DummyModelSetTransform : IClassTransformer {
     val String = Type.getObjectType("java/lang/String")
     val Map = Type.getObjectType("java/util/Map")
 
-    override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+    override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+        if (basicClass == null) return basicClass
         if (transformedName == ModelPackManager.className) {
             val cr = ClassReader(basicClass)
             val cw = ClassWriter(0)

@@ -14,7 +14,8 @@ class NPEInGetResourceSetTransform : IClassTransformer {
     val ResourceType = Type.getObjectType("jp/ngt/rtm/modelpack/ResourceType")
     val HocksKt = Type.getObjectType("com/anatawa12/fixRtm/HocksKt")
 
-    override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+    override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+        if (basicClass == null) return basicClass
         if (transformedName == ModelPackManager.className) {
             val cr = ClassReader(basicClass)
             val cw = ClassWriter(0)
