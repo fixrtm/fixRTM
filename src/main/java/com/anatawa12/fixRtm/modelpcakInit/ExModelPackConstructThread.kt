@@ -11,6 +11,7 @@ import net.minecraft.crash.CrashReport
 import net.minecraftforge.fml.relauncher.Side
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
 class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) : ModelPackConstructThread(threadSide, parent) {
@@ -63,7 +64,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         }
         guiUpdateThread.start()
 
-        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
+        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), ThreadFactoryImpl())
 
         val futures = mutableListOf<Future<*>>()
 
@@ -107,6 +108,20 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             true
         } else {
             false
+        }
+    }
+
+    private class ThreadFactoryImpl : ThreadFactory {
+        private val group: ThreadGroup = System.getSecurityManager()?.threadGroup ?: Thread.currentThread().threadGroup
+        private val threadNumber = AtomicInteger(1)
+
+        override fun newThread(r: Runnable?): Thread? {
+            val t = Thread(group, r,
+                    "fixrtm-ModelPackConstruct-pool-" + threadNumber.getAndIncrement(),
+                    0)
+            if (t.isDaemon) t.isDaemon = false
+            if (t.priority != Thread.NORM_PRIORITY) t.priority = Thread.NORM_PRIORITY
+            return t
         }
     }
 }
