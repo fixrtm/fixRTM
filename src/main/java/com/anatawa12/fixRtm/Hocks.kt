@@ -5,9 +5,12 @@ package com.anatawa12.fixRtm
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import jp.ngt.ngtlib.event.TickProcessEntry
+import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.text.TextComponentTranslation
 import java.util.zip.Inflater
 
 object ExModelPackManager {
@@ -91,4 +94,21 @@ fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: Stri
     if (map == null)
         throw ModelFormatException("sound.json for $domain is invalid.")
     return map
+}
+
+
+var BlockMarker_onMarkerActivated_player: EntityPlayer? = null
+fun BlockMarker_onMarkerActivated(player: EntityPlayer) {
+    if (!player.world.isRemote)
+        BlockMarker_onMarkerActivated_player = player
+}
+
+fun sendSwitchTypeError(message: String, vararg objects: Any?) {
+    val player = BlockMarker_onMarkerActivated_player
+    if (player == null) {
+        Exception("fixRTM Bug!!! BlockMarker_onMarkerActivated_player is not init-ed").printStackTrace()
+        NGTLog.sendChatMessageToAll(message, objects)
+        return
+    }
+    player.sendMessage(TextComponentTranslation(message, *objects))
 }

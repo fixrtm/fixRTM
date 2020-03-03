@@ -13,6 +13,7 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
                     , "com.anatawa12.fixRtm.asm.DummyModelSetTransform"
                     , "com.anatawa12.fixRtm.asm.ModelPackConstructThreadTransformer"
                     , "com.anatawa12.fixRtm.asm.NPEInMovingSoundMakerTransformer"
+                    , "com.anatawa12.fixRtm.asm.SwitchTypeErrorWillShownToAllTransformer"
                     //, "com.anatawa12.fixRtm.asm.ConstructDummisTransformer"
             )
 
