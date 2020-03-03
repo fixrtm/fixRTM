@@ -111,4 +111,5 @@ fun sendSwitchTypeError(message: String, vararg objects: Any?) {
         return
     }
     player.sendMessage(TextComponentTranslation(message, *objects))
+    BlockMarker_onMarkerActivated_player = null
 }
