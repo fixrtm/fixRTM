@@ -85,6 +85,8 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         for (future in futures) {
             future.get()
         }
+
+        exec.shutdown()
     }
 
     private fun construct(set: ResourceSet<*>) {
