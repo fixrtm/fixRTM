@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.dummies.*
+import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 
-@Mod(modid = FixRtm.MODID, dependencies = "required:${RTMCore.MODID}@${RTMCore.VERSION};")
+@Mod(modid = FixRtm.MODID, dependencies = "required:${RTMCore.MODID}@${RTMCore.VERSION};required:${NGTCore.MODID}@${NGTCore.VERSION};")
 object FixRtm {
     const val MODID = "fix-rtm"
     lateinit var modMetadata: ModMetadata
