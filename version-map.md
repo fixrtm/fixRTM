@@ -1,5 +1,5 @@
 # Version Map
 
-| RTM Version | FixRTM version |
-| :---------: | :------------: |
-| 2.4.14      | 1.2.0          |
+| RTM Version | NGTLib Version | FixRTM version |
+| :---------: | :------------: | :------------: |
+| 2.4.14      | 2.4.13         | 1.2.0          |
