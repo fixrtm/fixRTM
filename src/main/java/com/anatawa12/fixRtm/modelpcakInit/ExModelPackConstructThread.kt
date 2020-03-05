@@ -3,7 +3,6 @@ package com.anatawa12.fixRtm.modelpcakInit
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
 import jp.ngt.rtm.modelpack.ModelPackManager
-import jp.ngt.rtm.modelpack.init.ModelPackConstructThread
 import jp.ngt.rtm.modelpack.init.ModelPackLoadThread
 import jp.ngt.rtm.modelpack.init.ProgressStateHolder.ProgressState
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
@@ -14,7 +13,7 @@ import java.util.concurrent.Future
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
-class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) : ModelPackConstructThread(threadSide, parent) {
+class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) : ModelPackConstructThreadDummy(threadSide, parent) {
     @Volatile
     private var loading = true
     private var index = AtomicInteger(0)
