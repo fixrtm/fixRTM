@@ -7,7 +7,7 @@ fixes some bugs of RTM and make RTM more useful!
 
 ## Download
 
-Please wait for few days. I will publish to CurseForge.
+[Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
 ## dependencies
 

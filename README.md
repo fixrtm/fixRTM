@@ -7,7 +7,7 @@ RTMのバグを減らし、使いやすくする！
 
 ## ダウンロード
 
-お待ち下さい。CurseForgeを予定しています。
+[Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
 ## 前提mod
 
