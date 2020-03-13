@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.3.0"
+    id "org.jetbrains.kotlin.jvm" version "1.3.70"
 }
 
 repositories {
@@ -13,4 +13,5 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT"
+    compile "org.jd:jd-core:1.1.3"
 }

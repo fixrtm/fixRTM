@@ -26,6 +26,7 @@ task linkToModsDir() {
     def rtmInMods = new File(modsDir, downloadRTM.to.name)
     def ngtLibInMods = new File(modsDir, downloadNgtLib.to.name)
 
+    inputs.files(downloadRTM.to, downloadNgtLib.to)
     outputs.files(rtmInMods, ngtLibInMods)
 
     doLast {
@@ -35,3 +36,23 @@ task linkToModsDir() {
         Files.createSymbolicLink(ngtLibInMods.toPath(), downloadNgtLib.to.toPath())
     }
 }
+
+task decompileRTM(type: DecompileJar) {
+    jarFile = downloadRTM.to
+    sourceOutputTo = file("${jarFile}.src")
+}
+
+task decompileNgtLib(type: DecompileJar) {
+    jarFile = downloadNgtLib.to
+    sourceOutputTo = file("${jarFile}.src")
+}
+
+task decompileMods() {
+    dependsOn decompileRTM, decompileNgtLib
+}
+
+task prepareMods() {
+    dependsOn linkToModsDir, decompileMods
+}
+
+build.dependsOn prepareMods
