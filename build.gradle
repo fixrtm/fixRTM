@@ -13,12 +13,20 @@ buildscript {
     }
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "kotlin"
+apply plugin: "net.minecraftforge.gradle.forge"
 
 version = modVersion
 group = modGroup
 archivesBaseName = modBaseName
+
+sourceSets {
+    api {
+        java {
+            srcDirs("src/api/rtm", "src/api/ngtlib")
+        }
+    }
+}
 
 minecraft {
     version = project.forgeVersion
