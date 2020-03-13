@@ -11,18 +11,23 @@ import kotlin.properties.Delegates
 open class DownloadModJar : DefaultTask() {
     var projectId: Int by Delegates.notNull()
 
-    lateinit var to: File
+    @OutputFile lateinit var to: File
+    @Input lateinit var version: String
 
     @TaskAction
     fun download() {
+        version // check init
+        to // check init
+
         val files = CurseAPI.files(projectId)
         if (!files.isPresent)
             error("project#$projectId files not found")
 
         val file = files.get()
                 .filterNot { "1.12.2" !in it.gameVersionStrings() }
-                .maxBy { getVersionString(it.displayName()) }
-                ?: error("project#$projectId files not found")
+                .filter { version in it.displayName() }
+                .singleOrNull()
+                ?: error("project#$projectId version $version not found or found two or more")
 
         println("file name is: ${file.displayName()}, id: ${file.id()}")
 
