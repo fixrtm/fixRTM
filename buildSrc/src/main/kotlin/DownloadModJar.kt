@@ -42,25 +42,4 @@ open class DownloadModJar : DefaultTask() {
         response.body()!!.byteStream().copyTo(to.outputStream())
     }
 
-    private fun getVersionString(name: String): Version {
-        val regex = """.*?([0-9]+(\.[0-9]+)+).*""".toRegex()
-        val match = regex.matchEntire(name)
-                ?: throw NullPointerException("Expression '$regex.matchEntire($name)' must not be null")
-        return Version(match.groupValues[1])
-    }
-
-}
-
-private inline class Version(val version: String) : Comparable<Version> {
-    override fun compareTo(other: Version): Int {
-        val a = version.split('.')
-        val b = version.split('.')
-
-        for (i in 0 until minOf(a.size, b.size)) {
-            val res = a[i].toInt().compareTo(b[i].toInt())
-            if (res != 0) return res
-        }
-
-        return 0
-    }
 }
