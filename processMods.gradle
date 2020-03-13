@@ -1,0 +1,35 @@
+
+task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
+    from jar.archivePath
+    into new File(projectDir, "../fixRtmTest/mods")
+}
+
+task downloadRTM (type: DownloadModJar) {
+    projectId = 288988
+    to = new File(projectDir, "mods/rtm.jar")
+}
+
+task downloadNgtLib (type: DownloadModJar) {
+    projectId = 288989
+    to = new File(projectDir, "mods/ngtlib.jar")
+}
+
+import java.nio.file.Files
+
+task linkToModsDir() {
+    def modsDir = new File(projectDir, "run/mods")
+
+    dependsOn downloadRTM, downloadNgtLib
+
+    def rtmInMods = new File(modsDir, downloadRTM.to.name)
+    def ngtLibInMods = new File(modsDir, downloadNgtLib.to.name)
+
+    outputs.files(rtmInMods, ngtLibInMods)
+
+    doLast {
+        rtmInMods.delete()
+        ngtLibInMods.delete()
+        Files.createSymbolicLink(rtmInMods.toPath(), downloadRTM.to.toPath())
+        Files.createSymbolicLink(ngtLibInMods.toPath(), downloadNgtLib.to.toPath())
+    }
+}
