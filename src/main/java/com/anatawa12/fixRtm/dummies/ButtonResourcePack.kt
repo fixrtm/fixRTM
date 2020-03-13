@@ -16,7 +16,7 @@ object ButtonResourcePack : IResourcePack {
     private val resources = mutableMapOf<String, Image>()
 
     override fun resourceExists(location: ResourceLocation): Boolean
-            = location.resourceDomain == DOMEIN && location.resourcePath in resources
+            = location.namespace == DOMEIN && location.path in resources
 
     override fun getPackImage(): BufferedImage {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -38,8 +38,8 @@ object ButtonResourcePack : IResourcePack {
     }
 
     override fun getInputStream(location: ResourceLocation): InputStream {
-        if (location.resourceDomain != DOMEIN) throw FileNotFoundException(location.resourcePath)
-        return resources[location.resourcePath]?.byteArray?.inputStream() ?: throw FileNotFoundException(location.resourcePath)
+        if (location.namespace != DOMEIN) throw FileNotFoundException(location.path)
+        return resources[location.path]?.byteArray?.inputStream() ?: throw FileNotFoundException(location.path)
     }
 
     override fun getPackName(): String = "anatawa12 fix rtm button resource virtual pack"
