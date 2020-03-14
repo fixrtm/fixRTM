@@ -13,5 +13,6 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT"
+    compile "org.ow2.asm:asm-debug-all:5.2"
     compile "org.jd:jd-core:1.1.3"
 }

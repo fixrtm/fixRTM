@@ -37,13 +37,44 @@ task linkToModsDir() {
     }
 }
 
+def srgMcpsrgFile = file("${project.gradle.gradleUserHomeDir}" +
+        "/caches/minecraft/de/oceanlabs/mcp" +
+        "/mcp_${minecraft.mappingsChannel}/${minecraft.mappings.substring(minecraft.mappings.indexOf('_') + 1)}" +
+        "/${minecraft.version}/srgs/srg-mcp.srg")
+
+static String deObfuscatedJarPath(String path) {
+    return path.substring(0, path.lastIndexOf('.')) + ".deobf.jar"
+}
+
+task deObfuscateRTM(type: DeObfuscateJar) {
+    dependsOn downloadRTM
+    dependsOn extractMcpMappings
+
+    srgFile = srgMcpsrgFile
+    obfuscatedJar = downloadRTM.to
+    deObfuscatedJar = file(deObfuscatedJarPath("${downloadRTM.to}"))
+}
+
+task deObfuscateNgtLib(type: DeObfuscateJar) {
+    dependsOn downloadNgtLib
+    dependsOn extractMcpMappings
+
+    srgFile = srgMcpsrgFile
+    obfuscatedJar = downloadNgtLib.to
+    deObfuscatedJar = file(deObfuscatedJarPath("${downloadNgtLib.to}"))
+}
+
 task decompileRTM(type: DecompileJar) {
-    jarFile = downloadRTM.to
+    dependsOn deObfuscateRTM
+
+    jarFile = deObfuscateRTM.deObfuscatedJar
     sourceOutputTo = file("${jarFile}.src")
 }
 
 task decompileNgtLib(type: DecompileJar) {
-    jarFile = downloadNgtLib.to
+    dependsOn deObfuscateNgtLib
+
+    jarFile = deObfuscateNgtLib.deObfuscatedJar
     sourceOutputTo = file("${jarFile}.src")
 }
 
