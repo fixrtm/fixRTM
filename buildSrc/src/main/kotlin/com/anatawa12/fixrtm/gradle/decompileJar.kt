@@ -43,7 +43,10 @@ fun decompileJar(jarFile: File, outputDir: File) {
     outputDir.mkdirs()
     val logger = FernflowerLogger
 
-    val decompiler = ConsoleDecompilerImpl(outputDir, mapOf(), logger)
+    val decompiler = ConsoleDecompilerImpl(outputDir, mapOf(
+            "dgs" to "1",
+            "rsy" to "1"
+    ), logger)
 
     decompiler.addSource(jarFile)
 
