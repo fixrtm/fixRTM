@@ -8,11 +8,16 @@ repositories {
     maven {
         url "https://jitpack.io"
     }
+
+    maven {
+        name "forge"
+        url "https://files.minecraftforge.net/maven"
+    }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT"
     compile "org.ow2.asm:asm-debug-all:5.2"
-    compile "org.jd:jd-core:1.1.3"
+    compile "net.minecraftforge:fernflower:387"
 }
