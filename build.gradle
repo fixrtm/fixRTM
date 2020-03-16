@@ -56,6 +56,11 @@ dependencies {
 
     compileOnly files(new File(projectDir, "mods/rtm.deobf.jar"),
             new File(projectDir, "mods/ngtlib.deobf.jar"))
+
+    // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
+    apiCompile("org.twitter4j:twitter4j-core:4.0.7")
+    // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
+    apiCompile("com.github.sarxos:webcam-capture:0.3.12")
 }
 
 processResources {
