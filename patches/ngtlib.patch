@@ -1,0 +1,21 @@
+diff --git a/mods/ngtlib.deobf.jar.src/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
+index 5b86238..dac5d95 100644
+--- a/mods/ngtlib.deobf.jar.src/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
++++ b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
+@@ -1,7 +1,5 @@
+ package jp.ngt.ngtlib.renderer.model;
+ 
+-import com.na128.mmd.Pmx;
+-import com.na128.mmd.Reader;
+ import java.io.File;
+ import java.io.IOException;
+ import java.io.InputStream;
+@@ -11,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
+ @SideOnly(Side.CLIENT)
+ public final class ModelLoaderMMD {
+    public static PolygonModel loadModel(InputStream[] is, String name, VecAccuracy par1, Object... args) throws IOException {
+-      Pmx pmx = Reader.read(new File("path/to/pmx_or_pmd.pmx"));
++      // TODO: implement
+       return null;
+    }
+ }
