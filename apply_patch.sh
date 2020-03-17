@@ -9,7 +9,7 @@ function apply_patch() {
     ./process_non_patch.sh "$src_dir/$path" "$processed_dir/$path"
   done
   patch -p1 < "patches/$1.patch"
-  cp -rf "$processed_dir" "$dst_dir"
+  mv "$processed_dir" "$dst_dir"
 }
 
 apply_patch ngtlib
