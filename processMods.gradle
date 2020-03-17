@@ -69,6 +69,7 @@ task decompileRTM(type: DecompileJar) {
 
     jarFile = deObfuscateRTM.deObfuscatedJar
     sourceOutputTo = file("${jarFile}.src")
+    libraries = sourceSets.api.compileClasspath
 }
 
 task decompileNgtLib(type: DecompileJar) {
@@ -76,6 +77,7 @@ task decompileNgtLib(type: DecompileJar) {
 
     jarFile = deObfuscateNgtLib.deObfuscatedJar
     sourceOutputTo = file("${jarFile}.src")
+    libraries = sourceSets.api.compileClasspath
 }
 
 task decompileMods() {
