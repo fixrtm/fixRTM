@@ -86,4 +86,19 @@ task prepareMods() {
     dependsOn copyRTMResources, copyNgtLibResources
 }
 
+task checkNgtLibClasses(type: CheckClassesSame) {
+    src = deObfuscateNgtLib.deObfuscatedJar
+    dst = jar.archivePath
+    rootPackage = "jp.ngt.ngtlib"
+}
+
+task checkRtmClasses(type: CheckClassesSame) {
+    src = deObfuscateRTM.deObfuscatedJar
+    dst = jar.archivePath
+    rootPackage = "jp.ngt.rtm"
+}
+task checkClasses {
+    dependsOn checkNgtLibClasses, checkRtmClasses
+}
+
 build.dependsOn prepareMods
