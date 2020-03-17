@@ -17,6 +17,47 @@ index 75376c7..63f0211 100644
 +        return this;
      }
  }
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/block/NGTObject.java b/src/main/ngtlib/jp/ngt/ngtlib/block/NGTObject.java
+index cc1ae59..ef34c4b 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/block/NGTObject.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/block/NGTObject.java
+@@ -267,7 +267,7 @@ public class NGTObject {
+     }
+ 
+     @SideOnly(Side.CLIENT)
+-    public static void addInformation(List<String> list, NBTTagCompound data, float scale) {
++    public static void addInformation(List list, NBTTagCompound data, float scale) {
+         if (data.hasKey("ByteData"))
+             data = decompress(data);
+         int x = data.getInteger("SizeX");
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/event/NGTEventHandlerClient.java b/src/main/ngtlib/jp/ngt/ngtlib/event/NGTEventHandlerClient.java
+index ca6c7c0..0cd86d5 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/event/NGTEventHandlerClient.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/event/NGTEventHandlerClient.java
+@@ -11,6 +11,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
+ public final class NGTEventHandlerClient {
+     public static final NGTEventHandlerClient INSTANCE = new NGTEventHandlerClient();
+ 
++    private NGTEventHandlerClient() {
++    }
++
+     @SubscribeEvent
+     public void onChangeTexture(TextureStitchEvent.Post event) {
+         GLHelper.initGLList();
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/event/TickProcessQueue.java b/src/main/ngtlib/jp/ngt/ngtlib/event/TickProcessQueue.java
+index 57536e4..23f2c86 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/event/TickProcessQueue.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/event/TickProcessQueue.java
+@@ -17,6 +17,9 @@ public final class TickProcessQueue {
+ 
+     private final List<TickProcessEntry> newEntries = new ArrayList<>();
+ 
++    private TickProcessQueue() {
++    }
++
+     public static TickProcessQueue getInstance(Side side) {
+         return (side == Side.SERVER) ? INSTANCE_SERVER : INSTANCE_CLIENT;
+     }
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiButtonCustom.java b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiButtonCustom.java
 index 99d7e14..97d44b4 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiButtonCustom.java
@@ -40,19 +81,24 @@ index 4f42d09..7a918d1 100644
      }
  
      public static interface TextFieldListner {
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/TwitterUtil.java b/src/main/ngtlib/jp/ngt/ngtlib/io/TwitterUtil.java
+index db91bf3..a5d1549 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/TwitterUtil.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/io/TwitterUtil.java
+@@ -41,6 +41,9 @@ public class TwitterUtil {
+ 
+     private boolean waitingAuth;
+ 
++    private TwitterUtil() {
++    }
++
+     @Nullable
+     public static TwitterUtil getInstance() {
+         if (INSTANCE.twitter == null) {
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/ItemArgHolderBase.java b/src/main/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
-index 733a8fe..0ada07a 100644
+index 733a8fe..b7f8132 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/ItemArgHolderBase.java
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
-@@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
- import net.minecraft.util.math.BlockPos;
- import net.minecraft.world.World;
- 
--public abstract class ItemArgHolderBase<T extends ItemArgHolderBase> {
-+public abstract class ItemArgHolderBase<T extends ItemArgHolderBase<T>> {
-     private World world;
- 
-     private BlockPos pos;
 @@ -24,6 +24,7 @@ public abstract class ItemArgHolderBase<T extends ItemArgHolderBase> {
  
      public T setWorld(World par1) {
@@ -102,10 +148,16 @@ index 733a8fe..0ada07a 100644
  
          public ActionResult<ItemStack> pass() {
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.java b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
-index fe6a272..f44919e 100644
+index fe6a272..77936e2 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.java
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
-@@ -30,7 +30,7 @@ public final class RecipeManager {
+@@ -27,10 +27,13 @@ public final class RecipeManager {
+ 
+     private List<IRecipe> recipes = new ArrayList<>();
+ 
++    private RecipeManager() {
++    }
++
      @SubscribeEvent
      public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
          IRecipe[] array = this.recipes.<IRecipe>toArray(new IRecipe[this.recipes.size()]);
@@ -138,6 +190,118 @@ index dbbad77..df00c77 100644
      }
  
      public ResourceLocation getRegistryName() {
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/protection/ProtectionManager.java b/src/main/ngtlib/jp/ngt/ngtlib/protection/ProtectionManager.java
+index afe69fd..2caf993 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/protection/ProtectionManager.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/protection/ProtectionManager.java
+@@ -31,6 +31,9 @@ public class ProtectionManager {
+ 
+     private ProtectionData lockObjs;
+ 
++    private ProtectionManager() {
++    }
++
+     public ProtectionData getLockObj() {
+         if (this.lockObjs == null)
+             this.lockObjs = new ProtectionData("ProtectedObjects");
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/GLHelper.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/GLHelper.java
+index 3a9fbc0..d199267 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/GLHelper.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/GLHelper.java
+@@ -37,6 +37,9 @@ public final class GLHelper {
+ 
+     private List<GLObject> deleteGLLists = new ArrayList<>();
+ 
++    private GLHelper() {
++    }
++
+     public static void checkGLError(String par1) {
+         checkGLError(par1, false);
+     }
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTObjectRenderer.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTObjectRenderer.java
+index 305fb83..f01d4e8 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTObjectRenderer.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTObjectRenderer.java
+@@ -38,6 +38,9 @@ import org.lwjgl.opengl.GL11;
+ public class NGTObjectRenderer {
+     public static final NGTObjectRenderer INSTANCE = new NGTObjectRenderer();
+ 
++    private NGTObjectRenderer() {
++    }
++
+     public void renderNGTObject(IBlockAccessNGT par1, NGTObject par2, boolean changeLightting, int mode, int pass) {
+         GL11.glPushMatrix();
+         if (changeLightting)
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTParticle.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTParticle.java
+index 99fec0c..f7a0d0b 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTParticle.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTParticle.java
+@@ -13,6 +13,9 @@ public final class NGTParticle {
+ 
+     private final Map<String, EnumParticleTypes> nameMap = new HashMap<>();
+ 
++    private NGTParticle() {
++    }
++
+     public static EnumParticleTypes getParticle(String name) {
+         if (INSTANCE.nameMap.isEmpty())
+             INSTANCE.init();
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTTessellator.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTTessellator.java
+index dc00524..b2a88bc 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/NGTTessellator.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/NGTTessellator.java
+@@ -65,6 +65,9 @@ public final class NGTTessellator implements IRenderer {
+ 
+     private boolean isDrawing;
+ 
++    private NGTTessellator(){
++    }
++
+     public int draw() {
+         if (!this.isDrawing)
+             throw new IllegalStateException("Not tesselating!");
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/PolygonRenderer.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/PolygonRenderer.java
+index 229686e..70ffca1 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/PolygonRenderer.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/PolygonRenderer.java
+@@ -10,6 +10,9 @@ public final class PolygonRenderer implements IRenderer {
+ 
+     public static final float DIV_15 = 0.06666667F;
+ 
++    private PolygonRenderer() {
++    }
++
+     public void startDrawing(int par1) {
+         GL11.glBegin(par1);
+     }
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/media/Camera.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/media/Camera.java
+index 9fc80dd..82b513c 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/media/Camera.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/media/Camera.java
+@@ -14,6 +14,9 @@ public class Camera extends ImageBase {
+ 
+     private int texId = -1;
+ 
++    private Camera() {
++    }
++
+     public static Camera create(int cameraId) {
+         Camera camera = new Camera();
+         List<Webcam> list = Webcam.getWebcams();
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/media/GIF.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/media/GIF.java
+index 68ef366..9adadf1 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/media/GIF.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/media/GIF.java
+@@ -26,6 +26,9 @@ public class GIF {
+ 
+     protected int frameRate;
+ 
++    private GIF() {
++    }
++
+     public static GIF load(String source) {
+         InputStream stream = null;
+         if (source.startsWith("http")) {
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.java
 index 8d5e70b..ea3dbcd 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.java
@@ -169,10 +333,20 @@ index 520d079..58b2143 100644
  
      public void normalize() {
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/NGTRegHandler.java b/src/main/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
-index 57db5f3..09a7900 100644
+index 57db5f3..d39d97d 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/NGTRegHandler.java
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
-@@ -51,7 +51,7 @@ public class NGTRegHandler {
+@@ -20,6 +20,9 @@ public class NGTRegHandler {
+ 
+     private final List<Item> items = new ArrayList<>();
+ 
++    private NGTRegHandler() {
++    }
++
+     private static void checkName(String name) {
+         if (name.contains(":"))
+             throw new IllegalArgumentException("Name contains ':' -> " + name);
+@@ -51,7 +54,7 @@ public class NGTRegHandler {
          } else {
              item = new ItemBlock((Block)block);
          }
@@ -181,7 +355,7 @@ index 57db5f3..09a7900 100644
          register(item, name, unlocalizedName, (CreativeTabs)null, modID);
          return block;
      }
-@@ -63,7 +63,7 @@ public class NGTRegHandler {
+@@ -63,7 +66,7 @@ public class NGTRegHandler {
          item.setTranslationKey(unlocalizedName);
          if (tab != null)
              item.setCreativeTab(tab);
@@ -190,11 +364,35 @@ index 57db5f3..09a7900 100644
          return item;
      }
  
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.java b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.java
+index 31a91e2..b7cbf19 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.java
+@@ -22,6 +22,9 @@ public final class PermissionManager {
+ 
+     private Map<String, List<String>> permissionMap = new HashMap<>();
+ 
++    private PermissionManager() {
++    }
++
+     public void save() {
+         String[] sa = new String[this.permissionMap.size()];
+         int i = 0;
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/Usage.java b/src/main/ngtlib/jp/ngt/ngtlib/util/Usage.java
-index bb083fd..eaf5393 100644
+index bb083fd..710bf55 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/Usage.java
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/Usage.java
-@@ -74,7 +74,7 @@ public final class Usage {
+@@ -17,6 +17,9 @@ public final class Usage {
+ 
+     private final Map<UsageKey, UsageEntry> usages = new HashMap<>();
+ 
++    private Usage() {
++    }
++
+     public void requestUsage(EntityPlayer player) {
+         for (Map.Entry<UsageKey, UsageEntry> entry : this.usages.entrySet()) {
+             if (((UsageEntry)entry.getValue()).pattern.match(player)) {
+@@ -74,7 +77,7 @@ public final class Usage {
                              return true;
                          return false;
                      }
