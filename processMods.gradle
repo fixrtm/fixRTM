@@ -16,27 +16,6 @@ task downloadNgtLib (type: DownloadModJar) {
     to = new File(projectDir, "mods/ngtlib.jar")
 }
 
-import java.nio.file.Files
-
-task linkToModsDir() {
-    def modsDir = new File(projectDir, "run/mods")
-
-    dependsOn downloadRTM, downloadNgtLib
-
-    def rtmInMods = new File(modsDir, downloadRTM.to.name)
-    def ngtLibInMods = new File(modsDir, downloadNgtLib.to.name)
-
-    inputs.files(downloadRTM.to, downloadNgtLib.to)
-    outputs.files(rtmInMods, ngtLibInMods)
-
-    doLast {
-        rtmInMods.delete()
-        ngtLibInMods.delete()
-        Files.createSymbolicLink(rtmInMods.toPath(), downloadRTM.to.toPath())
-        Files.createSymbolicLink(ngtLibInMods.toPath(), downloadNgtLib.to.toPath())
-    }
-}
-
 def srgMcpsrgFile = file("${project.gradle.gradleUserHomeDir}" +
         "/caches/minecraft/de/oceanlabs/mcp" +
         "/mcp_${minecraft.mappingsChannel}/${minecraft.mappings.substring(minecraft.mappings.indexOf('_') + 1)}" +
@@ -78,12 +57,33 @@ task decompileNgtLib(type: DecompileJar) {
     sourceOutputTo = file("${jarFile}.src")
 }
 
+task copyRTMResources(type: Copy) {
+    dependsOn downloadRTM
+
+    from(zipTree(downloadRTM.to)) {
+        exclude("**/*.class")
+    }
+
+    into(file("src/main/rtmResources"))
+}
+
+task copyNgtLibResources(type: Copy) {
+    dependsOn downloadNgtLib
+
+    from(zipTree(downloadNgtLib.to)) {
+        exclude("**/*.class")
+    }
+
+    into(file("src/main/ngtlibResources"))
+}
+
 task decompileMods() {
     dependsOn decompileRTM, decompileNgtLib
 }
 
 task prepareMods() {
-    dependsOn linkToModsDir, decompileMods
+    dependsOn decompileMods
+    dependsOn copyRTMResources, copyNgtLibResources
 }
 
 build.dependsOn prepareMods

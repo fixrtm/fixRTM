@@ -26,6 +26,14 @@ sourceSets {
             srcDirs("src/api/rtm", "src/api/ngtlib")
         }
     }
+    main {
+        java {
+            srcDirs("src/main/rtm", "src/main/ngtlib")
+        }
+        resources {
+            srcDirs("src/main/rtmResources", "src/main/ngtlibResources")
+        }
+    }
 }
 
 minecraft {
@@ -61,6 +69,11 @@ dependencies {
     apiCompile("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
     apiCompile("com.github.sarxos:webcam-capture:0.3.12")
+
+    // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
+    compile("org.twitter4j:twitter4j-core:4.0.7")
+    // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
+    compile("com.github.sarxos:webcam-capture:0.3.12")
 }
 
 processResources {
@@ -108,5 +121,7 @@ compileKotlin {
         //freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
 }
+
+runClient.inputs.property("always_changed", new Date())
 
 apply from: "./processMods.gradle"
