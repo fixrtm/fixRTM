@@ -63,6 +63,8 @@ open class CheckClassesSame : DefaultTask() {
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} is only in dst")
                 is Difference.MethodOnlyInDst ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} is only in dst")
+                is Difference.ClassSignatureChanged ->
+                    logger.error("${difference.className} signature changed. src: '${difference.src}' dst: '${difference.dst}'")
                 is Difference.FieldSignatureChanged ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} signature changed. src: '${difference.src}' dst: '${difference.dst}'")
                 is Difference.MethodSignatureChanged ->
@@ -82,6 +84,9 @@ open class CheckClassesSame : DefaultTask() {
     }
 
     private fun checkClass(className: String, srcClass: ClassNode, dstClass: ClassNode) {
+        if (srcClass.signature != dstClass.signature)
+            addDiff(Difference.ClassSignatureChanged(className, srcClass.signature, dstClass.signature))
+
         val srcFields = srcClass.fields.map { it.name to it.desc to it }.toMap()
         val dstFields = dstClass.fields.map { it.name to it.desc to it }.toMap()
         srcFields.zipNullable(dstFields).forEach { (k, v) ->
@@ -216,6 +221,7 @@ open class CheckClassesSame : DefaultTask() {
         data class FieldOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
         data class MethodOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
         data class MethodOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
+        data class ClassSignatureChanged(val className: String, val src: String?, val dst: String?) : Difference()
         data class FieldSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
         data class MethodSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
         data class FieldAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
