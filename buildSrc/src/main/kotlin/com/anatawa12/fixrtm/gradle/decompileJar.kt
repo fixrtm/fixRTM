@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
 import java.util.jar.Manifest
+import java.util.zip.ZipFile
 
 fun main() {
     decompileJar(
@@ -23,12 +24,27 @@ class ConsoleDecompilerImpl(val destination: File, options: Map<String, Any>, lo
     }
 
     override fun copyEntry(source: String, path: String?, archiveName: String?, entryName: String) {
+        try {
+            ZipFile(File(source)).use { srcArchive ->
+                val entry = srcArchive.getEntry(entryName)
+                if (entry != null) {
+                    srcArchive.getInputStream(entry).use { `in` ->
+                        `in`.copyTo(destination.resolve(entryName).outputStream())
+                    }
+                }
+            }
+        } catch (ex: IOException) {
+            val message = "Cannot copy entry $entryName!/$source to $destination/$entryName"
+            DecompilerContext.getLogger().writeMessage(message, ex)
+        }
     }
 
     override fun saveClassEntry(path: String?, archiveName: String?, qualifiedName: String?, entryName: String, content: String?) {
         try {
             if (content != null) {
-                destination.resolve(entryName).apply { parentFile.mkdirs() }.writeText(content)
+                destination.resolve(entryName).writeText(content)
+            } else {
+                destination.resolve(entryName).mkdirs()
             }
         } catch (ex: IOException) {
             val message = "Cannot write $entryName"
