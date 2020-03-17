@@ -8,8 +8,8 @@ function apply_patch() {
   (cd "$src_dir" && find . -type f) | while read -r path; do
     ./process_non_patch.sh "$src_dir/$path" "$processed_dir/$path"
   done
-cp -rf "$processed_dir" "$dst_dir"
   patch -p1 < "patches/$1.patch"
+  cp -rf "$processed_dir" "$dst_dir"
 }
 
 apply_patch ngtlib

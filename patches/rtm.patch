@@ -1,7 +1,7 @@
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMBlock.java b/src/api/rtm/jp/ngt/rtm/RTMBlock.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMBlock.java b/src/main/rtm/jp/ngt/rtm/RTMBlock.java
 index 04dc2b5..7c86f6c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMBlock.java
-+++ b/src/api/rtm/jp/ngt/rtm/RTMBlock.java
++++ b/src/main/rtm/jp/ngt/rtm/RTMBlock.java
 @@ -355,16 +355,16 @@ public final class RTMBlock {
                      int meta = BlockUtil.getMetadata(world, pos);
                      int c0 = meta << 4 & 0xFF;
@@ -22,10 +22,10 @@ index 04dc2b5..7c86f6c 100644
      }
  
      @SideOnly(Side.CLIENT)
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.java b/src/api/rtm/jp/ngt/rtm/RTMItem.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.java b/src/main/rtm/jp/ngt/rtm/RTMItem.java
 index 07664e4..eecf42e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.java
-+++ b/src/api/rtm/jp/ngt/rtm/RTMItem.java
++++ b/src/main/rtm/jp/ngt/rtm/RTMItem.java
 @@ -249,7 +249,7 @@ public final class RTMItem {
          colors.registerItemColorHandler((stack, tintIndex) -> {
                      BlockMarker block = (BlockMarker)Block.getBlockFromItem(stack.getItem());
@@ -35,10 +35,10 @@ index 07664e4..eecf42e 100644
          colors.registerItemColorHandler((stack, tintIndex) -> 0, new Block[] { RTMBlock.steelSlab });
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/BlockSlot.java b/src/api/rtm/jp/ngt/rtm/block/BlockSlot.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/BlockSlot.java b/src/main/rtm/jp/ngt/rtm/block/BlockSlot.java
 index a451f8f..1422cc1 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/BlockSlot.java
-+++ b/src/api/rtm/jp/ngt/rtm/block/BlockSlot.java
++++ b/src/main/rtm/jp/ngt/rtm/block/BlockSlot.java
 @@ -137,7 +137,7 @@ public class BlockSlot extends BlockContainerCustom implements IPipeConnectable
  
      public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
@@ -48,10 +48,10 @@ index a451f8f..1422cc1 100644
              IProperty<?> prop = unmodifiableIterator.next();
              if (prop.getName().equals("facing")) {
                  world.setBlockState(pos, state.cycleProperty(prop));
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/decoration/Face.java b/src/api/rtm/jp/ngt/rtm/block/decoration/Face.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/decoration/Face.java b/src/main/rtm/jp/ngt/rtm/block/decoration/Face.java
 index 700ae6b..fc359ac 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/decoration/Face.java
-+++ b/src/api/rtm/jp/ngt/rtm/block/decoration/Face.java
++++ b/src/main/rtm/jp/ngt/rtm/block/decoration/Face.java
 @@ -59,19 +59,15 @@ public class Face implements Cloneable {
      }
  
@@ -78,10 +78,10 @@ index 700ae6b..fc359ac 100644
          FaceType(Face.UVFunc par1) {
              this.func = par1;
          }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/command/ModelCtrl.java b/src/api/rtm/jp/ngt/rtm/command/ModelCtrl.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/command/ModelCtrl.java b/src/main/rtm/jp/ngt/rtm/command/ModelCtrl.java
 index 8b96477..2731efb 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/command/ModelCtrl.java
-+++ b/src/api/rtm/jp/ngt/rtm/command/ModelCtrl.java
++++ b/src/main/rtm/jp/ngt/rtm/command/ModelCtrl.java
 @@ -12,43 +12,25 @@ import jp.ngt.rtm.modelpack.modelset.ModelSetFirearm;
  import net.minecraft.command.ICommandSender;
  
@@ -193,10 +193,10 @@ index 8b96477..2731efb 100644
  
      ModelCtrl(CommandMatcher par1, TargetFilter par2, CommandExecutor par3, String par4) {
          this.matcher = par1;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntitySignalConverter.java b/src/api/rtm/jp/ngt/rtm/electric/TileEntitySignalConverter.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntitySignalConverter.java b/src/main/rtm/jp/ngt/rtm/electric/TileEntitySignalConverter.java
 index d1cee01..8bdf998 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntitySignalConverter.java
-+++ b/src/api/rtm/jp/ngt/rtm/electric/TileEntitySignalConverter.java
++++ b/src/main/rtm/jp/ngt/rtm/electric/TileEntitySignalConverter.java
 @@ -76,15 +76,15 @@ public abstract class TileEntitySignalConverter extends TileEntityCustom impleme
  
      public static TileEntitySignalConverter createTileEntity(int par1) {
@@ -218,10 +218,10 @@ index d1cee01..8bdf998 100644
                  return new TileEntitySC_Wireless();
          }
          return new TileEntitySC_RSIn();
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/RenderBullet.java b/src/api/rtm/jp/ngt/rtm/entity/RenderBullet.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/RenderBullet.java b/src/main/rtm/jp/ngt/rtm/entity/RenderBullet.java
 index 3bab73a..c237e55 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/RenderBullet.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/RenderBullet.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/RenderBullet.java
 @@ -230,7 +230,7 @@ public class RenderBullet extends Render<EntityBullet> {
          RenderManager renMg = NGTUtilClient.getMinecraft().getRenderManager();
          float partialTicks = 0.0F;
@@ -231,10 +231,10 @@ index 3bab73a..c237e55 100644
          int k = (entity.getPrimaryHand() == EnumHandSide.RIGHT) ? 1 : -1;
          float f7 = entity.getSwingProgress(partialTicks);
          float f8 = MathHelper.sin((float)NGTMath.firstSqrt(f7) * 3.1415927F);
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/RenderNPC.java b/src/api/rtm/jp/ngt/rtm/entity/npc/RenderNPC.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/RenderNPC.java b/src/main/rtm/jp/ngt/rtm/entity/npc/RenderNPC.java
 index fac20ad..e50b8ed 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/RenderNPC.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/npc/RenderNPC.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/npc/RenderNPC.java
 @@ -47,7 +47,7 @@ public class RenderNPC extends RenderBiped<EntityNPC> {
              boolean usingGun = (hasGun && entity.isUsingItem());
              if (usingGun)
@@ -253,10 +253,10 @@ index fac20ad..e50b8ed 100644
              GlStateManager.depthMask(true);
              GlStateManager.disableBlend();
              GlStateManager.enableAlpha();
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.java b/src/api/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.java b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.java
 index 0344c6d..9e2bdfd 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.java
 @@ -556,10 +556,9 @@ public abstract class EntityTrainBase extends EntityVehicleBase<ModelSetTrain> i
      }
  
@@ -269,10 +269,10 @@ index 0344c6d..9e2bdfd 100644
      }
  
      public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java b/src/api/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
 index e1d489e..8a9f12b 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
 @@ -18,7 +18,7 @@ import net.minecraft.util.EnumHand;
  import net.minecraft.world.World;
  
@@ -291,10 +291,10 @@ index e1d489e..8a9f12b 100644
          return this.state;
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityContainer.java b/src/api/rtm/jp/ngt/rtm/entity/train/parts/EntityContainer.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityContainer.java b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityContainer.java
 index 0e883fa..3caf4fc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityContainer.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/train/parts/EntityContainer.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityContainer.java
 @@ -100,6 +100,7 @@ public class EntityContainer extends EntityCargoWithModel<ModelSetContainer> imp
                  double d0 = 1.5D;
                  double d1 = 256.0D;
@@ -312,10 +312,10 @@ index 0e883fa..3caf4fc 100644
                      cargo.getResourceState().readFromNBT(st2.writeToNBT());
                      cargo.updateResourceState();
                  }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.java b/src/api/rtm/jp/ngt/rtm/entity/train/util/Formation.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.java b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.java
 index d82ae47..74901a0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/train/util/Formation.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.java
 @@ -111,15 +111,15 @@ public final class Formation {
      }
  
@@ -335,10 +335,10 @@ index d82ae47..74901a0 100644
          this.entries = list.<FormationEntry>toArray(new FormationEntry[list.size()]);
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/util/CollisionObj.java b/src/api/rtm/jp/ngt/rtm/entity/util/CollisionObj.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/util/CollisionObj.java b/src/main/rtm/jp/ngt/rtm/entity/util/CollisionObj.java
 index b593f4e..fa7dd7e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/util/CollisionObj.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/util/CollisionObj.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/util/CollisionObj.java
 @@ -78,7 +78,7 @@ public final class CollisionObj {
          boolean addAll = false;
          List<String> nameList = new ArrayList<>();
@@ -348,10 +348,10 @@ index b593f4e..fa7dd7e 100644
              addAll = names[0].equals("-all");
          }
          for (GroupObject go : model.getGroupObjects()) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java b/src/api/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
 index 04f131a..e324a8b 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
 @@ -34,7 +34,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
@@ -370,10 +370,10 @@ index 04f131a..e324a8b 100644
      }
  
      protected void onVehicleUpdate() {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java b/src/api/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java b/src/main/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
 index 5b9a8ef..f889fb3 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
 @@ -47,7 +47,7 @@ public final class RenderVehicleBase extends Render<EntityVehicleBase> {
          super(renderManager);
      }
@@ -392,10 +392,10 @@ index 5b9a8ef..f889fb3 100644
          if (MinecraftForgeClient.getRenderPass() == 1) {
              ModelSetVehicleBase modelSet = vehicle.getResourceState().getResourceSet();
              if (modelSet != null)
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java b/src/api/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
 index 8a72d61..d5bcfff 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
-+++ b/src/api/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
 @@ -161,7 +161,7 @@ public final class VehicleTrackerEntry extends EntityTrackerEntry {
              if (trackedEntities != null) {
                  VehicleTrackerEntry tte = new VehicleTrackerEntry(par1);
@@ -405,10 +405,10 @@ index 8a72d61..d5bcfff 100644
                  while (iterator.hasNext()) {
                      EntityTrackerEntry entry = iterator.next();
                      if (entry != null && entry.equals(tte)) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerItemContainer.java b/src/api/rtm/jp/ngt/rtm/gui/ContainerItemContainer.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerItemContainer.java b/src/main/rtm/jp/ngt/rtm/gui/ContainerItemContainer.java
 index c6750f9..c85a12c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerItemContainer.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/ContainerItemContainer.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/ContainerItemContainer.java
 @@ -210,15 +210,14 @@ public class ContainerItemContainer extends Container {
          } else if (clickTypeIn == ClickType.SWAP && dragType >= 0 && dragType < 9) {
              Slot slot2 = this.inventorySlots.get(slotId);
@@ -448,10 +448,10 @@ index c6750f9..c85a12c 100644
      }
  
      protected boolean mergeItemStack(ItemStack itemStack, int par2, int par3, boolean par4) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerNPC.java b/src/api/rtm/jp/ngt/rtm/gui/ContainerNPC.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerNPC.java b/src/main/rtm/jp/ngt/rtm/gui/ContainerNPC.java
 index 9dc329b..4d31d76 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerNPC.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/ContainerNPC.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/ContainerNPC.java
 @@ -90,6 +90,7 @@ public final class ContainerNPC extends Container {
          public boolean isItemValid(ItemStack item) {
              if (item == null)
@@ -468,10 +468,10 @@ index 9dc329b..4d31d76 100644
              return item.getItem().isValidArmor(item, slot, (Entity)ContainerNPC.this.npc);
          }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerTrainControlPanel.java b/src/api/rtm/jp/ngt/rtm/gui/ContainerTrainControlPanel.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerTrainControlPanel.java b/src/main/rtm/jp/ngt/rtm/gui/ContainerTrainControlPanel.java
 index cbf8d61..4c4cdd2 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/ContainerTrainControlPanel.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/ContainerTrainControlPanel.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/ContainerTrainControlPanel.java
 @@ -9,7 +9,7 @@ import net.minecraft.inventory.IInventory;
  import net.minecraft.inventory.Slot;
  
@@ -481,10 +481,10 @@ index cbf8d61..4c4cdd2 100644
  
      public final EntityPlayer player;
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/DataMapEditor.java b/src/api/rtm/jp/ngt/rtm/gui/DataMapEditor.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/DataMapEditor.java b/src/main/rtm/jp/ngt/rtm/gui/DataMapEditor.java
 index 05ccbdd..4551d3f 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/DataMapEditor.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/DataMapEditor.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/DataMapEditor.java
 @@ -86,7 +86,7 @@ public class DataMapEditor extends JFrame {
  
      public class DMEditorTable extends JTable {
@@ -494,10 +494,10 @@ index 05ccbdd..4551d3f 100644
                          public boolean isCellEditable(int row, int column) {
                              return (column == 2);
                          }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiDecorationBlock.java b/src/api/rtm/jp/ngt/rtm/gui/GuiDecorationBlock.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiDecorationBlock.java b/src/main/rtm/jp/ngt/rtm/gui/GuiDecorationBlock.java
 index fd807e4..9ef2f9d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiDecorationBlock.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiDecorationBlock.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiDecorationBlock.java
 @@ -260,7 +260,7 @@ public class GuiDecorationBlock extends GuiScreenCustom {
          if (par1 == 0 || par1 == 1) {
              Element newElement;
@@ -543,10 +543,10 @@ index fd807e4..9ef2f9d 100644
              button.displayString = "lock UV : " + this.lockUV;
          }
      }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiIngameCustom.java b/src/api/rtm/jp/ngt/rtm/gui/GuiIngameCustom.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiIngameCustom.java b/src/main/rtm/jp/ngt/rtm/gui/GuiIngameCustom.java
 index 812061d..a6188ff 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiIngameCustom.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiIngameCustom.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiIngameCustom.java
 @@ -69,7 +69,7 @@ public class GuiIngameCustom extends GuiScreen {
          }
      }
@@ -556,10 +556,10 @@ index 812061d..a6188ff 100644
          ModelSetVehicleBase modelSet = vehicle.getResourceState().getResourceSet();
          if (modelSet != null && !((VehicleBaseConfig)modelSet.getConfig()).notDisplayCab) {
              NGTUtilClient.bindTexture((modelSet.guiTexture != null) ? modelSet.guiTexture : TEX_CAB);
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMotorman.java b/src/api/rtm/jp/ngt/rtm/gui/GuiMotorman.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMotorman.java b/src/main/rtm/jp/ngt/rtm/gui/GuiMotorman.java
 index a2244a9..f587e27 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMotorman.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiMotorman.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiMotorman.java
 @@ -35,7 +35,7 @@ public class GuiMotorman extends GuiSelect {
                          } catch (IOException e) {
                              e.printStackTrace();
@@ -569,10 +569,10 @@ index a2244a9..f587e27 100644
          }
          return new GuiMotorman(entity, elements);
      }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMovingMachine.java b/src/api/rtm/jp/ngt/rtm/gui/GuiMovingMachine.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMovingMachine.java b/src/main/rtm/jp/ngt/rtm/gui/GuiMovingMachine.java
 index 9d99bde..002928d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiMovingMachine.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiMovingMachine.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiMovingMachine.java
 @@ -96,7 +96,7 @@ public class GuiMovingMachine extends GuiScreenCustom {
          } else if (button.id == 1) {
              this.mc.displayGuiScreen(null);
@@ -582,10 +582,10 @@ index 9d99bde..002928d 100644
              this.buttonV.displayString = "GuideVisibility : " + this.guideVisibility;
          } else if (button.id == 101) {
              this.type = (this.type + 1) % VEHICLE_TYPE.length;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSelectModel.java b/src/api/rtm/jp/ngt/rtm/gui/GuiSelectModel.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSelectModel.java b/src/main/rtm/jp/ngt/rtm/gui/GuiSelectModel.java
 index b18d63b..7ba5859 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSelectModel.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiSelectModel.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiSelectModel.java
 @@ -69,7 +69,7 @@ public class GuiSelectModel extends GuiScreenCustom {
              String subType = state.type.subType;
              List<ResourceSet> list = ModelPackManager.INSTANCE.getModelList(state.type);
@@ -595,10 +595,10 @@ index b18d63b..7ba5859 100644
                  if (((IConfigWithType)modelSet.getConfig()).getSubType().equals(subType))
                      this.modelListAll.add(modelSet);
              }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSignboard.java b/src/api/rtm/jp/ngt/rtm/gui/GuiSignboard.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSignboard.java b/src/main/rtm/jp/ngt/rtm/gui/GuiSignboard.java
 index 6f28121..51c4ecc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiSignboard.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiSignboard.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiSignboard.java
 @@ -441,6 +441,7 @@ public class GuiSignboard extends GuiScreenCustom {
                  setForeground(Color.black);
                  setBackground(Color.white);
@@ -607,10 +607,10 @@ index 6f28121..51c4ecc 100644
          }
      }
  }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiVehicleControlPanel.java b/src/api/rtm/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiVehicleControlPanel.java b/src/main/rtm/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
 index e81591b..1818cfc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
 @@ -61,7 +61,7 @@ public class GuiVehicleControlPanel extends InventoryEffectRenderer {
  
      protected final EntityPlayer player;
@@ -629,10 +629,10 @@ index e81591b..1818cfc 100644
              int r = (this.buttonDoor[0]).opened ? 1 : 0;
              int l = (this.buttonDoor[1]).opened ? 1 : 0;
              int state = r << 1 | l;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalButton.java b/src/api/rtm/jp/ngt/rtm/gui/InternalButton.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalButton.java b/src/main/rtm/jp/ngt/rtm/gui/InternalButton.java
 index dc145b9..7c175d2 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalButton.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/InternalButton.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/InternalButton.java
 @@ -42,14 +42,17 @@ public class InternalButton {
          this.text = text;
          this.textColor = color;
@@ -651,10 +651,10 @@ index dc145b9..7c175d2 100644
      }
  
      public ButtonListner getListner() {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalGUI.java b/src/api/rtm/jp/ngt/rtm/gui/InternalGUI.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalGUI.java b/src/main/rtm/jp/ngt/rtm/gui/InternalGUI.java
 index fcaa35f..79a5476 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/gui/InternalGUI.java
-+++ b/src/api/rtm/jp/ngt/rtm/gui/InternalGUI.java
++++ b/src/main/rtm/jp/ngt/rtm/gui/InternalGUI.java
 @@ -37,6 +37,7 @@ public class InternalGUI {
  
      public InternalGUI setColor(int par1) {
@@ -663,10 +663,10 @@ index fcaa35f..79a5476 100644
      }
  
      public InternalButton addButton(InternalButton button) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemGun.java b/src/api/rtm/jp/ngt/rtm/item/ItemGun.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemGun.java b/src/main/rtm/jp/ngt/rtm/item/ItemGun.java
 index 2f87f4b..87a2e3c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemGun.java
-+++ b/src/api/rtm/jp/ngt/rtm/item/ItemGun.java
++++ b/src/main/rtm/jp/ngt/rtm/item/ItemGun.java
 @@ -145,13 +145,13 @@ public class ItemGun extends ItemCustom {
      }
  
@@ -688,10 +688,10 @@ index 2f87f4b..87a2e3c 100644
  
          public final ItemAmmunition.BulletType bulletType;
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemRail.java b/src/api/rtm/jp/ngt/rtm/item/ItemRail.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemRail.java b/src/main/rtm/jp/ngt/rtm/item/ItemRail.java
 index d63634e..2d6a7dd 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemRail.java
-+++ b/src/api/rtm/jp/ngt/rtm/item/ItemRail.java
++++ b/src/main/rtm/jp/ngt/rtm/item/ItemRail.java
 @@ -13,6 +13,7 @@ import jp.ngt.rtm.RTMResource;
  import jp.ngt.rtm.modelpack.ModelPackManager;
  import jp.ngt.rtm.modelpack.ResourceType;
@@ -709,10 +709,10 @@ index d63634e..2d6a7dd 100644
      public ItemRail() {
          setMaxStackSize(1);
      }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemTrain.java b/src/api/rtm/jp/ngt/rtm/item/ItemTrain.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemTrain.java b/src/main/rtm/jp/ngt/rtm/item/ItemTrain.java
 index f60184b..be8196b 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemTrain.java
-+++ b/src/api/rtm/jp/ngt/rtm/item/ItemTrain.java
++++ b/src/main/rtm/jp/ngt/rtm/item/ItemTrain.java
 @@ -45,7 +45,7 @@ import net.minecraft.world.World;
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
@@ -731,10 +731,10 @@ index f60184b..be8196b 100644
          NBTTagList tagList = new NBTTagList();
          for (FormationEntry entry : (train.getFormation()).entries) {
              if (entry != null) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemWithModel.java b/src/api/rtm/jp/ngt/rtm/item/ItemWithModel.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemWithModel.java b/src/main/rtm/jp/ngt/rtm/item/ItemWithModel.java
 index fcd837d..a92f573 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemWithModel.java
-+++ b/src/api/rtm/jp/ngt/rtm/item/ItemWithModel.java
++++ b/src/main/rtm/jp/ngt/rtm/item/ItemWithModel.java
 @@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ActionResult;
  import net.minecraft.util.text.TextFormatting;
@@ -744,10 +744,10 @@ index fcd837d..a92f573 100644
      private ItemStack selectedItem;
  
      private EntityPlayer selectedPlayer;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/IResourceSelector.java b/src/api/rtm/jp/ngt/rtm/modelpack/IResourceSelector.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/IResourceSelector.java b/src/main/rtm/jp/ngt/rtm/modelpack/IResourceSelector.java
 index 20f1cf6..60e76a4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/IResourceSelector.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/IResourceSelector.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/IResourceSelector.java
 @@ -4,7 +4,7 @@ import jp.ngt.rtm.modelpack.state.ResourceState;
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
@@ -764,10 +764,10 @@ index 20f1cf6..60e76a4 100644
 -    boolean closeGui(ResourceState paramResourceState);
 +    boolean closeGui(ResourceState<T> paramResourceState);
  }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.java b/src/api/rtm/jp/ngt/rtm/modelpack/ModelPackManager.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.java b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.java
 index 5bb1855..d1f52a4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/ModelPackManager.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.java
 @@ -241,7 +241,6 @@ public final class ModelPackManager {
  
      @SideOnly(Side.CLIENT)
@@ -806,10 +806,10 @@ index 5bb1855..d1f52a4 100644
      }
  
      public ResourceLocation getResource(String path) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/RTMResourceManager.java b/src/api/rtm/jp/ngt/rtm/modelpack/RTMResourceManager.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/RTMResourceManager.java b/src/main/rtm/jp/ngt/rtm/modelpack/RTMResourceManager.java
 index 3c913b9..f52c056 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/RTMResourceManager.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/RTMResourceManager.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/RTMResourceManager.java
 @@ -79,7 +79,7 @@ public final class RTMResourceManager implements IResourceManager {
      }
  
@@ -819,10 +819,10 @@ index 3c913b9..f52c056 100644
          list.add(getResource(par1));
          if (!list.isEmpty())
              return list;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ResourceType.java b/src/api/rtm/jp/ngt/rtm/modelpack/ResourceType.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ResourceType.java b/src/main/rtm/jp/ngt/rtm/modelpack/ResourceType.java
 index e02115f..42f0f39 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ResourceType.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/ResourceType.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/ResourceType.java
 @@ -3,7 +3,7 @@ package jp.ngt.rtm.modelpack;
  import jp.ngt.rtm.modelpack.cfg.ResourceConfig;
  import jp.ngt.rtm.modelpack.modelset.ResourceSet;
@@ -845,10 +845,10 @@ index e02115f..42f0f39 100644
      }
  
      public ResourceType<C, S> getSubType(String s) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ScriptExecuter.java b/src/api/rtm/jp/ngt/rtm/modelpack/ScriptExecuter.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ScriptExecuter.java b/src/main/rtm/jp/ngt/rtm/modelpack/ScriptExecuter.java
 index 23a127e..1b2b982 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ScriptExecuter.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/ScriptExecuter.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/ScriptExecuter.java
 @@ -22,7 +22,7 @@ public class ScriptExecuter implements ICommandSender {
  
      public long count;
@@ -858,10 +858,10 @@ index 23a127e..1b2b982 100644
          ModelSetBase set = selector.getResourceState().getResourceSet();
          if (set.serverSE != null)
              return ScriptUtil.doScriptIgnoreError(set.serverSE, name, args);
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java
 index 96ade8a..bda5693 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/ContainerConfig.java
 @@ -20,7 +20,7 @@ public class ContainerConfig extends ModelConfig {
      public void init() {
          super.init();
@@ -871,10 +871,10 @@ index 96ade8a..bda5693 100644
              this.model.modelFile = this.containerModel;
              this.model.textures = new String[][] { { "default", this.containerTexture } };
              this.model.rendererPath = null;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java
 index bb9bc77..4779020 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/FirearmConfig.java
 @@ -46,20 +46,20 @@ public class FirearmConfig extends ModelConfig {
      public void init() {
          super.init();
@@ -901,10 +901,10 @@ index bb9bc77..4779020 100644
          this.modelPartsN.initParts();
          this.modelPartsY.initParts();
          this.modelPartsX.initParts();
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/RailConfig.java b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/RailConfig.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/RailConfig.java b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/RailConfig.java
 index 243247c..84dab9e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/RailConfig.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/RailConfig.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/RailConfig.java
 @@ -20,7 +20,7 @@ public class RailConfig extends ModelConfig {
      public void init() {
          super.init();
@@ -914,10 +914,10 @@ index 243247c..84dab9e 100644
              this.model.modelFile = this.railModel;
              this.model.textures = new String[][] { { "default", this.railTexture } };
              this.model.rendererPath = null;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/SignalConfig.java b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/SignalConfig.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/SignalConfig.java b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/SignalConfig.java
 index a70f8b0..d74f9e6 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/SignalConfig.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/SignalConfig.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/SignalConfig.java
 @@ -32,14 +32,14 @@ public class SignalConfig extends ModelConfig {
      public void init() {
          super.init();
@@ -936,10 +936,10 @@ index a70f8b0..d74f9e6 100644
          this.modelPartsFixture.initParts();
          this.modelPartsBody.initParts();
          if (this.maxSignalLevel == 0 && this.lights != null) {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/TrainConfig.java b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/TrainConfig.java b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
 index d75c2a4..f0ddad1 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
 @@ -55,7 +55,7 @@ public class TrainConfig extends VehicleBaseConfig implements IConfigWithType {
      public void init() {
          super.init();
@@ -958,10 +958,10 @@ index d75c2a4..f0ddad1 100644
                  model.modelFile = this.bogieModel;
                  model.textures = new String[][] { { "default", this.bogieTexture } };
                  this.bogieModel3[1] = model;
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/MPLAdButton.java b/src/api/rtm/jp/ngt/rtm/modelpack/init/MPLAdButton.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/MPLAdButton.java b/src/main/rtm/jp/ngt/rtm/modelpack/init/MPLAdButton.java
 index 7155768..16ce18d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/MPLAdButton.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/init/MPLAdButton.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/MPLAdButton.java
 @@ -78,7 +78,7 @@ public final class MPLAdButton extends JButton {
  
      private void shuffleAds() {
@@ -971,10 +971,10 @@ index 7155768..16ce18d 100644
          Collections.shuffle(list);
          this.ads = list.<Advertisement>toArray(new Advertisement[list.size()]);
      }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java b/src/api/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
 index 7617124..dc17756 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
 @@ -165,7 +165,7 @@ public final class ModelPackLoadThread extends Thread {
          if (!this.displayWindow)
              return;
@@ -984,10 +984,10 @@ index 7617124..dc17756 100644
          this.bars[barId].setValue(i);
          this.bars[barId].setStringPainted(true);
          this.bars[barId].setString(String.format("%d/%d", new Object[] { Integer.valueOf(value), Integer.valueOf(max) }));
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.java b/src/api/rtm/jp/ngt/rtm/modelpack/state/ResourceState.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.java b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.java
 index 4a2b9b0..04aa86d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/state/ResourceState.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.java
 @@ -13,8 +13,8 @@ import net.minecraft.nbt.NBTBase;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.math.AxisAlignedBB;
@@ -1008,10 +1008,10 @@ index 4a2b9b0..04aa86d 100644
          this.type = type;
          this.modelName = type.defaultName;
          this.dataMap.setEntity(entity);
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java b/src/api/rtm/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java
 index bdf5927..95dbfc0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java
-+++ b/src/api/rtm/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceStateWithBlock.java
 @@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ResourceLocation;
@@ -1030,10 +1030,10 @@ index bdf5927..95dbfc0 100644
          super(type, entity);
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailBase.java b/src/api/rtm/jp/ngt/rtm/network/PacketLargeRailBase.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailBase.java b/src/main/rtm/jp/ngt/rtm/network/PacketLargeRailBase.java
 index bce2e3e..9c8d045 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailBase.java
-+++ b/src/api/rtm/jp/ngt/rtm/network/PacketLargeRailBase.java
++++ b/src/main/rtm/jp/ngt/rtm/network/PacketLargeRailBase.java
 @@ -61,6 +61,6 @@ public class PacketLargeRailBase extends PacketCustom implements IMessageHandler
                          }
                          return false;
@@ -1042,10 +1042,10 @@ index bce2e3e..9c8d045 100644
 +                }, 50, 5);
      }
  }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailCore.java b/src/api/rtm/jp/ngt/rtm/network/PacketLargeRailCore.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailCore.java b/src/main/rtm/jp/ngt/rtm/network/PacketLargeRailCore.java
 index 40f8126..e6c3f7c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketLargeRailCore.java
-+++ b/src/api/rtm/jp/ngt/rtm/network/PacketLargeRailCore.java
++++ b/src/main/rtm/jp/ngt/rtm/network/PacketLargeRailCore.java
 @@ -107,8 +107,9 @@ public class PacketLargeRailCore extends PacketCustom implements IMessageHandler
              tile0.getResourceState().readFromNBT(message.property);
              tile0.setRailPositions(message.railPositions);
@@ -1058,10 +1058,10 @@ index 40f8126..e6c3f7c 100644
              tile0.updateResourceState();
              return true;
          }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/RenderMarkerBlock.java b/src/api/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/RenderMarkerBlock.java b/src/main/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.java
 index 62c9477..2764446 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/RenderMarkerBlock.java
-+++ b/src/api/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.java
++++ b/src/main/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.java
 @@ -84,7 +84,7 @@ public final class RenderMarkerBlock extends TileEntitySpecialRenderer<TileEntit
              marker.gui.addButton(new InternalButton(-2.4F, startY, 4.8F, 0.5F))
                  .setColor(buttonColor).setText("Anchor mode 2-1 : " + marker.displayLine, 16777215, 0.05F)
@@ -1098,10 +1098,10 @@ index 62c9477..2764446 100644
                          button.setText("Display distance : " + marker.displayDistance, 16777215, 0.05F);
                      });
          }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/TileEntityLargeRailCore.java b/src/api/rtm/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/TileEntityLargeRailCore.java b/src/main/rtm/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
 index c28a0d3..d00a0af 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
-+++ b/src/api/rtm/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
++++ b/src/main/rtm/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
 @@ -114,6 +114,7 @@ public abstract class TileEntityLargeRailCore extends TileEntityLargeRailBase im
      }
  
@@ -1110,10 +1110,10 @@ index c28a0d3..d00a0af 100644
      }
  
      public void sendPacket() {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMapSwitch.java b/src/api/rtm/jp/ngt/rtm/rail/util/RailMapSwitch.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMapSwitch.java b/src/main/rtm/jp/ngt/rtm/rail/util/RailMapSwitch.java
 index 7e5bc38..3e944e3 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMapSwitch.java
-+++ b/src/api/rtm/jp/ngt/rtm/rail/util/RailMapSwitch.java
++++ b/src/main/rtm/jp/ngt/rtm/rail/util/RailMapSwitch.java
 @@ -16,5 +16,6 @@ public final class RailMapSwitch extends RailMap {
      @Deprecated
      public RailMapSwitch setState(boolean par1) {
@@ -1121,10 +1121,10 @@ index 7e5bc38..3e944e3 100644
 +        return this;
      }
  }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java b/src/api/rtm/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java b/src/main/rtm/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java
 index ccc0dac..c2c99da 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java
-+++ b/src/api/rtm/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java
++++ b/src/main/rtm/jp/ngt/rtm/render/BasicVehiclePartsRenderer.java
 @@ -29,7 +29,7 @@ public class BasicVehiclePartsRenderer extends VehiclePartsRenderer {
          super(par1);
      }
@@ -1146,10 +1146,10 @@ index ccc0dac..c2c99da 100644
          }
          return array;
      }
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/ModelObject.java b/src/api/rtm/jp/ngt/rtm/render/ModelObject.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/ModelObject.java b/src/main/rtm/jp/ngt/rtm/render/ModelObject.java
 index 2fa2c34..0ba8cee 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/ModelObject.java
-+++ b/src/api/rtm/jp/ngt/rtm/render/ModelObject.java
++++ b/src/main/rtm/jp/ngt/rtm/render/ModelObject.java
 @@ -48,7 +48,7 @@ public class ModelObject {
  
      private int program;
@@ -1159,10 +1159,10 @@ index 2fa2c34..0ba8cee 100644
          String filePath = par1.modelFile;
          this.model = ModelPackManager.INSTANCE.loadModel(filePath, 4, true, par2.getConfig(), par2.md5);
          Material[] materials = getMaterials(getTextureMap(par1.textures));
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/VehiclePartsRenderer.java b/src/api/rtm/jp/ngt/rtm/render/VehiclePartsRenderer.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/VehiclePartsRenderer.java b/src/main/rtm/jp/ngt/rtm/render/VehiclePartsRenderer.java
 index 0bd2a40..1f1312a 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/VehiclePartsRenderer.java
-+++ b/src/api/rtm/jp/ngt/rtm/render/VehiclePartsRenderer.java
++++ b/src/main/rtm/jp/ngt/rtm/render/VehiclePartsRenderer.java
 @@ -24,7 +24,7 @@ public class VehiclePartsRenderer extends EntityPartsRenderer<ModelSetVehicleBas
              }
      }
@@ -1172,10 +1172,10 @@ index 0bd2a40..1f1312a 100644
          super.init(par1, par2);
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.java b/src/api/rtm/jp/ngt/rtm/sound/MovingSoundMaker.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.java b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.java
 index 8d9356a..8d7866b 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.java
-+++ b/src/api/rtm/jp/ngt/rtm/sound/MovingSoundMaker.java
++++ b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.java
 @@ -49,6 +49,7 @@ public final class MovingSoundMaker {
          String domain;
          if (sound.contains("ogg"))
@@ -1193,10 +1193,10 @@ index 8d9356a..8d7866b 100644
          return domain + ":sounds/" + path + ".ogg";
      }
  
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundObj.java b/src/api/rtm/jp/ngt/rtm/sound/SoundObj.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundObj.java b/src/main/rtm/jp/ngt/rtm/sound/SoundObj.java
 index 13a39e6..d58f64e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundObj.java
-+++ b/src/api/rtm/jp/ngt/rtm/sound/SoundObj.java
++++ b/src/main/rtm/jp/ngt/rtm/sound/SoundObj.java
 @@ -17,13 +17,13 @@ public class SoundObj {
      public SoundObj(String par1) {
          this.name = par1;
@@ -1213,10 +1213,10 @@ index 13a39e6..d58f64e 100644
      }
  
      public SoundEvent getSound() {
-diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundUpdaterVehicle.java b/src/api/rtm/jp/ngt/rtm/sound/SoundUpdaterVehicle.java
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundUpdaterVehicle.java b/src/main/rtm/jp/ngt/rtm/sound/SoundUpdaterVehicle.java
 index 89e2c6a..51e9db2 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/SoundUpdaterVehicle.java
-+++ b/src/api/rtm/jp/ngt/rtm/sound/SoundUpdaterVehicle.java
++++ b/src/main/rtm/jp/ngt/rtm/sound/SoundUpdaterVehicle.java
 @@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
  

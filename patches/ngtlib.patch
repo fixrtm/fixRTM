@@ -1,7 +1,7 @@
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/block/BlockArgHolder.java b/src/api/ngtlib/jp/ngt/ngtlib/block/BlockArgHolder.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/block/BlockArgHolder.java b/src/main/ngtlib/jp/ngt/ngtlib/block/BlockArgHolder.java
 index 75376c7..63f0211 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/block/BlockArgHolder.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/block/BlockArgHolder.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/block/BlockArgHolder.java
 @@ -15,6 +15,7 @@ public class BlockArgHolder extends ItemArgHolderBase<BlockArgHolder> {
  
      public BlockArgHolder setBlockState(IBlockState par1) {
@@ -17,10 +17,10 @@ index 75376c7..63f0211 100644
 +        return this;
      }
  }
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiButtonCustom.java b/src/api/ngtlib/jp/ngt/ngtlib/gui/GuiButtonCustom.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiButtonCustom.java b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiButtonCustom.java
 index 99d7e14..97d44b4 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiButtonCustom.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/gui/GuiButtonCustom.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiButtonCustom.java
 @@ -28,5 +28,6 @@ public class GuiButtonCustom extends GuiButton {
      public GuiButtonCustom addTips(String par1) {
          if (par1 != null)
@@ -28,10 +28,10 @@ index 99d7e14..97d44b4 100644
 +        return this;
      }
  }
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java b/src/api/ngtlib/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
 index 4f42d09..7a918d1 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
 @@ -480,6 +480,7 @@ public class GuiTextFieldCustom extends GuiTextField {
  
      public GuiTextFieldCustom addTips(String par1) {
@@ -40,10 +40,10 @@ index 4f42d09..7a918d1 100644
      }
  
      public static interface TextFieldListner {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/ItemArgHolderBase.java b/src/api/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/ItemArgHolderBase.java b/src/main/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
 index 733a8fe..0ada07a 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/ItemArgHolderBase.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/ItemArgHolderBase.java
 @@ -9,7 +9,7 @@ import net.minecraft.util.EnumHand;
  import net.minecraft.util.math.BlockPos;
  import net.minecraft.world.World;
@@ -101,10 +101,10 @@ index 733a8fe..0ada07a 100644
          }
  
          public ActionResult<ItemStack> pass() {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.java b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.java b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
 index fe6a272..f44919e 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.java
 @@ -30,7 +30,7 @@ public final class RecipeManager {
      @SubscribeEvent
      public void registerRecipes(RegistryEvent.Register<IRecipe> event) {
@@ -114,10 +114,10 @@ index fe6a272..f44919e 100644
      }
  
      public static ShapedRecipes55 addRecipe(ItemStack output, Object... objs) {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RepairRecipe.java b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/RepairRecipe.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RepairRecipe.java b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RepairRecipe.java
 index 6a0501d..f69fac2 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RepairRecipe.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/RepairRecipe.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RepairRecipe.java
 @@ -82,6 +82,7 @@ public class RepairRecipe implements IRecipe {
  
      public IRecipe setRegistryName(ResourceLocation name) {
@@ -126,10 +126,10 @@ index 6a0501d..f69fac2 100644
      }
  
      public ResourceLocation getRegistryName() {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
 index dbbad77..df00c77 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
 @@ -124,6 +124,7 @@ public class ShapedRecipes55 implements IRecipe {
  
      public IRecipe setRegistryName(ResourceLocation name) {
@@ -138,10 +138,10 @@ index dbbad77..df00c77 100644
      }
  
      public ResourceLocation getRegistryName() {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
 index 61933af..f3964bf 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoaderMMD.java
 @@ -1,7 +1,5 @@
  package jp.ngt.ngtlib.renderer.model;
  
@@ -159,10 +159,10 @@ index 61933af..f3964bf 100644
          return null;
      }
  }
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.java b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.java
 index 8d5e70b..ea3dbcd 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.java
 @@ -80,7 +80,7 @@ public final class ObjModel extends PolygonModel {
              Vertex vertex = parseVertexNormal(currentLine, lineCount);
              if (vertex != null)
@@ -172,10 +172,10 @@ index 8d5e70b..ea3dbcd 100644
              GroupObject group = parseGroupObject(currentLine, lineCount);
              if (group != null)
                  if (this.currentGroupObject != null)
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/Vertex.java b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/Vertex.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/Vertex.java b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/Vertex.java
 index 520d079..58b2143 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/Vertex.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/renderer/model/Vertex.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/Vertex.java
 @@ -18,10 +18,12 @@ public abstract class Vertex implements Comparable<Vertex> {
  
      public Vertex add(Vertex vertex) {
@@ -189,10 +189,10 @@ index 520d079..58b2143 100644
      }
  
      public void normalize() {
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/NGTRegHandler.java b/src/api/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/NGTRegHandler.java b/src/main/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
 index 57db5f3..09a7900 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/NGTRegHandler.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/util/NGTRegHandler.java
 @@ -51,7 +51,7 @@ public class NGTRegHandler {
          } else {
              item = new ItemBlock((Block)block);
@@ -211,10 +211,10 @@ index 57db5f3..09a7900 100644
          return item;
      }
  
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/Usage.java b/src/api/ngtlib/jp/ngt/ngtlib/util/Usage.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/Usage.java b/src/main/ngtlib/jp/ngt/ngtlib/util/Usage.java
 index bb083fd..eaf5393 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/Usage.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/util/Usage.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/util/Usage.java
 @@ -74,7 +74,7 @@ public final class Usage {
                              return true;
                          return false;
@@ -224,10 +224,10 @@ index bb083fd..eaf5393 100644
          this.usages.put(new UsageKey(clazz, 0), entry);
          return entry;
      }
-diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/VersionChecker.java b/src/api/ngtlib/jp/ngt/ngtlib/util/VersionChecker.java
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/VersionChecker.java b/src/main/ngtlib/jp/ngt/ngtlib/util/VersionChecker.java
 index 0bce2c5..f89c4fa 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/VersionChecker.java
-+++ b/src/api/ngtlib/jp/ngt/ngtlib/util/VersionChecker.java
++++ b/src/main/ngtlib/jp/ngt/ngtlib/util/VersionChecker.java
 @@ -30,8 +30,7 @@ public class VersionChecker {
      }
  
