@@ -1,13 +1,9 @@
 package com.anatawa12.fixrtm.gradle
 
-import org.jetbrains.java.decompiler.main.DecompilerContext
 import org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler
 import org.jetbrains.java.decompiler.main.extern.IFernflowerLogger
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.io.IOException
-import java.util.jar.Manifest
-import java.util.zip.ZipFile
 
 fun main() {
     decompileJar(
@@ -16,44 +12,8 @@ fun main() {
     )
 }
 
-class ConsoleDecompilerImpl(val destination: File, options: Map<String, Any>, logger: IFernflowerLogger)
+class ConsoleDecompilerImpl(destination: File, options: Map<String, Any>, logger: IFernflowerLogger)
     : ConsoleDecompiler(destination, options, logger) {
-
-    override fun createArchive(path: String?, archiveName: String, manifest: Manifest?) {
-        destination.mkdirs()
-    }
-
-    override fun copyEntry(source: String, path: String?, archiveName: String?, entryName: String) {
-        try {
-            ZipFile(File(source)).use { srcArchive ->
-                val entry = srcArchive.getEntry(entryName)
-                if (entry != null) {
-                    srcArchive.getInputStream(entry).use { `in` ->
-                        `in`.copyTo(destination.resolve(entryName).outputStream())
-                    }
-                }
-            }
-        } catch (ex: IOException) {
-            val message = "Cannot copy entry $entryName!/$source to $destination/$entryName"
-            DecompilerContext.getLogger().writeMessage(message, ex)
-        }
-    }
-
-    override fun saveClassEntry(path: String?, archiveName: String?, qualifiedName: String?, entryName: String, content: String?) {
-        try {
-            if (content != null) {
-                destination.resolve(entryName).writeText(content)
-            } else {
-                destination.resolve(entryName).mkdirs()
-            }
-        } catch (ex: IOException) {
-            val message = "Cannot write $entryName"
-            DecompilerContext.getLogger().writeMessage(message, ex)
-        }
-    }
-
-    override fun closeArchive(path: String, archiveName: String) {
-    }
 }
 
 object FernflowerLogger : IFernflowerLogger() {
