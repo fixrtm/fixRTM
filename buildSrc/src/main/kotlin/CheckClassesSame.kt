@@ -36,8 +36,8 @@ open class CheckClassesSame : DefaultTask() {
             srcClasses.add(srcEntry.name)
             val dstEntry = dstZip.getEntry(srcEntry.name)
             if (dstEntry == null) return@forEach addDiff(Difference.ClassOnlyInSrc(srcEntry.name.removeSuffix(".class")))
-            val srcClass = readClass(srcZip.getInputStream(srcEntry).readBytes())
-            val dstClass = readClass(dstZip.getInputStream(dstEntry).readBytes())
+            val srcClass = readClass(srcZip.getInputStream(srcEntry).readBytes(1024))
+            val dstClass = readClass(dstZip.getInputStream(dstEntry).readBytes(1024))
 
             checkClass(srcEntry.name.removeSuffix(".class"), srcClass, dstClass)
         }
@@ -64,9 +64,9 @@ open class CheckClassesSame : DefaultTask() {
                 is Difference.MethodOnlyInDst ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} is only in dst")
                 is Difference.FieldSignatureChanged ->
-                    logger.error("${difference.owner}.${difference.name}:${difference.desc} signature changed")
+                    logger.error("${difference.owner}.${difference.name}:${difference.desc} signature changed. src: '${difference.src}' dst: '${difference.dst}'")
                 is Difference.MethodSignatureChanged ->
-                    logger.error("${difference.owner}.${difference.name}:${difference.desc} signature changed")
+                    logger.error("${difference.owner}.${difference.name}:${difference.desc} signature changed. src: '${difference.src}' dst: '${difference.dst}'")
                 is Difference.FieldAccessChanged ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} access changed")
                 is Difference.MethodAccessChanged ->
@@ -106,7 +106,7 @@ open class CheckClassesSame : DefaultTask() {
         if (srcField.access != dstField.access)
             addDiff(Difference.FieldAccessChanged(owner, name, desc))
         if (srcField.signature != dstField.signature)
-            addDiff(Difference.FieldSignatureChanged(owner, name, desc))
+            addDiff(Difference.FieldSignatureChanged(owner, name, desc, srcField.signature, dstField.signature))
         if (srcField.value != dstField.value)
             addDiff(Difference.FieldValueChanged(owner, name, desc))
     }
@@ -115,7 +115,7 @@ open class CheckClassesSame : DefaultTask() {
         if (srcMethod.access != dstMethod.access)
             addDiff(Difference.MethodAccessChanged(owner, name, desc))
         if (srcMethod.signature != dstMethod.signature)
-            addDiff(Difference.MethodSignatureChanged(owner, name, desc))
+            addDiff(Difference.MethodSignatureChanged(owner, name, desc, srcMethod.signature, dstMethod.signature))
         if (srcMethod.annotationDefault != dstMethod.annotationDefault)
             addDiff(Difference.AnnotationDefaultChanged(owner, name, desc))
         val srcInsns = srcMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
@@ -187,7 +187,7 @@ open class CheckClassesSame : DefaultTask() {
             }
             else -> error("Not yet implemented: ${srcInsn.javaClass.simpleName}")
         }
-        return false
+        return true
     }
 
     private fun readClass(byteArray: ByteArray): ClassNode
@@ -210,18 +210,18 @@ open class CheckClassesSame : DefaultTask() {
     }
 
     private sealed class Difference {
-        class ClassOnlyInSrc(val name: String) : Difference()
-        class ClassOnlyInDst(val name: String) : Difference()
-        class FieldOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
-        class FieldOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
-        class MethodOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
-        class MethodOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
-        class FieldSignatureChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class MethodSignatureChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class FieldAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class MethodAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class FieldValueChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class MethodCodeChanged(val owner: String, val name: String, val desc: String) : Difference()
-        class AnnotationDefaultChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class ClassOnlyInSrc(val name: String) : Difference()
+        data class ClassOnlyInDst(val name: String) : Difference()
+        data class FieldOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
+        data class FieldOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
+        data class MethodOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
+        data class MethodOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
+        data class FieldSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
+        data class MethodSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
+        data class FieldAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class MethodAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class FieldValueChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class MethodCodeChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class AnnotationDefaultChanged(val owner: String, val name: String, val desc: String) : Difference()
     }
 }
