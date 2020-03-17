@@ -971,6 +971,19 @@ index 7155768..16ce18d 100644
          Collections.shuffle(list);
          this.ads = list.<Advertisement>toArray(new Advertisement[list.size()]);
      }
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java b/src/api/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
+index 7617124..dc17756 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
++++ b/src/api/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
+@@ -165,7 +165,7 @@ public final class ModelPackLoadThread extends Thread {
+         if (!this.displayWindow)
+             return;
+         int max = this.maxValue[barId];
+-        int i = (int)(value / max * 100.0F);
++        int i = (int)((float)value / (float)max * 100.0F);
+         this.bars[barId].setValue(i);
+         this.bars[barId].setStringPainted(true);
+         this.bars[barId].setString(String.format("%d/%d", new Object[] { Integer.valueOf(value), Integer.valueOf(max) }));
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.java b/src/api/rtm/jp/ngt/rtm/modelpack/state/ResourceState.java
 index 4a2b9b0..04aa86d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.java
