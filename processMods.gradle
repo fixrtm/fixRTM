@@ -81,8 +81,20 @@ task decompileMods() {
     dependsOn decompileRTM, decompileNgtLib
 }
 
+task archiveRTMResourcesZip(type: Zip) {
+    dependsOn downloadRTM
+
+    from(zipTree(downloadRTM.to)) {
+        exclude("**/*.class")
+    }
+
+    destinationDir = file('run/mods')
+    archiveName 'RTMResources.zip'
+}
+
 task prepareMods() {
     dependsOn decompileMods
+    dependsOn archiveRTMResourcesZip
     dependsOn copyRTMResources, copyNgtLibResources
 }
 
