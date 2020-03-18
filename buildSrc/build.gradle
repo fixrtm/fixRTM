@@ -15,4 +15,6 @@ dependencies {
     compile "com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT"
     compile "org.ow2.asm:asm-debug-all:5.2"
     compile "org.jd:jd-core:1.1.3"
+
+    compile "io.sigpipe:jbsdiff:1.0"
 }
