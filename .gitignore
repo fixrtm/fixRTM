@@ -177,3 +177,5 @@ gradle-app.setting
 /mods
 /src/main/ngtlib
 /src/main/rtm
+/src/main/ngtlibResources
+/src/main/rtmResources
