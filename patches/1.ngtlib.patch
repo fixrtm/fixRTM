@@ -122,7 +122,7 @@ index 8e5cb44..d5e9217 100644
              RenderHelper.enableGUIStandardItemLighting();
              par1.getRenderItem().renderItemIntoGUI(this.iconItem, par2 + 2, par3 + 2);
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiSlotCustom.java b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiSlotCustom.java
-index 5b360d8..35da796 100644
+index 5b360d8..9cf4fd5 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/gui/GuiSlotCustom.java
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/gui/GuiSlotCustom.java
 @@ -164,7 +164,7 @@ public class GuiSlotCustom {
@@ -134,17 +134,19 @@ index 5b360d8..35da796 100644
      }
  
      public int getAmountScrolled() {
-@@ -201,15 +201,19 @@ public class GuiSlotCustom {
+@@ -201,15 +201,20 @@ public class GuiSlotCustom {
          int k = getSize();
          int l = getScrollBarX();
          int i1 = l + 6;
-+        int i;
++        int i; // 7
 +        int k2;
++        int j;
          if (p_148128_1_ > this.left && p_148128_1_ < this.right && p_148128_2_ > this.top && p_148128_2_ < this.bottom)
              if (Mouse.isButtonDown(0) && getEnabled()) {
                  if (this.initialClickY == -1.0F) {
-+                    int j;
-                     boolean flag1 = true;
+-                    boolean flag1 = true;
++                    boolean flag1;
++                    flag1 = true;
                      if (p_148128_2_ >= this.top && p_148128_2_ <= this.bottom) {
 -                        int i = p_148128_2_ - this.top - this.headerPadding + (int)this.amountScrolled - 4;
 +                        i = p_148128_2_ - this.top - this.headerPadding + (int)this.amountScrolled - 4;
@@ -156,7 +158,7 @@ index 5b360d8..35da796 100644
                              elementClicked(j2, flag, p_148128_1_, p_148128_2_);
                              this.selectedElement = j2;
                              this.lastClicked = Minecraft.getSystemTime();
-@@ -219,15 +223,15 @@ public class GuiSlotCustom {
+@@ -219,15 +224,15 @@ public class GuiSlotCustom {
                          }
                          if (p_148128_1_ >= l && p_148128_1_ <= i1) {
                              this.scrollMultiplier = -1.0F;
@@ -175,16 +177,40 @@ index 5b360d8..35da796 100644
                          } else {
                              this.scrollMultiplier = 1.0F;
                          }
-@@ -301,7 +305,7 @@ public class GuiSlotCustom {
+@@ -269,10 +274,10 @@ public class GuiSlotCustom {
+         NGTTessellator tessellator = NGTTessellator.instance;
+         drawContainerBackground();
+         int l1 = this.left + this.width / 2 - this.slotWidth / 2 + 2;
+-        int i2 = this.top + 4 - (int)this.amountScrolled;
++        i = this.top + 4 - (int)this.amountScrolled;
+         if (this.hasListHeader)
+-            drawListHeader(l1, i2, tessellator);
+-        drawSelectionBox(l1, i2, p_148128_1_, p_148128_2_);
++            drawListHeader(l1, i, tessellator);
++        drawSelectionBox(l1, i, p_148128_1_, p_148128_2_);
+         GL11.glDisable(2929);
+         byte b0 = 4;
+         float z = 0.0F;
+@@ -299,14 +304,14 @@ public class GuiSlotCustom {
+         tessellator.addVertexWithUV(this.right, (this.bottom - b0), z, 1.0F, 0.0F);
+         tessellator.addVertexWithUV(this.left, (this.bottom - b0), z, 0.0F, 0.0F);
          tessellator.draw();
-         int i3 = getMaxScroll();
-         if (i3 > 0) {
+-        int i3 = getMaxScroll();
+-        if (i3 > 0) {
 -            int k2 = (this.bottom - this.top) * (this.bottom - this.top) / getContentHeight();
++        j = getMaxScroll();
++        if (j > 0) {
 +            k2 = (this.bottom - this.top) * (this.bottom - this.top) / getContentHeight();
              if (k2 < 32)
                  k2 = 32;
              if (k2 > this.bottom - this.top - 8)
-@@ -345,7 +349,7 @@ public class GuiSlotCustom {
+                 k2 = this.bottom - this.top - 8;
+-            int l2 = (int)this.amountScrolled * (this.bottom - this.top - k2) / i3 + this.top;
++            int l2 = (int)this.amountScrolled * (this.bottom - this.top - k2) / j + this.top;
+             if (l2 < this.top)
+                 l2 = this.top;
+             tessellator.startDrawingQuads();
+@@ -345,7 +350,7 @@ public class GuiSlotCustom {
              int l1 = this.slotHeight - 4;
              if (k1 <= this.bottom && k1 + l1 >= this.top) {
                  if (this.showSelectionBox && isSelected(j1)) {
