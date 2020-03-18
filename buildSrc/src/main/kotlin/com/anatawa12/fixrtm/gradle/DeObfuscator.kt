@@ -74,5 +74,7 @@ class DeObfuscator(srgFile: File) {
                 = fieldMap[name] ?: name
         override fun mapMethodName(owner: String, name: String, desc: String): String
                 = methodMap[name] ?: name
+        override fun mapInvokeDynamicMethodName(name: String, desc: String): String
+                = methodMap[name] ?: name
     }
 }
