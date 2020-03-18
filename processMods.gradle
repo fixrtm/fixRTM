@@ -99,12 +99,14 @@ task prepareMods() {
 }
 
 task checkNgtLibClasses(type: CheckClassesSame) {
+    dependsOn jar, deObfuscateNgtLib
     src = deObfuscateNgtLib.deObfuscatedJar
     dst = jar.archivePath
     rootPackage = "jp.ngt.ngtlib"
 }
 
 task checkRtmClasses(type: CheckClassesSame) {
+    dependsOn jar, deObfuscateRTM
     src = deObfuscateRTM.deObfuscatedJar
     dst = jar.archivePath
     rootPackage = "jp.ngt.rtm"

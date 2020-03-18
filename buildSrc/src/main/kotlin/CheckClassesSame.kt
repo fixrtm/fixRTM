@@ -184,8 +184,8 @@ open class CheckClassesSame : DefaultTask() {
             is TableSwitchInsnNode -> { dstInsn as TableSwitchInsnNode
                 if (srcInsn.min != dstInsn.min) return false
                 if (srcInsn.max != dstInsn.max) return false
-                if (srcInsn.dflt != dstInsn.dflt) return false
-                if (srcInsn.labels != dstInsn.labels) return false
+                //if (srcInsn.dflt != dstInsn.dflt) return false
+                //if (srcInsn.labels != dstInsn.labels) return false
             }
             is TypeInsnNode -> { dstInsn as TypeInsnNode
                 if (srcInsn.desc != dstInsn.desc) return false
