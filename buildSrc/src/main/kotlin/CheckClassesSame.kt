@@ -1,8 +1,10 @@
+import com.anatawa12.fixrtm.gradle.AbstractInsnNodePatchPrinter
+import com.github.difflib.DiffUtils
+import com.github.difflib.patch.Patch
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.TaskAction
-import org.gradle.internal.impldep.aQute.bnd.service.diff.Diff
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.*
 import org.slf4j.LoggerFactory
@@ -76,7 +78,10 @@ open class CheckClassesSame : DefaultTask() {
                 is Difference.FieldValueChanged ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} value changed")
                 is Difference.MethodCodeChanged ->
-                    logger.error("${difference.owner}.${difference.name}:${difference.desc} code changed")
+                    logger.error(buildString {
+                        appendln("${difference.owner}.${difference.name}:${difference.desc} code changed")
+                        appendln(AbstractInsnNodePatchPrinter.print(difference.source, difference.patch))
+                    })
                 is Difference.AnnotationDefaultChanged ->
                     logger.error("${difference.owner}.${difference.name}:${difference.desc} annotation default changed")
             }
@@ -125,12 +130,10 @@ open class CheckClassesSame : DefaultTask() {
             addDiff(Difference.AnnotationDefaultChanged(owner, name, desc))
         val srcInsns = srcMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
         val dstInsns = dstMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
-        if (srcInsns.size != dstInsns.size)
-            return addDiff(Difference.MethodCodeChanged(owner, name, desc))
-        for ((srcInsn, dstInsn) in srcInsns.zip(dstInsns)) {
-            if (!checkInsn(srcInsn, dstInsn))
-                return addDiff(Difference.MethodCodeChanged(owner, name, desc))
-        }
+        val patch = DiffUtils.diff(srcInsns, dstInsns, ::checkInsn)
+        if (patch.deltas.isEmpty()) return
+
+        addDiff(Difference.MethodCodeChanged(owner, name, desc, srcInsns, patch))
     }
 
     private fun checkInsn(srcInsn: AbstractInsnNode, dstInsn: AbstractInsnNode): Boolean {
@@ -227,7 +230,7 @@ open class CheckClassesSame : DefaultTask() {
         data class FieldAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
         data class MethodAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
         data class FieldValueChanged(val owner: String, val name: String, val desc: String) : Difference()
-        data class MethodCodeChanged(val owner: String, val name: String, val desc: String) : Difference()
+        data class MethodCodeChanged(val owner: String, val name: String, val desc: String, val source: List<AbstractInsnNode>, val patch: Patch<AbstractInsnNode>) : Difference()
         data class AnnotationDefaultChanged(val owner: String, val name: String, val desc: String) : Difference()
     }
 }
