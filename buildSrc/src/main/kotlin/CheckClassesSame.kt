@@ -124,7 +124,7 @@ open class CheckClassesSame : DefaultTask() {
         if (srcMethod.annotationDefault != dstMethod.annotationDefault)
             addDiff(Difference.AnnotationDefaultChanged(owner, name, desc))
         val srcInsns = srcMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
-        val dstInsns = srcMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
+        val dstInsns = dstMethod.instructions.iterator().asSequence().filter { it.opcode != -1 }.toList()
         if (srcInsns.size != dstInsns.size)
             return addDiff(Difference.MethodCodeChanged(owner, name, desc))
         for ((srcInsn, dstInsn) in srcInsns.zip(dstInsns)) {
