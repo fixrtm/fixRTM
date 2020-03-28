@@ -1,3 +1,11 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.anatawa12.jasm:jasm-gradle-plugin:$jasm_version"
+    }
+}
 
 task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
     from jar.archivePath
@@ -43,18 +51,24 @@ task deObfuscateNgtLib(type: DeObfuscateJar) {
     deObfuscatedJar = file(deObfuscatedJarPath("${downloadNgtLib.to}"))
 }
 
-task decompileRTM(type: DecompileJar) {
+task disassembleRTM(type: com.anatawa12.jasm.plugins.gradle.DisassembleToJasm) {
     dependsOn deObfuscateRTM
 
-    jarFile = deObfuscateRTM.deObfuscatedJar
-    sourceOutputTo = file("${jarFile}.src")
+    files = zipTree(deObfuscateRTM.deObfuscatedJar).matching {
+        include "**/*.class"
+    }
+
+    outputTo = file("${deObfuscateRTM.deObfuscatedJar}.src")
 }
 
-task decompileNgtLib(type: DecompileJar) {
+task disassembleNgtLib(type: com.anatawa12.jasm.plugins.gradle.DisassembleToJasm) {
     dependsOn deObfuscateNgtLib
 
-    jarFile = deObfuscateNgtLib.deObfuscatedJar
-    sourceOutputTo = file("${jarFile}.src")
+    files = zipTree(deObfuscateNgtLib.deObfuscatedJar).matching {
+        include "**/*.class"
+    }
+
+    outputTo = file("${deObfuscateNgtLib.deObfuscatedJar}.src")
 }
 
 task copyRTMResources(type: Copy) {
@@ -78,7 +92,7 @@ task copyNgtLibResources(type: Copy) {
 }
 
 task decompileMods() {
-    dependsOn decompileRTM, decompileNgtLib
+    dependsOn disassembleRTM, disassembleNgtLib
 }
 
 task archiveRTMResourcesZip(type: Zip) {
