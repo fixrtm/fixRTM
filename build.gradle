@@ -10,8 +10,11 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath("com.anatawa12.jasm:jasm-gradle-plugin:1.0.1")
     }
 }
+
+apply plugin: "com.anatawa12.jasm"
 
 apply plugin: "kotlin"
 apply plugin: "net.minecraftforge.gradle.forge"
@@ -27,7 +30,7 @@ sourceSets {
         }
     }
     main {
-        java {
+        jasm {
             srcDirs("src/main/rtm", "src/main/ngtlib")
         }
         resources {
