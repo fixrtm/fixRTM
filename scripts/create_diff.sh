@@ -10,6 +10,8 @@ function make_patch() {
   cp -r "$src_dir" "$processed_dir"
 
   git diff --no-index "$processed_dir" "$dst_dir" > "patches/$1.patch"
+
+  rm -rf "$processed_dir"
 }
 
 make_patch ngtlib
