@@ -2,15 +2,15 @@ DIR="$(dirname "$(readlink -f "$0")")"
 
 cd "$DIR/.." || exit
 
-patch_max=${1:-2}
-
 function make_patch() {
+  src_dir="mods/$1.deobf.jar.src"
   processed_dir="mods/$1.deobf.jar.src.processed"
   dst_dir="src/main/$1"
-  git diff --no-index "$processed_dir" "$dst_dir" > "patches/$2.$1.patch"
+
+  cp -r "$src_dir" "$processed_dir"
+
+  git diff --no-index "$processed_dir" "$dst_dir" > "patches/$1.patch"
 }
 
-./scripts/apply_patch_to_processed.sh $(($patch_max - 1))
-
-make_patch ngtlib $patch_max
-make_patch rtm $patch_max
+make_patch ngtlib
+make_patch rtm
