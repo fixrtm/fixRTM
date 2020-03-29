@@ -1,0 +1,27 @@
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
+index 757bbc8..df8aa22 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
+@@ -2067,7 +2067,7 @@ L_0018:
+     .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
+ .end field
+ 
+-.field private final dummyMap Ljava/util/Map;
++.field public final dummyMap Ljava/util/Map;
+     .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
+ .end field
+ 
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
+index 06225c0..520f92a 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
+@@ -331,6 +331,9 @@ L_0009:
+     aload 0
+     getfield jp/ngt/rtm/modelpack/state/ResourceState/modelName Ljava/lang/String;
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
++    aload 0
++    getfield jp/ngt/rtm/modelpack/state/ResourceState/type Ljp/ngt/rtm/modelpack/ResourceType;
++    invokestatic com/anatawa12/fixRtm/HocksKt/eraseNullForModelSet (Ljp/ngt/rtm/modelpack/modelset/ResourceSet;Ljp/ngt/rtm/modelpack/ResourceType;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
+     putfield jp/ngt/rtm/modelpack/state/ResourceState/modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
+ L_0014:
+     .line 118

@@ -14,9 +14,8 @@ import net.minecraft.util.text.TextComponentTranslation
 import java.util.zip.Inflater
 
 object ExModelPackManager {
-    var dummyMap: Map<String, ResourceSet<*>>
-        get() = error("impl in gen")
-        set(v) = error("impl in gen")
+    val dummyMap: Map<String, ResourceSet<*>>
+        get() = jp.ngt.rtm.modelpack.ModelPackManager.INSTANCE.dummyMap
 
     @Suppress("UNCHECKED_CAST")
     val allModelSetMap: MutableMap<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>
