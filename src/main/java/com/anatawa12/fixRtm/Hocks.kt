@@ -42,24 +42,6 @@ private fun Any?.defaultToString(): String = if (this == null) {
     this.javaClass.name + "@" + Integer.toHexString(System.identityHashCode(this))
 }
 
-fun preProcess(entry: TickProcessEntry?) {
-}
-
-fun postProcess(isEnd: Boolean) {
-}
-
-fun postProcess() {
-}
-
-fun preProcess() {
-}
-fun eraseNullForAddTickProcessEntry(addEntry: TickProcessEntry?, inEntry: TickProcessEntry?) {
-
-    requireNotNull(inEntry) {
-        "TickProcessQueue.add's first argument is null. fixRtm (made by anataqa12) found a bug! this is a bug from RTM and anatawa12 think this is good trace for fix bug."
-    }
-}
-
 fun wrapWithDeflate(byteBuf: ByteBuf): ByteBuf {
     return DeflateByteBuf(byteBuf)
 }
