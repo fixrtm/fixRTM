@@ -165,6 +165,32 @@ index 06225c0..520f92a 100644
      putfield jp/ngt/rtm/modelpack/state/ResourceState/modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
  L_0014:
      .line 118
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
+index 8663826..20e3ca1 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
++++ b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
+@@ -572,6 +572,8 @@ L_0000:
+     .var 4 is z I from L_0000 to L_0046
+     .var 5 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_0046
+     .var 6 is makeRail Z from L_0000 to L_0046
++    aload 5
++    invokestatic com/anatawa12/fixRtm/HocksKt/BlockMarker_onMarkerActivated "(Lnet/minecraft/entity/player/EntityPlayer;)V"
+     aload 0
+     aload 5
+     iload 6
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
+index 61097af..4dc0fbd 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm
++++ b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
+@@ -509,7 +509,7 @@ L_005a:
+     getfield jp/ngt/rtm/rail/util/RailPosition/blockZ I
+     invokestatic java/lang/Integer/valueOf (I)Ljava/lang/Integer;
+     aastore
+-    invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessageToAll "(Ljava/lang/String;[Ljava/lang/Object;)V"
++    invokestatic com/anatawa12/fixRtm/HocksKt/sendSwitchTypeError "(Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_0072:
+     .line 101
+     .stack use locals
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 index a9dfc80..8baf2ca 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm
