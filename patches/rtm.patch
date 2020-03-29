@@ -1,8 +1,71 @@
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-index 757bbc8..df8aa22 100644
+index 757bbc8..c991f5c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-@@ -2067,7 +2067,7 @@ L_0018:
+@@ -1143,6 +1143,7 @@ L_0000:
+     .var 1 is type Ljp/ngt/rtm/modelpack/ResourceType; from L_0000 to L_005d
+     .var 2 is name Ljava/lang/String; from L_0000 to L_005d
+     aload 1
++    invokestatic jp/ngt/rtm/modelpack/ModelPackManager/"get parent or me" (Ljp/ngt/rtm/modelpack/ResourceType;)Ljp/ngt/rtm/modelpack/ResourceType;
+     astore 3
+ L_0004:
+     .line 311
+@@ -1219,15 +1220,12 @@ L_0035:
+     ifnonnull L_0058
+ L_0039:
+     .line 321
+-    aload 0
+-    getfield jp/ngt/rtm/modelpack/ModelPackManager/dummyMap Ljava/util/Map;
+-    aload 1
+-    getfield jp/ngt/rtm/modelpack/ResourceType/hasSubType Z
+-    ifeq L_0043
+     aload 1
+-    getfield jp/ngt/rtm/modelpack/ResourceType/subType Ljava/lang/String;
+-    goto L_0047
+-L_0043:
++    aload 2
++    invokestatic com/anatawa12/fixRtm/DummyModelPackManager/getSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
++    areturn
++L_0058:
++    .line 327
+     .stack
+         locals Object jp/ngt/rtm/modelpack/ModelPackManager
+         locals Object jp/ngt/rtm/modelpack/ResourceType
+@@ -1236,33 +1234,6 @@ L_0043:
+         locals Integer
+         locals Object java/util/Map
+         locals Object jp/ngt/rtm/modelpack/modelset/ResourceSet
+-        stacks Object java/util/Map
+-    .end stack
+-    aload 1
+-    getfield jp/ngt/rtm/modelpack/ResourceType/name Ljava/lang/String;
+-L_0047:
+-    .stack use locals
+-        stacks Object java/util/Map
+-        stacks Object java/lang/Object
+-    .end stack
+-    invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
+-    checkcast jp/ngt/rtm/modelpack/modelset/ResourceSet
+-    astore 6
+-L_004c:
+-    .line 322
+-    aload 6
+-    ifnonnull L_0058
+-L_0050:
+-    .line 324
+-    new jp/ngt/rtm/modelpack/ModelPackException
+-    dup
+-    ldc "Default model is not registered."
+-    aload 2
+-    invokespecial jp/ngt/rtm/modelpack/ModelPackException/<init> (Ljava/lang/String;Ljava/lang/String;)V
+-    athrow
+-L_0058:
+-    .line 327
+-    .stack use locals
+     .end stack
+     aload 6
+     areturn
+@@ -2067,7 +2038,7 @@ L_0018:
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
@@ -11,6 +74,31 @@ index 757bbc8..df8aa22 100644
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
  
+@@ -2100,3 +2071,24 @@ L_0018:
+ .field static final synthetic $assertionsDisabled Z
+ .end field
+ 
++.method public static "get parent or me" "(Ljp/ngt/rtm/modelpack/ResourceType;)Ljp/ngt/rtm/modelpack/ResourceType;"
++    .limit local 1
++    .limit stack 1
++
++    .stack
++        locals Object jp/ngt/rtm/modelpack/ResourceType
++    .end stack
++    aload 0
++    getfield jp/ngt/rtm/modelpack/ResourceType/parent Ljp/ngt/rtm/modelpack/ResourceType;
++    ifnull L_if_null_to
++    .stack use locals
++    .end stack
++    aload 0
++    getfield jp/ngt/rtm/modelpack/ResourceType/parent Ljp/ngt/rtm/modelpack/ResourceType;
++    areturn
++L_if_null_to:
++    .stack use locals
++    .end stack
++    aload 0
++    areturn
++.end method
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index 06225c0..520f92a 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
