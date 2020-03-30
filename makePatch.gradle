@@ -47,4 +47,9 @@ task makeFixrtmJar(type: Jar) {
     destinationDir = fixRtmOutputDir
     baseName = "fix"
     version = project.version
+
+    manifest {
+        attributes("FMLCorePlugin" : "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+                "FMLCorePluginContainsFMLMod": "*")
+    }
 }
