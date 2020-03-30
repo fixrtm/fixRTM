@@ -132,3 +132,4 @@ compileKotlin {
 runClient.inputs.property("always_changed", new Date())
 
 apply from: "./processMods.gradle"
+apply from: "./makePatch.gradle"
