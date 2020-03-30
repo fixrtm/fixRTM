@@ -29,7 +29,7 @@ task unzipFixRTM(type: Copy) {
         include "kotlin/**/*"
         include "kotlinx/**/*"
         include "org/**/*"
-        include "META-INF/**/*"
+        include "io/sigpipe/**/*"
     }
 
     destinationDir = unzippedJarDir
@@ -40,9 +40,9 @@ task makeFixrtmJar(type: Jar) {
     dependsOn makeRtmPatch
     dependsOn unzipFixRTM
 
+    from "src/main/resources"
     from unzippedJarDir
     from patchesDir
-    from "src/main/resources"
 
     destinationDir = fixRtmOutputDir
     baseName = "fix"

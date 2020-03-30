@@ -67,6 +67,7 @@ repositories {
 dependencies {
     shade "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     shade group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.0'
+    shade "io.sigpipe:jbsdiff:1.0"
 
     compileOnly files(sourceSets.main.jasm.outputDir)
     //compileOnly files(new File(projectDir, "mods/rtm.deobf.jar"),
