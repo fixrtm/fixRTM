@@ -40,7 +40,13 @@ task makeFixrtmJar(type: Jar) {
     dependsOn makeRtmPatch
     dependsOn unzipFixRTM
 
-    from "src/main/resources"
+    from ("src/main/resources") {
+        include "mcmod.info"
+        expand "version": project.version, "mcversion": project.minecraft.version
+    }
+    from ("src/main/resources") {
+        exclude "mcmod.info"
+    }
     from unzippedJarDir
     from patchesDir
 
