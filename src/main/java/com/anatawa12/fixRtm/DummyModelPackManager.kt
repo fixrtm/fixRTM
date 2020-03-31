@@ -6,9 +6,10 @@ import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraftforge.fml.common.FMLCommonHandler
 import java.lang.reflect.Constructor
+import java.util.*
 
 object DummyModelPackManager {
-    private val modelSetMap = mutableMapOf<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>()
+    private val modelSetMap = WeakHashMap<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>()
     private val dummyClassMap = mutableMapOf<Class<out ResourceSet<*>>, ModelPackCreator<*, *>>()
 
     @Suppress("UNCHECKED_CAST")
