@@ -14,9 +14,8 @@ import net.minecraft.util.text.TextComponentTranslation
 import java.util.zip.Inflater
 
 object ExModelPackManager {
-    var dummyMap: Map<String, ResourceSet<*>>
-        get() = error("impl in gen")
-        set(v) = error("impl in gen")
+    val dummyMap: Map<String, ResourceSet<*>>
+        get() = jp.ngt.rtm.modelpack.ModelPackManager.INSTANCE.dummyMap
 
     @Suppress("UNCHECKED_CAST")
     val allModelSetMap: MutableMap<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>
@@ -41,24 +40,6 @@ private fun Any?.defaultToString(): String = if (this == null) {
     "null"
 } else {
     this.javaClass.name + "@" + Integer.toHexString(System.identityHashCode(this))
-}
-
-fun preProcess(entry: TickProcessEntry?) {
-}
-
-fun postProcess(isEnd: Boolean) {
-}
-
-fun postProcess() {
-}
-
-fun preProcess() {
-}
-fun eraseNullForAddTickProcessEntry(addEntry: TickProcessEntry?, inEntry: TickProcessEntry?) {
-
-    requireNotNull(inEntry) {
-        "TickProcessQueue.add's first argument is null. fixRtm (made by anataqa12) found a bug! this is a bug from RTM and anatawa12 think this is good trace for fix bug."
-    }
 }
 
 fun wrapWithDeflate(byteBuf: ByteBuf): ByteBuf {

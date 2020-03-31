@@ -1,0 +1,61 @@
+
+def buildDir = file("${buildDir}/fixrtm")
+
+def oldRTM = file("${projectDir}/mods/rtm.jar")
+def oldNGTLib = file("${projectDir}/mods/ngtlib.jar")
+def fixRtmBuiltJar = jar.archivePath
+
+def patchesDir = file("${buildDir}/resources/patches")
+def unzippedJarDir = file("$buildDir/unzipped")
+def fixRtmOutputDir = file("$buildDir/libs")
+
+task makeRtmPatch(type: MakeBsdiffPatch) {
+    dependsOn build
+
+    oldFiles = zipTree(oldRTM) + zipTree(oldNGTLib)
+    newFiles = zipTree(fixRtmBuiltJar).matching {
+        include ("**/*.class")
+    }
+
+    outTo = patchesDir
+    patchPrefix = "com/anatawa12/fixRtm/asm/patches"
+}
+
+task unzipFixRTM(type: Copy) {
+    dependsOn build
+
+    from (zipTree(fixRtmBuiltJar)){
+        include "com/anatawa12/**/*"
+        include "kotlin/**/*"
+        include "kotlinx/**/*"
+        include "org/**/*"
+        include "io/sigpipe/**/*"
+    }
+
+    destinationDir = unzippedJarDir
+}
+
+task makeFixrtmJar(type: Jar) {
+    dependsOn build
+    dependsOn makeRtmPatch
+    dependsOn unzipFixRTM
+
+    from ("src/main/resources") {
+        include "mcmod.info"
+        expand "version": project.version, "mcversion": project.minecraft.version
+    }
+    from ("src/main/resources") {
+        exclude "mcmod.info"
+    }
+    from unzippedJarDir
+    from patchesDir
+
+    destinationDir = fixRtmOutputDir
+    baseName = jar.baseName
+    version = project.version
+
+    manifest {
+        attributes("FMLCorePlugin" : "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+                "FMLCorePluginContainsFMLMod": "*")
+    }
+}

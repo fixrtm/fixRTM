@@ -11,18 +11,23 @@ import kotlin.properties.Delegates
 open class DownloadModJar : DefaultTask() {
     var projectId: Int by Delegates.notNull()
 
-    lateinit var to: File
+    @OutputFile lateinit var to: File
+    @Input lateinit var version: String
 
     @TaskAction
     fun download() {
+        version // check init
+        to // check init
+
         val files = CurseAPI.files(projectId)
         if (!files.isPresent)
             error("project#$projectId files not found")
 
         val file = files.get()
                 .filterNot { "1.12.2" !in it.gameVersionStrings() }
-                .maxBy { getVersionString(it.displayName()) }
-                ?: error("project#$projectId files not found")
+                .filter { version in it.displayName() }
+                .singleOrNull()
+                ?: error("project#$projectId version $version not found or found two or more")
 
         println("file name is: ${file.displayName()}, id: ${file.id()}")
 
@@ -37,25 +42,4 @@ open class DownloadModJar : DefaultTask() {
         response.body()!!.byteStream().copyTo(to.outputStream())
     }
 
-    private fun getVersionString(name: String): Version {
-        val regex = """.*?([0-9]+(\.[0-9]+)+).*""".toRegex()
-        val match = regex.matchEntire(name)
-                ?: throw NullPointerException("Expression '$regex.matchEntire($name)' must not be null")
-        return Version(match.groupValues[1])
-    }
-
-}
-
-private inline class Version(val version: String) : Comparable<Version> {
-    override fun compareTo(other: Version): Int {
-        val a = version.split('.')
-        val b = version.split('.')
-
-        for (i in 0 until minOf(a.size, b.size)) {
-            val res = a[i].toInt().compareTo(b[i].toInt())
-            if (res != 0) return res
-        }
-
-        return 0
-    }
 }

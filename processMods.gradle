@@ -1,0 +1,132 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.anatawa12.jasm:jasm-gradle-plugin:$jasm_version"
+    }
+}
+
+task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
+    from jar.archivePath
+    into new File(projectDir, "../fixRtmTest/mods")
+}
+
+task downloadRTM (type: DownloadModJar) {
+    projectId = 288988
+    version = "2.4.18"
+    to = new File(projectDir, "mods/rtm.jar")
+}
+
+task downloadNgtLib (type: DownloadModJar) {
+    projectId = 288989
+    version = "2.4.16"
+    to = new File(projectDir, "mods/ngtlib.jar")
+}
+
+def srgMcpsrgFile = file("${project.gradle.gradleUserHomeDir}" +
+        "/caches/minecraft/de/oceanlabs/mcp" +
+        "/mcp_${minecraft.mappingsChannel}/${minecraft.mappings.substring(minecraft.mappings.indexOf('_') + 1)}" +
+        "/${minecraft.version}/srgs/srg-mcp.srg")
+
+static String deObfuscatedJarPath(String path) {
+    return path.substring(0, path.lastIndexOf('.')) + ".deobf.jar"
+}
+
+task deObfuscateRTM(type: DeObfuscateJar) {
+    dependsOn downloadRTM
+    dependsOn extractMcpMappings
+
+    srgFile = srgMcpsrgFile
+    obfuscatedJar = downloadRTM.to
+    deObfuscatedJar = file(deObfuscatedJarPath("${downloadRTM.to}"))
+}
+
+task deObfuscateNgtLib(type: DeObfuscateJar) {
+    dependsOn downloadNgtLib
+    dependsOn extractMcpMappings
+
+    srgFile = srgMcpsrgFile
+    obfuscatedJar = downloadNgtLib.to
+    deObfuscatedJar = file(deObfuscatedJarPath("${downloadNgtLib.to}"))
+}
+
+task disassembleRTM(type: com.anatawa12.jasm.plugins.gradle.DisassembleToJasm) {
+    dependsOn deObfuscateRTM
+
+    files = zipTree(deObfuscateRTM.deObfuscatedJar).matching {
+        include "**/*.class"
+    }
+
+    outputTo = file("${deObfuscateRTM.deObfuscatedJar}.src")
+}
+
+task disassembleNgtLib(type: com.anatawa12.jasm.plugins.gradle.DisassembleToJasm) {
+    dependsOn deObfuscateNgtLib
+
+    files = zipTree(deObfuscateNgtLib.deObfuscatedJar).matching {
+        include "**/*.class"
+    }
+
+    outputTo = file("${deObfuscateNgtLib.deObfuscatedJar}.src")
+}
+
+task copyRTMResources(type: Copy) {
+    dependsOn downloadRTM
+
+    from(zipTree(downloadRTM.to)) {
+        exclude("**/*.class")
+    }
+
+    into(file("src/main/rtmResources"))
+}
+
+task copyNgtLibResources(type: Copy) {
+    dependsOn downloadNgtLib
+
+    from(zipTree(downloadNgtLib.to)) {
+        exclude("**/*.class")
+    }
+
+    into(file("src/main/ngtlibResources"))
+}
+
+task decompileMods() {
+    dependsOn disassembleRTM, disassembleNgtLib
+}
+
+task archiveRTMResourcesZip(type: Zip) {
+    dependsOn downloadRTM
+
+    from(zipTree(downloadRTM.to)) {
+        exclude("**/*.class")
+    }
+
+    destinationDir = file('run/mods')
+    archiveName 'RTMResources.zip'
+}
+
+task prepareMods() {
+    dependsOn decompileMods
+    dependsOn archiveRTMResourcesZip
+    dependsOn copyRTMResources, copyNgtLibResources
+}
+
+task checkNgtLibClasses(type: CheckClassesSame) {
+    dependsOn jar, deObfuscateNgtLib
+    src = deObfuscateNgtLib.deObfuscatedJar
+    dst = jar.archivePath
+    rootPackage = "jp.ngt.ngtlib"
+}
+
+task checkRtmClasses(type: CheckClassesSame) {
+    dependsOn jar, deObfuscateRTM
+    src = deObfuscateRTM.deObfuscatedJar
+    dst = jar.archivePath
+    rootPackage = "jp.ngt.rtm"
+}
+task checkClasses {
+    dependsOn checkNgtLibClasses, checkRtmClasses
+}
+
+build.dependsOn prepareMods

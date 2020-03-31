@@ -175,3 +175,7 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/linux,macos,gradle,windows,forgegradle,intellij+iml
 
 /mods
+/src/main/ngtlib
+/src/main/rtm
+/src/main/ngtlibResources
+/src/main/rtmResources
