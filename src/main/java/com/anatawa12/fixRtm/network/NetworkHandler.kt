@@ -18,7 +18,7 @@ object NetworkHandler {
 
     }
 
-    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage> registerMessage(messageHandler: Class<out IMessageHandler<REQ, REPLY>>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
+    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage> registerMessage(messageHandler: IMessageHandler<REQ, REPLY>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
         INSTANCE.registerMessage(messageHandler, requestMessageType, discriminator, sendTo)
     }
 
