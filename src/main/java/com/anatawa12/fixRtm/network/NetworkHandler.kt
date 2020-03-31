@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
 
 
 object NetworkHandler {
-    @JvmStatic private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("AegisSystemMod")
+    @JvmStatic private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("fix-rtm")
 
     @JvmStatic internal fun init() {
-
+        registerMessage(SentAllModels, SentAllModels::class.java, 0x01, Side.CLIENT)
     }
 
-    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage> registerMessage(messageHandler: IMessageHandler<REQ, REPLY>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
+    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage?> registerMessage(messageHandler: IMessageHandler<REQ, REPLY>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
         INSTANCE.registerMessage(messageHandler, requestMessageType, discriminator, sendTo)
     }
 

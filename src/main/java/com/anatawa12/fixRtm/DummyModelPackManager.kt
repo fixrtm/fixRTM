@@ -1,9 +1,12 @@
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.network.NetworkHandler
+import com.anatawa12.fixRtm.network.SentAllModels
+import jp.ngt.ngtlib.util.NGTUtil
 import jp.ngt.rtm.modelpack.ResourceType
-import jp.ngt.rtm.modelpack.cfg.ModelConfig
 import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraftforge.fml.common.FMLCommonHandler
 import java.lang.reflect.Constructor
 import java.util.*
@@ -34,7 +37,8 @@ object DummyModelPackManager {
     }
 
     @JvmStatic
-    fun <S: ResourceSet<C>, C : ResourceConfig>getSet(type: ResourceType<C, S>, name: String): S {
+    fun <S: ResourceSet<C>, C : ResourceConfig>getSet(type: ResourceType<C, S>, name: String): S? {
+        if (!useDummyModelSet()) return null
         return getModelSetMap(type)[name] ?: registerResourceSet(type, name)
     }
 
@@ -61,5 +65,17 @@ object DummyModelPackManager {
     interface ModelPackCreator <S: ResourceSet<C>, C : ResourceConfig> {
         val dummyFor: Class<out ResourceSet<C>>
         fun make(name: String, type: ResourceType<C, S>): S
+    }
+
+    // gotAllModels
+
+    var gotAllModels = true
+
+    fun useDummyModelSet(): Boolean {
+        if (NGTUtil.isServer()) return true // if server
+        if (!NGTUtil.isSMP()) return true // if single player
+        if (!FixRtm.serverHasFixRTM) return true // if server does not use fixrtm
+        if (gotAllModels) return true // if got all model name
+        return false
     }
 }

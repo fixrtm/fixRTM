@@ -7,6 +7,7 @@ import io.netty.buffer.Unpooled
 import jp.ngt.ngtlib.event.TickProcessEntry
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
+import jp.ngt.ngtlib.util.NGTUtil
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraft.entity.player.EntityPlayer

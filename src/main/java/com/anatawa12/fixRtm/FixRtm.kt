@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.dummies.*
+import com.anatawa12.fixRtm.network.NetworkHandler
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -44,6 +45,7 @@ object FixRtm {
         DummyModelPackManager.registerDummyClass(DummyModelSetMachine)
         MinecraftForge.EVENT_BUS.register(this)
         modMetadata = e.modMetadata
+        NetworkHandler.init()
     }
 
     @Mod.EventHandler
@@ -82,6 +84,8 @@ object FixRtm {
         if (remoteSide == Side.SERVER) {
             // on client
             serverHasFixRTM = mods.containsKey(MODID)
+            if (serverHasFixRTM)
+                DummyModelPackManager.gotAllModels = false
             return true
         } else {
             return true
