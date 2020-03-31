@@ -12,28 +12,32 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
 
 
 object NetworkHandler {
-    private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("AegisSystemMod")
+    @JvmStatic private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("AegisSystemMod")
 
-    internal fun init() {
+    @JvmStatic internal fun init() {
 
     }
 
-    private fun <REQ : IMessage, REPLY : IMessage> registerMessage(messageHandler: Class<out IMessageHandler<REQ, REPLY>>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
+    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage> registerMessage(messageHandler: Class<out IMessageHandler<REQ, REPLY>>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
         INSTANCE.registerMessage(messageHandler, requestMessageType, discriminator, sendTo)
     }
 
+    @JvmStatic
     fun sendPacketServer(message: IMessage) {
         INSTANCE.sendToServer(message)
     }
 
+    @JvmStatic
     fun sendPacketAll(message: IMessage) {
         INSTANCE.sendToAll(message)
     }
 
+    @JvmStatic
     fun sendPacketEPM(message: IMessage, EPM: EntityPlayerMP) {
         INSTANCE.sendTo(message, EPM)
     }
 
+    @JvmStatic
     fun sendPacketAround(message: IMessage, dimension: Int, x: Double, y: Double, z: Double, range: Double) {
         INSTANCE.sendToAllAround(message, NetworkRegistry.TargetPoint(dimension, x, y, z, range))
     }
