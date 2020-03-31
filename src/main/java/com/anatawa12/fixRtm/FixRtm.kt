@@ -74,8 +74,8 @@ object FixRtm {
     }
 
     @NetworkCheckHandler
-    fun networkCheck(mods: Map<String, String>, side: Side): Boolean {
-        if (side == Side.SERVER) return true
+    fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
+        if (remoteSide == Side.SERVER) return true // on client
         if (mods[RTMCore.MODID] != RTMCore.VERSION)
             return false
         return mods.containsKey(MODID)
