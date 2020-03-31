@@ -152,7 +152,7 @@ index 85ac6d0..6585384 100644
  L_0059:
      .line 190
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
-index 06225c0..520f92a 100644
+index ce341fe..b4615fe 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 @@ -331,6 +331,9 @@ L_0009:
