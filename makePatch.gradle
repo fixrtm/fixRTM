@@ -51,7 +51,7 @@ task makeFixrtmJar(type: Jar) {
     from patchesDir
 
     destinationDir = fixRtmOutputDir
-    baseName = "fix"
+    baseName = jar.baseName
     version = project.version
 
     manifest {
