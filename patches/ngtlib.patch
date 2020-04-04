@@ -1,0 +1,27 @@
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
+index 6dbd18f..a96f265 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
+@@ -656,6 +656,22 @@ L_0014:
+     iconst_1
+     ireturn
+ L_0018:
++
++    .line 1146
++    .stack use locals
++    .end stack
++    aload 0
++    ldc "fixrtm.all_permit"
++    invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
++    aload 1
++    invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
++    invokeinterface java/util/List/contains (Ljava/lang/Object;)Z
++    ifeq L_if_has_not_all_permit
++    .line 1148
++    iconst_1
++    ireturn
++L_if_has_not_all_permit:
++
+     .line 152
+     .stack use locals
+     .end stack
