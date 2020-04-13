@@ -1,5 +1,5 @@
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
-index 89cf20c..f3ea31e 100644
+index 89cf20c..a04eba2 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
 @@ -49,42 +49,43 @@ L_0000:
@@ -32,6 +32,126 @@ index 89cf20c..f3ea31e 100644
  .method public execute "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V"
      .throws net/minecraft/command/CommandException
      .limit stack 4
+     .limit local 7
+-    .catch net/minecraft/command/PlayerNotFoundException from L_0000 to L_0005 using L_0008
+ L_0000:
+-    .line 38
++    .line 43
+     .var 0 is this Ljp/ngt/ngtlib/command/CommandPermit; from L_0000 to L_009c
+     .var 1 is server Lnet/minecraft/server/MinecraftServer; from L_0000 to L_009c
+     .var 2 is sender Lnet/minecraft/command/ICommandSender; from L_0000 to L_009c
+     .var 3 is args "[Ljava/lang/String;" from L_0000 to L_009c
+-    aload 2
+-    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
++    aconst_null
+     astore 4
+-L_0005:
+-    .line 44
+-    .var 4 is player Lnet/minecraft/entity/player/EntityPlayerMP; from L_0005 to L_0008
+-    goto L_0013
+-L_0008:
+-    .line 40
+-    .stack
+-        locals Object jp/ngt/ngtlib/command/CommandPermit
+-        locals Object net/minecraft/server/MinecraftServer
+-        locals Object net/minecraft/command/ICommandSender
+-        locals Object "[Ljava/lang/String;"
+-        stacks Object net/minecraft/command/PlayerNotFoundException
+-    .end stack
+-    astore 5
+-L_000c:
+-    .line 42
+-    .var 5 is e Lnet/minecraft/command/PlayerNotFoundException; from L_000c to L_0013
+-    aload 5
+-    invokevirtual net/minecraft/command/PlayerNotFoundException/printStackTrace ()V
+-L_0010:
+-    .line 43
+-    return
++    .var 4 is player Ljava/lang/Object; from L_0013 to L_0008
++
+ L_0013:
+     .line 46
+     .var 4 is player Lnet/minecraft/entity/player/EntityPlayerMP; from L_0013 to L_009c
+@@ -109,7 +110,8 @@ L_0019:
+ L_0021:
+     .line 50
+     getstatic jp/ngt/ngtlib/util/PermissionManager/INSTANCE Ljp/ngt/ngtlib/util/PermissionManager;
+-    aload 4
++    aload 2
++    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
+     invokevirtual jp/ngt/ngtlib/util/PermissionManager/showPermissionList (Lnet/minecraft/entity/player/EntityPlayer;)V
+ L_0026:
+     .line 51
+@@ -126,13 +128,14 @@ L_0029:
+     ifeq L_0044
+ L_0032:
+     .line 55
+-    aload 4
++    aload 2
+     new java/lang/StringBuilder
+     dup
+     invokespecial java/lang/StringBuilder/<init> ()V
+     ldc "My name is "
+     invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+-    aload 4
++    aload 2
++    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
+     invokevirtual net/minecraft/entity/player/EntityPlayerMP/getName ()Ljava/lang/String;
+     invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+     invokevirtual java/lang/StringBuilder/toString ()Ljava/lang/String;
+@@ -175,7 +178,8 @@ L_0057:
+ L_005f:
+     .line 65
+     getstatic jp/ngt/ngtlib/util/PermissionManager/INSTANCE Ljp/ngt/ngtlib/util/PermissionManager;
+-    aload 4
++    aload 2
++    invokestatic jp/ngt/ngtlib/command/CommandPermit/getPlayerOrNull (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
+     aload 5
+     aload 6
+     invokevirtual jp/ngt/ngtlib/util/PermissionManager/addPermission (Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;Ljava/lang/String;)V
+@@ -202,7 +206,8 @@ L_0069:
+ L_0072:
+     .line 70
+     getstatic jp/ngt/ngtlib/util/PermissionManager/INSTANCE Ljp/ngt/ngtlib/util/PermissionManager;
+-    aload 4
++    aload 2
++    invokestatic jp/ngt/ngtlib/command/CommandPermit/getPlayerOrNull (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
+     aload 5
+     aload 6
+     invokevirtual jp/ngt/ngtlib/util/PermissionManager/removePermission (Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;Ljava/lang/String;)V
+@@ -218,28 +223,28 @@ L_007c:
+         locals Object "[Ljava/lang/String;"
+         locals Object net/minecraft/entity/player/EntityPlayerMP
+     .end stack
+-    aload 4
++    aload 2
+     ldc "/permit add <player> <category>"
+     iconst_0
+     anewarray java/lang/Object
+     invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_0084:
+     .line 77
+-    aload 4
++    aload 2
+     ldc "/permit remove <player> <category>"
+     iconst_0
+     anewarray java/lang/Object
+     invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_008b:
+     .line 78
+-    aload 4
++    aload 2
+     ldc "/permit list"
+     iconst_0
+     anewarray java/lang/Object
+     invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_0092:
+     .line 79
+-    aload 4
++    aload 2
+     ldc "/permit myname"
+     iconst_0
+     anewarray java/lang/Object
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 index 6dbd18f..3b97102 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
