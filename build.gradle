@@ -108,10 +108,14 @@ processResources {
 
 runClient {
     environment("fml.coreMods.load", "com.anatawa12.fixRtm.asm.FixRtmCorePlugin")
+    /*
     systemProperties["legacy.debugClassLoading"] = "true"
     systemProperties["legacy.debugClassLoadingSave"] = "true"
+    // */
+    //*
     if (!hasProperty("noLogin") && hasProperty("minecraft.login.username") && hasProperty("minecraft.login.password"))
-    args += ["-username", getProperty("minecraft.login.username"), "-password", getProperty("minecraft.login.password")]
+        args += ["-username", getProperty("minecraft.login.username"), "-password", getProperty("minecraft.login.password")]
+    // */
 }
 
 jar {
