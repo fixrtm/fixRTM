@@ -1,5 +1,5 @@
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-index 6dbd18f..a96f265 100644
+index 6dbd18f..3b97102 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 @@ -656,6 +656,22 @@ L_0014:
@@ -25,3 +25,22 @@ index 6dbd18f..a96f265 100644
      .line 152
      .stack use locals
      .end stack
+@@ -695,6 +711,18 @@ L_0006:
+     iconst_1
+     ireturn
+ L_000a:
++
++    .line 1164
++    .stack
++        locals Object jp/ngt/ngtlib/util/PermissionManager
++        locals Object net/minecraft/entity/player/EntityPlayer
++    .end stack
++    aload 1
++    ifnull L_player_non_null
++    iconst_1
++    ireturn
++L_player_non_null:
++
+     .line 164
+     .stack
+         locals Object jp/ngt/ngtlib/util/PermissionManager
