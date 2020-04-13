@@ -1,3 +1,37 @@
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
+index 89cf20c..f3ea31e 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
+@@ -49,42 +49,43 @@ L_0000:
+ L_0004:
+ .end method
+ 
++.method private static getPlayerOrNull "(Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;"
++    .limit stack 1
++    .limit local 1
++    .catch net/minecraft/command/PlayerNotFoundException from L_start to L_catch using L_catch
++
++L_start:
++    .line 1038
++    .var 1 is sender Lnet/minecraft/command/ICommandSender; from L_0000 to L_009c
++    aload 1
++    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
++    areturn
++L_catch:
++    .line 1042
++    .stack
++        locals Object net/minecraft/command/ICommandSender
++        stacks Object net/minecraft/command/PlayerNotFoundException
++    .end stack
++    pop
++    aconst_null
++    areturn
++
++.end method
++
+ .method public execute "(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/command/ICommandSender;[Ljava/lang/String;)V"
+     .throws net/minecraft/command/CommandException
+     .limit stack 4
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 index 6dbd18f..3b97102 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
