@@ -1,5 +1,3 @@
-@file:Suppress("unused") // Used with Transform
-
 package com.anatawa12.fixRtm
 
 import io.netty.buffer.ByteBuf
@@ -13,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.text.TextComponentTranslation
 import java.util.zip.Inflater
 
+@Suppress("unused") // Used with Transform
 fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): ResourceSet<*> {
     if (inSet != null) return inSet
     if (type.hasSubType) {
@@ -60,6 +59,7 @@ fun readFromDeflate(byteBuf: ByteBuf): ByteBuf {
     return result
 }
 
+@Suppress("unused") // Used with Transform
 fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: String): Map<K, V> {
     if (map == null)
         throw ModelFormatException("sound.json for $domain is invalid.")
@@ -68,11 +68,14 @@ fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: Stri
 
 
 var BlockMarker_onMarkerActivated_player: EntityPlayer? = null
+
+@Suppress("unused") // Used with Transform
 fun BlockMarker_onMarkerActivated(player: EntityPlayer) {
     if (!player.world.isRemote)
         BlockMarker_onMarkerActivated_player = player
 }
 
+@Suppress("unused") // Used with Transform
 fun sendSwitchTypeError(message: String, vararg objects: Any?) {
     val player = BlockMarker_onMarkerActivated_player
     if (player == null) {
