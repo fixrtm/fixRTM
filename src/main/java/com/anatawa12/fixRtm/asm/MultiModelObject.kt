@@ -1,6 +1,6 @@
 package com.anatawa12.fixRtm.asm
 
-import com.anatawa12.fixRtm.dummies.DummyModelObject
+import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.DummyModelObject
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.GroupObject
 import jp.ngt.ngtlib.renderer.model.IModelNGT

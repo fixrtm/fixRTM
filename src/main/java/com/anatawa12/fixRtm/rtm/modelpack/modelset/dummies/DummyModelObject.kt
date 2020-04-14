@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.dummies
+package com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies
 
 import com.anatawa12.fixRtm.DummyModelPackManager
 import com.anatawa12.fixRtm.drawCenterString
