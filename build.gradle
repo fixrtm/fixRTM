@@ -137,7 +137,8 @@ compileKotlin {
     }
 }
 
-runClient.inputs.property("always_changed", new Date())
+runClient.outputs.upToDateWhen { false }
+runServer.outputs.upToDateWhen { false }
 
 apply from: "./processMods.gradle"
 apply from: "./makePatch.gradle"
