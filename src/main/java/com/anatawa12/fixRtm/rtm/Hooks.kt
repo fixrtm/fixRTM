@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm
+package com.anatawa12.fixRtm.rtm
 
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
