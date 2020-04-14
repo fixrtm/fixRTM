@@ -1,7 +1,5 @@
 package com.anatawa12.fixRtm
 
-import io.netty.buffer.ByteBuf
-import io.netty.buffer.Unpooled
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
 import jp.ngt.rtm.modelpack.ModelPackManager
@@ -9,7 +7,6 @@ import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.text.TextComponentTranslation
-import java.util.zip.Inflater
 
 @Suppress("unused") // Used with Transform
 fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): ResourceSet<*> {
@@ -22,41 +19,6 @@ fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): Reso
         return ModelPackManager.INSTANCE.dummyMap[type.name]
                 ?: error("ResourceType(${type.name}) don't have dummyMap")
     }
-}
-
-private fun Any?.defaultToString(): String = if (this == null) {
-    "null"
-} else {
-    this.javaClass.name + "@" + Integer.toHexString(System.identityHashCode(this))
-}
-
-fun wrapWithDeflate(byteBuf: ByteBuf): ByteBuf {
-    return DeflateByteBuf(byteBuf)
-}
-
-fun writeToDeflate(byteBuf: ByteBuf) {
-    (byteBuf as DeflateByteBuf).writeDeflated()
-}
-
-fun readFromDeflate(byteBuf: ByteBuf): ByteBuf {
-    val inf = Inflater()
-
-    var readBuf: ByteArray? = ByteArray(byteBuf.readableBytes())
-    byteBuf.readBytes(readBuf)
-    inf.setInput(readBuf)
-    println("received packet size: ${readBuf?.size}")
-    readBuf = null
-
-    val result = Unpooled.buffer()
-    val buf = ByteArray(1024)
-    while (true) {
-        val len = inf.inflate(buf)
-        if (len == 0) break
-        result.writeBytes(buf, 0, len)
-    }
-    println("real packet size: ${result.readableBytes()}")
-    println("real packet: $result")
-    return result
 }
 
 @Suppress("unused") // Used with Transform
