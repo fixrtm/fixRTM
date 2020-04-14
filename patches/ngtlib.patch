@@ -153,7 +153,7 @@ index 89cf20c..a04eba2 100644
      iconst_0
      anewarray java/lang/Object
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-index 6dbd18f..3b97102 100644
+index 6dbd18f..47ecf68 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 @@ -656,6 +656,22 @@ L_0014:
@@ -190,7 +190,7 @@ index 6dbd18f..3b97102 100644
 +        locals Object net/minecraft/entity/player/EntityPlayer
 +    .end stack
 +    aload 1
-+    ifnull L_player_non_null
++    ifnonnull L_player_non_null
 +    iconst_1
 +    ireturn
 +L_player_non_null:
