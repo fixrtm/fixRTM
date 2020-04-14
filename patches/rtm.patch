@@ -143,7 +143,7 @@ index a9e7430..646cbfb 100644
  .inner public static final enum jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState inner ProgressState outer jp/ngt/rtm/modelpack/init/ProgressStateHolder
  
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
-index 85ac6d0..6585384 100644
+index 85ac6d0..a8c04bf 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 @@ -524,18 +524,18 @@ L_003e:
@@ -151,21 +151,21 @@ index 85ac6d0..6585384 100644
  L_0041:
      .line 185
 -    new jp/ngt/rtm/modelpack/init/ModelPackConstructThread
-+    new com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread
++    new com/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread
      dup
      aload 0
      getfield jp/ngt/rtm/modelpack/init/ModelPackLoadThread/threadSide Lnet/minecraftforge/fml/relauncher/Side;
      aload 0
 -    invokespecial jp/ngt/rtm/modelpack/init/ModelPackConstructThread/<init> (Lnet/minecraftforge/fml/relauncher/Side;Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
-+    invokespecial com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread/<init> (Lnet/minecraftforge/fml/relauncher/Side;Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
++    invokespecial com/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread/<init> (Lnet/minecraftforge/fml/relauncher/Side;Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
      astore 1
  L_004a:
      .line 186
 -    .var 1 is thread2 Ljp/ngt/rtm/modelpack/init/ModelPackConstructThread; from L_004a to L_006a
-+    .var 1 is thread2 Lcom/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread; from L_004a to L_006a
++    .var 1 is thread2 Lcom/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread; from L_004a to L_006a
      aload 1
 -    invokevirtual jp/ngt/rtm/modelpack/init/ModelPackConstructThread/start ()V
-+    invokevirtual com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread/start ()V
++    invokevirtual com/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread/start ()V
  L_004e:
      .line 187
      getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
@@ -174,11 +174,11 @@ index 85ac6d0..6585384 100644
      .stack
          locals Object jp/ngt/rtm/modelpack/init/ModelPackLoadThread
 -        locals Object jp/ngt/rtm/modelpack/init/ModelPackConstructThread
-+        locals Object com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread
++        locals Object com/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread
      .end stack
      aload 1
 -    invokevirtual jp/ngt/rtm/modelpack/init/ModelPackConstructThread/setFinish ()Z
-+    invokevirtual com/anatawa12/fixRtm/modelpcakInit/ExModelPackConstructThread/setFinish ()Z
++    invokevirtual com/anatawa12/fixRtm/rtm/modelpack/init/ExModelPackConstructThread/setFinish ()Z
      ifne L_005e
  L_0059:
      .line 190
