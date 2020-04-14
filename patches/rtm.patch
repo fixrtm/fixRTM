@@ -183,7 +183,7 @@ index 85ac6d0..a8c04bf 100644
  L_0059:
      .line 190
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
-index ce341fe..b4615fe 100644
+index ce341fe..c56013a 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 @@ -331,6 +331,9 @@ L_0009:
@@ -192,12 +192,12 @@ index ce341fe..b4615fe 100644
      invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
 +    aload 0
 +    getfield jp/ngt/rtm/modelpack/state/ResourceState/type Ljp/ngt/rtm/modelpack/ResourceType;
-+    invokestatic com/anatawa12/fixRtm/HocksKt/eraseNullForModelSet (Ljp/ngt/rtm/modelpack/modelset/ResourceSet;Ljp/ngt/rtm/modelpack/ResourceType;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
++    invokestatic com/anatawa12/fixRtm/rtm/HooksKt/eraseNullForModelSet (Ljp/ngt/rtm/modelpack/modelset/ResourceSet;Ljp/ngt/rtm/modelpack/ResourceType;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
      putfield jp/ngt/rtm/modelpack/state/ResourceState/modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
  L_0014:
      .line 118
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
-index 8663826..20e3ca1 100644
+index 8663826..e509f2d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
 @@ -572,6 +572,8 @@ L_0000:
@@ -205,12 +205,12 @@ index 8663826..20e3ca1 100644
      .var 5 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_0046
      .var 6 is makeRail Z from L_0000 to L_0046
 +    aload 5
-+    invokestatic com/anatawa12/fixRtm/HocksKt/BlockMarker_onMarkerActivated "(Lnet/minecraft/entity/player/EntityPlayer;)V"
++    invokestatic com/anatawa12/fixRtm/rtm/HooksKt/BlockMarker_onMarkerActivated "(Lnet/minecraft/entity/player/EntityPlayer;)V"
      aload 0
      aload 5
      iload 6
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
-index 61097af..4dc0fbd 100644
+index 61097af..41d3cbc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
 @@ -509,7 +509,7 @@ L_005a:
@@ -218,12 +218,12 @@ index 61097af..4dc0fbd 100644
      invokestatic java/lang/Integer/valueOf (I)Ljava/lang/Integer;
      aastore
 -    invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessageToAll "(Ljava/lang/String;[Ljava/lang/Object;)V"
-+    invokestatic com/anatawa12/fixRtm/HocksKt/sendSwitchTypeError "(Ljava/lang/String;[Ljava/lang/Object;)V"
++    invokestatic com/anatawa12/fixRtm/rtm/HooksKt/sendSwitchTypeError "(Ljava/lang/String;[Ljava/lang/Object;)V"
  L_0072:
      .line 101
      .stack use locals
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
-index 55fb34a..5991c69 100644
+index 55fb34a..2b55a66 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 @@ -317,6 +317,8 @@ L_0018:
@@ -231,7 +231,7 @@ index 55fb34a..5991c69 100644
      .var 3 is map Ljava/util/Map; signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/sound/MovingSoundMaker\$SoundListDummy;>;" from L_0018 to L_009c
      aload 3
 +    aload 0
-+    invokestatic com/anatawa12/fixRtm/HocksKt/MovingSoundMaker_loadSoundJson_nullCheck (Ljava/util/Map;Ljava/lang/String;)Ljava/util/Map;
++    invokestatic com/anatawa12/fixRtm/rtm/HooksKt/MovingSoundMaker_loadSoundJson_nullCheck (Ljava/util/Map;Ljava/lang/String;)Ljava/util/Map;
      invokeinterface java/util/Map/entrySet ()Ljava/util/Set;
      invokeinterface java/util/Set/iterator ()Ljava/util/Iterator;
      astore 4
