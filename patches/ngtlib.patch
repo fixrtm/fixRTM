@@ -1,5 +1,5 @@
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
-index 89cf20c..a04eba2 100644
+index 89cf20c..bb3eb7d 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
 @@ -49,42 +49,43 @@ L_0000:
@@ -13,8 +13,8 @@ index 89cf20c..a04eba2 100644
 +
 +L_start:
 +    .line 1038
-+    .var 1 is sender Lnet/minecraft/command/ICommandSender; from L_0000 to L_009c
-+    aload 1
++    .var 0 is sender Lnet/minecraft/command/ICommandSender; from L_start to L_end
++    aload 0
 +    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
 +    areturn
 +L_catch:
@@ -26,6 +26,7 @@ index 89cf20c..a04eba2 100644
 +    pop
 +    aconst_null
 +    areturn
++L_end:
 +
 +.end method
 +
@@ -67,7 +68,6 @@ index 89cf20c..a04eba2 100644
 -L_0010:
 -    .line 43
 -    return
-+    .var 4 is player Ljava/lang/Object; from L_0013 to L_0008
 +
  L_0013:
      .line 46
