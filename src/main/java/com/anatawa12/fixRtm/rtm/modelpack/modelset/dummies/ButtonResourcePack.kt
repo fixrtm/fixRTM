@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.dummies
+package com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive

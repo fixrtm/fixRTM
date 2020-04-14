@@ -1,6 +1,6 @@
 package com.anatawa12.fixRtm
 
-import com.anatawa12.fixRtm.dummies.*
+import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.network.NetworkHandler
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore

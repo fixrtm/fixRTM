@@ -1,7 +1,6 @@
-package com.anatawa12.fixRtm.dummies
+package com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies
 
 import com.anatawa12.fixRtm.DummyModelPackManager
-import com.anatawa12.fixRtm.ExModelPackManager
 import com.anatawa12.fixRtm.asm.MultiModelObject
 import jp.ngt.ngtlib.io.ResourceLocationCustom
 import jp.ngt.ngtlib.renderer.model.IModelNGT
@@ -23,7 +22,6 @@ import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 import java.lang.reflect.Field
-import java.util.*
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 

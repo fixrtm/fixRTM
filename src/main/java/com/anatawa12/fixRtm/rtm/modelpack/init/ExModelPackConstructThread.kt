@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.modelpcakInit
+package com.anatawa12.fixRtm.rtm.modelpack.init
 
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
