@@ -4,35 +4,23 @@ package com.anatawa12.fixRtm
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import jp.ngt.ngtlib.event.TickProcessEntry
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
-import jp.ngt.ngtlib.util.NGTUtil
+import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.text.TextComponentTranslation
 import java.util.zip.Inflater
 
-object ExModelPackManager {
-    val dummyMap: Map<String, ResourceSet<*>>
-        get() = jp.ngt.rtm.modelpack.ModelPackManager.INSTANCE.dummyMap
-
-    @Suppress("UNCHECKED_CAST")
-    val allModelSetMap: MutableMap<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>
-            = jp.ngt.rtm.modelpack.ModelPackManager::class.java.getDeclaredField("allModelSetMap")
-            .apply { isAccessible = true }
-            .get(ModelPackManager) as MutableMap<ResourceType<*, *>, MutableMap<String, ResourceSet<*>>>
-}
-
 fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): ResourceSet<*> {
     if (inSet != null) return inSet
     if (type.hasSubType) {
-        return ExModelPackManager.dummyMap[type.name]
-                ?: (ExModelPackManager.dummyMap[type.subType])
+        return ModelPackManager.INSTANCE.dummyMap[type.name]
+                ?: (ModelPackManager.INSTANCE.dummyMap[type.subType])
                 ?: error("ResourceType(${type.name}) and ResourceType(${type.subType}) don't have dummy ResourceSet")
     } else {
-        return ExModelPackManager.dummyMap[type.name]
+        return ModelPackManager.INSTANCE.dummyMap[type.name]
                 ?: error("ResourceType(${type.name}) don't have dummyMap")
     }
 }

@@ -42,9 +42,8 @@ fun renderRenderOrnament(tile: TileEntityOrnament, x: Double, y: Double, z: Doub
     return true
 }
 
-val ModelPackManager = jp.ngt.rtm.modelpack.ModelPackManager.INSTANCE
 fun <T : ResourceSet<*>> getResourceSet(type: ResourceType<*, *>, name: String): T
-        = ModelPackManager.getResourceSet(type, name)
+        = jp.ngt.rtm.modelpack.ModelPackManager.INSTANCE.getResourceSet(type, name)
 fun <Set : ModelSetOrnament>ResourceType<*, Set>.getDefalutResouceSet(): Set {
     var set: Set? = null
     when (name) {
