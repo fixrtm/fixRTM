@@ -113,8 +113,8 @@ runClient {
     systemProperties["legacy.debugClassLoadingSave"] = "true"
     // */
     //*
-    if (!hasProperty("noLogin") && hasProperty("minecraft.login.username") && hasProperty("minecraft.login.password"))
-        args += ["-username", getProperty("minecraft.login.username"), "-password", getProperty("minecraft.login.password")]
+    if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password"))
+        args += ["-username", project.getProperty("minecraft.login.username"), "-password", project.getProperty("minecraft.login.password")]
     // */
 }
 
