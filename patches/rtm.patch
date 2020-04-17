@@ -1,3 +1,28 @@
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
+index e0457b7..6a0fe61 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
+@@ -1477,10 +1477,20 @@ L_0017:
+     aload 0
+     invokevirtual jp/ngt/rtm/entity/train/EntityBogie/getTrain ()Ljp/ngt/rtm/entity/train/EntityTrainBase;
+     ifnonnull L_0021
++
++    .line 1378
++    aload 0
++    getfield jp/ngt/rtm/entity/train/EntityBogie/world Lnet/minecraft/world/World;
++    getfield net/minecraft/world/World/isRemote Z
++    ifne L_ifRemote
++
+ L_001d:
+     .line 378
+     aload 0
+     invokevirtual jp/ngt/rtm/entity/train/EntityBogie/setDead ()V
++
++L_ifRemote:
++
+ L_0021:
+     .line 380
+     .stack use locals
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 index 0866a89..1ed0e7e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
