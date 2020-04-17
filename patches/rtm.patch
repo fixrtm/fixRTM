@@ -23,6 +23,29 @@ index e0457b7..6a0fe61 100644
  L_0021:
      .line 380
      .stack use locals
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
+index 5ffef9f..3e50be4 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
+@@ -230,6 +230,18 @@ L_0000:
+ L_0003:
+ .end method
+ 
++.method public getEntityBoundingBox ()Lnet/minecraft/util/math/AxisAlignedBB;
++    .limit stack 1
++    .limit local 1
++L_start:
++    .var 0 is this Ljp/ngt/rtm/entity/vehicle/WeatherEffectDummy; from L_start to L_end
++    aload 0
++    getfield jp/ngt/rtm/entity/vehicle/WeatherEffectDummy/parent Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;
++    invokevirtual net/minecraft/entity/Entity/getEntityBoundingBox ()Lnet/minecraft/util/math/AxisAlignedBB;
++    areturn
++L_end:
++.end method
++
+ .field private final parent Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;
+ .end field
+ 
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 index 0866a89..1ed0e7e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
