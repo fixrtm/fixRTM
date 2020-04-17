@@ -127,7 +127,9 @@ jar {
 
     manifest {
         attributes("FMLCorePlugin" : "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
-        "FMLCorePluginContainsFMLMod": "*")
+                "FMLCorePluginContainsFMLMod": "*",
+                'FMLAT': 'fix-rtm_at.cfg',
+        )
     }
 }
 
