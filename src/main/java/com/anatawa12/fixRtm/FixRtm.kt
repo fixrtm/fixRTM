@@ -65,13 +65,7 @@ object FixRtm {
     @SubscribeEvent
     fun registerModel(e: ModelRegistryEvent) {
         ClientRegistry.registerTileEntity(TestTileEntity::class.java, "test", TestSPRenderer)
-        try {
-            @Suppress("UNCHECKED_CAST")
-            (Minecraft::class.java.getDeclaredField("field_110449_ao").apply { isAccessible = true }.get(Minecraft.getMinecraft()) as MutableList<IResourcePack>).add(ButtonResourcePack)
-        } catch (ex: NoSuchFieldException) {
-            @Suppress("UNCHECKED_CAST")
-            (Minecraft::class.java.getDeclaredField("defaultResourcePacks").apply { isAccessible = true }.get(Minecraft.getMinecraft()) as MutableList<IResourcePack>).add(ButtonResourcePack)
-        }
+        Minecraft.getMinecraft().defaultResourcePacks.add(ButtonResourcePack)
         DummyModelObject.init()
     }
 
