@@ -1,3 +1,16 @@
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm b/src/main/rtm/jp/ngt/rtm/RTMItem.jasm
+index 6a22154..d1aa343 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm
++++ b/src/main/rtm/jp/ngt/rtm/RTMItem.jasm
+@@ -552,7 +552,7 @@ L_001e:
+     .line 154
+     getstatic jp/ngt/rtm/RTMItem/itemtrain Lnet/minecraft/item/Item;
+     bipush 127
+-    ldc "item_train_127"
++    ldc "item_train_fixrtm_test"
+     invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
+ L_0024:
+     .line 155
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 index e0457b7..6a0fe61 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
