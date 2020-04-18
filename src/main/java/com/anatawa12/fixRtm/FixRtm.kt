@@ -6,7 +6,6 @@ import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.IResourcePack
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
@@ -65,7 +64,7 @@ object FixRtm {
     @SubscribeEvent
     fun registerModel(e: ModelRegistryEvent) {
         ClientRegistry.registerTileEntity(TestTileEntity::class.java, "test", TestSPRenderer)
-        Minecraft.getMinecraft().defaultResourcePacks.add(ButtonResourcePack)
+        Minecraft.getMinecraft().defaultResourcePacks.add(GeneratedResourcePack)
         DummyModelObject.init()
     }
 

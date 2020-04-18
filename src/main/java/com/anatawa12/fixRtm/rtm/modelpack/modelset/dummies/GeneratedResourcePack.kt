@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage
 import java.io.*
 import javax.imageio.ImageIO
 
-object ButtonResourcePack : IResourcePack {
+object GeneratedResourcePack : IResourcePack {
     private val DOMEIN = "fix-rtm"
     private var nextId = 1;
     private val resources = mutableMapOf<String, Image>()

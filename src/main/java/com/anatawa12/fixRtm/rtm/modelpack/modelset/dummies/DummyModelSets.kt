@@ -32,7 +32,7 @@ fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT) {
                     TextureSet(DummyModelObject.material, 0, false, false)
             ))
     modelObj.renderer.init(this, modelObj)
-    buttonTexture = ButtonResourcePack.addImage(createButtonTexture(name))
+    buttonTexture = GeneratedResourcePack.addImage(createButtonTexture(name))
 }
 
 
