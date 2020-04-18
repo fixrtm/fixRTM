@@ -6,6 +6,7 @@ import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
+import net.minecraft.client.resources.IReloadableResourceManager
 import net.minecraft.item.Item
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
@@ -65,6 +66,9 @@ object FixRtm {
     fun registerModel(e: ModelRegistryEvent) {
         ClientRegistry.registerTileEntity(TestTileEntity::class.java, "test", TestSPRenderer)
         Minecraft.getMinecraft().defaultResourcePacks.add(GeneratedResourcePack)
+        Minecraft.getMinecraft().resourceManager
+                .let { it as IReloadableResourceManager }
+                .registerReloadListener(GeneratedResourcePack)
         DummyModelObject.init()
     }
 

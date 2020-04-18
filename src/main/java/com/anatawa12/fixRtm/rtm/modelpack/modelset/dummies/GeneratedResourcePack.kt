@@ -2,6 +2,8 @@ package com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import net.minecraft.client.resources.IResourceManager
+import net.minecraft.client.resources.IResourceManagerReloadListener
 import net.minecraft.client.resources.IResourcePack
 import net.minecraft.client.resources.data.IMetadataSection
 import net.minecraft.client.resources.data.MetadataSerializer
@@ -10,7 +12,7 @@ import java.awt.image.BufferedImage
 import java.io.*
 import javax.imageio.ImageIO
 
-object GeneratedResourcePack : IResourcePack {
+object GeneratedResourcePack : IResourcePack, IResourceManagerReloadListener {
     private val DOMEIN = "fix-rtm"
     private var nextId = 1;
     private val resourceGenerators = mutableMapOf<String, () -> ResourceFile>()
@@ -72,4 +74,8 @@ object GeneratedResourcePack : IResourcePack {
     }
 
     private data class ResourceFile(val byteArray: ByteArray)
+
+    override fun onResourceManagerReload(manager: IResourceManager) {
+        resources.clear()
+    }
 }
