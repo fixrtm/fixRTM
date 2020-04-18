@@ -13,10 +13,11 @@ import javax.imageio.ImageIO
 object GeneratedResourcePack : IResourcePack {
     private val DOMEIN = "fix-rtm"
     private var nextId = 1;
-    private val resources = mutableMapOf<String, Image>()
+    private val resourceGenerators = mutableMapOf<String, () -> ResourceFile>()
+    private val resources = mutableMapOf<String, ResourceFile>()
 
     override fun resourceExists(location: ResourceLocation): Boolean
-            = location.namespace == DOMEIN && location.path in resources
+            = location.namespace == DOMEIN && location.path in resourceGenerators
 
     override fun getPackImage(): BufferedImage {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -39,21 +40,36 @@ object GeneratedResourcePack : IResourcePack {
 
     override fun getInputStream(location: ResourceLocation): InputStream {
         if (location.namespace != DOMEIN) throw FileNotFoundException(location.path)
-        return resources[location.path]?.byteArray?.inputStream() ?: throw FileNotFoundException(location.path)
+        var resource = resources[location.path]
+        if (resource == null) {
+            val generator = resourceGenerators[location.path]
+                    ?: throw FileNotFoundException(location.path)
+            resource = generator()
+            resources[location.path]= resource
+        }
+        return resource.byteArray.inputStream()
     }
 
     override fun getPackName(): String = "anatawa12 fix rtm button resource virtual pack"
 
     override fun getResourceDomains(): Set<String> = setOf(DOMEIN)
 
-    fun addImage(img: BufferedImage): ResourceLocation {
-        val newId = "%x08.png".format(nextId++)
+    fun addImage(img: BufferedImage): ResourceLocation = addImage("%x08.png".format(nextId++), img)
+
+    fun addImage(name: String, img: BufferedImage): ResourceLocation = addImageGenerator(name) { img }
+
+    fun addImageGenerator(name: String, generator: () -> BufferedImage): ResourceLocation = addFileGenerator(name) {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        ImageIO.write(img, "PNG", byteArrayOutputStream)
-        val newImage = Image(byteArrayOutputStream.toByteArray(), img)
-        resources[newId] = newImage
-        return ResourceLocation(DOMEIN, newId)
+        ImageIO.write(generator(), "PNG", byteArrayOutputStream)
+        byteArrayOutputStream.toByteArray()
     }
 
-    private data class Image(val byteArray: ByteArray, val image: BufferedImage)
+    fun addFile(name: String, data: ByteArray): ResourceLocation = addFileGenerator(name) { data }
+
+    fun addFileGenerator(name: String, generator: () -> ByteArray): ResourceLocation {
+        resourceGenerators[name] = { ResourceFile(generator()) }
+        return ResourceLocation(DOMEIN, name)
+    }
+
+    private data class ResourceFile(val byteArray: ByteArray)
 }
