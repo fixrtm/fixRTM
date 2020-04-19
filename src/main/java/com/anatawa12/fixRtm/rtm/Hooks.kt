@@ -6,6 +6,7 @@ import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.text.TextComponentTranslation
 
 @Suppress("unused") // Used with Transform
@@ -47,4 +48,16 @@ fun sendSwitchTypeError(message: String, vararg objects: Any?) {
     }
     player.sendMessage(TextComponentTranslation(message, *objects))
     BlockMarker_onMarkerActivated_player = null
+}
+
+@Suppress("unused") // Used from jasm
+fun fixRiderPosOnDismount_remakeAABB(aabb: AxisAlignedBB?): Boolean {
+    if (aabb == null) return true
+    if (!aabb.minX.isFinite()) return true
+    if (!aabb.minY.isFinite()) return true
+    if (!aabb.minZ.isFinite()) return true
+    if (!aabb.maxX.isFinite()) return true
+    if (!aabb.maxY.isFinite()) return true
+    if (!aabb.maxZ.isFinite()) return true
+    return false
 }
