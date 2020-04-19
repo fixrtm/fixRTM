@@ -5,9 +5,12 @@ import jp.ngt.ngtlib.renderer.model.ModelFormatException
 import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
+import net.minecraft.block.material.Material
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.math.AxisAlignedBB
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextComponentTranslation
+import net.minecraft.world.World
 
 @Suppress("unused") // Used with Transform
 fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): ResourceSet<*> {
@@ -60,4 +63,22 @@ fun fixRiderPosOnDismount_remakeAABB(aabb: AxisAlignedBB?): Boolean {
     if (!aabb.maxY.isFinite()) return true
     if (!aabb.maxZ.isFinite()) return true
     return false
+}
+
+@Suppress("unused") // Used from jasm
+fun fixRiderPosOnDismount_calcBestBlockPos(world: World, pos: BlockPos): BlockPos {
+    for (i in 0..10) {
+        val pos1 = BlockPos(pos.x, pos.y + i, pos.z)
+        val pos2 = BlockPos(pos.x, pos.y - i, pos.z)
+
+        if (canBeSpawnedAt(world, pos1)) return pos1
+        if (canBeSpawnedAt(world, pos2)) return pos2
+    }
+    return world.getTopSolidOrLiquidBlock(pos)
+}
+
+private fun canBeSpawnedAt(world: World, pos: BlockPos): Boolean {
+    if (world.isOutsideBuildHeight(pos)) return false
+    return world.getBlockState(pos).material == Material.AIR
+            && world.getBlockState(pos.up()).material == Material.AIR
 }

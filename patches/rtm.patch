@@ -24,7 +24,7 @@ index e0457b7..6a0fe61 100644
      .line 380
      .stack use locals
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index 4d94e4a..2623512 100644
+index 4d94e4a..18e2380 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 @@ -938,7 +938,7 @@ L_000b:
@@ -64,6 +64,15 @@ index 4d94e4a..2623512 100644
  L_0028:
      .line 374
      .stack use locals
+@@ -1098,7 +1100,7 @@ L_0092:
+     dload 10
+     dload 12
+     invokespecial net/minecraft/util/math/BlockPos/<init> (DDD)V
+-    invokevirtual net/minecraft/world/World/getTopSolidOrLiquidBlock (Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockPos;
++    invokestatic com/anatawa12/fixRtm/rtm/HooksKt/fixRiderPosOnDismount_calcBestBlockPos (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockPos;
+     astore 14
+ L_009e:
+     .line 387
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 index 5ffef9f..3e50be4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
