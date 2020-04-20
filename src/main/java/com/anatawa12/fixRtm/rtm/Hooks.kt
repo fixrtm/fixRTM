@@ -36,7 +36,8 @@ fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: Stri
 var BlockMarker_onMarkerActivated_player: EntityPlayer? = null
 
 @Suppress("unused") // Used with Transform
-fun BlockMarker_onMarkerActivated(player: EntityPlayer) {
+fun BlockMarker_onMarkerActivated(player: EntityPlayer?) {
+    if (player == null) return
     if (!player.world.isRemote)
         BlockMarker_onMarkerActivated_player = player
 }
