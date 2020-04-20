@@ -14,13 +14,13 @@ task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
 
 task downloadRTM (type: DownloadModJar) {
     projectId = 288988
-    version = "2.4.18"
+    version = "2.4.19"
     to = new File(projectDir, "mods/rtm.jar")
 }
 
 task downloadNgtLib (type: DownloadModJar) {
     projectId = 288989
-    version = "2.4.16"
+    version = "2.4.17"
     to = new File(projectDir, "mods/ngtlib.jar")
 }
 
