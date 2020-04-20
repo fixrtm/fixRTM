@@ -78,6 +78,8 @@ task copyRTMResources(type: Copy) {
         exclude("**/*.class")
     }
 
+    includeEmptyDirs = false
+
     into(file("src/main/rtmResources"))
 }
 
@@ -87,6 +89,8 @@ task copyNgtLibResources(type: Copy) {
     from(zipTree(downloadNgtLib.to)) {
         exclude("**/*.class")
     }
+
+    includeEmptyDirs = false
 
     into(file("src/main/ngtlibResources"))
 }
