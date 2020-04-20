@@ -2,7 +2,14 @@ diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm b/src/main
 index 6a22154..d1aa343 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/RTMItem.jasm
-@@ -552,7 +552,7 @@ L_001e:
+@@ -545,21 +545,21 @@ L_0012:
+ L_0018:
+     .line 153
+     getstatic jp/ngt/rtm/RTMItem/itemtrain Lnet/minecraft/item/Item;
+     iconst_3
+     ldc "item_train_3"
+     invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
+ L_001e:
      .line 154
      getstatic jp/ngt/rtm/RTMItem/itemtrain Lnet/minecraft/item/Item;
      bipush 127
@@ -11,11 +18,25 @@ index 6a22154..d1aa343 100644
      invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
  L_0024:
      .line 155
+     getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
+     iconst_0
+     ldc "item_npc_0"
+     invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
+ L_002a:
+     .line 156
+     getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 index e0457b7..6a0fe61 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-@@ -1477,10 +1477,20 @@ L_0017:
+@@ -1470,24 +1470,34 @@ L_0012:
+     .end stack
+     iconst_0
+     istore 1
+ L_0017:
+     .line 376
+     .stack use locals
+     .end stack
      aload 0
      invokevirtual jp/ngt/rtm/entity/train/EntityBogie/getTrain ()Ljp/ngt/rtm/entity/train/EntityTrainBase;
      ifnonnull L_0021
@@ -36,11 +57,25 @@ index e0457b7..6a0fe61 100644
  L_0021:
      .line 380
      .stack use locals
+     .end stack
+     return
+ L_0025:
+ .end method
+ 
+ .method public onBogieUpdate ()V
+     .limit stack 2
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 index 4d94e4a..18e2380 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-@@ -938,7 +938,7 @@ L_000b:
+@@ -931,48 +931,50 @@ L_0004:
+     astore 4
+ L_000b:
+     .line 364
+     .var 4 is set Ljp/ngt/rtm/modelpack/modelset/ModelSetBase; from L_000b to L_0011
+     aload 4
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ModelSetBase/getCollisionObj ()Ljp/ngt/rtm/entity/util/CollisionObj;
+     invokevirtual jp/ngt/rtm/entity/util/CollisionObj/getSizeBox ()Lnet/minecraft/util/math/AxisAlignedBB;
      astore 3
  L_0011:
      .line 370
@@ -49,7 +84,9 @@ index 4d94e4a..18e2380 100644
  L_0014:
      .line 366
      .stack
-@@ -948,12 +948,13 @@ L_0014:
+         locals Object jp/ngt/rtm/entity/vehicle/EntityVehicleBase
+         locals Object net/minecraft/entity/Entity
+         locals Object net/minecraft/entity/Entity
          locals Object net/minecraft/util/math/AxisAlignedBB
          stacks Object java/lang/NullPointerException
      .end stack
@@ -69,7 +106,12 @@ index 4d94e4a..18e2380 100644
  L_001c:
      .line 369
      new net/minecraft/util/math/AxisAlignedBB
-@@ -966,6 +967,7 @@ L_001c:
+     dup
+     ldc -1.5
+     dconst_0
+     ldc -2.0
+     ldc 1.5
+     ldc 3.0
      ldc 2.0
      invokespecial net/minecraft/util/math/AxisAlignedBB/<init> (DDDDDD)V
      astore 3
@@ -77,7 +119,21 @@ index 4d94e4a..18e2380 100644
  L_0028:
      .line 374
      .stack use locals
-@@ -1098,7 +1100,7 @@ L_0092:
+     .end stack
+     aload 2
+     getfield net/minecraft/entity/Entity/posX D
+     aload 0
+     getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/posX D
+     dsub
+     aload 2
+@@ -1091,21 +1093,21 @@ L_0092:
+     .line 386
+     .var 12 is z D from L_0092 to L_00b1
+     aload 0
+     getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/world Lnet/minecraft/world/World;
+     new net/minecraft/util/math/BlockPos
+     dup
+     dload 8
      dload 10
      dload 12
      invokespecial net/minecraft/util/math/BlockPos/<init> (DDD)V
@@ -86,11 +142,25 @@ index 4d94e4a..18e2380 100644
      astore 14
  L_009e:
      .line 387
+     .var 14 is pos Lnet/minecraft/util/math/BlockPos; from L_009e to L_00b1
+     aload 1
+     aload 14
+     invokevirtual net/minecraft/util/math/BlockPos/getX ()I
+     i2d
+     ldc 0.5
+     dadd
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 index 5ffef9f..3e50be4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
-@@ -230,6 +230,18 @@ L_0000:
+@@ -223,13 +223,25 @@ L_0003:
+     .limit stack 0
+     .limit local 2
+ L_0000:
+     .line 85
+     .var 0 is this Ljp/ngt/rtm/entity/vehicle/WeatherEffectDummy; from L_0000 to L_0003
+     .var 1 is compound Lnet/minecraft/nbt/NBTTagCompound; from L_0000 to L_0003
+     return
  L_0003:
  .end method
  
@@ -113,7 +183,14 @@ diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackMana
 index 0866a89..1ed0e7e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-@@ -909,12 +909,20 @@ L_004b:
+@@ -902,26 +902,34 @@ L_0048:
+ L_004b:
+     .line 260
+     .stack
+         locals Object jp/ngt/rtm/modelpack/ModelPackManager
+         locals Object net/minecraft/entity/player/EntityPlayerMP
+         locals Integer
+         locals Object java/util/Iterator
      .end stack
      goto L_000b
  L_004f:
@@ -135,7 +212,21 @@ index 0866a89..1ed0e7e 100644
      return
  L_0053:
  .end method
-@@ -1143,6 +1151,7 @@ L_0000:
+ 
+ .method public addModelSetName (ILjava/lang/String;Ljava/lang/String;)V
+     .limit stack 3
+     .limit local 6
+ L_0000:
+     .line 266
+     .var 0 is this Ljp/ngt/rtm/modelpack/ModelPackManager; from L_0000 to L_0068
+@@ -1136,20 +1144,21 @@ L_002e:
+ .method public getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
+     .signature "<T:Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>(Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)TT;"
+     .limit stack 4
+     .limit local 7
+ L_0000:
+     .line 310
+     .var 0 is this Ljp/ngt/rtm/modelpack/ModelPackManager; from L_0000 to L_005d
      .var 1 is type Ljp/ngt/rtm/modelpack/ResourceType; from L_0000 to L_005d
      .var 2 is name Ljava/lang/String; from L_0000 to L_005d
      aload 1
@@ -143,7 +234,21 @@ index 0866a89..1ed0e7e 100644
      astore 3
  L_0004:
      .line 311
-@@ -1219,15 +1228,12 @@ L_0035:
+     .var 3 is parent Ljp/ngt/rtm/modelpack/ResourceType; from L_0004 to L_005d
+     aload 1
+     getfield jp/ngt/rtm/modelpack/ResourceType/parent Ljp/ngt/rtm/modelpack/ResourceType;
+     ifnull L_000e
+ L_0009:
+     .line 313
+     aload 1
+@@ -1212,64 +1221,34 @@ L_002b:
+     invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
+     checkcast jp/ngt/rtm/modelpack/modelset/ResourceSet
+     astore 6
+ L_0035:
+     .line 319
+     .var 6 is modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet; signature "TT;" from L_0035 to L_005d
+     aload 6
      ifnonnull L_0058
  L_0039:
      .line 321
@@ -164,7 +269,8 @@ index 0866a89..1ed0e7e 100644
      .stack
          locals Object jp/ngt/rtm/modelpack/ModelPackManager
          locals Object jp/ngt/rtm/modelpack/ResourceType
-@@ -1236,33 +1242,6 @@ L_0043:
+         locals Object java/lang/String
+         locals Object jp/ngt/rtm/modelpack/ResourceType
          locals Integer
          locals Object java/util/Map
          locals Object jp/ngt/rtm/modelpack/modelset/ResourceSet
@@ -198,7 +304,21 @@ index 0866a89..1ed0e7e 100644
      .end stack
      aload 6
      areturn
-@@ -2059,7 +2038,7 @@ L_0018:
+ L_005d:
+ .end method
+ 
+ .method public getModelList (Ljp/ngt/rtm/modelpack/ResourceType;)Ljava/util/List;
+     .signature "(Ljp/ngt/rtm/modelpack/ResourceType;)Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
+     .limit stack 3
+     .limit local 4
+@@ -2052,29 +2031,29 @@ L_0018:
+ .field private static final SC_INCLUDE Ljava/util/regex/Pattern;
+ .end field
+ 
+ .field private static final ENCODING "[Ljava/lang/String;"
+ .end field
+ 
+ .field private final typeMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/ResourceType;>;"
  .end field
  
@@ -207,7 +327,7 @@ index 0866a89..1ed0e7e 100644
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
-@@ -2067,7 +2046,7 @@ L_0018:
+ .field private final smpModelSetMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
@@ -216,7 +336,21 @@ index 0866a89..1ed0e7e 100644
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
  
-@@ -2100,3 +2079,24 @@ L_0018:
+ .field public final unconstructSets Ljava/util/List;
+     .signature "Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
+ .end field
+ 
+ .field private final modelCache Ljava/util/Map;
+     .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/IModelNGT;>;"
+ .end field
+@@ -2093,10 +2072,31 @@ L_0018:
+ 
+ .field public modelLoaded Z
+ .end field
+ 
+ .field private static final DEFAULT_DOMAIN Ljava/lang/String; = "minecraft"
+ .end field
+ 
  .field static final synthetic $assertionsDisabled Z
  .end field
  
@@ -245,7 +379,7 @@ diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPac
 index a9e7430..646cbfb 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
-@@ -1,6 +1,6 @@
+@@ -1,13 +1,13 @@
  .bytecode 52.0
  .source "ModelPackConstructThread.java"
 -.class public final jp/ngt/rtm/modelpack/init/ModelPackConstructThread
@@ -253,11 +387,25 @@ index a9e7430..646cbfb 100644
  .super java/lang/Thread
  .inner public static final enum jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState inner ProgressState outer jp/ngt/rtm/modelpack/init/ProgressStateHolder
  
+ .method public <init> (Lnet/minecraftforge/fml/relauncher/Side;Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
+     .limit stack 2
+     .limit local 3
+ L_0000:
+     .line 22
+     .var 0 is this Ljp/ngt/rtm/modelpack/init/ModelPackConstructThread; from L_0000 to L_0017
+     .var 1 is par1 Lnet/minecraftforge/fml/relauncher/Side; from L_0000 to L_0017
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 index 85ac6d0..a8c04bf 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
-@@ -524,18 +524,18 @@ L_003e:
+@@ -517,45 +517,45 @@ L_0035:
+     iconst_0
+     invokestatic jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState/values "()[Ljp/ngt/rtm/modelpack/init/ProgressStateHolder\$ProgressState;"
+     arraylength
+     ldc ""
+     invokevirtual jp/ngt/rtm/modelpack/init/ModelPackLoadThread/setBarMaxValue (IILjava/lang/String;)V
+ L_003e:
+     .line 184
      invokestatic jp/ngt/ngtlib/io/NGTLog/startTimer ()V
  L_0041:
      .line 185
@@ -280,7 +428,9 @@ index 85ac6d0..a8c04bf 100644
  L_004e:
      .line 187
      getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
-@@ -545,10 +545,10 @@ L_0053:
+     aload 0
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/load (Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
+ L_0053:
      .line 188
      .stack
          locals Object jp/ngt/rtm/modelpack/init/ModelPackLoadThread
@@ -293,11 +443,25 @@ index 85ac6d0..a8c04bf 100644
      ifne L_005e
  L_0059:
      .line 190
+     ldc 500L
+     invokestatic jp/ngt/rtm/modelpack/init/ModelPackLoadThread/sleep (J)V
+     goto L_0053
+ L_005e:
+     .line 192
+     .stack use locals
+     .end stack
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index ce341fe..c56013a 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
-@@ -331,6 +331,9 @@ L_0009:
+@@ -324,20 +324,23 @@ L_0009:
+     .stack
+         locals Object jp/ngt/rtm/modelpack/state/ResourceState
+     .end stack
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     getfield jp/ngt/rtm/modelpack/state/ResourceState/type Ljp/ngt/rtm/modelpack/ResourceType;
      aload 0
      getfield jp/ngt/rtm/modelpack/state/ResourceState/modelName Ljava/lang/String;
      invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
@@ -307,11 +471,25 @@ index ce341fe..c56013a 100644
      putfield jp/ngt/rtm/modelpack/state/ResourceState/modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
  L_0014:
      .line 118
+     aload 0
+     getfield jp/ngt/rtm/modelpack/state/ResourceState/modelSet Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/isDummy ()Z
+     ifne L_0022
+ L_001a:
+     .line 120
+     aload 0
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
 index 8663826..e509f2d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
-@@ -572,6 +572,8 @@ L_0000:
+@@ -565,20 +565,22 @@ L_0026:
+     .limit local 12
+ L_0000:
+     .line 190
+     .var 0 is this Ljp/ngt/rtm/rail/BlockMarker; from L_0000 to L_0046
+     .var 1 is world Lnet/minecraft/world/World; from L_0000 to L_0046
+     .var 2 is x I from L_0000 to L_0046
+     .var 3 is y I from L_0000 to L_0046
      .var 4 is z I from L_0000 to L_0046
      .var 5 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_0046
      .var 6 is makeRail Z from L_0000 to L_0046
@@ -320,11 +498,25 @@ index 8663826..e509f2d 100644
      aload 0
      aload 5
      iload 6
+     invokevirtual jp/ngt/rtm/rail/BlockMarker/hasRail (Lnet/minecraft/entity/player/EntityPlayer;Z)Ljp/ngt/rtm/modelpack/state/ResourceStateRail;
+     astore 7
+ L_0007:
+     .line 191
+     .var 7 is prop Ljp/ngt/rtm/modelpack/state/ResourceStateRail; from L_0007 to L_0046
+     aload 7
+     ifnull L_0041
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
 index 61097af..41d3cbc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
-@@ -509,7 +509,7 @@ L_005a:
+@@ -502,21 +502,21 @@ L_005a:
+     aload 2
+     getfield jp/ngt/rtm/rail/util/RailPosition/blockY I
+     invokestatic java/lang/Integer/valueOf (I)Ljava/lang/Integer;
+     aastore
+     dup
+     iconst_2
+     aload 2
      getfield jp/ngt/rtm/rail/util/RailPosition/blockZ I
      invokestatic java/lang/Integer/valueOf (I)Ljava/lang/Integer;
      aastore
@@ -333,11 +525,25 @@ index 61097af..41d3cbc 100644
  L_0072:
      .line 101
      .stack use locals
+     .end stack
+     aconst_null
+     areturn
+ L_0077:
+ .end method
+ 
+ .field private worldObj Lnet/minecraft/world/World;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 index 55fb34a..2b55a66 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
-@@ -317,6 +317,8 @@ L_0018:
+@@ -310,20 +310,22 @@ L_0010:
+     invokestatic jp/ngt/ngtlib/io/NGTJson/getGson ()Lcom/google/gson/Gson;
+     aload 2
+     getstatic jp/ngt/rtm/sound/MovingSoundMaker/TYPE Ljava/lang/reflect/ParameterizedType;
+     invokevirtual com/google/gson/Gson/fromJson (Ljava/lang/String;Ljava/lang/reflect/Type;)Ljava/lang/Object;
+     checkcast java/util/Map
+     astore 3
+ L_0018:
      .line 115
      .var 3 is map Ljava/util/Map; signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/sound/MovingSoundMaker\$SoundListDummy;>;" from L_0018 to L_009c
      aload 3
@@ -346,3 +552,10 @@ index 55fb34a..2b55a66 100644
      invokeinterface java/util/Map/entrySet ()Ljava/util/Set;
      invokeinterface java/util/Set/iterator ()Ljava/util/Iterator;
      astore 4
+ L_001e:
+     .stack
+         locals Object java/lang/String
+         locals Object java/util/Map
+         locals Object java/lang/String
+         locals Object java/util/Map
+         locals Object java/util/Iterator

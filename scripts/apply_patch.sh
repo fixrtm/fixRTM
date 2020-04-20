@@ -10,7 +10,7 @@ function apply_patch() {
 
   cp -r "$src_dir" "$processed_dir"
 
-  patch -p1 < "patches/$1.patch"
+  patch -F 5 -p1 < "patches/$1.patch"
 
   rm -rf "$dst_dir"
   mv "$processed_dir" "$dst_dir"
