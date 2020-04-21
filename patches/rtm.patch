@@ -179,6 +179,78 @@ index 5ffef9f..3e50be4 100644
  .field private final parent Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;
  .end field
  
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/event/RTMEventHandler.jasm b/src/main/rtm/jp/ngt/rtm/event/RTMEventHandler.jasm
+index aefff78..27c3d26 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/event/RTMEventHandler.jasm
++++ b/src/main/rtm/jp/ngt/rtm/event/RTMEventHandler.jasm
+@@ -10,48 +10,62 @@
+     .limit local 1
+ L_0000:
+     .line 18
+     .var 0 is this Ljp/ngt/rtm/event/RTMEventHandler; from L_0000 to L_0005
+     aload 0
+     invokespecial java/lang/Object/<init> ()V
+     return
+ L_0005:
+ .end method
+ 
+-.method public onPlayerLoggedIn (Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V
++.method public onServerConnectionFromClient (Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent;)V
+     .annotation visible net/minecraftforge/fml/common/eventhandler/SubscribeEvent
+     .end annotation
+     .limit stack 2
+     .limit local 2
+ L_0000:
+     .line 26
+     .var 0 is this Ljp/ngt/rtm/event/RTMEventHandler; from L_0000 to L_001e
+-    .var 1 is event Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent; from L_0000 to L_001e
++    .var 1 is event Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent; from L_0000 to L_001e
+     invokestatic jp/ngt/ngtlib/util/NGTUtil/isSMP ()Z
+     ifne L_0006
+     invokestatic jp/ngt/ngtlib/util/NGTUtil/openedLANWorld ()Z
+     ifeq L_000e
+ L_0006:
+     .line 28
+     .stack
+         locals Object jp/ngt/rtm/event/RTMEventHandler
+-        locals Object net/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent
++        locals Object net/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent
+     .end stack
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 1
+-    getfield net/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent/player Lnet/minecraft/entity/player/EntityPlayer;
+-    checkcast net/minecraft/entity/player/EntityPlayerMP
++    invokevirtual net/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent/getHandler ()Lnet/minecraft/network/INetHandler;
++    checkcast net/minecraft/network/NetHandlerPlayServer
++    getfield net/minecraft/network/NetHandlerPlayServer/player Lnet/minecraft/entity/player/EntityPlayerMP;
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/sendModelSetsToClient (Lnet/minecraft/entity/player/EntityPlayerMP;)V
+ L_000e:
+     .line 30
+     .stack use locals
+     .end stack
++    return
++L_001e:
++.end method
++
++.method public onPlayerLoggedIn (Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V
++    .annotation visible net/minecraftforge/fml/common/eventhandler/SubscribeEvent
++    .end annotation
++    .limit stack 2
++    .limit local 2
++L_0000:
++    .var 0 is this Ljp/ngt/rtm/event/RTMEventHandler; from L_0000 to L_001e
++    .var 1 is event Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent; from L_0000 to L_001e
++    .line 30
+     getstatic jp/ngt/rtm/block/decoration/DecorationStore/INSTANCE Ljp/ngt/rtm/block/decoration/DecorationStore;
+     aload 1
+     getfield net/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent/player Lnet/minecraft/entity/player/EntityPlayer;
+     invokevirtual net/minecraft/entity/player/EntityPlayer/getEntityWorld ()Lnet/minecraft/world/World;
+     invokevirtual jp/ngt/rtm/block/decoration/DecorationStore/loadModels (Lnet/minecraft/world/World;)V
+ L_0016:
+     .line 31
+     iconst_1
+     invokestatic jp/ngt/rtm/sound/SpeakerSounds/getInstance (Z)Ljp/ngt/rtm/sound/SpeakerSounds;
+     invokevirtual jp/ngt/rtm/sound/SpeakerSounds/syncSoundList ()V
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 index 0866a89..1ed0e7e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
