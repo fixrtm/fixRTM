@@ -599,6 +599,41 @@ index 9f15efb..380b0e5 100644
  L_0077:
  .end method
  
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/SwitchType$SwitchSingleCross.jasm b/src/main/rtm/jp/ngt/rtm/rail/util/SwitchType$SwitchSingleCross.jasm
+index d1831ec..7eeb299 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/SwitchType$SwitchSingleCross.jasm
++++ b/src/main/rtm/jp/ngt/rtm/rail/util/SwitchType$SwitchSingleCross.jasm
+@@ -290,20 +290,30 @@ L_0089:
+     aload 3
+     iconst_2
+     new jp/ngt/rtm/rail/util/RailMapSwitch
+     dup
+     aload 4
+     aload 5
+     aload 6
+     aload 7
+     invokespecial jp/ngt/rtm/rail/util/RailMapSwitch/<init> (Ljp/ngt/rtm/rail/util/RailPosition;Ljp/ngt/rtm/rail/util/RailPosition;Ljp/ngt/rtm/rail/util/RailDir;Ljp/ngt/rtm/rail/util/RailDir;)V
+     aastore
++
++    aload 3
++    invokestatic com/anatawa12/fixRtm/UtilsKt/isAllNotNull ([Ljava/lang/Object;)Z
++    ifne L_all_railMaps_are_not_null
++    iconst_0
++    ireturn
++L_all_railMaps_are_not_null:
++    .stack use locals
++    .end stack
++
+ L_0096:
+     .line 172
+     aload 0
+     aload 3
+     putfield jp/ngt/rtm/rail/util/SwitchType$SwitchSingleCross/railMaps "[Ljp/ngt/rtm/rail/util/RailMapSwitch;"
+ L_009b:
+     .line 174
+     aload 0
+     iconst_4
+     anewarray jp/ngt/rtm/rail/util/Point
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 index 34f470e..019c243 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm
