@@ -24,4 +24,10 @@ object MainConfig {
             "change test train texture",
             "change texture for test train to make easy to identify test train and electric train",
             true)
+
+    @JvmField
+    val addAllowAllPermissionEnabled = cfg.enableDisableProp(
+            "add allow all permission",
+            "adds a permission meaning all permissions are approved",
+            true)
 }
