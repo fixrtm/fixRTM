@@ -15,7 +15,7 @@ class KVSConfig {
 
         if (nameed.isEmpty()) {
             val entry = Entry.Prop(name, computeComment(comment, default), default)
-            if (entries.last() != Entry.EmptyLine)
+            if (entries.isNotEmpty() && entries.last() != Entry.EmptyLine)
                 entries.add(Entry.EmptyLine)
             entries.add(entry)
             return entry
