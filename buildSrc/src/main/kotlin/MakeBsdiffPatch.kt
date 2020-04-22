@@ -28,6 +28,9 @@ open class MakeBsdiffPatch : DefaultTask() {
             val oldBytes = oldFile.readBytes()
             val newBytes = newFile.readBytes()
 
+            if (oldBytes.contentEquals(newBytes))
+                continue
+
             val bsDiffFile = patchDir.resolve("$newPath.bsdiff")
             val newHashFile = patchDir.resolve("$newPath.new.sha1")
             val oldHashFile = patchDir.resolve("$newPath.old.sha1")
