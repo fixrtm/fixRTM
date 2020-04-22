@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import jp.ngt.ngtlib.NGTCore
@@ -86,27 +87,35 @@ object FixRtm {
                 .let { it as IReloadableResourceManager }
                 .registerReloadListener(GeneratedResourcePack)
 
-        GeneratedResourcePack.addImageGenerator("textures/generated/items/item_test_train.png") {
-            try {
-                val baseBackImage = Minecraft.getMinecraft().resourceManager
+        if (changeTestTrainTextureEnabled) {
+            GeneratedResourcePack.addImageGenerator("textures/generated/items/item_test_train.png") {
+                try {
+                    val baseBackImage = Minecraft.getMinecraft().resourceManager
+                            .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
+                            .inputStream.let { ImageIO.read(it) }
+                    val testTrainText = Minecraft.getMinecraft().resourceManager
+                            .getResource(ResourceLocation(MODID, "textures/template/test_train_text.png"))
+                            .inputStream.let { ImageIO.read(it) }
+                    val img = BufferedImage(
+                            max(baseBackImage.width, testTrainText.width),
+                            max(baseBackImage.height, testTrainText.height),
+                            BufferedImage.TYPE_INT_ARGB)
+
+                    val graphics = img.createGraphics()
+
+                    graphics.drawImage(baseBackImage, 0, 0, img.width, img.height, Color(0, 0, 0, 0), null)
+                    graphics.drawImage(testTrainText, 0, 0, img.width, img.height, Color(0, 0, 0, 0), null)
+
+                    img
+                } catch (e: Throwable) {
+                    throw e
+                }
+            }
+        } else {
+            GeneratedResourcePack.addFileGenerator("textures/generated/items/item_test_train.png") {
+                Minecraft.getMinecraft().resourceManager
                         .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
-                        .inputStream.let { ImageIO.read(it) }
-                val testTrainText = Minecraft.getMinecraft().resourceManager
-                        .getResource(ResourceLocation(MODID, "textures/template/test_train_text.png"))
-                        .inputStream.let { ImageIO.read(it) }
-                val img = BufferedImage(
-                        max(baseBackImage.width, testTrainText.width),
-                        max(baseBackImage.height, testTrainText.height),
-                        BufferedImage.TYPE_INT_ARGB)
-
-                val graphics = img.createGraphics()
-
-                graphics.drawImage(baseBackImage, 0, 0, img.width, img.height, Color(0, 0, 0, 0), null)
-                graphics.drawImage(testTrainText, 0, 0, img.width, img.height, Color(0, 0, 0, 0), null)
-
-                img
-            } catch (e: Throwable) {
-                throw e
+                        .inputStream.readBytes()
             }
         }
     }

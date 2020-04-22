@@ -226,10 +226,10 @@ index 89cf20c..bb3eb7d 100644
  .end method
  
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-index 6dbd18f..47ecf68 100644
+index e394adf..b6c8387 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-@@ -649,20 +649,36 @@ L_000a:
+@@ -665,20 +665,39 @@ L_000a:
      invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
@@ -244,6 +244,9 @@ index 6dbd18f..47ecf68 100644
 +    .line 1146
 +    .stack use locals
 +    .end stack
++    getstatic com/anatawa12/fixRtm/asm/config/MainConfig/addAllowAllPermissionEnabled Z
++    ifeq L_if_has_not_all_permit
++    .line 1147
 +    aload 0
 +    ldc "fixrtm.all_permit"
 +    invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
@@ -266,7 +269,7 @@ index 6dbd18f..47ecf68 100644
      iconst_0
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
-@@ -688,20 +704,32 @@ L_0000:
+@@ -704,20 +723,32 @@ L_0000:
      .var 1 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_003f
      getstatic jp/ngt/ngtlib/util/PermissionManager/DEBUG_MODE Z
      ifne L_000a

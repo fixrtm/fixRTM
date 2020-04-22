@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
+import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
 import jp.ngt.rtm.modelpack.ModelPackManager
@@ -39,8 +40,12 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
     }
 
     override fun run() {
-        runWithCrashReport {
-            runThread()
+        if (multiThreadModelConstructEnabled) {
+            runWithCrashReport {
+                runThread()
+            }
+        } else {
+            super.run()
         }
     }
 
