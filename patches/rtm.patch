@@ -189,7 +189,7 @@ index aefff78..27c3d26 100644
      return
  L_0005:
  .end method
-
+ 
 -.method public onPlayerLoggedIn (Lnet/minecraftforge/fml/common/gameevent/PlayerEvent$PlayerLoggedInEvent;)V
 +.method public onServerConnectionFromClient (Lnet/minecraftforge/fml/common/network/FMLNetworkEvent$ServerConnectionFromClientEvent;)V
      .annotation visible net/minecraftforge/fml/common/eventhandler/SubscribeEvent
@@ -254,32 +254,32 @@ index 79fab25..489b1a8 100644
 @@ -12,29 +12,29 @@
  .field private static final SC_INCLUDE Ljava/util/regex/Pattern;
  .end field
-
+ 
  .field private static final ENCODING "[Ljava/lang/String;"
  .end field
-
+ 
  .field private final typeMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/ResourceType;>;"
  .end field
-
+ 
 -.field private final allModelSetMap Ljava/util/Map;
 +.field public final allModelSetMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
-
+ 
  .field private final smpModelSetMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
-
+ 
 -.field private final dummyMap Ljava/util/Map;
 +.field public final dummyMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
-
+ 
  .field public final unconstructSets Ljava/util/List;
      .signature "Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
-
+ 
  .field private final modelCache Ljava/util/Map;
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/IModelNGT;>;"
  .end field
@@ -457,10 +457,10 @@ index 09bef39..c998070 100644
  
  .field private final threadSide Lnet/minecraftforge/fml/relauncher/Side;
  .end field
-
+ 
  .field private final parent Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;
  .end field
-
+ 
  .field private loading Z
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 index 0a49c17..d210f43 100644
@@ -598,7 +598,7 @@ index 9f15efb..380b0e5 100644
      areturn
  L_0077:
  .end method
-
+ 
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 index 34f470e..019c243 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm
