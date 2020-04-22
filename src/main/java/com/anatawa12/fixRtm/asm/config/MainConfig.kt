@@ -30,4 +30,14 @@ object MainConfig {
             "add allow all permission",
             "adds a permission meaning all permissions are approved",
             true)
+
+    @JvmField
+    val markerDistanceMoreRealPosition = cfg.enableDisableProp(
+            "marker distances more real position",
+            "make marker distances signs more real position",
+            true)
+
+    init {
+        configFile.writer().use { cfg.writeTo(it) }
+    }
 }
