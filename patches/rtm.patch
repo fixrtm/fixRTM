@@ -573,6 +573,177 @@ index d2c0e4b..6ffb4cc 100644
      .var 7 is prop Ljp/ngt/rtm/modelpack/state/ResourceStateRail; from L_0007 to L_0052
      aload 7
      ifnull L_004d
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/RenderMarkerBlock.jasm b/src/main/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.jasm
+index 14eaa94..bd54e73 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/RenderMarkerBlock.jasm
++++ b/src/main/rtm/jp/ngt/rtm/rail/RenderMarkerBlock.jasm
+@@ -963,22 +963,26 @@ L_005c:
+     iconst_1
+     if_icmpgt L_0098
+ L_0061:
+     .line 212
+     fload 9
+     iload 10
+     i2f
+     fmul
+     fstore 11
+ L_0068:
+-    .line 213
+     .var 11 is moveX F from L_0068 to L_0094
++
++    ldc "markerDistanceMoreRealPosition"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
++    .line 213
+     aload 7
+     ldc -0.4f
+     fload 11
+     fadd
+     fconst_0
+     ldc 0.4f
+     fload 9
+     fadd
+     invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
+ L_0073:
+@@ -1007,20 +1011,109 @@ L_0089:
+     .line 216
+     aload 7
+     ldc 0.4f
+     fload 11
+     fadd
+     fconst_0
+     ldc 0.4f
+     fload 9
+     fadd
+     invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++
++    ldc "markerDistanceMoreRealPosition"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    .line 1213
++    aload 7
++    ldc -0.4f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.4f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1214
++    aload 7
++    ldc -0.4f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.6f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1215
++    aload 7
++    ldc 0.4f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.6f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1216
++    aload 7
++    ldc 0.4f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.4f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++
++    .line 1217
++    aload 7
++    ldc -0.1f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.1f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1218
++    aload 7
++    ldc -0.1f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.9f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1219
++    aload 7
++    ldc 0.1f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.9f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++    .line 1220
++    aload 7
++    ldc 0.1f
++    fload 11
++    fadd
++    fconst_0
++    ldc -0.1f
++    fload 9
++    fadd
++    invokevirtual jp/ngt/ngtlib/renderer/NGTTessellator/addVertex (FFF)V
++
++    ldc ""
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+ L_0094:
+     .line 210
+     iinc 10 1
+     goto L_005c
+ L_0098:
+     .line 207
+     .stack
+         locals Object jp/ngt/rtm/rail/RenderMarkerBlock
+         locals Object jp/ngt/rtm/rail/TileEntityMarker
+         locals Integer
+@@ -1124,20 +1217,28 @@ L_00ca:
+     fstore 12
+ L_00d1:
+     .line 229
+     .var 12 is moveX F from L_00d1 to L_010a
+     invokestatic org/lwjgl/opengl/GL11/glPushMatrix ()V
+ L_00d4:
+     .line 230
+     fload 12
+     fconst_0
+     fload 10
++
++    ldc "markerDistanceMoreRealPosition"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++    ldc -0.5f
++    fadd
++    ldc ""
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     invokestatic org/lwjgl/opengl/GL11/glTranslatef (FFF)V
+ L_00da:
+     .line 231
+     invokestatic jp/ngt/ngtlib/util/NGTUtilClient/getMinecraft ()Lnet/minecraft/client/Minecraft;
+     invokevirtual net/minecraft/client/Minecraft/getRenderManager ()Lnet/minecraft/client/renderer/entity/RenderManager;
+     getfield net/minecraft/client/renderer/entity/RenderManager/playerViewY F
+     fneg
+     fload 5
+     fsub
+     fconst_0
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm b/src/main/rtm/jp/ngt/rtm/rail/util/RailMaker.jasm
 index 9f15efb..380b0e5 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/util/RailMaker.jasm
