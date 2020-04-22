@@ -1,8 +1,10 @@
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.asm.config.MainConfig.dummyModelPackEnabled
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.network.SentAllModels
 import jp.ngt.ngtlib.util.NGTUtil
+import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import jp.ngt.rtm.modelpack.modelset.ResourceSet
@@ -37,8 +39,8 @@ object DummyModelPackManager {
     }
 
     @JvmStatic
-    fun <S: ResourceSet<C>, C : ResourceConfig>getSet(type: ResourceType<C, S>, name: String): S? {
-        if (!useDummyModelSet()) return null
+    fun <S: ResourceSet<C>, C : ResourceConfig>getSet(type: ResourceType<C, S>, name: String): S {
+        if (!useDummyModelSet()) return ModelPackManager.INSTANCE.dummyMap[type.subType ?: type.name]!! as S
         return getModelSetMap(type)[name] ?: registerResourceSet(type, name)
     }
 
@@ -72,6 +74,7 @@ object DummyModelPackManager {
     var gotAllModels = true
 
     fun useDummyModelSet(): Boolean {
+        if (!dummyModelPackEnabled) return false // if disabled
         if (NGTUtil.isServer()) return true // if server
         if (!NGTUtil.isSMP()) return true // if single player
         if (!FixRtm.serverHasFixRTM) return true // if server does not use fixrtm
