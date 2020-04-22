@@ -101,6 +101,20 @@ class KVSConfig {
         }
     }
 
+    fun enableDisableProp(name: String, comment: String, default: Boolean): Boolean {
+        val defaultStr = if (default) "enable" else "disable"
+        val entry = getSingleEntry(name, comment, defaultStr)
+        return when (entry?.value) {
+            "enable", "enabled" -> true
+            "disable", "disabled" -> false
+            null -> default
+            else -> {
+                errors += Error(name, "invalid value for (dis|en)able(d): '${entry.value}'")
+                default
+            }
+        }
+    }
+
     private sealed class Entry {
         object EmptyLine : Entry()
         class Comment(val comment: String): Entry()
