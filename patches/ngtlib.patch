@@ -225,6 +225,174 @@ index 89cf20c..bb3eb7d 100644
  L_009c:
  .end method
  
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
+index 9c7d247..1840c0a 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
+@@ -1532,31 +1532,20 @@ L_0007:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 422
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0004
+     getstatic jp/ngt/ngtlib/io/FileType/OBJ Ljp/ngt/ngtlib/io/FileType;
+     areturn
+ L_0004:
+ .end method
+ 
+-.method public getDrawMode ()I
+-    .limit stack 1
+-    .limit local 1
+-L_0000:
+-    .line 428
+-    .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0004
+-    iconst_4
+-    ireturn
+-L_0004:
+-.end method
+-
+ .method public getMaterials ()Ljava/util/Map;
+     .signature "()Ljava/util/Map<Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/Material;>;"
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 434
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/ObjModel/materials Ljava/util/Map;
+     areturn
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
+index 5d26e9d..4c180c4 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
+@@ -480,21 +480,21 @@ L_0078:
+     .limit local 1
+ L_0000:
+     .line 152
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/sizeBox "[F"
+     areturn
+ L_0005:
+ .end method
+ 
+-.method public renderAll (Z)V
++.method public final renderAll (Z)V
+     .limit stack 3
+     .limit local 3
+ L_0000:
+     .line 158
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_002a
+     .var 1 is smoothing Z from L_0000 to L_002a
+     iload 1
+     ifeq L_0008
+ L_0004:
+     .line 160
+@@ -538,21 +538,21 @@ L_0026:
+     .line 172
+     .stack
+         locals Object jp/ngt/ngtlib/renderer/model/PolygonModel
+         locals Integer
+         locals Object jp/ngt/ngtlib/renderer/NGTTessellator
+     .end stack
+     return
+ L_002a:
+ .end method
+ 
+-.method public tessellateAll (Ljp/ngt/ngtlib/renderer/NGTTessellator;Z)V
++.method public final tessellateAll (Ljp/ngt/ngtlib/renderer/NGTTessellator;Z)V
+     .limit stack 3
+     .limit local 5
+ L_0000:
+     .line 176
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_001c
+     .var 1 is tessellator Ljp/ngt/ngtlib/renderer/NGTTessellator; from L_0000 to L_001c
+     .var 2 is smoothing Z from L_0000 to L_001c
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/groupObjects Ljava/util/List;
+     invokeinterface java/util/List/iterator ()Ljava/util/Iterator;
+@@ -585,21 +585,21 @@ L_0018:
+     .line 180
+     .stack
+         locals Object jp/ngt/ngtlib/renderer/model/PolygonModel
+         locals Object jp/ngt/ngtlib/renderer/NGTTessellator
+         locals Integer
+     .end stack
+     return
+ L_001c:
+ .end method
+ 
+-.method public varargs renderOnly "(Z[Ljava/lang/String;)V"
++.method public final varargs renderOnly "(Z[Ljava/lang/String;)V"
+     .limit stack 2
+     .limit local 9
+ L_0000:
+     .line 185
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_004c
+     .var 1 is smoothing Z from L_0000 to L_004c
+     .var 2 is groupNames "[Ljava/lang/String;" from L_0000 to L_004c
+     iload 1
+     ifeq L_0008
+ L_0004:
+@@ -701,21 +701,21 @@ L_0044:
+     sipush 7424
+     invokestatic org/lwjgl/opengl/GL11/glShadeModel (I)V
+ L_0048:
+     .line 205
+     .stack use locals
+     .end stack
+     return
+ L_004c:
+ .end method
+ 
+-.method public renderPart (ZLjava/lang/String;)V
++.method public final renderPart (ZLjava/lang/String;)V
+     .limit stack 2
+     .limit local 5
+ L_0000:
+     .line 210
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0036
+     .var 1 is smoothing Z from L_0000 to L_0036
+     .var 2 is partName Ljava/lang/String; from L_0000 to L_0036
+     iload 1
+     ifeq L_0008
+ L_0004:
+@@ -780,33 +780,33 @@ L_002e:
+     sipush 7424
+     invokestatic org/lwjgl/opengl/GL11/glShadeModel (I)V
+ L_0032:
+     .line 227
+     .stack use locals
+     .end stack
+     return
+ L_0036:
+ .end method
+ 
+-.method public getDrawMode ()I
++.method public final getDrawMode ()I
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 232
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/drawMode I
+     ireturn
+ L_0005:
+ .end method
+ 
+-.method public getGroupObjects ()Ljava/util/List;
++.method public final getGroupObjects ()Ljava/util/List;
+     .signature "()Ljava/util/List<Ljp/ngt/ngtlib/renderer/model/GroupObject;>;"
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 238
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/groupObjects Ljava/util/List;
+     areturn
+ L_0005:
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 index e394adf..b6c8387 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
