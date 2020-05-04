@@ -42,7 +42,6 @@ object FixRtm {
 
     @Mod.EventHandler
     fun preInit(e: FMLPreInitializationEvent) {
-        if (!MainConfig.cachedPolygonModel) CachedPolygonModel.init()
         DummyModelPackManager.registerDummyClass(DummyModelSetConnector::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetContainer::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetFirearm::class.java)

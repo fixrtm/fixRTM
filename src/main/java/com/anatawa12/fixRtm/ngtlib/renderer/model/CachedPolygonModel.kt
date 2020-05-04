@@ -1,135 +1,36 @@
 package com.anatawa12.fixRtm.ngtlib.renderer.model
 
-import com.anatawa12.fixRtm.asm.Preprocessor
-import com.anatawa12.fixRtm.asm.config.KVSConfig
-import com.anatawa12.fixRtm.asm.config.MainConfig
-import com.anatawa12.fixRtm.minecraftDir
-import com.anatawa12.fixRtm.readUTFNullable
-import com.anatawa12.fixRtm.threadFactoryWithPrefix
-import com.anatawa12.fixRtm.writeUTFNullable
-import com.google.common.collect.Iterators
+import com.anatawa12.fixRtm.*
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.*
 import net.minecraft.util.ResourceLocation
 import org.apache.commons.codec.digest.DigestUtils
-import org.apache.logging.log4j.LogManager
 import java.io.*
-import java.util.*
-import java.util.concurrent.*
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
+import java.util.concurrent.Executors
 
 object CachedPolygonModel {
     val type = FileType("fixrtm-cached-polygon-model-file", "fixrtm cached polygon model file.")
-    private val logger = LogManager.getLogger("jasm-model-cache")
-    private val executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-            threadFactoryWithPrefix("jasm-model-cache-creating"))
 
-    internal fun init() {
-        // first, static initializer
-        checkCache()
-    }
-
-    //private var loadedCache: SoftReference<ConcurrentHashMap<String, CachedModel>>? = null
-    private val cache = ConcurrentHashMap<String, CachedModel>()
-    private var writings = Collections.newSetFromMap<String>(ConcurrentHashMap())
     private val baseDir = minecraftDir.resolve("fixrtm-model-cache")
-    private val checkLock = ReentrantLock()
-    private var checked = false
 
-    private fun checkCache() {
-        if (checked) return
-        checkLock.withLock {
-            if (checked) return
-            baseDir.mkdirs()
-            val digest = DigestUtils.sha1Hex(SequenceInputStream(
-                    Iterators.asEnumeration(
-                            minecraftDir.resolve("mods")
-                                    .walkBottomUp()
-                                    .filter { it.isFile }
-                                    .map { it.canonicalFile }
-                                    .sorted()
-                                    .flatMap {
-                                        sequenceOf(
-                                                it.path.toByteArray(Charsets.UTF_16).inputStream(),
-                                                it.inputStream().buffered())
-                                    }
-                                    .iterator()
-                    )
-            ))
-            val modsDigest = baseDir.resolve("mods-digest")
-                    .also { it.appendText("") }
-                    .readText()
-            if (digest != modsDigest) {
-                logger.warn("mods dir may changed so discord cache")
-                baseDir.deleteRecursively()
-                baseDir.mkdirs()
-                baseDir.resolve("mods-digest").writeText(digest)
-            } else {
-                val hex2 = "[0-9a-fA-F]{2}".toRegex()
-                val hex40 = "[0-9a-fA-F]{40}".toRegex()
-                baseDir.listFiles()!!
-                        .asSequence()
-                        .filter { it.isDirectory }
-                        .filter { hex2.matches(it.name) }
-                        .flatMap { it.listFiles()!!.asSequence() }
-                        .filter { it.isFile }
-                        .filter { hex40.matches(it.name) }
-                        .forEach { file ->
-                            executor.submit {
-                                CachedModel(file.inputStream().buffered())
-                                        .also { cache[file.name] = it }
-                                CachedModel(file.inputStream().buffered())
-                                        .also { cache[file.name] = it }
-                            }
-                        }
-            }
-            checked = true
-        }
+    private val cache = FileCache<PolygonModel>(
+            baseDir,
+            DigestUtils.sha1Hex(minecraftDir.resolve("mods").directoryDigestBaseStream()),
+            Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+                    threadFactoryWithPrefix("jasm-model-cache-creating")),
+            { out, v -> CachedModelWriter.writeCachedModel(DataOutputStream(out), v) },
+            ::CachedModel
+    )
+
+    init {
+        cache.loadAll()
     }
 
-    private fun getCacheValue(sha1: String) = cache[sha1]
-
-    fun getCachedModel(sha1: String): PolygonModel? {
-        getCacheValue(sha1)?.let { return it }
-        if (sha1 in writings) return null
-        val file = getFile(sha1)
-        if (!file.exists()) return null
-
-        try {
-            return CachedModel(file.inputStream().buffered())
-                    .also { cache[sha1] = it }
-        } catch (e: IOException) {
-            file.delete()
-            logger.error("reading cache", e)
-            return null
-        } finally {
-        }
-    }
+    fun getCachedModel(sha1: String): PolygonModel? = cache.getCachedValue(sha1)
 
     fun putCachedModel(sha1: String, model: PolygonModel) {
-        executor.submit {
-            val file = getFile(sha1)
-            if (file.exists())
-                logger.warn("sha butting: $sha1")
-            writings.add(sha1)
-            try {
-                val bas = ByteArrayOutputStream()
-                CachedModelWriter.writeCachedModel(DataOutputStream(bas), model)
-                file.outputStream().buffered().use { bas.writeTo(it) }
-            } catch (e: IOException) {
-                file.delete()
-                logger.error("putting cache", e)
-            } finally {
-                writings.remove(sha1)
-            }
-        }
+        cache.putCachedValue(sha1, model)
     }
-
-    private fun getFile(sha1: String) = baseDir
-            .resolve(sha1.substring(0, 2))
-            .also { it.mkdirs() }
-            .resolve(sha1)
 
     private class CachedModel(file: InputStream): PolygonModel() {
         private val materials = mutableMapOf<String, Material>()
