@@ -225,6 +225,365 @@ index 89cf20c..bb3eb7d 100644
  L_009c:
  .end method
  
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
+index a2f9d39..a54ca73 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
+@@ -33,160 +33,32 @@ L_0000:
+     aload 0
+     invokespecial jp/ngt/ngtlib/io/ResourceLocationCustom/<init> (Ljava/lang/String;Ljava/lang/String;)V
+     aload 1
+     aload 2
+     invokestatic jp/ngt/ngtlib/renderer/model/ModelLoader/loadModel "(Lnet/minecraft/util/ResourceLocation;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+     areturn
+ L_000b:
+ .end method
+ 
+ .method public static varargs loadModel "(Lnet/minecraft/util/ResourceLocation;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+-    .limit stack 4
+-    .limit local 9
+-    .catch java/io/IOException from L_0026 to L_002b using L_002e
+-    .catch java/io/IOException from L_0005 to L_0043 using L_0054
+-    .catch java/io/IOException from L_0045 to L_0052 using L_0054
++    .limit stack 3
++    .limit local 3
+ L_0000:
+     .line 29
+     .var 0 is resource Lnet/minecraft/util/ResourceLocation; from L_0000 to L_0067
+     .var 1 is par1 Ljp/ngt/ngtlib/renderer/model/VecAccuracy; from L_0000 to L_0067
+     .var 2 is args "[Ljava/lang/Object;" from L_0000 to L_0067
+     aload 0
+-    invokevirtual net/minecraft/util/ResourceLocation/toString ()Ljava/lang/String;
+-    astore 3
+-L_0005:
+-    .line 33
+-    .var 3 is fileName Ljava/lang/String; from L_0005 to L_0067
+-    aload 0
+-    invokestatic jp/ngt/ngtlib/io/NGTFileLoader/getInputStream (Lnet/minecraft/util/ResourceLocation;)Ljava/io/InputStream;
+-    astore 4
+-L_000a:
+-    .line 35
+-    .var 4 is is Ljava/io/InputStream; from L_000a to L_0054
+-    getstatic jp/ngt/ngtlib/io/FileType/OBJ Ljp/ngt/ngtlib/io/FileType;
+-    aload 0
+-    invokevirtual net/minecraft/util/ResourceLocation/getPath ()Ljava/lang/String;
+-    invokevirtual jp/ngt/ngtlib/io/FileType/match (Ljava/lang/String;)Z
+-    ifeq L_0045
+-L_0011:
+-    .line 37
+-    aload 0
+-    invokevirtual net/minecraft/util/ResourceLocation/getPath ()Ljava/lang/String;
+-    ldc ".obj"
+-    ldc ".mtl"
+-    invokevirtual java/lang/String/replaceAll (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+-    astore 5
+-L_0019:
+-    .line 38
+-    .var 5 is mtlFileName Ljava/lang/String; from L_0019 to L_0045
+-    new net/minecraft/util/ResourceLocation
+-    dup
+-    aload 0
+-    invokevirtual net/minecraft/util/ResourceLocation/getNamespace ()Ljava/lang/String;
+-    aload 5
+-    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
+-    astore 6
+-L_0022:
+-    .line 39
+-    .var 6 is mtlFile Lnet/minecraft/util/ResourceLocation; from L_0022 to L_0045
+-    aconst_null
+-    astore 7
+-L_0026:
+-    .line 42
+-    .var 7 is is2 Ljava/io/InputStream; from L_0026 to L_0045
+-    aload 6
+-    invokestatic jp/ngt/ngtlib/io/NGTFileLoader/getInputStream (Lnet/minecraft/util/ResourceLocation;)Ljava/io/InputStream;
+-    astore 7
+-L_002b:
+-    .line 47
+-    goto L_0032
+-L_002e:
+-    .line 44
+-    .stack
+-        locals Object net/minecraft/util/ResourceLocation
+-        locals Object jp/ngt/ngtlib/renderer/model/VecAccuracy
+-        locals Object "[Ljava/lang/Object;"
+-        locals Object java/lang/String
+-        locals Object java/io/InputStream
+-        locals Object java/lang/String
+-        locals Object net/minecraft/util/ResourceLocation
+-        locals Object java/io/InputStream
+-        stacks Object java/io/IOException
+-    .end stack
+-    astore 8
+-L_0032:
+-    .line 48
+-    .stack use locals
+-    .end stack
+-    iconst_2
+-    anewarray java/io/InputStream
+-    dup
+-    iconst_0
+-    aload 4
+-    aastore
+-    dup
+-    iconst_1
+-    aload 7
+-    aastore
+-    aload 3
+-    aload 1
+-    aload 2
+-    invokestatic jp/ngt/ngtlib/renderer/model/ModelLoader/loadModel "([Ljava/io/InputStream;Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+-L_0043:
+-    areturn
+-L_0045:
+-    .line 52
+-    .stack
+-        locals Object net/minecraft/util/ResourceLocation
+-        locals Object jp/ngt/ngtlib/renderer/model/VecAccuracy
+-        locals Object "[Ljava/lang/Object;"
+-        locals Object java/lang/String
+-        locals Object java/io/InputStream
+-    .end stack
+-    iconst_1
+-    anewarray java/io/InputStream
+-    dup
+-    iconst_0
+-    aload 4
+-    aastore
+-    aload 3
+     aload 1
+     aload 2
+-    invokestatic jp/ngt/ngtlib/renderer/model/ModelLoader/loadModel "([Ljava/io/InputStream;Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+-L_0052:
++    invokestatic com/anatawa12/fixRtm/ngtlib/renderer/model/ModelLoaderKt/loadModel "(Lnet/minecraft/util/ResourceLocation;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+     areturn
+-L_0054:
+-    .line 55
+-    .stack
+-        locals Object net/minecraft/util/ResourceLocation
+-        locals Object jp/ngt/ngtlib/renderer/model/VecAccuracy
+-        locals Object "[Ljava/lang/Object;"
+-        locals Object java/lang/String
+-        stacks Object java/io/IOException
+-    .end stack
+-    astore 4
+-L_0058:
+-    .line 57
+-    .var 4 is e Ljava/io/IOException; from L_0058 to L_0067
+-    new jp/ngt/ngtlib/renderer/model/ModelFormatException
+-    dup
+-    new java/lang/StringBuilder
+-    dup
+-    invokespecial java/lang/StringBuilder/<init> ()V
+-    ldc "Failed to load model : "
+-    invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+-    aload 3
+-    invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+-    invokevirtual java/lang/StringBuilder/toString ()Ljava/lang/String;
+-    aload 4
+-    invokespecial jp/ngt/ngtlib/renderer/model/ModelFormatException/<init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+-    athrow
+ L_0067:
+ .end method
+ 
+ .method public static varargs loadModel "(Ljava/io/File;Ljp/ngt/ngtlib/renderer/model/VecAccuracy;[Ljava/lang/Object;)Ljp/ngt/ngtlib/renderer/model/PolygonModel;"
+     .limit stack 5
+     .limit local 8
+     .catch java/io/IOException from L_0026 to L_0030 using L_0033
+     .catch java/io/IOException from L_0000 to L_0049 using L_005b
+     .catch java/io/IOException from L_004b to L_0059 using L_005b
+ L_0000:
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
+index 9c7d247..1840c0a 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ObjModel.jasm
+@@ -1532,31 +1532,20 @@ L_0007:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 422
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0004
+     getstatic jp/ngt/ngtlib/io/FileType/OBJ Ljp/ngt/ngtlib/io/FileType;
+     areturn
+ L_0004:
+ .end method
+ 
+-.method public getDrawMode ()I
+-    .limit stack 1
+-    .limit local 1
+-L_0000:
+-    .line 428
+-    .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0004
+-    iconst_4
+-    ireturn
+-L_0004:
+-.end method
+-
+ .method public getMaterials ()Ljava/util/Map;
+     .signature "()Ljava/util/Map<Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/Material;>;"
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 434
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/ObjModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/ObjModel/materials Ljava/util/Map;
+     areturn
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
+index 5d26e9d..84909bf 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/PolygonModel.jasm
+@@ -8,21 +8,21 @@
+ .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+     value e = net/minecraftforge/fml/relauncher/Side CLIENT
+ .end annotation
+ 
+ .field protected fileName Ljava/lang/String;
+ .end field
+ 
+ .field protected drawMode I
+ .end field
+ 
+-.field protected accuracy Ljp/ngt/ngtlib/renderer/model/VecAccuracy;
++.field public accuracy Ljp/ngt/ngtlib/renderer/model/VecAccuracy;
+ .end field
+ 
+ .field protected sizeBox "[F"
+ .end field
+ 
+ .field public final vertices Ljava/util/List;
+     .signature "Ljava/util/List<Ljp/ngt/ngtlib/renderer/model/Vertex;>;"
+ .end field
+ 
+ .field public final groupObjects Ljava/util/List;
+@@ -480,21 +480,21 @@ L_0078:
+     .limit local 1
+ L_0000:
+     .line 152
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/sizeBox "[F"
+     areturn
+ L_0005:
+ .end method
+ 
+-.method public renderAll (Z)V
++.method public final renderAll (Z)V
+     .limit stack 3
+     .limit local 3
+ L_0000:
+     .line 158
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_002a
+     .var 1 is smoothing Z from L_0000 to L_002a
+     iload 1
+     ifeq L_0008
+ L_0004:
+     .line 160
+@@ -538,21 +538,21 @@ L_0026:
+     .line 172
+     .stack
+         locals Object jp/ngt/ngtlib/renderer/model/PolygonModel
+         locals Integer
+         locals Object jp/ngt/ngtlib/renderer/NGTTessellator
+     .end stack
+     return
+ L_002a:
+ .end method
+ 
+-.method public tessellateAll (Ljp/ngt/ngtlib/renderer/NGTTessellator;Z)V
++.method public final tessellateAll (Ljp/ngt/ngtlib/renderer/NGTTessellator;Z)V
+     .limit stack 3
+     .limit local 5
+ L_0000:
+     .line 176
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_001c
+     .var 1 is tessellator Ljp/ngt/ngtlib/renderer/NGTTessellator; from L_0000 to L_001c
+     .var 2 is smoothing Z from L_0000 to L_001c
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/groupObjects Ljava/util/List;
+     invokeinterface java/util/List/iterator ()Ljava/util/Iterator;
+@@ -585,21 +585,21 @@ L_0018:
+     .line 180
+     .stack
+         locals Object jp/ngt/ngtlib/renderer/model/PolygonModel
+         locals Object jp/ngt/ngtlib/renderer/NGTTessellator
+         locals Integer
+     .end stack
+     return
+ L_001c:
+ .end method
+ 
+-.method public varargs renderOnly "(Z[Ljava/lang/String;)V"
++.method public final varargs renderOnly "(Z[Ljava/lang/String;)V"
+     .limit stack 2
+     .limit local 9
+ L_0000:
+     .line 185
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_004c
+     .var 1 is smoothing Z from L_0000 to L_004c
+     .var 2 is groupNames "[Ljava/lang/String;" from L_0000 to L_004c
+     iload 1
+     ifeq L_0008
+ L_0004:
+@@ -701,21 +701,21 @@ L_0044:
+     sipush 7424
+     invokestatic org/lwjgl/opengl/GL11/glShadeModel (I)V
+ L_0048:
+     .line 205
+     .stack use locals
+     .end stack
+     return
+ L_004c:
+ .end method
+ 
+-.method public renderPart (ZLjava/lang/String;)V
++.method public final renderPart (ZLjava/lang/String;)V
+     .limit stack 2
+     .limit local 5
+ L_0000:
+     .line 210
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0036
+     .var 1 is smoothing Z from L_0000 to L_0036
+     .var 2 is partName Ljava/lang/String; from L_0000 to L_0036
+     iload 1
+     ifeq L_0008
+ L_0004:
+@@ -780,33 +780,33 @@ L_002e:
+     sipush 7424
+     invokestatic org/lwjgl/opengl/GL11/glShadeModel (I)V
+ L_0032:
+     .line 227
+     .stack use locals
+     .end stack
+     return
+ L_0036:
+ .end method
+ 
+-.method public getDrawMode ()I
++.method public final getDrawMode ()I
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 232
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/drawMode I
+     ireturn
+ L_0005:
+ .end method
+ 
+-.method public getGroupObjects ()Ljava/util/List;
++.method public final getGroupObjects ()Ljava/util/List;
+     .signature "()Ljava/util/List<Ljp/ngt/ngtlib/renderer/model/GroupObject;>;"
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 238
+     .var 0 is this Ljp/ngt/ngtlib/renderer/model/PolygonModel; from L_0000 to L_0005
+     aload 0
+     getfield jp/ngt/ngtlib/renderer/model/PolygonModel/groupObjects Ljava/util/List;
+     areturn
+ L_0005:
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
 index e394adf..b6c8387 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm

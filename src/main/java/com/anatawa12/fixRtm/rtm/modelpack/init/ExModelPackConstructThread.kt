@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
 import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
+import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
 import jp.ngt.rtm.modelpack.ModelPackManager
@@ -19,6 +20,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
     @Volatile
     private var loading = true
     private var index = AtomicInteger(0)
+
     @Volatile
     private var lastLoadedModelName: String = ""
 
@@ -69,7 +71,8 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         }
         guiUpdateThread.start()
 
-        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), ThreadFactoryImpl())
+        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
 
         val futures = mutableListOf<Future<*>>()
 
@@ -115,20 +118,6 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             true
         } else {
             false
-        }
-    }
-
-    private class ThreadFactoryImpl : ThreadFactory {
-        private val group: ThreadGroup = System.getSecurityManager()?.threadGroup ?: Thread.currentThread().threadGroup
-        private val threadNumber = AtomicInteger(1)
-
-        override fun newThread(r: Runnable?): Thread? {
-            val t = Thread(group, r,
-                    "fixrtm-ModelPackConstruct-pool-" + threadNumber.getAndIncrement(),
-                    0)
-            if (t.isDaemon) t.isDaemon = false
-            if (t.priority != Thread.NORM_PRIORITY) t.priority = Thread.NORM_PRIORITY
-            return t
         }
     }
 }
