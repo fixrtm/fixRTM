@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 object CachedPolygonModel {
     val type = FileType("fixrtm-cached-polygon-model-file", "fixrtm cached polygon model file.")
 
-    private val baseDir = minecraftDir.resolve("fixrtm-model-cache")
+    private val baseDir = fixCacheDir.resolve("polygon-model")
 
     private val cache = FileCache<PolygonModel>(
             baseDir,

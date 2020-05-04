@@ -29,6 +29,7 @@ fun <E> List<E?>.isAllNotNull(): Boolean = all { it != null }
 fun <E> Array<E?>.isAllNotNull(): Boolean = all { it != null }
 
 val minecraftDir = Loader.instance().configDir.parentFile!!
+val fixCacheDir = minecraftDir.resolve("fixrtm-cache")
 
 fun File.directoryDigestBaseStream()
         = SequenceInputStream(Iterators.asEnumeration(
