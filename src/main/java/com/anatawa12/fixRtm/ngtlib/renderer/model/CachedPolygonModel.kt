@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm.ngtlib.renderer.model
 
 import com.anatawa12.fixRtm.*
+import com.anatawa12.fixRtm.io.FIXModelPack
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.*
 import net.minecraft.util.ResourceLocation
@@ -26,9 +27,11 @@ object CachedPolygonModel {
         cache.loadAll()
     }
 
-    fun getCachedModel(sha1: String): PolygonModel? = cache.getCachedValue(sha1)
+    fun getCachedModel(pack: FIXModelPack, sha1: String): PolygonModel? {
+        return cache.getCachedValue(sha1)
+    }
 
-    fun putCachedModel(sha1: String, model: PolygonModel) {
+    fun putCachedModel(pack: FIXModelPack, sha1: String, model: PolygonModel) {
         cache.putCachedValue(sha1, model)
     }
 
