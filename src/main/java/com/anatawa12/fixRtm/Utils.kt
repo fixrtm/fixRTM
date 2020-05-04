@@ -2,10 +2,11 @@ package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
+import com.anatawa12.fixRtm.utils.sortedWalk
+import com.google.common.collect.Iterables
+import com.google.common.collect.Iterators
 import net.minecraftforge.fml.common.Loader
-import java.io.DataInput
-import java.io.DataOutput
-import java.io.UTFDataFormatException
+import java.io.*
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -28,6 +29,18 @@ fun <E> List<E?>.isAllNotNull(): Boolean = all { it != null }
 fun <E> Array<E?>.isAllNotNull(): Boolean = all { it != null }
 
 val minecraftDir = Loader.instance().configDir.parentFile!!
+
+fun File.directoryDigestBaseStream()
+        = SequenceInputStream(Iterators.asEnumeration(
+        this.sortedWalk()
+                .flatMap {
+                    sequenceOf(
+                            it.toRelativeString(this).byteInputStream(),
+                            it.inputStream().buffered()
+                    )
+                }
+                .iterator()
+))
 
 fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     if (string == null) return writeShort(0xFFFF)
