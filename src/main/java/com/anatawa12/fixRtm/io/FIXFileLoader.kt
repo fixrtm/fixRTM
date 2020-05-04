@@ -11,6 +11,7 @@ import java.util.*
 import java.util.zip.ZipFile
 
 object FIXFileLoader {
+    val allModelPacks: Set<FIXModelPack>
     private val packs: Map<String, Set<FIXModelPack>>
 
     init {
@@ -26,6 +27,8 @@ object FIXFileLoader {
         }
 
         this.packs = packs
+
+        allModelPacks = packs.flatMapTo(mutableSetOf()) { it.value }
     }
 
     fun getResource(location: ResourceLocation): FIXResource {
