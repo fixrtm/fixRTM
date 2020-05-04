@@ -37,6 +37,11 @@ object MainConfig {
             "make marker distances signs more real position",
             true)
 
+    val cachedPolygonModel = cfg.enableDisableProp(
+            "cached polygon model",
+            "caches obj, mqo model.",
+            true)
+
     init {
         configFile.writer().use { cfg.writeTo(it) }
     }

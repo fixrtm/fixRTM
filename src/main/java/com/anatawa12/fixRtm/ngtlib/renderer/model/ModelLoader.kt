@@ -2,6 +2,7 @@
 
 package com.anatawa12.fixRtm.ngtlib.renderer.model
 
+import com.anatawa12.fixRtm.asm.config.MainConfig
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.io.NGTFileLoader
 import jp.ngt.ngtlib.renderer.model.ModelFormatException
@@ -19,11 +20,13 @@ fun loadModel(resource: ResourceLocation, par1: VecAccuracy, vararg args: Any?):
     try {
         val digest = DigestUtils.sha1Hex("$fileName:$par1")
 
-        CachedPolygonModel.getCachedModel(digest)?.let { return it }
+        if (MainConfig.cachedPolygonModel)
+            CachedPolygonModel.getCachedModel(digest)?.let { return it }
 
         val model = ModelLoader.loadModel(inputStreams(resource), fileName, par1, *args)
 
-        CachedPolygonModel.putCachedModel(digest, model)
+        if (MainConfig.cachedPolygonModel)
+            CachedPolygonModel.putCachedModel(digest, model)
 
         return model
     } catch (var10: IOException) {
