@@ -26,7 +26,6 @@ object CachedPolygonModel {
             threadFactoryWithPrefix("jasm-model-cache-creating"))
 
     internal fun init() {
-        if (!MainConfig.cachedPolygonModel) return
         // first, static initializer
         checkCache()
     }
@@ -92,8 +91,6 @@ object CachedPolygonModel {
     private fun getCacheValue(sha1: String) = cache[sha1]
 
     fun getCachedModel(sha1: String): PolygonModel? {
-        if (!MainConfig.cachedPolygonModel)
-            return null
         getCacheValue(sha1)?.let { return it }
         if (sha1 in writings) return null
         val file = getFile(sha1)
@@ -111,7 +108,6 @@ object CachedPolygonModel {
     }
 
     fun putCachedModel(sha1: String, model: PolygonModel) {
-        if (!MainConfig.cachedPolygonModel) return
         executor.submit {
             val file = getFile(sha1)
             if (file.exists())

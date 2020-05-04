@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
@@ -41,7 +42,7 @@ object FixRtm {
 
     @Mod.EventHandler
     fun preInit(e: FMLPreInitializationEvent) {
-        CachedPolygonModel.init()
+        if (!MainConfig.cachedPolygonModel) CachedPolygonModel.init()
         DummyModelPackManager.registerDummyClass(DummyModelSetConnector::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetContainer::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetFirearm::class.java)

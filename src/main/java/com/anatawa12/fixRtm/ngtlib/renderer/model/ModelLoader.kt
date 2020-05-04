@@ -16,17 +16,17 @@ import java.io.InputStream
 
 
 fun loadModel(resource: ResourceLocation, par1: VecAccuracy, vararg args: Any?): PolygonModel? {
+    if (!MainConfig.cachedPolygonModel)
+        return ModelLoader.loadModel__NGTLIB(resource, par1, *args)
     val fileName = resource.toString()
     try {
         val digest = DigestUtils.sha1Hex("$fileName:$par1")
 
-        if (MainConfig.cachedPolygonModel)
-            CachedPolygonModel.getCachedModel(digest)?.let { return it }
+        CachedPolygonModel.getCachedModel(digest)?.let { return it }
 
         val model = ModelLoader.loadModel(inputStreams(resource), fileName, par1, *args)
 
-        if (MainConfig.cachedPolygonModel)
-            CachedPolygonModel.putCachedModel(digest, model)
+        CachedPolygonModel.putCachedModel(digest, model)
 
         return model
     } catch (var10: IOException) {
