@@ -9,7 +9,8 @@ class FileCache<TValue>(
         baseDigest: String,
         private val executor: ExecutorService,
         private val serialize: (OutputStream, TValue) -> Unit,
-        private val deserialize: (InputStream) -> TValue
+        private val deserialize: (InputStream) -> TValue,
+        private val withTwoCharDir: Boolean = true
 ) {
     private val cache = ConcurrentHashMap<String, TValue>()
     private var writings = Collections.newSetFromMap<String>(ConcurrentHashMap())
@@ -29,9 +30,16 @@ class FileCache<TValue>(
     fun loadAll() {
         baseDir.listFiles()!!
                 .asSequence()
-                .filter { it.isDirectory }
-                .filter { isHex2(it.name) }
-                .flatMap { it.listFiles()!!.asSequence() }
+                .also { filesInBaseDir ->
+                    if (withTwoCharDir) {
+                        filesInBaseDir
+                                .filter { it.isDirectory }
+                                .filter { isHex2(it.name) }
+                                .flatMap { it.listFiles()!!.asSequence() }
+                    } else {
+                        filesInBaseDir
+                    }
+                }
                 .filter { it.isFile }
                 .filter { isHex40(it.name) }
                 .forEach { file ->
@@ -81,9 +89,13 @@ class FileCache<TValue>(
 
     private fun getFile(sha1In: String): File {
         val sha1 = sha1In.toLowerCase()
-        return baseDir.resolve(sha1.substring(0, 2))
-                .also { it.mkdirs() }
-                .resolve(sha1)
+        if (withTwoCharDir) {
+            return baseDir.resolve(sha1.substring(0, 2))
+                    .also { it.mkdirs() }
+                    .resolve(sha1)
+        } else {
+            return baseDir.resolve(sha1)
+        }
     }
 
     companion object {
