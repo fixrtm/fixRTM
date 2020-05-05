@@ -3,10 +3,10 @@ package com.anatawa12.fixRtm
 import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
-import com.google.common.collect.Iterables
 import com.google.common.collect.Iterators
 import net.minecraftforge.fml.common.Loader
 import java.io.*
+import java.nio.charset.Charset
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -30,6 +30,7 @@ fun <E> Array<E?>.isAllNotNull(): Boolean = all { it != null }
 
 val minecraftDir = Loader.instance().configDir.parentFile!!
 val fixCacheDir = minecraftDir.resolve("fixrtm-cache")
+val MS932 = Charset.forName("MS932")
 
 fun File.directoryDigestBaseStream()
         = SequenceInputStream(Iterators.asEnumeration(

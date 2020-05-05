@@ -1,12 +1,17 @@
 package com.anatawa12.fixRtm.io
 
+import com.anatawa12.fixRtm.Loggers
+import com.anatawa12.fixRtm.MS932
 import com.anatawa12.fixRtm.directoryDigestBaseStream
 import com.anatawa12.fixRtm.minecraftDir
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler
 import org.apache.commons.codec.digest.DigestUtils
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.net.URI
+import java.nio.charset.Charset
 import java.util.*
 import java.util.zip.ZipFile
 
@@ -14,12 +19,13 @@ object FIXFileLoader {
     val allModelPacks: Set<FIXModelPack>
     private val packs: Map<String, Set<FIXModelPack>>
 
+    private val logger = Loggers.getLogger("FIXFileLoader")
+
     init {
         val packs = HashMap<String, MutableSet<FIXModelPack>>()
-        val mods = minecraftDir.resolve("mods")
 
-        for (file in mods.listFiles()!!) {
-            val pack = loadModelPack(file)
+        for (file in getFiles()) {
+            val pack = loadModelPack(file) ?: continue
 
             for (domain in pack.domains) {
                 packs.computeIfAbsent(domain) { HashSet() }.add(pack)
@@ -29,6 +35,18 @@ object FIXFileLoader {
         this.packs = packs
 
         allModelPacks = packs.flatMapTo(mutableSetOf()) { it.value }
+        logger.trace("FIXFileLoader loads model packs:")
+        for (pack in allModelPacks) {
+            logger.trace("${pack.file.name}: ${pack.domains}")
+        }
+    }
+
+    fun getFiles(): List<File> {
+        if (!FMLLaunchHandler.isDeobfuscatedEnvironment())
+            return minecraftDir.resolve("mods").listFiles()!!.asList()
+        else
+            return (minecraftDir.resolve("mods").listFiles()!!.asList()
+                    + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore('!')))))
     }
 
     fun getResource(location: ResourceLocation): FIXResource {
@@ -40,14 +58,27 @@ object FIXFileLoader {
 
     fun getInputStream(location: ResourceLocation): InputStream = getResource(location).inputStream
 
-    private fun loadModelPack(file: File): FIXModelPack = if (file.isFile) {
-        ZipModelPack(file)
-    } else {
-        DirectoryModelPack(file)
+    private fun loadModelPack(file: File): FIXModelPack? {
+        try {
+            if (file.isFile) {
+                return ZipModelPack(file)
+            } else {
+                return DirectoryModelPack(file)
+            }
+        } catch (e: IllegalArgumentException) {
+            if (file.isFile) {
+                return ZipModelPack(file, MS932)
+            } else {
+                throw e
+            }
+        } catch (e: Throwable) {
+            logger.error("trying to construct model pack: ${file.name}", e)
+            return null
+        }
     }
 
-    private class ZipModelPack(override val file: File) : FIXModelPack {
-        private val zipFile = ZipFile(file)
+    private class ZipModelPack(override val file: File, charset: Charset = Charsets.UTF_8) : FIXModelPack {
+        private val zipFile = ZipFile(file, charset)
 
         override val sha1Hash: String = DigestUtils.sha1Hex(file.inputStream().buffered())
 
@@ -57,7 +88,7 @@ object FIXFileLoader {
             val domains = mutableSetOf<String>()
             for (entry in zipFile.entries()) {
                 val parts = entry.name.split("/")
-                if (parts[0] == "assets" && parts.size == 2)
+                if (parts[0] == "assets" && parts.size >= 2 && parts[1].isNotEmpty())
                     domains.add(parts[1])
             }
             this.domains = domains
