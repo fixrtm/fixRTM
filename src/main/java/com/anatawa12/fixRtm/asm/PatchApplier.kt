@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.asm
 
+import com.anatawa12.fixRtm.Loggers
 import io.sigpipe.jbsdiff.Patch
 import net.minecraft.launchwrapper.IClassTransformer
 import org.apache.logging.log4j.LogManager
@@ -57,7 +58,7 @@ class PatchApplier : IClassTransformer {
 
     private val classLoader = PatchApplier::class.java.classLoader
 
-    private val logger = LogManager.getLogger("jasm-patch-applier")
+    private val logger = Loggers.getLogger("jasm-patch-applier")
 
     private val sha1 = ThreadLocal.withInitial { MessageDigest.getInstance("SHA-1") }
 }
