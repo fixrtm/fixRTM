@@ -2,6 +2,7 @@ package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
+import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
@@ -37,6 +38,8 @@ object FixRtm {
 
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
+        FIXFileLoader // init
+        if (!MainConfig.cachedPolygonModel) CachedPolygonModel // init
         if (e.side == Side.CLIENT) registerGenerators()
     }
 
