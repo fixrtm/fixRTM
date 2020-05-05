@@ -61,6 +61,7 @@ object FIXFileLoader {
     private fun loadModelPack(file: File): FIXModelPack? {
         try {
             if (file.isFile) {
+                if (file.extension != "jar" && file.extension != "zip") return null
                 return ZipModelPack(file)
             } else {
                 return DirectoryModelPack(file)
