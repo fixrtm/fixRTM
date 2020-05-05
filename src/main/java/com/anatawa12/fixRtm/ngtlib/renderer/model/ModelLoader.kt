@@ -38,7 +38,7 @@ fun loadModel(resource: ResourceLocation, par1: VecAccuracy, vararg args: Any?):
 
 private fun inputStreams(resource: ResourceLocation): Pair<FIXModelPack, Array<InputStream?>> {
     val mainResource = FIXFileLoader.getResource(resource)
-    val mainStream = mainResource.inputStream
+    val mainStream: InputStream? = mainResource.inputStream
     if (FileType.OBJ.match(resource.path)) {
         val mtlFileName = resource.path.replace(".obj", ".mtl")
         val mtlFile = ResourceLocation(resource.namespace, mtlFileName)
