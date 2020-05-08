@@ -179,7 +179,7 @@ index 5298b6c..b941866 100644
      .stack
          locals Object jp/ngt/rtm/entity/vehicle/RenderVehicleBase
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
-index 137db20..c06076c 100644
+index 137db20..730442e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
 @@ -616,20 +616,30 @@ L_0051:
@@ -213,32 +213,59 @@ index 137db20..c06076c 100644
  L_0065:
      .line 196
      goto L_0083
-@@ -747,20 +757,25 @@ L_0016:
+@@ -665,26 +675,51 @@ L_007d:
+     invokestatic net/minecraftforge/event/ForgeEventFactory/onStopEntityTracking (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/player/EntityPlayer;)V
+ L_0083:
+     .line 205
+     .stack use locals
+     .end stack
      return
- L_001a:
+ L_0087:
  .end method
  
- .method public static trackingVehicle (Lnet/minecraft/entity/Entity;)Z
-     .limit stack 3
-     .limit local 7
+ .method public isVisibleTo (Lnet/minecraft/entity/player/EntityPlayerMP;)Z
+-    .limit stack 1
++    .limit stack 4
+     .limit local 2
  L_0000:
-     .line 232
-     .var 0 is par1 Lnet/minecraft/entity/Entity; from L_0000 to L_0079
-+    iconst_1
+     .line 210
+     .var 0 is this Ljp/ngt/rtm/entity/vehicle/VehicleTrackerEntry; from L_0000 to L_0004
+     .var 1 is playerMP Lnet/minecraft/entity/player/EntityPlayerMP; from L_0000 to L_0004
++    aload 1
++    aload 0
++    getfield jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/trackedEntity Lnet/minecraft/entity/Entity;
++    getfield net/minecraft/entity/Entity/posX D
++    aload 0
++    getfield jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/trackedEntity Lnet/minecraft/entity/Entity;
++    getfield net/minecraft/entity/Entity/posY D
++    aload 0
++    getfield jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/trackedEntity Lnet/minecraft/entity/Entity;
++    getfield net/minecraft/entity/Entity/posZ D
++    invokevirtual net/minecraft/entity/Entity/getDistanceSq (DDD)D
++    ldc 16.0
++    ldc 32.0
++    dmul
++    dup2
++    dmul
++    dcmpl
++    iflt JMP
++    iconst_0
 +    ireturn
++JMP:
 +    .stack
-+        locals Object net/minecraft/entity/Entity
++        locals Object jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry
++        locals Object net/minecraft/entity/player/EntityPlayerMP
 +    .end stack
-     aload 0
-     instanceof jp/ngt/rtm/entity/vehicle/EntityVehicleBase
-     ifne L_000f
-     aload 0
-     instanceof jp/ngt/rtm/entity/train/EntityBogie
-     ifne L_000f
- L_0008:
-     .line 234
-     new java/lang/IllegalArgumentException
-     dup
+     iconst_1
+     ireturn
+ L_0004:
+ .end method
+ 
+ .method private isPlayerWatchingThisChunk (Lnet/minecraft/entity/player/EntityPlayerMP;)Z
+     .limit stack 4
+     .limit local 2
+ L_0000:
+     .line 215
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 index d0e484a..ab9a52f 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
