@@ -267,10 +267,35 @@ index 137db20..730442e 100644
  L_0000:
      .line 215
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
-index d0e484a..ab9a52f 100644
+index d0e484a..b7325e4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
-@@ -226,10 +226,21 @@ L_0003:
+@@ -110,22 +110,23 @@ L_002b:
+ L_0032:
+     .line 36
+     aload 0
+     aload 0
+     getfield jp/ngt/rtm/entity/vehicle/WeatherEffectDummy/parent Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;
+     getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/rotationPitch F
+     putfield jp/ngt/rtm/entity/vehicle/WeatherEffectDummy/rotationPitch F
+ L_0039:
+     .line 38
+     aload 0
++    aload 0
+     getfield jp/ngt/rtm/entity/vehicle/WeatherEffectDummy/parent Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;
+-    getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/isDead Z
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/WeatherEffectDummyKt/shouldDead (Ljp/ngt/rtm/entity/vehicle/WeatherEffectDummy;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)Z
+     ifeq L_0050
+ L_003f:
+     .line 40
+     aload 0
+     invokevirtual jp/ngt/rtm/entity/vehicle/WeatherEffectDummy/setDead ()V
+ L_0043:
+     .line 41
+     ldc "[WED] Remove %d"
+     iconst_1
+     anewarray java/lang/Object
+@@ -226,10 +227,21 @@ L_0003:
      .limit stack 0
      .limit local 2
  L_0000:
