@@ -5,6 +5,7 @@ import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.*
+import net.minecraft.client.Minecraft
 import net.minecraft.util.ResourceLocation
 import org.apache.commons.codec.digest.DigestUtils
 import java.io.*
@@ -32,7 +33,7 @@ object CachedPolygonModel {
         for (modelPack in FIXFileLoader.allModelPacks) {
             val cache = FileCache<PolygonModel>(
                     baseDir.resolve(modelPack.file.name),
-                    DigestUtils.sha1Hex(modelPack.file.inputStream().buffered()),
+                    modelPack.sha1Hash,
                     executor,
                     { out, v -> CachedModelWriter.writeCachedModel(DataOutputStream(out), v) },
                     ::CachedModel,

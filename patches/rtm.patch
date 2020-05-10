@@ -64,6 +64,72 @@ index 5ca3be3..aa70ce9 100644
  
  .method public onBogieUpdate ()V
      .limit stack 2
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.jasm
+index 08fdfe9..a7f5e63 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.jasm
+@@ -1843,46 +1843,57 @@ L_0000:
+     .line 397
+     .var 0 is this Ljp/ngt/rtm/entity/train/util/Formation; from L_0000 to L_001f
+     .var 1 is train Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0000 to L_001f
+     aload 0
+     getfield jp/ngt/rtm/entity/train/util/Formation/direction B
+     ifne L_000b
+     aload 0
+     getfield jp/ngt/rtm/entity/train/util/Formation/entries "[Ljp/ngt/rtm/entity/train/util/FormationEntry;"
+     iconst_0
+     aaload
+-    getfield jp/ngt/rtm/entity/train/util/FormationEntry/train Ljp/ngt/rtm/entity/train/EntityTrainBase;
+     goto L_0016
+ L_000b:
+     .stack
+         locals Object jp/ngt/rtm/entity/train/util/Formation
+         locals Object jp/ngt/rtm/entity/train/EntityTrainBase
+     .end stack
+     aload 0
+     getfield jp/ngt/rtm/entity/train/util/Formation/entries "[Ljp/ngt/rtm/entity/train/util/FormationEntry;"
+     aload 0
+     getfield jp/ngt/rtm/entity/train/util/Formation/entries "[Ljp/ngt/rtm/entity/train/util/FormationEntry;"
+     arraylength
+     iconst_1
+     isub
+     aaload
+-    getfield jp/ngt/rtm/entity/train/util/FormationEntry/train Ljp/ngt/rtm/entity/train/EntityTrainBase;
+ L_0016:
+     .stack use locals
+-        stacks Object jp/ngt/rtm/entity/train/EntityTrainBase
++        stacks Object jp/ngt/rtm/entity/train/util/FormationEntry
+     .end stack
+     astore 2
+ L_0019:
+     .line 398
+-    .var 2 is front Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0019 to L_001f
++    .var 2 is front Ljp/ngt/rtm/entity/train/util/FormationEntry; from L_0019 to L_001f
++
++    aload 2
++    ifnonnull L_nonnull
++    iconst_0
++    ireturn
++L_nonnull:
++    .stack
++        locals Object jp/ngt/rtm/entity/train/util/Formation
++        locals Object jp/ngt/rtm/entity/train/EntityTrainBase
++        locals Object jp/ngt/rtm/entity/train/util/FormationEntry
++    .end stack
++
+     aload 1
+     aload 2
++    getfield jp/ngt/rtm/entity/train/util/FormationEntry/train Ljp/ngt/rtm/entity/train/EntityTrainBase;
+     invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/equals (Ljava/lang/Object;)Z
+     ireturn
+ L_001f:
+ .end method
+ 
+ .method public updateTrainMovement ()V
+     .limit stack 5
+     .limit local 6
+ L_0000:
+     .line 404
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 index b252a06..0c0db45 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
@@ -688,6 +754,35 @@ index 2945cc2..a90bdee 100644
  L_001a:
      .line 120
      aload 0
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketVehicleMovement.jasm b/src/main/rtm/jp/ngt/rtm/network/PacketVehicleMovement.jasm
+index 6e5c39c..e670ca1 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/network/PacketVehicleMovement.jasm
++++ b/src/main/rtm/jp/ngt/rtm/network/PacketVehicleMovement.jasm
+@@ -357,20 +357,24 @@ L_001b:
+ L_0023:
+     .line 97
+     .var 4 is entity Lnet/minecraft/entity/Entity; from L_0023 to L_008e
+     aload 4
+     ifnull L_007c
+     aload 4
+     getfield net/minecraft/entity/Entity/isDead Z
+     ifne L_007c
+ L_002a:
+     .line 99
++
++    aload 4
++    invokestatic com/anatawa12/fixRtm/rtm/network/PacketVehicleMovementKt/addEntityIfNotExits (Lnet/minecraft/entity/Entity;)V
++
+     aload 1
+     getfield jp/ngt/rtm/network/PacketVehicleMovement/vehicleX I
+     i2d
+     ldc 0.03125
+     dmul
+     dstore 5
+ L_0032:
+     .line 100
+     .var 5 is x D from L_0032 to L_0078
+     aload 1
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
 index d2c0e4b..6ffb4cc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
