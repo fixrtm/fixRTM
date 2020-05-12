@@ -11,7 +11,7 @@ fun addEntityIfNotExits(entity: Entity) {
     if ((!entity.addedToChunk || !entity.isAddedToWorld)
             && world.isBlockLoaded(entity.position, false)) {
         Minecraft.getMinecraft().addScheduledTask {
-            logger.info("the entity: $entity is not added")
+            logger.trace("the entity: $entity is not added")
             world.spawnEntity(entity)
         }
     }

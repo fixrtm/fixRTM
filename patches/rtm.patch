@@ -26,10 +26,33 @@ index 2297030..17edb7e 100644
      .line 156
      getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 5ca3be3..aa70ce9 100644
+index 5ca3be3..92dcff4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-@@ -1547,24 +1547,34 @@ L_0012:
+@@ -128,20 +128,22 @@ L_0020:
+     iconst_1
+     putfield jp/ngt/rtm/entity/train/EntityBogie/preventEntitySpawning Z
+ L_0025:
+     .line 81
+     aload 0
+     ldc 2.75f
+     ldc 1.1875f
+     invokevirtual jp/ngt/rtm/entity/train/EntityBogie/setBogieSize (FF)V
+ L_002b:
+     .line 82
++    aload 0
++    invokestatic com/anatawa12/fixRtm/rtm/entity/train/EntityBogieKt/constructor (Ljp/ngt/rtm/entity/train/EntityBogie;)V
+     return
+ L_002e:
+ .end method
+ 
+ .method public <init> (Lnet/minecraft/world/World;BLjp/ngt/rtm/entity/train/EntityTrainBase;)V
+     .limit stack 2
+     .limit local 4
+ L_0000:
+     .line 86
+     .var 0 is this Ljp/ngt/rtm/entity/train/EntityBogie; from L_0000 to L_0012
+@@ -1547,24 +1549,34 @@ L_0012:
      .end stack
      iconst_0
      istore 1
@@ -131,10 +154,33 @@ index 08fdfe9..a7f5e63 100644
  L_0000:
      .line 404
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index b252a06..0c0db45 100644
+index b252a06..595c970 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-@@ -1068,48 +1068,50 @@ L_0004:
+@@ -271,20 +271,22 @@ L_0061:
+ L_0068:
+     .line 96
+     iinc 4 1
+     goto L_0058
+ L_006c:
+     .line 100
+     .stack
+         locals Object jp/ngt/rtm/entity/vehicle/EntityVehicleBase
+         locals Object net/minecraft/world/World
+     .end stack
++    aload 0
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/constructor (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
+     return
+ L_0070:
+ .end method
+ 
+ .method protected entityInit ()V
+     .limit stack 0
+     .limit local 1
+ L_0000:
+     .line 105
+     .var 0 is this Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase; signature "Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase<TT;>;" from L_0000 to L_0003
+@@ -1068,48 +1070,50 @@ L_0004:
      astore 4
  L_000b:
      .line 365
@@ -192,7 +238,7 @@ index b252a06..0c0db45 100644
      getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/posX D
      dsub
      aload 2
-@@ -1228,21 +1230,21 @@ L_0092:
+@@ -1228,21 +1232,21 @@ L_0092:
      .line 387
      .var 12 is z D from L_0092 to L_00b1
      aload 0
