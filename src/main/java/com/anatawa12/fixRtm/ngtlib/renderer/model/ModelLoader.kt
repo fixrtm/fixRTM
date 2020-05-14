@@ -11,7 +11,6 @@ import jp.ngt.ngtlib.renderer.model.ModelLoader
 import jp.ngt.ngtlib.renderer.model.PolygonModel
 import jp.ngt.ngtlib.renderer.model.VecAccuracy
 import net.minecraft.util.ResourceLocation
-import org.apache.commons.codec.digest.DigestUtils
 import java.io.IOException
 import java.io.InputStream
 

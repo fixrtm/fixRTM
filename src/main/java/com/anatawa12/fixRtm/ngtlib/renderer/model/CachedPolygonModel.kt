@@ -4,11 +4,11 @@ import com.anatawa12.fixRtm.caching.ModelPackBasedCache
 import com.anatawa12.fixRtm.caching.TaggedFileManager
 import com.anatawa12.fixRtm.io.FIXModelPack
 import com.anatawa12.fixRtm.readUTFNullable
+import com.anatawa12.fixRtm.utils.DigestUtils
 import com.anatawa12.fixRtm.writeUTFNullable
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.*
 import net.minecraft.util.ResourceLocation
-import org.apache.commons.codec.digest.DigestUtils
 import java.io.*
 
 object CachedPolygonModel {
