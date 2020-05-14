@@ -8,14 +8,34 @@ def fixRtmBuiltJar = jar.archivePath
 def patchesDir = file("${buildDir}/resources/patches")
 def unzippedJarDir = file("$buildDir/unzipped")
 def fixRtmOutputDir = file("$buildDir/libs")
+def remadeClassesDir = file("$buildDir/remade-classes")
+def unzippedNgtsDir = file("$buildDir/unzipped-ngts")
 
-task makeRtmPatch(type: MakeBsdiffPatch) {
-    dependsOn build
-
-    oldFiles = zipTree(oldRTM) + zipTree(oldNGTLib)
-    newFiles = zipTree(fixRtmBuiltJar).matching {
+task unzipNgtsDir(type: Copy) {
+    from (zipTree(oldRTM) + zipTree(oldNGTLib)) {
         include ("**/*.class")
     }
+    into unzippedNgtsDir
+}
+
+task remakeClasses(type: RemakeClassWithConstantPool) {
+    dependsOn build
+    dependsOn unzipNgtsDir
+
+    oldFiles = fileTree(unzippedNgtsDir)
+    newFiles = zipTree(fixRtmBuiltJar).matching {
+        include ("jp/ngt/**/*.class")
+    }
+    outTo = remadeClassesDir
+}
+
+task makeRtmPatch(type: MakeClassBsdiffPatch) {
+    dependsOn remakeClasses
+    dependsOn unzipNgtsDir
+    dependsOn build
+
+    oldFiles = fileTree(unzippedNgtsDir)
+    newFiles = fileTree(remadeClassesDir)
 
     outTo = patchesDir
     patchPrefix = "com/anatawa12/fixRtm/asm/patches"
@@ -25,11 +45,7 @@ task unzipFixRTM(type: Copy) {
     dependsOn build
 
     from (zipTree(fixRtmBuiltJar)){
-        include "com/anatawa12/**/*"
-        include "kotlin/**/*"
-        include "kotlinx/**/*"
-        include "org/**/*"
-        include "io/sigpipe/**/*"
+        exclude ("jp/ngt/**/*")
     }
 
     destinationDir = unzippedJarDir
