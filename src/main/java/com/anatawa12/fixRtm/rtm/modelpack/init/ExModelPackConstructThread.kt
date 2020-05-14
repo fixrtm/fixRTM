@@ -4,6 +4,7 @@ import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabl
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
+import jp.ngt.rtm.modelpack.ModelPackException
 import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.init.ModelPackConstructThread
 import jp.ngt.rtm.modelpack.init.ModelPackLoadThread
@@ -98,15 +99,23 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
     }
 
     private fun construct(set: ResourceSet<*>) {
-        if (threadSide == Side.SERVER) {
-            set.constructOnServer()
-        } else {
-            set.constructOnClient()
-            set.finishConstruct()
+        try {
+            if (threadSide == Side.SERVER) {
+                set.constructOnServer()
+            } else {
+                set.constructOnClient()
+                set.finishConstruct()
+            }
+            val index = index.incrementAndGet()
+            lastLoadedModelName = set.config.name
+            NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+        } catch (throwable: Throwable) {
+            if (set.config.file == null) {
+                throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)", throwable)
+            } else {
+                throw ModelConstructingException("constructing resource: ${set.config.name} (source file: ${set.config.file})", throwable)
+            }
         }
-        val index = index.incrementAndGet()
-        lastLoadedModelName = set.config.name
-        NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
     }
 
 
