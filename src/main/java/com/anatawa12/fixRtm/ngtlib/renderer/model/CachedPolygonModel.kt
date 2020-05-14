@@ -1,57 +1,39 @@
 package com.anatawa12.fixRtm.ngtlib.renderer.model
 
-import com.anatawa12.fixRtm.*
-import com.anatawa12.fixRtm.io.FIXFileLoader
+import com.anatawa12.fixRtm.caching.ModelPackBasedCache
+import com.anatawa12.fixRtm.caching.TaggedFileManager
 import com.anatawa12.fixRtm.io.FIXModelPack
+import com.anatawa12.fixRtm.readUTFNullable
+import com.anatawa12.fixRtm.writeUTFNullable
 import jp.ngt.ngtlib.io.FileType
 import jp.ngt.ngtlib.renderer.model.*
-import net.minecraft.client.Minecraft
 import net.minecraft.util.ResourceLocation
 import org.apache.commons.codec.digest.DigestUtils
 import java.io.*
-import java.util.concurrent.Executors
 
 object CachedPolygonModel {
     val type = FileType("fixrtm-cached-polygon-model-file", "fixrtm cached polygon model file.")
 
-    private val baseDir = fixCacheDir.resolve("polygon-model")
-
-    private val caches: Map<FIXModelPack, FileCache<PolygonModel>>
-
-    init {
-        val modelName = FIXFileLoader.allModelPacks.mapTo(mutableSetOf()) { it.file.name }
-
-        for (removedNames in (baseDir.list()?.toSet().orEmpty() - modelName)) {
-            baseDir.resolve("removedNames").deleteRecursively()
-        }
-
-        val executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-                threadFactoryWithPrefix("jasm-model-cache-creating"))
-
-        val caches = mutableMapOf<FIXModelPack, FileCache<PolygonModel>>()
-
-        for (modelPack in FIXFileLoader.allModelPacks) {
-            val cache = FileCache<PolygonModel>(
-                    baseDir.resolve(modelPack.file.name),
-                    modelPack.sha1Hash,
-                    executor,
-                    { out, v -> CachedModelWriter.writeCachedModel(DataOutputStream(out), v) },
-                    ::CachedModel,
-                    withTwoCharDir = false
-            )
-            cache.loadAll()
-            caches[modelPack] = cache
-        }
-
-        this.caches = caches
+    fun getCachedModel(pack: FIXModelPack, resource: ResourceLocation, accuracy: VecAccuracy): PolygonModel? {
+        val sha1 = DigestUtils.sha1Hex("cached-model:$accuracy:$resource")
+        return ModelPackBasedCache.get(pack, sha1, Serializer)
     }
 
-    fun getCachedModel(pack: FIXModelPack, sha1: String): PolygonModel? {
-        return caches[pack]?.getCachedValue(sha1)
+    fun putCachedModel(pack: FIXModelPack, resource: ResourceLocation, accuracy: VecAccuracy, model: PolygonModel) {
+        val sha1 = DigestUtils.sha1Hex("cached-model:$accuracy:$resource")
+        ModelPackBasedCache.put(pack, sha1, model)
     }
 
-    fun putCachedModel(pack: FIXModelPack, sha1: String, model: PolygonModel) {
-        caches[pack]?.putCachedValue(sha1, model)
+    object Serializer : TaggedFileManager.Serializer<PolygonModel> {
+        override val type: Class<PolygonModel> get() = PolygonModel::class.java
+
+        override fun serialize(stream: OutputStream, value: PolygonModel) {
+            CachedModelWriter.writeCachedModel(DataOutputStream(stream), value)
+        }
+
+        override fun deserialize(stream: InputStream): PolygonModel {
+            return CachedModel(stream)
+        }
     }
 
     private class CachedModel(file: InputStream): PolygonModel() {
