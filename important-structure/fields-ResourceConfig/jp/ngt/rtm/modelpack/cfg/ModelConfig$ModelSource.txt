@@ -1,0 +1,19 @@
+super: java/lang/Object
+name: fragmentShaderPath
+type: Ljava/lang/String;
+
+name: modelFile
+type: Ljava/lang/String;
+
+name: rendererPath
+type: Ljava/lang/String;
+
+name: textures
+type: [[Ljava/lang/String;
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig;
+
+name: vertexShaderPath
+type: Ljava/lang/String;
+

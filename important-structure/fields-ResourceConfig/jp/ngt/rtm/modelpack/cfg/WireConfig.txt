@@ -1,0 +1,19 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: deflectionCoefficient
+type: F
+
+name: lengthCoefficient
+type: F
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: sectionLength
+type: F
+
+name: yOffset
+type: F
+

@@ -1,0 +1,10 @@
+super: jp/ngt/rtm/modelpack/cfg/TextureConfig
+name: poleLength
+type: F
+
+name: resolutionU
+type: I
+
+name: resolutionV
+type: I
+

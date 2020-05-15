@@ -1,0 +1,88 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: customButtonTips
+type: [Ljava/lang/String;
+
+name: customButtons
+type: [[Ljava/lang/String;
+
+name: door_left
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$VehicleParts;
+
+name: door_right
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$VehicleParts;
+
+name: headLights
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$Light;
+
+name: interiorLights
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$Light;
+
+name: notDisplayCab
+type: Z
+
+name: pantograph_back
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$VehicleParts;
+
+name: pantograph_front
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$VehicleParts;
+
+name: playerPos
+type: [[F
+
+name: rollsignNames
+type: [Ljava/lang/String;
+
+name: rollsignTexture
+type: Ljava/lang/String;
+
+name: rollsigns
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$Rollsign;
+
+name: seatPos
+type: [[I
+
+name: seatPosF
+type: [[F
+
+name: size
+type: [F
+
+name: smoke
+type: [[Ljava/lang/Object;
+
+name: soundScriptPath
+type: Ljava/lang/String;
+
+name: sound_Acceleration
+type: Ljava/lang/String;
+
+name: sound_Announcement
+type: [[Ljava/lang/String;
+
+name: sound_D_S
+type: Ljava/lang/String;
+
+name: sound_Deceleration
+type: Ljava/lang/String;
+
+name: sound_DoorClose
+type: Ljava/lang/String;
+
+name: sound_DoorOpen
+type: Ljava/lang/String;
+
+name: sound_Horn
+type: Ljava/lang/String;
+
+name: sound_S_A
+type: Ljava/lang/String;
+
+name: sound_Stop
+type: Ljava/lang/String;
+
+name: tailLights
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$Light;
+
+name: wheelRotationSpeed
+type: F
+

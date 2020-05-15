@@ -1,0 +1,331 @@
+
+  // access flags 0x1
+  public load(Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V
+    TRYCATCHBLOCK L0 L1 L2 jp/ngt/rtm/modelpack/ModelPackException
+    TRYCATCHBLOCK L0 L1 L3 java/lang/Throwable
+   L4
+    LINENUMBER 82 L4
+    INVOKEDYNAMIC match()Ljp/ngt/ngtlib/io/FileMatcher; [
+      // handle kind 0x6 : INVOKESTATIC
+      java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+      // arguments:
+      (Ljava/io/File;)Z, 
+      // handle kind 0x6 : INVOKESTATIC
+      jp/ngt/rtm/modelpack/ModelPackManager.lambda$load$0(Ljava/io/File;)Z, 
+      (Ljava/io/File;)Z
+    ]
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTFileLoader.findFile (Ljp/ngt/ngtlib/io/FileMatcher;)Ljava/util/List;
+    ASTORE 2
+   L5
+    LINENUMBER 87 L5
+    ALOAD 0
+    GETFIELD jp/ngt/rtm/modelpack/ModelPackManager.fileCache : Ljava/util/List;
+    ALOAD 2
+    INVOKEINTERFACE java/util/List.addAll (Ljava/util/Collection;)Z
+    POP
+   L6
+    LINENUMBER 89 L6
+    LDC "[ModelPack] Start searching json"
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTLog.debug (Ljava/lang/String;)V
+   L7
+    LINENUMBER 90 L7
+    ALOAD 1
+    ICONST_0
+    GETSTATIC jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState.SEARCHING_MODEL : Ljp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (ILjp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;)V
+   L8
+    LINENUMBER 91 L8
+    ALOAD 1
+    ICONST_1
+    ICONST_0
+    LDC "Searching..."
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarMaxValue (IILjava/lang/String;)V
+   L9
+    LINENUMBER 95 L9
+    INVOKEDYNAMIC match()Ljp/ngt/ngtlib/io/FileMatcher; [
+      // handle kind 0x6 : INVOKESTATIC
+      java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+      // arguments:
+      (Ljava/io/File;)Z, 
+      // handle kind 0x6 : INVOKESTATIC
+      jp/ngt/rtm/modelpack/ModelPackManager.lambda$load$1(Ljava/io/File;)Z, 
+      (Ljava/io/File;)Z
+    ]
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTFileLoader.findFile (Ljp/ngt/ngtlib/io/FileMatcher;)Ljava/util/List;
+    ASTORE 3
+   L10
+    LINENUMBER 100 L10
+    LDC "[ModelPack] Find %d json"
+    ICONST_1
+    ANEWARRAY java/lang/Object
+    DUP
+    ICONST_0
+    ALOAD 3
+    INVOKEINTERFACE java/util/List.size ()I
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    AASTORE
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTLog.debug (Ljava/lang/String;[Ljava/lang/Object;)V
+   L11
+    LINENUMBER 102 L11
+    LDC "[ModelPack] Start registering json"
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTLog.debug (Ljava/lang/String;)V
+   L12
+    LINENUMBER 103 L12
+    ALOAD 1
+    ICONST_0
+    GETSTATIC jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState.LOADING_MODEL : Ljp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (ILjp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;)V
+   L13
+    LINENUMBER 104 L13
+    ALOAD 1
+    ICONST_1
+    ALOAD 3
+    INVOKEINTERFACE java/util/List.size ()I
+    LDC ""
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarMaxValue (IILjava/lang/String;)V
+   L14
+    LINENUMBER 105 L14
+    ICONST_0
+    ISTORE 4
+   L15
+    LINENUMBER 106 L15
+    ALOAD 3
+    INVOKEINTERFACE java/util/List.iterator ()Ljava/util/Iterator;
+    ASTORE 5
+   L16
+   FRAME FULL [jp/ngt/rtm/modelpack/ModelPackManager jp/ngt/rtm/modelpack/init/ModelPackLoadThread java/util/List java/util/List I java/util/Iterator] []
+    ALOAD 5
+    INVOKEINTERFACE java/util/Iterator.hasNext ()Z
+    IFEQ L17
+    ALOAD 5
+    INVOKEINTERFACE java/util/Iterator.next ()Ljava/lang/Object;
+    CHECKCAST java/io/File
+    ASTORE 6
+   L18
+    LINENUMBER 108 L18
+    ALOAD 6
+    INVOKEVIRTUAL java/io/File.getName ()Ljava/lang/String;
+    LDC "_"
+    INVOKEVIRTUAL java/lang/String.contains (Ljava/lang/CharSequence;)Z
+    IFNE L19
+    GOTO L16
+   L19
+    LINENUMBER 109 L19
+   FRAME APPEND [java/io/File]
+    ALOAD 6
+    INVOKEVIRTUAL java/io/File.getName ()Ljava/lang/String;
+    LDC "_"
+    INVOKEVIRTUAL java/lang/String.split (Ljava/lang/String;)[Ljava/lang/String;
+    ICONST_0
+    AALOAD
+    ASTORE 7
+   L20
+    LINENUMBER 111 L20
+    ALOAD 1
+    ICONST_1
+    ILOAD 4
+    ICONST_1
+    IADD
+    ALOAD 6
+    INVOKEVIRTUAL java/io/File.getName ()Ljava/lang/String;
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (IILjava/lang/String;)V
+   L21
+    LINENUMBER 113 L21
+    ALOAD 0
+    GETFIELD jp/ngt/rtm/modelpack/ModelPackManager.typeMap : Ljava/util/Map;
+    ALOAD 7
+    INVOKEINTERFACE java/util/Map.containsKey (Ljava/lang/Object;)Z
+    IFNE L22
+    GOTO L16
+   L22
+    LINENUMBER 114 L22
+   FRAME APPEND [java/lang/String]
+    ALOAD 0
+    GETFIELD jp/ngt/rtm/modelpack/ModelPackManager.typeMap : Ljava/util/Map;
+    ALOAD 7
+    INVOKEINTERFACE java/util/Map.get (Ljava/lang/Object;)Ljava/lang/Object;
+    CHECKCAST jp/ngt/rtm/modelpack/ResourceType
+    ASTORE 8
+   L0
+    LINENUMBER 118 L0
+    ALOAD 0
+    ALOAD 8
+    ALOAD 6
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/ModelPackManager.registerResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/io/File;)Ljava/lang/String;
+    POP
+   L1
+    LINENUMBER 127 L1
+    GOTO L23
+   L2
+    LINENUMBER 120 L2
+   FRAME FULL [jp/ngt/rtm/modelpack/ModelPackManager jp/ngt/rtm/modelpack/init/ModelPackLoadThread java/util/List java/util/List I java/util/Iterator java/io/File java/lang/String jp/ngt/rtm/modelpack/ResourceType] [jp/ngt/rtm/modelpack/ModelPackException]
+    ASTORE 9
+   L24
+    LINENUMBER 122 L24
+    ALOAD 9
+    ATHROW
+   L3
+    LINENUMBER 124 L3
+   FRAME SAME1 java/lang/Throwable
+    ASTORE 9
+   L25
+    LINENUMBER 126 L25
+    NEW jp/ngt/rtm/modelpack/ModelPackException
+    DUP
+    LDC "Can't load model"
+    ALOAD 6
+    INVOKEVIRTUAL java/io/File.getAbsolutePath ()Ljava/lang/String;
+    ALOAD 9
+    INVOKESPECIAL jp/ngt/rtm/modelpack/ModelPackException.<init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V
+    ATHROW
+   L23
+    LINENUMBER 128 L23
+   FRAME SAME
+    IINC 4 1
+   L26
+    LINENUMBER 129 L26
+    GOTO L16
+   L17
+    LINENUMBER 130 L17
+   FRAME FULL [jp/ngt/rtm/modelpack/ModelPackManager jp/ngt/rtm/modelpack/init/ModelPackLoadThread java/util/List java/util/List I] []
+    LDC "[ModelPack] Register %d json"
+    ICONST_1
+    ANEWARRAY java/lang/Object
+    DUP
+    ICONST_0
+    ILOAD 4
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    AASTORE
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTLog.debug (Ljava/lang/String;[Ljava/lang/Object;)V
+   L27
+    LINENUMBER 133 L27
+    ALOAD 1
+    ICONST_0
+    GETSTATIC jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState.SEARCHING_RRS : Ljp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (ILjp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;)V
+   L28
+    LINENUMBER 134 L28
+    ALOAD 1
+    ICONST_1
+    ICONST_0
+    LDC "Loading..."
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarMaxValue (IILjava/lang/String;)V
+   L29
+    LINENUMBER 135 L29
+    INVOKEDYNAMIC match()Ljp/ngt/ngtlib/io/FileMatcher; [
+      // handle kind 0x6 : INVOKESTATIC
+      java/lang/invoke/LambdaMetafactory.metafactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+      // arguments:
+      (Ljava/io/File;)Z, 
+      // handle kind 0x6 : INVOKESTATIC
+      jp/ngt/rtm/modelpack/ModelPackManager.lambda$load$2(Ljava/io/File;)Z, 
+      (Ljava/io/File;)Z
+    ]
+    INVOKESTATIC jp/ngt/ngtlib/io/NGTFileLoader.findFile (Ljp/ngt/ngtlib/io/FileMatcher;)Ljava/util/List;
+    ASTORE 5
+   L30
+    LINENUMBER 138 L30
+    ALOAD 1
+    ICONST_0
+    GETSTATIC jp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState.LOADING_RRS : Ljp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (ILjp/ngt/rtm/modelpack/init/ProgressStateHolder$ProgressState;)V
+   L31
+    LINENUMBER 139 L31
+    ALOAD 1
+    ICONST_1
+    ALOAD 5
+    INVOKEINTERFACE java/util/List.size ()I
+    LDC ""
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarMaxValue (IILjava/lang/String;)V
+   L32
+    LINENUMBER 140 L32
+    ICONST_0
+    ISTORE 4
+   L33
+    LINENUMBER 141 L33
+    ALOAD 5
+    INVOKEINTERFACE java/util/List.iterator ()Ljava/util/Iterator;
+    ASTORE 6
+   L34
+   FRAME APPEND [java/util/List java/util/Iterator]
+    ALOAD 6
+    INVOKEINTERFACE java/util/Iterator.hasNext ()Z
+    IFEQ L35
+    ALOAD 6
+    INVOKEINTERFACE java/util/Iterator.next ()Ljava/lang/Object;
+    CHECKCAST java/io/File
+    ASTORE 7
+   L36
+    LINENUMBER 143 L36
+    IINC 4 1
+   L37
+    LINENUMBER 144 L37
+    ALOAD 7
+    INVOKEVIRTUAL java/io/File.getName ()Ljava/lang/String;
+    ASTORE 8
+   L38
+    LINENUMBER 145 L38
+    ALOAD 1
+    ICONST_1
+    ILOAD 4
+    ALOAD 8
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/init/ModelPackLoadThread.setBarValue (IILjava/lang/String;)V
+   L39
+    LINENUMBER 146 L39
+    NEW jp/ngt/rtm/modelpack/cfg/RRSConfig
+    DUP
+    ALOAD 8
+    INVOKESPECIAL jp/ngt/rtm/modelpack/cfg/RRSConfig.<init> (Ljava/lang/String;)V
+    ASTORE 9
+   L40
+    LINENUMBER 147 L40
+    ALOAD 0
+    GETSTATIC jp/ngt/rtm/RTMResource.RRS : Ljp/ngt/rtm/modelpack/ResourceType;
+    ALOAD 9
+    LDC "dummy_str"
+    INVOKEVIRTUAL jp/ngt/rtm/modelpack/ModelPackManager.registerResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;Ljava/lang/String;)Ljava/lang/String;
+    POP
+   L41
+    LINENUMBER 148 L41
+    GOTO L34
+   L35
+    LINENUMBER 174 L35
+   FRAME CHOP 1
+    GETSTATIC jp/ngt/rtm/block/tt/TimeTableManager.INSTANCE : Ljp/ngt/rtm/block/tt/TimeTableManager;
+    INVOKEVIRTUAL jp/ngt/rtm/block/tt/TimeTableManager.load ()V
+   L42
+    LINENUMBER 176 L42
+    ALOAD 1
+    ICONST_1
+    PUTFIELD jp/ngt/rtm/modelpack/init/ModelPackLoadThread.loadFinished : Z
+   L43
+    LINENUMBER 177 L43
+    ALOAD 0
+    ICONST_1
+    PUTFIELD jp/ngt/rtm/modelpack/ModelPackManager.modelLoaded : Z
+   L44
+    LINENUMBER 178 L44
+    RETURN
+   L45
+    LOCALVARIABLE e Ljp/ngt/rtm/modelpack/ModelPackException; L24 L3 9
+    LOCALVARIABLE e Ljava/lang/Throwable; L25 L23 9
+    LOCALVARIABLE typeName Ljava/lang/String; L20 L26 7
+    LOCALVARIABLE type Ljp/ngt/rtm/modelpack/ResourceType; L0 L26 8
+    LOCALVARIABLE file Ljava/io/File; L18 L26 6
+    LOCALVARIABLE name Ljava/lang/String; L38 L41 8
+    LOCALVARIABLE cfg Ljp/ngt/rtm/modelpack/cfg/RRSConfig; L40 L41 9
+    LOCALVARIABLE file Ljava/io/File; L36 L41 7
+    LOCALVARIABLE this Ljp/ngt/rtm/modelpack/ModelPackManager; L4 L45 0
+    LOCALVARIABLE par1 Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread; L4 L45 1
+    LOCALVARIABLE fileListTemp Ljava/util/List; L5 L45 2
+    // signature Ljava/util/List<Ljava/io/File;>;
+    // declaration: java.util.List<java.io.File>
+    LOCALVARIABLE fileList Ljava/util/List; L10 L45 3
+    // signature Ljava/util/List<Ljava/io/File;>;
+    // declaration: java.util.List<java.io.File>
+    LOCALVARIABLE count I L15 L45 4
+    LOCALVARIABLE fileList2 Ljava/util/List; L30 L45 5
+    // signature Ljava/util/List<Ljava/io/File;>;
+    // declaration: java.util.List<java.io.File>
+    MAXSTACK = 5
+    MAXLOCALS = 10

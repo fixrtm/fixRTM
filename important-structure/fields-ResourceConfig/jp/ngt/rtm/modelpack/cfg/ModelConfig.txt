@@ -1,0 +1,34 @@
+super: jp/ngt/rtm/modelpack/cfg/ResourceConfig
+name: accuracy
+type: Ljava/lang/String;
+
+name: buttonTexture
+type: Ljava/lang/String;
+
+name: collisionParts
+type: [Ljava/lang/String;
+
+name: doCulling
+type: Z
+
+name: guiScriptPath
+type: Ljava/lang/String;
+
+name: guiTexture
+type: Ljava/lang/String;
+
+name: offset
+type: [F
+
+name: renderAABB
+type: [F
+
+name: scale
+type: F
+
+name: serverScriptPath
+type: Ljava/lang/String;
+
+name: smoothing
+type: Z
+

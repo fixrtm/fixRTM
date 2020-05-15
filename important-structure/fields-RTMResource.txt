@@ -1,0 +1,123 @@
+name: FIREARM
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: RAIL
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: SIGNAL
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: CONTAINER
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: NPC
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: WIRE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: SIGNBOARD
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: FLAG
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: RRS
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: CONNECTOR
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: CONNECTOR_RELAY
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: CONNECTOR_INPUT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: CONNECTOR_OUTPUT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_GATE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_POINT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_TURNSTILE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_VENDOR
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_LIGHT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_BUMPINGPOST
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_ANTENNA_SEND
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_ANTENNA_RECEIVE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: MACHINE_SPEAKER
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_LAMP
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_STAIR
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_SCAFFOLD
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_POLE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_PIPE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: ORNAMENT_PLANT
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN_EC
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN_DC
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN_CC
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN_TC
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: TRAIN_TEST
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE_CAR
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE_PLANE
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE_SHIP
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE_TROLLEY
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+

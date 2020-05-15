@@ -1,0 +1,31 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: lightTexture
+type: Ljava/lang/String;
+
+name: lights
+type: [Ljava/lang/String;
+
+name: maxSignalLevel
+type: I
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: modelPartsBody
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: modelPartsFixture
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: rotateBody
+type: Z
+
+name: signalModel
+type: Ljava/lang/String;
+
+name: signalName
+type: Ljava/lang/String;
+
+name: signalTexture
+type: Ljava/lang/String;
+

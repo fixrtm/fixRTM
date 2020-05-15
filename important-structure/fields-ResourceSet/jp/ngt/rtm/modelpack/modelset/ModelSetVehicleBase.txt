@@ -1,0 +1,7 @@
+super: jp/ngt/rtm/modelpack/modelset/ModelSetBase
+name: rollsignTexture
+type: Lnet/minecraft/util/ResourceLocation;
+
+name: soundSE
+type: Ljavax/script/ScriptEngine;
+

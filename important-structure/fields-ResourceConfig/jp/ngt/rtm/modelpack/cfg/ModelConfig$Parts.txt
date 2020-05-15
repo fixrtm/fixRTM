@@ -1,0 +1,10 @@
+super: java/lang/Object
+name: objects
+type: [Ljava/lang/String;
+
+name: pos
+type: [F
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig;
+

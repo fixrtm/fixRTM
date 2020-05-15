@@ -1,0 +1,13 @@
+super: java/lang/Object
+name: cfg
+type: Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+
+name: dataFormatter
+type: Ljp/ngt/rtm/modelpack/state/DataFormatter;
+
+name: isDummySet
+type: Z
+
+name: md5
+type: [B
+

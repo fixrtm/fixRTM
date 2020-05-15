@@ -1,0 +1,13 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: connectorType
+type: Ljava/lang/String;
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: wirePos
+type: [F
+

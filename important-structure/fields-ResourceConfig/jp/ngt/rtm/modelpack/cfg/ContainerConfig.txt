@@ -1,0 +1,22 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: containerHeight
+type: F
+
+name: containerLength
+type: F
+
+name: containerModel
+type: Ljava/lang/String;
+
+name: containerName
+type: Ljava/lang/String;
+
+name: containerTexture
+type: Ljava/lang/String;
+
+name: containerWidth
+type: F
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+

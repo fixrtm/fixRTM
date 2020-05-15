@@ -1,0 +1,16 @@
+super: jp/ngt/rtm/modelpack/cfg/TextureConfig
+name: animationCycle
+type: I
+
+name: backTexture
+type: I
+
+name: color
+type: I
+
+name: frame
+type: I
+
+name: lightValue
+type: I
+

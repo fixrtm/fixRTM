@@ -1,0 +1,1 @@
+super: jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase

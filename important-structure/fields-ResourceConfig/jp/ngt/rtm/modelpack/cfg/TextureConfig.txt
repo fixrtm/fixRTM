@@ -1,0 +1,13 @@
+super: jp/ngt/rtm/modelpack/cfg/ResourceConfig
+name: depth
+type: F
+
+name: height
+type: F
+
+name: texture
+type: Ljava/lang/String;
+
+name: width
+type: F
+

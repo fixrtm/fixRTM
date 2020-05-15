@@ -1,0 +1,16 @@
+super: java/lang/Object
+name: defaultData
+type: Ljava/lang/String;
+
+name: defaultValues
+type: [Ljp/ngt/rtm/modelpack/cfg/ResourceConfig$DMInitValue;
+
+name: tags
+type: Ljava/lang/String;
+
+name: useCustomColor
+type: Z
+
+name: version
+type: S
+
