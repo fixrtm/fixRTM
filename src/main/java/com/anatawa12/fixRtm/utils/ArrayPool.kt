@@ -53,10 +53,10 @@ class ArrayPool<TArray>(
 
     companion object {
         private val pByte: ThreadLocal<ArrayPool<ByteArray>> = ThreadLocal.withInitial {
-            ArrayPool(::ByteArray, ByteArray::size)
+            ArrayPool(::ByteArray) { size }
         }
         private val pChar: ThreadLocal<ArrayPool<CharArray>> = ThreadLocal.withInitial {
-            ArrayPool(::CharArray, CharArray::size)
+            ArrayPool(::CharArray) { size }
          }
 
         val bytePool get() = pByte.get()
