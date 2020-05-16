@@ -1,0 +1,61 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: ammoType
+type: B
+
+name: firearmModel
+type: Ljava/lang/String;
+
+name: firearmName
+type: Ljava/lang/String;
+
+name: firearmTexture
+type: Ljava/lang/String;
+
+name: fpvMode
+type: Z
+
+name: magazineSize
+type: I
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: modelPartsBarrel
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: modelPartsN
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: modelPartsX
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: modelPartsY
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$Parts;
+
+name: muzzlePos
+type: [F
+
+name: pitch
+type: [F
+
+name: playerPos
+type: [F
+
+name: rateOfFire
+type: I
+
+name: recoil
+type: F
+
+name: rotationSpeedX
+type: F
+
+name: rotationSpeedY
+type: F
+
+name: useOldSystem
+type: Z
+
+name: yaw
+type: [F
+

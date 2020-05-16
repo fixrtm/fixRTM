@@ -1,0 +1,10 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig$Parts
+name: childParts
+type: [Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig$VehicleParts;
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig;
+
+name: transform
+type: [[F
+

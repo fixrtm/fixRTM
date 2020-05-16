@@ -1,0 +1,4 @@
+super: jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase
+name: bogieModels
+type: [Ljp/ngt/rtm/render/ModelObject;
+

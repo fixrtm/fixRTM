@@ -1,0 +1,7 @@
+super: jp/ngt/rtm/modelpack/modelset/ModelSetBase
+name: lightTexture
+type: Lnet/minecraft/util/ResourceLocation;
+
+name: texture
+type: Lnet/minecraft/util/ResourceLocation;
+

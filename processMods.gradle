@@ -110,10 +110,73 @@ task archiveRTMResourcesZip(type: Zip) {
     archiveName 'RTMResources.zip'
 }
 
+final importantStructureDir = new File(projectDir, "important-structure")
+
+task addImportantStructureDir(type: Exec) {
+    commandLine 'git', 'add', importantStructureDir
+}
+
+task printResourceConfigFieldStructure(type: PrintFieldStructure) {
+    dependsOn downloadRTM
+    finalizedBy addImportantStructureDir
+
+    files = zipTree(downloadRTM.to).matching {
+        include "**/*.class"
+    }
+    outTo = new File(importantStructureDir, "fields-ResourceConfig")
+    superClass = "jp.ngt.rtm.modelpack.cfg.ResourceConfig"
+}
+
+task printResourceSetFieldStructure(type: PrintFieldStructure) {
+    dependsOn downloadRTM
+    finalizedBy addImportantStructureDir
+
+    files = zipTree(downloadRTM.to).matching {
+        include "**/*.class"
+    }
+    outTo = new File(importantStructureDir, "fields-ResourceSet")
+    superClass = "jp.ngt.rtm.modelpack.modelset.ResourceSet"
+
+    condition = { String internalName ->
+        internalName.startsWith("jp/ngt/rtm/modelpack/modelset/")
+    }
+
+    exclude "jp.ngt.rtm.modelpack.cfg.ResourceConfig"
+}
+
+task printRTMResourceStaticFields(type: PrintStaticFields) {
+    dependsOn downloadRTM
+    finalizedBy addImportantStructureDir
+
+    files = zipTree(downloadRTM.to).matching {
+        include "**/*.class"
+    }
+    outTo = new File(importantStructureDir, "fields-RTMResource.txt")
+    ofClass = "jp.ngt.rtm.RTMResource"
+}
+
+task printModelPackLoadMethodCode(type: PrintMethodCode) {
+    dependsOn downloadRTM
+    finalizedBy addImportantStructureDir
+
+    files = zipTree(downloadRTM.to).matching {
+        include "**/*.class"
+    }
+    outTo = new File(importantStructureDir, "fields-ModelPackLoadMethodCode.txt")
+    ofClass = "jp.ngt.rtm.modelpack.ModelPackManager"
+    methodName = "load"
+    methodDesc = "(Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V"
+}
+
 task prepareMods() {
     dependsOn decompileMods
     dependsOn archiveRTMResourcesZip
     dependsOn copyRTMResources, copyNgtLibResources
+
+    dependsOn printResourceConfigFieldStructure
+    dependsOn printResourceSetFieldStructure
+    dependsOn printRTMResourceStaticFields
+    dependsOn printModelPackLoadMethodCode
 }
 
 task checkNgtLibClasses(type: CheckClassesSame) {
@@ -129,6 +192,7 @@ task checkRtmClasses(type: CheckClassesSame) {
     dst = jar.archivePath
     rootPackage = "jp.ngt.rtm"
 }
+
 task checkClasses {
     dependsOn checkNgtLibClasses, checkRtmClasses
 }

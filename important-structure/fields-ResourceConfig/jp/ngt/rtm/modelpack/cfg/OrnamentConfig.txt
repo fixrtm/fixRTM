@@ -1,0 +1,16 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: conveyorSpeed
+type: F
+
+name: minRandomScale
+type: F
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: ornamentType
+type: Ljava/lang/String;
+

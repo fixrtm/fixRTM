@@ -1,0 +1,22 @@
+super: jp/ngt/rtm/modelpack/modelset/ResourceSet
+name: buttonTexture
+type: Lnet/minecraft/util/ResourceLocation;
+
+name: collisionObj
+type: Ljp/ngt/rtm/entity/util/CollisionObj;
+
+name: guiSE
+type: Ljavax/script/ScriptEngine;
+
+name: guiTexture
+type: Lnet/minecraft/util/ResourceLocation;
+
+name: modelObj
+type: Ljp/ngt/rtm/render/ModelObject;
+
+name: serverSE
+type: Ljavax/script/ScriptEngine;
+
+name: syncFinished
+type: Z
+

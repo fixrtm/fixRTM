@@ -1,0 +1,43 @@
+super: jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig
+name: acceleration
+type: [F
+
+name: changeYawOnStopping
+type: Z
+
+name: connectionDistance
+type: F
+
+name: friction
+type: [F
+
+name: hoveringSpeed
+type: F
+
+name: maxSpeed
+type: [F
+
+name: maxYaw
+type: [F
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: pitchCoefficient
+type: [F
+
+name: rollCoefficient
+type: [F
+
+name: vehicleType
+type: Ljava/lang/String;
+
+name: vibration
+type: [F
+
+name: yawCoefficient
+type: [F
+

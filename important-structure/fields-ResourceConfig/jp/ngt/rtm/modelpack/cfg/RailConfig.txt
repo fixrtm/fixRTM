@@ -1,0 +1,22 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: allowCrossing
+type: Z
+
+name: ballastWidth
+type: I
+
+name: defaultBallast
+type: [Ljp/ngt/rtm/modelpack/cfg/RailConfig$BallastSet;
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: railModel
+type: Ljava/lang/String;
+
+name: railName
+type: Ljava/lang/String;
+
+name: railTexture
+type: Ljava/lang/String;
+

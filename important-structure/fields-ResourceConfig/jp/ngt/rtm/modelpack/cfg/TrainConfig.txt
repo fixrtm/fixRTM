@@ -1,0 +1,70 @@
+super: jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig
+name: accelerateion
+type: F
+
+name: bogieModel
+type: Ljava/lang/String;
+
+name: bogieModel2
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: bogieModel3
+type: [Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: bogiePos
+type: [[F
+
+name: bogieTexture
+type: Ljava/lang/String;
+
+name: isSingleTrain
+type: Z
+
+name: jointDelay
+type: [[F
+
+name: maxSpeed
+type: [F
+
+name: muteJointSound
+type: Z
+
+name: pantoPos
+type: [[F
+
+name: rollSpeedCoefficient
+type: F
+
+name: rollVariationCoefficient
+type: F
+
+name: rollWidthCoefficient
+type: F
+
+name: rolling
+type: F
+
+name: sound_BrakeRelease
+type: Ljava/lang/String;
+
+name: sound_BrakeRelease2
+type: Ljava/lang/String;
+
+name: trainDistance
+type: F
+
+name: trainModel
+type: Ljava/lang/String;
+
+name: trainModel2
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: trainName
+type: Ljava/lang/String;
+
+name: trainTexture
+type: Ljava/lang/String;
+
+name: trainType
+type: Ljava/lang/String;
+

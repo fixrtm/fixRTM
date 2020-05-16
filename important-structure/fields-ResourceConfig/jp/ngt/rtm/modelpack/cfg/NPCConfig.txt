@@ -1,0 +1,25 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: damage
+type: F
+
+name: health
+type: F
+
+name: lightTexture
+type: Ljava/lang/String;
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: role
+type: Ljava/lang/String;
+
+name: speed
+type: F
+
+name: texture
+type: Ljava/lang/String;
+

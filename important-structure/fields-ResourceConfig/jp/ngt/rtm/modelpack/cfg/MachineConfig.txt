@@ -1,0 +1,25 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: brightness
+type: [I
+
+name: followRailAngle
+type: Z
+
+name: machineType
+type: Ljava/lang/String;
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: rotateByMetadata
+type: Z
+
+name: sound_OnActivate
+type: Ljava/lang/String;
+
+name: sound_Running
+type: Ljava/lang/String;
+
