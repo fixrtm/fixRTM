@@ -1,22 +1,23 @@
 package com.anatawa12.fixRtm.caching
 
-import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
-import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.ngtlib.renderer.model.FileCache
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
-import jp.ngt.ngtlib.renderer.model.PolygonModel
+import java.io.File
 import java.util.concurrent.Executors
 
-object ModelPackBasedCache {
-    private val baseDir = fixCacheDir.resolve("modelpack-base")
-
+class ModelPackBasedCache(
+        baseDir: File,
+        vararg serializers: Pair<Int, TaggedFileManager.Serializer<*>>
+) {
     private val caches: Map<FIXModelPack, FileCache<Any>>
     private val taggedFileManager = TaggedFileManager()
 
     init {
-        taggedFileManager.register(0x0000, CachedPolygonModel.Serializer)
+        for ((id, serializer) in serializers) {
+            taggedFileManager.register(id, serializer)
+        }
     }
 
     init {
@@ -51,7 +52,7 @@ object ModelPackBasedCache {
         return serializer.type.cast(caches[pack]?.getCachedValue(sha1))
     }
 
-    fun put(pack: FIXModelPack, sha1: String, model: PolygonModel) {
+    fun put(pack: FIXModelPack, sha1: String, model: Any) {
         caches[pack]?.putCachedValue(sha1, model)
     }
 

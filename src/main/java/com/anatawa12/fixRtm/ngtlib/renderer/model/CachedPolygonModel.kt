@@ -2,6 +2,7 @@ package com.anatawa12.fixRtm.ngtlib.renderer.model
 
 import com.anatawa12.fixRtm.caching.ModelPackBasedCache
 import com.anatawa12.fixRtm.caching.TaggedFileManager
+import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.io.FIXModelPack
 import com.anatawa12.fixRtm.readUTFNullable
 import com.anatawa12.fixRtm.utils.DigestUtils
@@ -12,23 +13,28 @@ import net.minecraft.util.ResourceLocation
 import java.io.*
 
 object CachedPolygonModel {
+    private val cache = ModelPackBasedCache(
+            fixCacheDir.resolve("polygon-model"),
+            0x0000 to Serializer
+    )
+
     val type = FileType("fixrtm-cached-polygon-model-file", "fixrtm cached polygon model file.")
 
     fun getCachedModel(pack: FIXModelPack, resource: ResourceLocation, accuracy: VecAccuracy): PolygonModel? {
         val sha1 = DigestUtils.sha1Hex("cached-model:$accuracy:$resource")
-        return ModelPackBasedCache.get(pack, sha1, Serializer)
+        return cache.get(pack, sha1, Serializer)
     }
 
     fun putCachedModel(pack: FIXModelPack, resource: ResourceLocation, accuracy: VecAccuracy, model: PolygonModel) {
         val sha1 = DigestUtils.sha1Hex("cached-model:$accuracy:$resource")
-        ModelPackBasedCache.put(pack, sha1, model)
+        cache.put(pack, sha1, model)
     }
 
-    object Serializer : TaggedFileManager.Serializer<PolygonModel> {
+    private object Serializer : TaggedFileManager.Serializer<PolygonModel> {
         override val type: Class<PolygonModel> get() = PolygonModel::class.java
 
         override fun serialize(stream: OutputStream, value: PolygonModel) {
-            CachedModelWriter.writeCachedModel(DataOutputStream(stream), value)
+            CachedModelWriter.writeCachedModel(stream, value)
         }
 
         override fun deserialize(stream: InputStream): PolygonModel {
@@ -120,6 +126,10 @@ object CachedPolygonModel {
     }
 
     private object CachedModelWriter {
+
+        fun writeCachedModel(writer: OutputStream, value: PolygonModel) {
+            writeCachedModel(DataOutputStream(writer) as DataOutput, value)
+        }
 
         fun writeCachedModel(writer: DataOutput, value: PolygonModel) {
             writer.writeInt(value.drawMode)
