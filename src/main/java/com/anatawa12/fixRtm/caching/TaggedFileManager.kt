@@ -41,8 +41,8 @@ class TaggedFileManager {
     }
 
     private fun writeVInt(stream: OutputStream, v: Int) {
-        if (0 <= v) {
-            throw IllegalArgumentException("too big: $v")
+        if (v < 0) {
+            throw IllegalArgumentException("too small: $v")
         } else if (v < 0x80) {
             // 00000000 0xxxxxxx -> 0xxxxxxx
 
