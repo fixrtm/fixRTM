@@ -4,10 +4,11 @@ import com.google.common.collect.HashBiMap
 import java.io.EOFException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.concurrent.ConcurrentHashMap
 
 class TaggedFileManager {
     private val map = HashBiMap.create<Int, Serializer<*>>()
-    private val classMap = HashBiMap.create<Class<*>, Serializer<*>>()
+    private val classMap = ConcurrentHashMap<Class<*>, Serializer<*>>()
 
     fun deserialize(stream: InputStream): Any {
         val serializer = map[readVInt(stream)]
@@ -29,11 +30,13 @@ class TaggedFileManager {
 
     @Suppress("UNCHECKED_CAST")
     private fun <T : Any> getSerializerFor(value: T): Serializer<T> {
-        classMap[value.javaClass]?.let { return it as Serializer<T> }
+        val clazz = value.javaClass
+        return classMap.computeIfAbsent(clazz) { computeSerializerFor(it) } as Serializer<T>
+    }
 
+    private fun <T : Any> computeSerializerFor(clazz: Class<T>): Serializer<T> {
         for (serializer in map.values) {
-            if (serializer.type.isInstance(value)) {
-                classMap[value.javaClass] = serializer
+            if (serializer.type.isAssignableFrom(clazz)) {
                 return serializer as Serializer<T>
             }
         }
