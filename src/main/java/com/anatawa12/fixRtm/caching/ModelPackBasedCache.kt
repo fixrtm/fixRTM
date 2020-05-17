@@ -2,7 +2,6 @@ package com.anatawa12.fixRtm.caching
 
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
-import com.anatawa12.fixRtm.ngtlib.renderer.model.FileCache
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import java.io.File
 import java.util.concurrent.Executors
