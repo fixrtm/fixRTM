@@ -11,7 +11,6 @@ import jp.ngt.ngtlib.renderer.model.ModelLoader
 import jp.ngt.ngtlib.renderer.model.PolygonModel
 import jp.ngt.ngtlib.renderer.model.VecAccuracy
 import net.minecraft.util.ResourceLocation
-import org.apache.commons.codec.digest.DigestUtils
 import java.io.IOException
 import java.io.InputStream
 
@@ -22,13 +21,12 @@ fun loadModel(resource: ResourceLocation, par1: VecAccuracy, vararg args: Any?):
     val fileName = resource.toString()
     try {
         val (pack, streams) = inputStreams(resource)
-        val digest = DigestUtils.sha1Hex("$fileName:$par1")
 
-        CachedPolygonModel.getCachedModel(pack, digest)?.let { return it }
+        CachedPolygonModel.getCachedModel(pack, resource, par1)?.let { return it }
 
         val model = ModelLoader.loadModel(streams, fileName, par1, *args)
 
-        CachedPolygonModel.putCachedModel(pack, digest, model)
+        CachedPolygonModel.putCachedModel(pack, resource, par1, model)
 
         return model
     } catch (var10: IOException) {

@@ -81,6 +81,8 @@ class FileCache<TValue>(
                 file.outputStream().buffered().use { bas.writeTo(it) }
             } catch (e: IOException) {
                 file.delete()
+            } catch (throwable: Throwable) {
+                throwable.printStackTrace()
             } finally {
                 writings.remove(sha1)
             }

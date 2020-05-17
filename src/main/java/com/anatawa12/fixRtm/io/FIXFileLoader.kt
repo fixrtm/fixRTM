@@ -4,9 +4,9 @@ import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.MS932
 import com.anatawa12.fixRtm.directoryDigestBaseStream
 import com.anatawa12.fixRtm.minecraftDir
+import com.anatawa12.fixRtm.utils.DigestUtils
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler
-import org.apache.commons.codec.digest.DigestUtils
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
