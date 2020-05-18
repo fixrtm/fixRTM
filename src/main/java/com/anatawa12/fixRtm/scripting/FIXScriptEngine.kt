@@ -2,8 +2,6 @@ package com.anatawa12.fixRtm.scripting
 
 import org.mozilla.javascript.Function
 import org.mozilla.javascript.NativeObject
-import org.mozilla.javascript.Scriptable
-import org.mozilla.javascript.ScriptableObject
 import java.io.Reader
 import javax.script.*
 
@@ -51,11 +49,7 @@ class FIXScriptEngine : ScriptEngine, Invocable {
     }
 
     override fun get(key: String): Any? {
-        val result = scope[key]
-        if (result == null) {
-            return null
-        }
-        return result
+        return scope[key]
     }
 
     override fun getFactory(): ScriptEngineFactory {
