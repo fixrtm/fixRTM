@@ -4,6 +4,7 @@ import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.mkParent
 import com.anatawa12.fixRtm.utils.DigestUtils
 import org.mozilla.javascript.CompilerEnvirons
+import org.mozilla.javascript.Context
 import org.mozilla.javascript.Script
 import org.mozilla.javascript.optimizer.ClassCompiler
 import org.mozilla.javascript.tools.ToolErrorReporter
@@ -53,6 +54,10 @@ object ScriptCompiledClassCache {
 
     private fun getClassName(source: String, filename: String): String {
         return basePackage + DigestUtils.sha1Hex(source)
+    }
+
+    fun initContext(it: Context) {
+        it.applicationClassLoader = Loader
     }
 
     object Loader : ClassLoader(Loader::class.java.classLoader) {

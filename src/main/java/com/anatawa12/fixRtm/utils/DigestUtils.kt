@@ -7,9 +7,13 @@ object DigestUtils {
     private val sha1 = ThreadLocal.withInitial { MessageDigest.getInstance("SHA-1") }
     const val STREAM_BUFFER_LENGTH = 0x10000
 
-    fun sha1Hex(value: String) = sha1Hex(value.toByteArray())
+    fun sha1(bytes: String) = sha1(bytes.toByteArray())
 
-    fun sha1Hex(bytes: ByteArray) = hex(sha1.get().digest(bytes))
+    fun sha1(bytes: ByteArray) = sha1.get().digest(bytes)
+
+    fun sha1Hex(value: String) = hex(sha1(value.toByteArray()))
+
+    fun sha1Hex(bytes: ByteArray) = hex(sha1(bytes))
 
     fun sha1Hex(stream: InputStream): String {
         val sha1 = sha1.get()

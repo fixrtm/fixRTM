@@ -3,7 +3,7 @@ package com.anatawa12.fixRtm.scripting
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import net.minecraft.util.ResourceLocation
 import org.mozilla.javascript.*
-import java.nio.charset.Charset
+import java.util.concurrent.ConcurrentHashMap
 
 
 object ScriptImporter {
@@ -18,11 +18,34 @@ object ScriptImporter {
 
     fun getScript(name: String): Script {
         val resourceLocation = ResourceLocation(name)
-        var script = FIXFileLoader.getInputStream(resourceLocation).reader(Charset.defaultCharset()).use { it.readText() }
-        script = preprocessScript(script)
-        return ScriptCompiledClassCache.compile(script, name)
+        val script = FIXFileLoader.getInputStream(resourceLocation).reader().use { it.readText() }
+        return makeScript(resourceLocation, script)
     }
 
+    fun makeScript(name: ResourceLocation, script: String): Script {
+        val script = preprocessScript(script)
+        return ScriptCompiledClassCache.compile(script, name.toString())
+    }
+
+    private val allDependenceScripts = ConcurrentHashMap<ResourceLocation, Map<ResourceLocation, String>>()
+
+    fun getAllDependenceScripts(name: String): Map<ResourceLocation, String> {
+        val scriptPath = ResourceLocation(name)
+        val script = FIXFileLoader.getInputStream(scriptPath).reader().use { it.readText() }
+        return getAllDependenceScripts(scriptPath, script)
+    }
+
+    fun getAllDependenceScripts(scriptPath: ResourceLocation, script: String): Map<ResourceLocation, String> {
+        allDependenceScripts[scriptPath]?.let { return it }
+        val dependencies = mutableMapOf<ResourceLocation, String>()
+        dependencies[scriptPath] = script
+        for (matchResult in jsIncludePath.findAll(script)) {
+            val includeScriptName = matchResult.groupValues[1]
+            dependencies += getAllDependenceScripts(includeScriptName)
+        }
+        allDependenceScripts[scriptPath] = dependencies
+        return dependencies
+    }
 
     private val jsIncludePath = "//include <(.+)>".toRegex()
 
