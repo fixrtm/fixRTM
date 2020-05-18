@@ -1,0 +1,70 @@
+package com.anatawa12.fixRtm.scripting
+
+import com.anatawa12.fixRtm.fixCacheDir
+import com.anatawa12.fixRtm.mkParent
+import com.anatawa12.fixRtm.utils.DigestUtils
+import org.mozilla.javascript.CompilerEnvirons
+import org.mozilla.javascript.Script
+import org.mozilla.javascript.optimizer.ClassCompiler
+import org.mozilla.javascript.tools.ToolErrorReporter
+import java.io.IOException
+import java.util.concurrent.ConcurrentHashMap
+
+object ScriptCompiledClassCache {
+    private val compiledClasses = fixCacheDir.resolve("script-compiled-class")
+
+    private val reporter = ToolErrorReporter(true)
+    private val compilerEnv = CompilerEnvirons()
+    private val compiler = ClassCompiler(compilerEnv)
+    private val compileds = ConcurrentHashMap<String, ByteArray>()
+    private val basePackage = "com.anatawa12.fixRtm.scripting.compiled.c_"
+
+    init {
+        compilerEnv.errorReporter = reporter
+        compilerEnv.optimizationLevel = 9
+    }
+
+    fun compile(source: String, filename: String): Script {
+        val className = getClassName(source, filename)
+        try {
+            return Loader.loadClass(className).newInstance() as Script
+        } catch (e: ClassNotFoundException) {
+        } catch (e: ClassCastException) {
+        }
+        processCompiled(compiler.compileToClassFiles(source, filename, 1, className)).also {
+            compileds.putAll(it)
+            for ((name, classFile) in it) {
+                val hashPart = name.replace('.', '/')
+                compiledClasses.resolve("$hashPart.class").mkParent().writeBytes(classFile)
+            }
+        }
+
+        val clazz = Loader.loadClass(className)
+        println(clazz.interfaces[0])
+        check (Script::class.java.isAssignableFrom(clazz)) { "compiled code is not Script type" }
+        return clazz.newInstance() as Script
+    }
+
+    private fun processCompiled(compileToClassFiles: Array<Any>) = compileToClassFiles
+            .asSequence()
+            .chunked(2)
+            .map { (name, code) -> name as String to code as ByteArray }
+            .toMap()
+
+    private fun getClassName(source: String, filename: String): String {
+        return basePackage + DigestUtils.sha1Hex(source)
+    }
+
+    object Loader : ClassLoader(Loader::class.java.classLoader) {
+        override fun findClass(name: String): Class<*> {
+            val hashPart = name.replace('.', '/')
+            val bytes = compileds[name] ?: try {
+                compiledClasses.resolve("$hashPart.class").readBytes()
+            } catch (e: IOException) {
+                throw ClassNotFoundException(name)
+            }
+            return defineClass(name, bytes, 0, bytes.size)
+        }
+    }
+}
+
