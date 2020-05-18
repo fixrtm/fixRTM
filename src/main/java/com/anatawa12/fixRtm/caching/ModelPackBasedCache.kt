@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.caching
 
+import com.anatawa12.fixRtm.fixRTMCommonExecutor
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
@@ -26,16 +27,13 @@ class ModelPackBasedCache(
             baseDir.resolve(removedNames).deleteRecursively()
         }
 
-        val executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-                threadFactoryWithPrefix("jasm-model-cache-creating"))
-
         val caches = mutableMapOf<FIXModelPack, FileCache<Any>>()
 
         for (modelPack in FIXFileLoader.allModelPacks) {
             val cache = FileCache(
                     baseDir = baseDir.resolve(modelPack.file.name),
                     baseDigest = modelPack.sha1Hash,
-                    executor = executor,
+                    executor = fixRTMCommonExecutor,
                     serialize = taggedFileManager::serialize,
                     deserialize = taggedFileManager::deserialize,
                     withTwoCharDir = false
