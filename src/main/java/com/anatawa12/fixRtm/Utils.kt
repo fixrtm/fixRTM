@@ -129,3 +129,5 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 
     return String(chars, 0, charI)
 }
+
+fun File.mkParent(): File = apply { parentFile.mkdirs() }
