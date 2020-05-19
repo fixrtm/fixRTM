@@ -3,6 +3,7 @@ package com.anatawa12.fixRtm.scripting
 import com.anatawa12.fixRtm.caching.TaggedFileManager
 import org.mozilla.javascript.NativeObject
 import org.mozilla.javascript.Scriptable
+import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.serialize.ScriptableInputStream
 import org.mozilla.javascript.serialize.ScriptableOutputStream
 import java.io.*
@@ -16,7 +17,7 @@ class ExecutedScript private constructor(
 ) {
     constructor(
             dependencies: Map<String, ByteArray>,
-            scope: NativeObject,
+            scope: ScriptableObject,
             base: Scriptable
     ): this(
             dependencies, writeScopeData(scope, base)
@@ -67,7 +68,7 @@ class ExecutedScript private constructor(
         /**
          * user have to set [Context]
          */
-        private fun writeScopeData(scope: NativeObject, base: Scriptable): ByteArray {
+        private fun writeScopeData(scope: ScriptableObject, base: Scriptable): ByteArray {
             val baos = ByteArrayOutputStream()
             ScriptableOutputStream(baos, base).use { stream ->
                 stream.writeObject(scope)
@@ -78,10 +79,10 @@ class ExecutedScript private constructor(
         /**
          * user have to set [Context]
          */
-        private fun readScopeData(data: ByteArray, base: Scriptable): NativeObject {
+        private fun readScopeData(data: ByteArray, base: Scriptable): ScriptableObject {
             val bais = ByteArrayInputStream(data)
             ScriptableInputStream(bais, base).use { stream ->
-                return stream.readObject() as NativeObject
+                return stream.readObject() as ScriptableObject
             }
         }
     }

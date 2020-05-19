@@ -2,11 +2,12 @@ package com.anatawa12.fixRtm.scripting
 
 import org.mozilla.javascript.Function
 import org.mozilla.javascript.NativeObject
+import org.mozilla.javascript.ScriptableObject
 import java.io.Reader
 import javax.script.*
 
 class FIXScriptEngine : ScriptEngine, Invocable {
-    lateinit var scope: NativeObject
+    lateinit var scope: ScriptableObject
 
     override fun createBindings(): Bindings {
         TODO("Not yet implemented")

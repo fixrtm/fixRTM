@@ -10,31 +10,36 @@ import com.anatawa12.fixRtm.utils.DigestUtils
 import jp.ngt.rtm.modelpack.ModelPackManager
 import net.minecraft.util.ResourceLocation
 import org.mozilla.javascript.ImporterTopLevel
-import org.mozilla.javascript.NativeObject
+import org.mozilla.javascript.ScriptableObject
+import org.mozilla.javascript.TopLevel
 import javax.script.ScriptEngine
 
 val baseScope = usingContext {
-    val scope = ImporterTopLevel(it, false)
+    val scope = TopLevel()
+
+    it.initStandardObjects(scope)
 
     ScriptImporter.init(scope)
 
     scope
 }
 
-private fun makeNewScope(): NativeObject {
-    val scope = NativeObject()
+fun loadFIXScriptUtil() {}
+
+private fun makeNewScope(): ScriptableObject = usingContext {
+    val scope = ImporterTopLevel(it, false)
     scope.prototype = baseScope
     return scope
 }
 
-fun makeNewScopeWithCache(cache: ExecutedScript): NativeObject {
+fun makeNewScopeWithCache(cache: ExecutedScript): ScriptableObject {
     usingContext {
         ScriptCompiledClassCache.initContext(it)
         return cache.getScope(baseScope)
     }
 }
 
-fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: NativeObject): ExecutedScript {
+fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: ScriptableObject): ExecutedScript {
     usingContext {
         ScriptCompiledClassCache.initContext(it)
         return ExecutedScript(dependencies, scope, baseScope)
@@ -45,8 +50,8 @@ fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: NativeObject
 fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
     val filePath = ResourceLocation(fileName)
     val resource = FIXFileLoader.getResource(filePath)
-    val script = resource.inputStream.reader().use { it.readText() }
-    val dependencies = makeDependenciesData(ScriptImporter.getAllDependenceScripts(filePath, script))
+    val scriptStr = resource.inputStream.reader().use { it.readText() }
+    val dependencies = makeDependenciesData(ScriptImporter.getAllDependenceScripts(filePath, scriptStr))
 
     // first, try cache
     getScriptAndDoScriptByCache(filePath, resource.pack, dependencies)?.let { scope ->
@@ -60,7 +65,7 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
     usingContext { cx ->
         val scope = makeNewScope()
 
-        val script = ScriptImporter.getScript(fileName)
+        val script = ScriptImporter.makeScript(filePath, scriptStr)
 
         script.exec(cx, scope)
 
@@ -74,7 +79,7 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
     return engine
 }
 
-fun getScriptAndDoScriptByCache(filePath: ResourceLocation, pack: FIXModelPack, dependencies: Map<String, ByteArray>): NativeObject? {
+fun getScriptAndDoScriptByCache(filePath: ResourceLocation, pack: FIXModelPack, dependencies: Map<String, ByteArray>): ScriptableObject? {
     val cache = ExecutedScriptCache.getScript(pack, filePath) ?: return null
 
     // verify cache
