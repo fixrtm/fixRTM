@@ -502,7 +502,7 @@ index aefff78..27c3d26 100644
      invokestatic jp/ngt/rtm/sound/SpeakerSounds/getInstance (Z)Ljp/ngt/rtm/sound/SpeakerSounds;
      invokevirtual jp/ngt/rtm/sound/SpeakerSounds/syncSoundList ()V
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-index 79fab25..8bef3a3 100644
+index 79fab25..8c22920 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 @@ -12,29 +12,29 @@
@@ -591,7 +591,47 @@ index 79fab25..8bef3a3 100644
  L_0028:
      areturn
  L_002a:
-@@ -956,26 +968,34 @@ L_0048:
+@@ -799,21 +811,39 @@ L_001b:
+     dup
+     iconst_0
+     aload 2
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/getName ()Ljava/lang/String;
+     aastore
+     dup
+     iconst_1
+     aload 1
+     getfield jp/ngt/rtm/modelpack/ResourceType/name Ljava/lang/String;
+     aastore
++
++    ldc "for_decompiler_cup"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/never (Ljava/lang/String;)V
++
++    dup2
++
++    ldc "reduceConstructModelLog"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     invokestatic jp/ngt/ngtlib/io/NGTLog/debug "(Ljava/lang/String;[Ljava/lang/Object;)V"
++
++    ldc "reduceConstructModelLog"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    invokestatic jp/ngt/ngtlib/io/NGTLog/trace "(Ljava/lang/String;[Ljava/lang/Object;)V"
++
++    ldc "reduceConstructModelLog"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+ L_002b:
+     .line 236
+     aload 0
+     getfield jp/ngt/rtm/modelpack/ModelPackManager/allModelSetMap Ljava/util/Map;
+     aload 1
+     invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
+     checkcast java/util/Map
+     aload 2
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/getName ()Ljava/lang/String;
+     aload 4
+@@ -956,26 +986,34 @@ L_0048:
  L_004b:
      .line 260
      .stack
@@ -627,7 +667,7 @@ index 79fab25..8bef3a3 100644
  L_0000:
      .line 266
      .var 0 is this Ljp/ngt/rtm/modelpack/ModelPackManager; from L_0000 to L_0068
-@@ -1190,20 +1210,21 @@ L_002e:
+@@ -1190,20 +1228,21 @@ L_002e:
  .method public getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
      .signature "<T:Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>(Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)TT;"
      .limit stack 4
@@ -649,7 +689,7 @@ index 79fab25..8bef3a3 100644
  L_0009:
      .line 313
      aload 1
-@@ -1266,64 +1287,34 @@ L_002b:
+@@ -1266,64 +1305,34 @@ L_002b:
      invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
      checkcast jp/ngt/rtm/modelpack/modelset/ResourceSet
      astore 6
@@ -662,10 +702,10 @@ index 79fab25..8bef3a3 100644
      .line 321
 -    aload 0
 -    getfield jp/ngt/rtm/modelpack/ModelPackManager/dummyMap Ljava/util/Map;
-     aload 1
+-    aload 1
 -    getfield jp/ngt/rtm/modelpack/ResourceType/hasSubType Z
 -    ifeq L_0043
--    aload 1
+     aload 1
 -    getfield jp/ngt/rtm/modelpack/ResourceType/subType Ljava/lang/String;
 -    goto L_0047
 -L_0043:
@@ -719,7 +759,7 @@ index 79fab25..8bef3a3 100644
      .signature "(Ljp/ngt/rtm/modelpack/ResourceType;)Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
      .limit stack 3
      .limit local 4
-@@ -2093,10 +2084,31 @@ L_0018:
+@@ -2093,10 +2102,31 @@ L_0018:
      ldc "UTF-8"
      aastore
      dup
