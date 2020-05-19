@@ -53,8 +53,7 @@ class FileCache<TValue>(
                 .forEach { file ->
                     executor.submit {
                         if (cache[file.name] == null)
-                        deserialize(file.inputStream().buffered().gunzip())
-                                .also { cache[file.name] = it }
+                            readCache(file, file.name)
                     }
                 }
     }
@@ -67,7 +66,10 @@ class FileCache<TValue>(
         if (sha1 in writings) return null
         val file = getFile(sha1)
         if (!file.exists()) return null
+        return readCache(file, sha1)
+    }
 
+    private fun readCache(file: File, sha1: String): TValue? {
         try {
             return deserialize(file.inputStream().buffered().gunzip())
                     .also { cache[sha1] = it }
