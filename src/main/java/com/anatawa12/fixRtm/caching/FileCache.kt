@@ -1,12 +1,13 @@
 package com.anatawa12.fixRtm.caching
 
+import com.anatawa12.fixRtm.mkParent
 import java.io.*
 import java.util.*
 import java.util.concurrent.*
 
 class FileCache<TValue>(
         private val baseDir: File,
-        baseDigest: String,
+        private val baseDigest: String,
         private val executor: ExecutorService,
         private val serialize: (OutputStream, TValue) -> Unit,
         private val deserialize: (InputStream) -> TValue,
@@ -14,14 +15,13 @@ class FileCache<TValue>(
 ) {
     private val cache = ConcurrentHashMap<String, TValue>()
     private var writings = Collections.newSetFromMap<String>(ConcurrentHashMap())
+    private val baseDigestFile = baseDir.resolve("base-digest")
     val cacheDiscarded: Boolean
 
     init {
-        baseDir.mkdirs()
-        val modsDigest = baseDir.resolve("base-digest")
-                .also { it.appendText("") }
-                .readText()
-        if (baseDigest != modsDigest) {
+        if (!baseDir.exists() || !baseDigestFile.exists()) {
+            cacheDiscarded = false
+        } else if (baseDigest != baseDigestFile.readText()) {
             cacheDiscarded = true
             baseDir.deleteRecursively()
             baseDir.mkdirs()
@@ -32,14 +32,14 @@ class FileCache<TValue>(
     }
 
     fun loadAll() {
-        baseDir.listFiles()!!
-                .asSequence()
+        baseDir.listFiles()
+                ?.asSequence().orEmpty()
                 .also { filesInBaseDir ->
                     if (withTwoCharDir) {
                         filesInBaseDir
                                 .filter { it.isDirectory }
                                 .filter { isHex2(it.name) }
-                                .flatMap { it.listFiles()!!.asSequence() }
+                                .flatMap { it.listFiles()?.asSequence().orEmpty() }
                     } else {
                         filesInBaseDir
                     }
@@ -77,7 +77,7 @@ class FileCache<TValue>(
     fun putCachedValue(sha1: String, value: TValue) {
         require(isHex40IgnoreCase(sha1)) { "invalid sha hash" }
         executor.submit {
-            val file = getFile(sha1)
+            val file = getFile(sha1).prepare()
             writings.add(sha1)
             try {
                 val bas = ByteArrayOutputStream()
@@ -97,11 +97,18 @@ class FileCache<TValue>(
         val sha1 = sha1In.toLowerCase()
         if (withTwoCharDir) {
             return baseDir.resolve(sha1.substring(0, 2))
-                    .also { it.mkdirs() }
                     .resolve(sha1)
         } else {
             return baseDir.resolve(sha1)
         }
+    }
+
+    private fun File.prepare(): File = apply {
+        if (!baseDir.exists()) {
+            baseDir.mkdirs()
+            baseDigestFile.writeText(baseDigest)
+        }
+        mkParent()
     }
 
     companion object {
