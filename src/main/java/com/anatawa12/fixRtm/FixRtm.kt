@@ -6,6 +6,7 @@ import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
+import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
 import com.anatawa12.fixRtm.scripting.RhinoHooks
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
@@ -46,6 +47,7 @@ object FixRtm {
         RhinoHooks// load
         FIXFileLoader // init
         if (!MainConfig.cachedPolygonModel) CachedPolygonModel // init
+        if (!MainConfig.cachedScripts) ExecutedScriptCache // init
         if (e.side == Side.CLIENT) registerGenerators()
     }
 
