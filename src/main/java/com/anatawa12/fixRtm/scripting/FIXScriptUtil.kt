@@ -21,6 +21,8 @@ val baseScope = usingContext {
 
     ScriptImporter.init(scope)
 
+    scope.sealObject()
+
     scope
 }
 
