@@ -98,19 +98,7 @@ fun makeDependenciesData(dependencies: Map<ResourceLocation, String>): Map<Strin
 }
 
 @Suppress("unused")
-fun getScriptAndDoScript(fileName: String): ScriptEngine {
-    val engine = FIXScriptEngine()
-    usingContext { cx ->
-        val scope = makeNewScope()
-
-        val script = ScriptImporter.getScript(fileName)
-
-        script.exec(cx, scope)
-
-        engine.scope = scope
-    }
-    return engine
-}
+fun getScriptAndDoScript(fileName: String): ScriptEngine = ModelPackManager.INSTANCE.getScriptAndDoScript(fileName)
 
 object ExecutedScriptCache {
     private val cache = ModelPackBasedCache(
