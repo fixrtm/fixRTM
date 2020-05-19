@@ -1,10 +1,11 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
+import com.anatawa12.fixRtm.asm.Preprocessor
+import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
-import jp.ngt.rtm.modelpack.ModelPackException
 import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.init.ModelPackConstructThread
 import jp.ngt.rtm.modelpack.init.ModelPackLoadThread
@@ -14,7 +15,6 @@ import net.minecraft.crash.CrashReport
 import net.minecraftforge.fml.relauncher.Side
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
-import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
 class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) : ModelPackConstructThread(threadSide, parent) {
@@ -108,7 +108,11 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             }
             val index = index.incrementAndGet()
             lastLoadedModelName = set.config.name
+            Preprocessor.ifDisabled(MainConfig::reduceConstructModelLog.name)
             NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            Preprocessor.ifEnabled(MainConfig::reduceConstructModelLog.name)
+            NGTLog.trace("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            Preprocessor.whatever(MainConfig::reduceConstructModelLog.name)
         } catch (throwable: Throwable) {
             if (set.config.file == null) {
                 throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)", throwable)

@@ -15,4 +15,8 @@ object Preprocessor {
      * keep bytecode below whatever.
      */
     @JvmStatic fun whatever(dummy: String): Unit = error("can't call. must be replaced from transformer")
+    /**
+     * never keep bytecode.
+     */
+    @JvmStatic fun never(dummy: String): Unit = error("can't call. must be replaced from transformer")
 }

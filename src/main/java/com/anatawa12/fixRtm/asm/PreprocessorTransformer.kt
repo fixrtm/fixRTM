@@ -77,6 +77,9 @@ class PreprocessorTransformer : IClassTransformer {
                     Preprocessor::whatever.name -> {
                         mv = visitor
                     }
+                    Preprocessor::never.name -> {
+                        mv = null
+                    }
                     else -> throw RuntimeException("method '$name' is not exits in $inPreprocessor")
                 }
                 lastLdc = NOT_INITED

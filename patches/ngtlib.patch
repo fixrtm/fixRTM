@@ -225,6 +225,124 @@ index 89cf20c..bb3eb7d 100644
  L_009c:
  .end method
  
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/NGTLog.jasm b/src/main/ngtlib/jp/ngt/ngtlib/io/NGTLog.jasm
+index ea31691..427b9b6 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/NGTLog.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/io/NGTLog.jasm
+@@ -1,16 +1,16 @@
+ .bytecode 52.0
+ .source "NGTLog.java"
+ .class public final jp/ngt/ngtlib/io/NGTLog
+ .super java/lang/Object
+ 
+-.field private static final logger Lorg/apache/logging/log4j/Logger;
++.field public static final logger Lorg/apache/logging/log4j/Logger;
+ .end field
+ 
+ .field private static final startTimes Ljava/util/List;
+     .signature "Ljava/util/List<Ljava/lang/Long;>;"
+ .end field
+ 
+ .method public <init> ()V
+     .limit stack 1
+     .limit local 1
+ L_0000:
+@@ -32,65 +32,90 @@ L_0000:
+     iconst_0
+     anewarray java/lang/Object
+     invokestatic jp/ngt/ngtlib/io/NGTLog/debug "(Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_0006:
+     .line 26
+     return
+ L_0009:
+ .end method
+ 
+ .method public static varargs debug "(Ljava/lang/String;[Ljava/lang/Object;)V"
++    .limit stack 3
++    .limit local 3
++    aload 0
++    aload 1
++    getstatic org/apache/logging/log4j/Level/INFO Lorg/apache/logging/log4j/Level;
++    invokestatic jp/ngt/ngtlib/io/NGTLog/_log_ "(Ljava/lang/String;[Ljava/lang/Object;Lorg/apache/logging/log4j/Level;)V"
++    return
++L_0023:
++.end method
++
++.method public static varargs trace "(Ljava/lang/String;[Ljava/lang/Object;)V"
++    .limit stack 3
++    .limit local 3
++    aload 0
++    aload 1
++    getstatic org/apache/logging/log4j/Level/TRACE Lorg/apache/logging/log4j/Level;
++    invokestatic jp/ngt/ngtlib/io/NGTLog/_log_ "(Ljava/lang/String;[Ljava/lang/Object;Lorg/apache/logging/log4j/Level;)V"
++    return
++L_0023:
++.end method
++
++.method public static _log_ "(Ljava/lang/String;[Ljava/lang/Object;Lorg/apache/logging/log4j/Level;)V"
+     .limit stack 3
+     .limit local 3
+     .catch java/lang/Exception from L_0000 to L_0018 using L_001b
+ L_0000:
+     .line 32
+     .var 0 is par1 Ljava/lang/String; from L_0000 to L_0023
+     .var 1 is par2 "[Ljava/lang/Object;" from L_0000 to L_0023
++    .var 2 is label "Lorg/apache/logging/log4j/Level;" from L_0000 to L_0023
+     aload 0
+-    astore 2
++    astore 3
+ L_0004:
+     .line 33
+-    .var 2 is message Ljava/lang/String; from L_0004 to L_0018
++    .var 3 is message Ljava/lang/String; from L_0004 to L_0018
+     aload 1
+     ifnull L_0011
+     aload 1
+     arraylength
+     ifle L_0011
+ L_000b:
+     .line 35
+     aload 0
+     aload 1
+     invokestatic java/lang/String/format "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"
+-    astore 2
++    astore 3
+ L_0011:
+     .line 37
+     .stack
+         locals Object java/lang/String
+         locals Object "[Ljava/lang/Object;"
++        locals Object org/apache/logging/log4j/Level
+         locals Object java/lang/String
+     .end stack
+     getstatic jp/ngt/ngtlib/io/NGTLog/logger Lorg/apache/logging/log4j/Logger;
+-    getstatic org/apache/logging/log4j/Level/INFO Lorg/apache/logging/log4j/Level;
+     aload 2
++    aload 3
+     invokeinterface org/apache/logging/log4j/Logger/log (Lorg/apache/logging/log4j/Level;Ljava/lang/String;)V
+ L_0018:
+     .line 42
+     goto L_001f
+ L_001b:
+     .line 39
+     .stack
+         locals Object java/lang/String
+         locals Object "[Ljava/lang/Object;"
++        locals Object org/apache/logging/log4j/Level
+         stacks Object java/lang/Exception
+     .end stack
+-    astore 2
++    pop
+ L_001f:
+     .line 43
+     .stack use locals
+     .end stack
+     return
+ L_0023:
+ .end method
+ 
+ .method public static varargs sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
+     .limit stack 5
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
 index a2f9d39..27e8e57 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
