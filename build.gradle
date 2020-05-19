@@ -70,7 +70,6 @@ dependencies {
     shade ("io.sigpipe:jbsdiff:1.0") {
         exclude group: "org.apache.commons", module: "commons-compress"
     }
-    shade "org.apache.commons:commons-compress:1.8.1"
     shade "org.mozilla:rhino:1.7.12"
 
     compileOnly files(sourceSets.main.jasm.outputDir)
@@ -126,6 +125,7 @@ jar {
     configurations.shade.each {dep ->
         from(project.zipTree(dep)){
             exclude 'META-INF', 'META-INF/**'
+            exclude 'LICENSE.txt'
         }
     }
 
