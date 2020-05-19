@@ -42,6 +42,12 @@ object MainConfig {
             "caches obj, mqo model.",
             true)
 
+    @JvmField
+    val cachedScripts = cfg.enableDisableProp(
+            "cached scripts",
+            "caches compiled script and executed environment",
+            true)
+
     init {
         configFile.writer().use { cfg.writeTo(it) }
     }

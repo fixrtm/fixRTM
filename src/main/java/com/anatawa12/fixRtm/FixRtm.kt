@@ -6,6 +6,9 @@ import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
+import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
+import com.anatawa12.fixRtm.scripting.RhinoHooks
+import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
+import org.mozilla.javascript.NativeJavaObject
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -40,8 +44,14 @@ object FixRtm {
 
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
+        NativeJavaObject.NOT_FOUND// load
+        RhinoHooks// load
         FIXFileLoader // init
         if (!MainConfig.cachedPolygonModel) CachedPolygonModel // init
+        if (!MainConfig.cachedScripts) {
+            ExecutedScriptCache// init
+            loadFIXScriptUtil()// init
+        }
         if (e.side == Side.CLIENT) registerGenerators()
     }
 

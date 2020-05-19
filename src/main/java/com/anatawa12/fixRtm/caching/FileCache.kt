@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.ngtlib.renderer.model
+package com.anatawa12.fixRtm.caching
 
 import java.io.*
 import java.util.*
@@ -14,6 +14,7 @@ class FileCache<TValue>(
 ) {
     private val cache = ConcurrentHashMap<String, TValue>()
     private var writings = Collections.newSetFromMap<String>(ConcurrentHashMap())
+    val cacheDiscarded: Boolean
 
     init {
         baseDir.mkdirs()
@@ -21,9 +22,12 @@ class FileCache<TValue>(
                 .also { it.appendText("") }
                 .readText()
         if (baseDigest != modsDigest) {
+            cacheDiscarded = true
             baseDir.deleteRecursively()
             baseDir.mkdirs()
             baseDir.resolve("base-digest").writeText(baseDigest)
+        } else {
+            cacheDiscarded = false
         }
     }
 

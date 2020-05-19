@@ -84,19 +84,24 @@ object FIXFileLoader {
         override val sha1Hash: String = DigestUtils.sha1Hex(file.inputStream().buffered())
 
         override val domains: Set<String>
+        private val ignoreCaseMap: Map<String, String>
 
         init {
             val domains = mutableSetOf<String>()
+            val ignoreCaseMap = mutableMapOf<String, String>()
             for (entry in zipFile.entries()) {
                 val parts = entry.name.split("/")
                 if (parts[0] == "assets" && parts.size >= 2 && parts[1].isNotEmpty())
                     domains.add(parts[1])
+                ignoreCaseMap[entry.name.toLowerCase()] = entry.name
             }
             this.domains = domains
+            this.ignoreCaseMap = ignoreCaseMap
         }
 
         override fun getFile(location: ResourceLocation): FIXResource? {
-            val path = "assets/${location.namespace}/${location.path}"
+            var path = "assets/${location.namespace}/${location.path}"
+            path = ignoreCaseMap[path] ?: path
             val file = zipFile.getEntry(path) ?: return null
             return FIXResource(this, zipFile.getInputStream(file))
         }

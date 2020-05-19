@@ -854,6 +854,156 @@ index 0a49c17..d210f43 100644
      .line 192
      .stack use locals
      .end stack
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
+index c1621a2..bfa23df 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
+@@ -80,22 +80,35 @@ L_0000:
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/serverScriptPath Ljava/lang/String;
+     ifnull L_0012
+ L_0007:
+     .line 48
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/serverScriptPath Ljava/lang/String;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getScript (Ljava/lang/String;)Ljava/lang/String;
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    invokestatic com/anatawa12/fixRtm/scripting/FIXScriptUtil/getScriptAndDoScript (Ljp/ngt/rtm/modelpack/ModelPackManager;Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     putfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/serverSE Ljavax/script/ScriptEngine;
+ L_0012:
+     .line 50
+     .stack
+         locals Object jp/ngt/rtm/modelpack/modelset/ModelSetBase
+     .end stack
+     return
+ L_0016:
+ .end method
+ 
+@@ -119,43 +132,69 @@ L_0005:
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/serverScriptPath Ljava/lang/String;
+     ifnull L_0017
+ L_000c:
+     .line 61
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/serverScriptPath Ljava/lang/String;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getScript (Ljava/lang/String;)Ljava/lang/String;
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    invokestatic com/anatawa12/fixRtm/scripting/FIXScriptUtil/getScriptAndDoScript (Ljp/ngt/rtm/modelpack/ModelPackManager;Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     putfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/serverSE Ljavax/script/ScriptEngine;
+ L_0017:
+     .line 64
+     .stack
+         locals Object jp/ngt/rtm/modelpack/modelset/ModelSetBase
+     .end stack
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/guiScriptPath Ljava/lang/String;
+     ifnull L_0034
+ L_001f:
+     .line 66
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/guiScriptPath Ljava/lang/String;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getScript (Ljava/lang/String;)Ljava/lang/String;
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    invokestatic com/anatawa12/fixRtm/scripting/FIXScriptUtil/getScriptAndDoScript (Ljp/ngt/rtm/modelpack/ModelPackManager;Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     putfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/guiSE Ljavax/script/ScriptEngine;
+ L_002a:
+     .line 67
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/guiTexture Ljava/lang/String;
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResource (Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
+index e05f400..c53b685 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
+@@ -192,22 +192,35 @@ L_0068:
+     checkcast jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig
+     getfield jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig/soundScriptPath Ljava/lang/String;
+     ifnull L_0079
+ L_006f:
+     .line 62
+     aload 0
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase/getConfig ()Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig;
+     getfield jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig/soundScriptPath Ljava/lang/String;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getScript (Ljava/lang/String;)Ljava/lang/String;
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    invokestatic com/anatawa12/fixRtm/scripting/FIXScriptUtil/getScriptAndDoScript (Ljp/ngt/rtm/modelpack/ModelPackManager;Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     putfield jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase/soundSE Ljavax/script/ScriptEngine;
+ L_0079:
+     .line 65
+     .stack
+         locals Object jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase
+     .end stack
+     return
+ L_007d:
+ .end method
+ 
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index 2945cc2..a90bdee 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
@@ -1170,6 +1320,48 @@ index d1831ec..7eeb299 100644
      aload 0
      iconst_4
      anewarray jp/ngt/rtm/rail/util/Point
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
+index 7cd3941..bb7b02b 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm
++++ b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
+@@ -28,22 +28,37 @@ L_0000:
+     .var 0 is par1 Lnet/minecraft/util/ResourceLocation; from L_0000 to L_0029
+     .var 1 is args "[Ljava/lang/String;" from L_0000 to L_0029
+     getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
+     aload 0
+     invokevirtual net/minecraft/util/ResourceLocation/getPath ()Ljava/lang/String;
+     invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getScript (Ljava/lang/String;)Ljava/lang/String;
+     astore 2
+ L_0007:
+     .line 18
+     .var 2 is text Ljava/lang/String; from L_0007 to L_0029
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
+     aload 2
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    aload 0
++    invokevirtual net/minecraft/util/ResourceLocation/toString ()Ljava/lang/String;
++    invokestatic com/anatawa12/fixRtm/scripting/FIXScriptUtil/getScriptAndDoScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/whatever (Ljava/lang/String;)V
++
+     astore 3
+ L_000c:
+     .line 20
+     .var 3 is se Ljavax/script/ScriptEngine; from L_000c to L_0029
+     aload 3
+     ldc "renderClass"
+     invokestatic jp/ngt/ngtlib/io/ScriptUtil/getScriptField (Ljavax/script/ScriptEngine;Ljava/lang/String;)Ljava/lang/Object;
+     checkcast java/lang/String
+     astore 4
+ L_0013:
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm b/src/main/rtm/jp/ngt/rtm/sound/MovingSoundMaker.jasm
 index 34f470e..019c243 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/sound/MovingSoundMaker.jasm

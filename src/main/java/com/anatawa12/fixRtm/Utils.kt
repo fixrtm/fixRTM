@@ -7,6 +7,7 @@ import com.google.common.collect.Iterators
 import net.minecraftforge.fml.common.Loader
 import java.io.*
 import java.nio.charset.Charset
+import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -31,6 +32,8 @@ fun <E> Array<E?>.isAllNotNull(): Boolean = all { it != null }
 val minecraftDir = Loader.instance().configDir.parentFile!!
 val fixCacheDir = minecraftDir.resolve("fixrtm-cache")
 val MS932 = Charset.forName("MS932")
+val fixRTMCommonExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+        threadFactoryWithPrefix("fixrtm-common-executor"))
 
 fun File.directoryDigestBaseStream()
         = SequenceInputStream(Iterators.asEnumeration(
@@ -129,3 +132,5 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 
     return String(chars, 0, charI)
 }
+
+fun File.mkParent(): File = apply { parentFile.mkdirs() }
