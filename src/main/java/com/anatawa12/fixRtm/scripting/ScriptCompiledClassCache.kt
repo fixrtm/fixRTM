@@ -44,7 +44,6 @@ object ScriptCompiledClassCache {
         }
 
         val clazz = Loader.loadClass(className)
-        println(clazz.interfaces[0])
         check (Script::class.java.isAssignableFrom(clazz)) { "compiled code is not Script type" }
         return clazz.newInstance() as Script
     }
