@@ -29,6 +29,8 @@ val baseScope = usingContext {
 fun loadFIXScriptUtil() {}
 
 private fun makeNewScope(): ScriptableObject = usingContext {
+    it.applicationClassLoader = ScriptCompiledClassCache.Loader
+
     val scope = ImporterTopLevel(it, false)
     scope.prototype = baseScope
     return scope
