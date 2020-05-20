@@ -1361,12 +1361,24 @@ index d1831ec..7eeb299 100644
      iconst_4
      anewarray jp/ngt/rtm/rail/util/Point
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
-index 7cd3941..bb7b02b 100644
+index 7cd3941..49f40d0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
-@@ -28,22 +28,37 @@ L_0000:
+@@ -20,30 +20,48 @@ L_0005:
+ .end method
+ 
+ .method public static varargs getRendererWithScript "(Lnet/minecraft/util/ResourceLocation;[Ljava/lang/String;)Ljp/ngt/rtm/render/PartsRenderer;"
+     .signature "<R:Ljp/ngt/rtm/render/PartsRenderer;>(Lnet/minecraft/util/ResourceLocation;[Ljava/lang/String;)TR;"
+     .limit stack 3
+     .limit local 6
+ L_0000:
+     .line 17
      .var 0 is par1 Lnet/minecraft/util/ResourceLocation; from L_0000 to L_0029
      .var 1 is args "[Ljava/lang/String;" from L_0000 to L_0029
++
++    ldc "cachedScripts"
++    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
++
      getstatic jp/ngt/rtm/modelpack/ModelPackManager/INSTANCE Ljp/ngt/rtm/modelpack/ModelPackManager;
      aload 0
      invokevirtual net/minecraft/util/ResourceLocation/getPath ()Ljava/lang/String;
@@ -1375,15 +1387,14 @@ index 7cd3941..bb7b02b 100644
  L_0007:
      .line 18
      .var 2 is text Ljava/lang/String; from L_0007 to L_0029
-+
-+    ldc "cachedScripts"
-+    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifDisabled (Ljava/lang/String;)V
-+
      aload 2
      invokestatic jp/ngt/ngtlib/io/ScriptUtil/doScript (Ljava/lang/String;)Ljavax/script/ScriptEngine;
 +
 +    ldc "cachedScripts"
 +    invokestatic com/anatawa12/fixRtm/asm/Preprocessor/ifEnabled (Ljava/lang/String;)V
++
++    aconst_null
++    astore 2
 +
 +    aload 0
 +    invokevirtual net/minecraft/util/ResourceLocation/toString ()Ljava/lang/String;
