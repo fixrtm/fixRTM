@@ -1,13 +1,9 @@
 package com.anatawa12.fixRtm.caching
 
-import com.anatawa12.fixRtm.gunzip
-import com.anatawa12.fixRtm.gzip
 import com.anatawa12.fixRtm.mkParent
 import java.io.*
 import java.util.*
 import java.util.concurrent.*
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
 
 class FileCache<TValue>(
         private val baseDir: File,
@@ -71,7 +67,7 @@ class FileCache<TValue>(
 
     private fun readCache(file: File, sha1: String): TValue? {
         try {
-            return deserialize(file.inputStream().buffered().gunzip())
+            return deserialize(file.inputStream().buffered())
                     .also { cache[sha1] = it }
         } catch (e: IOException) {
             file.delete()
@@ -88,7 +84,7 @@ class FileCache<TValue>(
             try {
                 val bas = ByteArrayOutputStream()
                 serialize(bas, value)
-                file.outputStream().buffered().gzip().use { bas.writeTo(it) }
+                file.outputStream().buffered().use { bas.writeTo(it) }
             } catch (e: IOException) {
                 file.delete()
             } catch (throwable: Throwable) {

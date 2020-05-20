@@ -10,8 +10,6 @@ import java.nio.charset.Charset
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
 
 fun getThreadGroup() = System.getSecurityManager()?.threadGroup ?: Thread.currentThread().threadGroup!!
 
@@ -136,6 +134,3 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 }
 
 fun File.mkParent(): File = apply { parentFile.mkdirs() }
-
-fun InputStream.gunzip() = GZIPInputStream(this)
-fun OutputStream.gzip() = GZIPOutputStream(this)

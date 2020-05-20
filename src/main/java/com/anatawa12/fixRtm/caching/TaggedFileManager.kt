@@ -2,6 +2,7 @@ package com.anatawa12.fixRtm.caching
 
 import com.google.common.collect.HashBiMap
 import java.io.EOFException
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.concurrent.ConcurrentHashMap
@@ -12,13 +13,14 @@ class TaggedFileManager {
 
     fun deserialize(stream: InputStream): Any {
         val serializer = map[readVInt(stream)]
-                ?: throw IllegalArgumentException("invalid stream: invalid id")
+                ?: throw IOException("invalid stream: invalid id")
         return serializer.deserialize(stream)
     }
 
     fun serialize(stream: OutputStream, value: Any) {
         val serializer = getSerializerFor(value)
-        val id = requireNotNull(map.inverse()[serializer]) { "serializer is not register" }
+        val id = map.inverse()[serializer]
+                ?: throw IOException("serializer for ${value.javaClass} is not register")
         writeVInt(stream, id)
         serializer.serialize(stream, value)
     }
@@ -40,12 +42,12 @@ class TaggedFileManager {
                 return serializer as Serializer<T>
             }
         }
-        throw IllegalArgumentException("invalid value: no serializer found.")
+        throw IOException("invalid value: no serializer found.")
     }
 
     private fun writeVInt(stream: OutputStream, v: Int) {
         if (v < 0) {
-            throw IllegalArgumentException("too small: $v")
+            throw IOException("too small: $v")
         } else if (v < 0x80) {
             // 00000000 0xxxxxxx -> 0xxxxxxx
 
@@ -55,7 +57,7 @@ class TaggedFileManager {
             stream.write(v ushr 8 or 0x80)
             stream.write(v and 0xFF)
         } else {
-            throw IllegalArgumentException("too big: $v")
+            throw IOException("too big: $v")
         }
     }
 
