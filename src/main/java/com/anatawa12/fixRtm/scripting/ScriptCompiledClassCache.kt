@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.scripting
 
+import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.mkParent
 import com.anatawa12.fixRtm.utils.DigestUtils
@@ -9,7 +10,9 @@ import org.mozilla.javascript.Script
 import org.mozilla.javascript.optimizer.ClassCompiler
 import org.mozilla.javascript.tools.ToolErrorReporter
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import java.util.logging.Logger
 
 object ScriptCompiledClassCache {
     private val compiledClasses = fixCacheDir.resolve("script-compiled-class")
@@ -61,6 +64,19 @@ object ScriptCompiledClassCache {
     }
 
     object Loader : ClassLoader(Loader::class.java.classLoader) {
+        val invalids = Collections.newSetFromMap<String>(ConcurrentHashMap())
+        override fun loadClass(name: String?, resolve: Boolean): Class<*> {
+            if (name in invalids)
+                throw ClassNotFoundException(name)
+            val loaded = super.loadClass(name, resolve)
+            if (loaded.name != name) {
+                invalids.add(name)
+                Loggers.getLogger("ScriptCompiledClassCache.Loader").trace("loaded.name != name: $name")
+                throw ClassNotFoundException(name)
+            }
+            return loaded
+        }
+
         override fun findClass(name: String): Class<*> {
             val hashPart = name.replace('.', '/')
             val bytes = compileds[name] ?: try {
