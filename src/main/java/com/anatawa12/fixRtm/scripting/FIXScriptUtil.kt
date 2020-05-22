@@ -69,7 +69,7 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
     usingContext { cx ->
         val scope = makeNewScope()
 
-        val script = ScriptImporter.makeScript(filePath, scriptStr)
+        val script = ScriptImporter.makeScript(filePath, scriptStr, resource.pack)
 
         script.exec(cx, scope)
 

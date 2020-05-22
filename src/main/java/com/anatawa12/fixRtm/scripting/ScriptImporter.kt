@@ -21,8 +21,9 @@ object ScriptImporter {
 
     fun getScript(name: String): Script {
         val resourceLocation = ResourceLocation(name)
-        val script = FIXFileLoader.getInputStream(resourceLocation).reader().use { it.readText() }
-        return makeScript(resourceLocation, script)
+        val resource = FIXFileLoader.getResource(resourceLocation)
+        val script = resource.inputStream.reader().use { it.readText() }
+        return makeScript(resourceLocation, script, resource.pack)
     }
 
     fun makeScript(location: ResourceLocation, script: String, pack: FIXModelPack? = null): Script {
