@@ -36,7 +36,7 @@ private fun makeNewScope(): ScriptableObject = usingContext {
     return scope
 }
 
-fun makeNewScopeWithCache(cache: ExecutedScript): ScriptableObject {
+fun makeNewScopeWithCache(cache: ExecutedScript): ScriptableObject? {
     usingContext {
         ScriptCompiledClassCache.initContext(it)
         return cache.getScope(baseScope)
@@ -95,7 +95,11 @@ fun getScriptAndDoScriptByCache(filePath: ResourceLocation, pack: FIXModelPack, 
 
     // load cache
 
-    return makeNewScopeWithCache(cache)
+    val newScope = makeNewScopeWithCache(cache)
+    if (newScope == null) {
+        ExecutedScriptCache.discord(pack, filePath)
+    }
+    return newScope
 }
 
 fun makeDependenciesData(dependencies: Map<ResourceLocation, String>): Map<String, ByteArray> {

@@ -1,7 +1,7 @@
 package com.anatawa12.fixRtm.scripting
 
+import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.caching.TaggedFileManager
-import org.mozilla.javascript.NativeObject
 import org.mozilla.javascript.Scriptable
 import org.mozilla.javascript.ScriptableObject
 import org.mozilla.javascript.serialize.ScriptableInputStream
@@ -13,7 +13,7 @@ class ExecutedScript private constructor(
          * dependency name and sha1 hash of script.
          */
         val dependencies: Map<String, ByteArray>,
-        val scopeData: ByteArray
+        val scopeData: ByteArray?
 ) {
     constructor(
             dependencies: Map<String, ByteArray>,
@@ -33,6 +33,8 @@ class ExecutedScript private constructor(
         override val type: Class<ExecutedScript> get() = ExecutedScript::class.java
 
         override fun serialize(stream: OutputStream, value: ExecutedScript) {
+            if (value.scopeData == null)
+                throw IOException("this is not valid ExecutedScript, failed to make scopeData")
             val stream = DataOutputStream(stream)
             stream.writeInt(value.dependencies.size)
             for ((name, data) in value.dependencies) {
@@ -68,22 +70,38 @@ class ExecutedScript private constructor(
         /**
          * user have to set [Context]
          */
-        private fun writeScopeData(scope: ScriptableObject, base: Scriptable): ByteArray {
-            val baos = ByteArrayOutputStream()
-            ScriptableOutputStream(baos, base).use { stream ->
-                stream.writeObject(scope)
+        private fun writeScopeData(scope: ScriptableObject, base: Scriptable): ByteArray? {
+            try {
+                val baos = ByteArrayOutputStream()
+                ScriptableOutputStream(baos, base).use { stream ->
+                    stream.writeObject(scope)
+                }
+                return baos.toByteArray()
+            } catch (e: IOException) {
+                logger.error("writing scope data: ", e)
+                return null
             }
-            return baos.toByteArray()
         }
 
         /**
          * user have to set [Context]
          */
-        private fun readScopeData(data: ByteArray, base: Scriptable): ScriptableObject {
-            val bais = ByteArrayInputStream(data)
-            ScriptableInputStream(bais, base).use { stream ->
-                return stream.readObject() as ScriptableObject
+        private fun readScopeData(data: ByteArray?, base: Scriptable): ScriptableObject? {
+            if (data == null) return null
+            try {
+                val bais = ByteArrayInputStream(data)
+                ScriptableInputStream(bais, base).use { stream ->
+                    return stream.readObject() as ScriptableObject
+                }
+            } catch (e: IOException) {
+                logger.error("reading scope data: ", e)
+                return null
+            } catch (e: ClassNotFoundException) {
+                logger.error("reading scope data: ", e)
+                return null
             }
         }
+
+        private val logger = Loggers.getLogger("ExecutedScript")
     }
 }
