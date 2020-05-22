@@ -122,5 +122,9 @@ object ExecutedScriptCache {
     fun add(pack: FIXModelPack, filePath: ResourceLocation, executedScript: ExecutedScript) {
         cache.put(pack, DigestUtils.sha1Hex(filePath.toString()), executedScript)
     }
+
+    fun discord(pack: FIXModelPack, filePath: ResourceLocation) {
+        cache.discord(pack, DigestUtils.sha1Hex(filePath.toString()))
+    }
 }
 
