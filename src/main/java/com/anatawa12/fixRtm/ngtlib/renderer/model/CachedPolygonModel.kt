@@ -200,4 +200,6 @@ object CachedPolygonModel {
             writer.writeUTFNullable(value.texture?.toString())
         }
     }
+
+    fun load() {}
 }

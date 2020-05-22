@@ -130,5 +130,7 @@ object ExecutedScriptCache {
     fun discord(pack: FIXModelPack, filePath: ResourceLocation) {
         cache.discord(pack, DigestUtils.sha1Hex(filePath.toString()))
     }
+
+    fun load() {}
 }
 

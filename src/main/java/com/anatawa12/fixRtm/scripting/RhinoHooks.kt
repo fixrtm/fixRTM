@@ -165,4 +165,6 @@ object RhinoHooks {
      */
     @JvmStatic
     private fun getSizeRank(aType: Class<*>?): Int = error("implement by transformer")
+
+    fun load() {}
 }
