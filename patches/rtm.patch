@@ -1360,6 +1360,37 @@ index d1831ec..7eeb299 100644
      aload 0
      iconst_4
      anewarray jp/ngt/rtm/rail/util/Point
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/PartsRenderer.jasm b/src/main/rtm/jp/ngt/rtm/render/PartsRenderer.jasm
+index 283bb01..efd8f8d 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/PartsRenderer.jasm
++++ b/src/main/rtm/jp/ngt/rtm/render/PartsRenderer.jasm
+@@ -173,21 +173,25 @@ L_000b:
+     .end stack
+     astore 3
+ L_000f:
+     .line 78
+     .var 3 is e Ljava/lang/Exception; from L_000f to L_0021
+     new java/lang/RuntimeException
+     dup
+     new java/lang/StringBuilder
+     dup
+     invokespecial java/lang/StringBuilder/<init> ()V
+-    ldc "On init script : "
++    ldc "On '"
++    invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
++    aload 1
++    invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
++    ldc "' function : "
+     invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+     aload 0
+     getfield jp/ngt/rtm/render/PartsRenderer/modelSet Ljp/ngt/rtm/modelpack/modelset/ModelSetBase;
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ModelSetBase/getConfig ()Ljp/ngt/rtm/modelpack/cfg/ModelConfig;
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ModelConfig/getName ()Ljava/lang/String;
+     invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+     invokevirtual java/lang/StringBuilder/toString ()Ljava/lang/String;
+     aload 3
+     invokespecial java/lang/RuntimeException/<init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+     athrow
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
 index 7cd3941..49f40d0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm
