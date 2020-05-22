@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.asm
 
+import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
 import com.anatawa12.fixRtm.scripting.RhinoHooks
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
@@ -16,6 +17,11 @@ class RhinoTransformer : IClassTransformer {
             val reader = ClassReader(basicClass!!)
             val writer = ClassWriter(0)
             reader.accept(NativeJavaObjectVisitor(writer), 0)
+            return writer.toByteArray()
+        } else if (name == PrimitiveJavaHelper.NativeString_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(NativeStringVisitor(writer), 0)
             return writer.toByteArray()
         }
         return basicClass
@@ -108,6 +114,34 @@ class RhinoTransformer : IClassTransformer {
         }
     }
 
+    class NativeStringVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitEnd() {
+            visitMethod(ACC_PUBLIC, PrimitiveJavaHelper.get_name, PrimitiveJavaHelper.get_desc,
+                    null, null).apply {
+                visitCode()
+                visitVarInsn(ALOAD, 0) // this
+                visitVarInsn(ALOAD, 1) // name
+                visitVarInsn(ALOAD, 2) // start
+                visitMethodInsn(INVOKESPECIAL, IdScriptableObject_internal, PrimitiveJavaHelper.get_name, PrimitiveJavaHelper.get_desc, false)
+                visitInsn(DUP)
+                visitFieldInsn(GETSTATIC, Scriptable_internal, Scriptable_NOT_FOUND_name, Scriptable_NOT_FOUND_desc)
+                val ifEq = Label()
+                visitJumpInsn(IF_ACMPEQ, ifEq)
+                visitInsn(ARETURN)
+                visitLabel(ifEq)
+                visitFrame(F_SAME1, 0, null, 1, arrayOf("java/lang/Object"))
+                visitInsn(POP)
+                visitVarInsn(ALOAD, 1) // name
+                visitVarInsn(ALOAD, 2) // start
+                visitMethodInsn(INVOKESTATIC, PrimitiveJavaHelper.internalClassName, PrimitiveJavaHelper.NativeString_get_hook_name, PrimitiveJavaHelper.NativeString_get_hook_desc, false)
+                visitInsn(ARETURN)
+                visitMaxs(3, 3)
+                visitEnd()
+            }
+            super.visitEnd()
+        }
+    }
+
     class InsertCodeAtFirstVisitor(visitor: MethodVisitor, private val function: MethodVisitor.() -> Unit)
         : MethodVisitor(ASM5, visitor) {
         private var visited = false
@@ -127,5 +161,9 @@ class RhinoTransformer : IClassTransformer {
         const val NativeJavaObject_name = "org.mozilla.javascript.NativeJavaObject"
         const val NativeJavaObject_internal = "org/mozilla/javascript/NativeJavaObject"
         const val CoerceTypeImplFailed_internal = "com/anatawa12/fixRtm/scripting/CoerceTypeImplFailed"
+        const val IdScriptableObject_internal = "org/mozilla/javascript/IdScriptableObject"
+        const val Scriptable_internal = "org/mozilla/javascript/Scriptable"
+        const val Scriptable_NOT_FOUND_name = "NOT_FOUND"
+        const val Scriptable_NOT_FOUND_desc = "L${"java/lang/Object"};"
     }
 }
