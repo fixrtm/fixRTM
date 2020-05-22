@@ -12,7 +12,6 @@ import org.mozilla.javascript.tools.ToolErrorReporter
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import java.util.logging.Logger
 
 object ScriptCompiledClassCache {
     private val compiledClasses = fixCacheDir.resolve("script-compiled-class")
@@ -83,7 +82,21 @@ object ScriptCompiledClassCache {
             } catch (e: IOException) {
                 throw ClassNotFoundException(name)
             }
-            return defineClass(name, bytes, 0, bytes.size)
+            val clazz = defineClass(name, bytes, 0, bytes.size)
+            if (Script::class.java.isAssignableFrom(clazz)) {
+                loadScriptClass(clazz as Class<out Script>)
+            }
+            return clazz
+        }
+
+        private fun loadScriptClass(clazz: Class<out Script>) {
+            try {
+                val m = clazz.getDeclaredMethod("_reInit", Context::class.java)
+                m.isAccessible = true
+                usingContext { m.invoke(null, it) }
+            } catch (e: NoSuchMethodException) {
+                // no method is ignore
+            }
         }
     }
 }
