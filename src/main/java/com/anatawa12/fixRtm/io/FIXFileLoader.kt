@@ -130,4 +130,6 @@ object FIXFileLoader {
             }
         }
     }
+
+    fun load() {}
 }

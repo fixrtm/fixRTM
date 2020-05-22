@@ -7,6 +7,7 @@ import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
+import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
 import com.anatawa12.fixRtm.scripting.RhinoHooks
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import jp.ngt.ngtlib.NGTCore
@@ -44,13 +45,13 @@ object FixRtm {
 
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
-        NativeJavaObject.NOT_FOUND// load
-        RhinoHooks// load
-        FIXFileLoader // init
-        if (!MainConfig.cachedPolygonModel) CachedPolygonModel // init
-        if (!MainConfig.cachedScripts) {
-            ExecutedScriptCache// init
+        NativeJavaObject.canConvert(0, Object::class.java)// load
+        RhinoHooks.load()// load
+        FIXFileLoader.load() // init
+        if (MainConfig.cachedScripts) {
+            ExecutedScriptCache.load()// init
             loadFIXScriptUtil()// init
+            PrimitiveJavaHelper.load()// init
         }
         if (e.side == Side.CLIENT) registerGenerators()
     }

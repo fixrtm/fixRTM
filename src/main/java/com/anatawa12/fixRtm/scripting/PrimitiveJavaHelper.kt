@@ -21,7 +21,7 @@ object PrimitiveJavaHelper {
         return wrapFunctionForString(stringObject.get(name, start))
     }
 
-    private val stringObject = NativeJavaObject(null, "", null)
+    private val stringObject = usingContext { NativeJavaObject(baseScope, "", null) }
 
     private fun wrapFunctionForString(scriptable: Any?): Any? {
         if (scriptable is NativeJavaMethod)
@@ -41,4 +41,6 @@ object PrimitiveJavaHelper {
             "trimRight", "valueOf", "anchor", "big", "blink", "bold", "fixed", "fontcolor", "fontsize", "italics",
             "link", "small", "strike", "sub", "sup"
     )
+
+    fun load() {}
 }
