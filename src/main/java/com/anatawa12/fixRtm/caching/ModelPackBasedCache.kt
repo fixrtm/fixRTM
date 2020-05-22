@@ -53,4 +53,8 @@ class ModelPackBasedCache(
         caches[pack]?.putCachedValue(sha1, model)
     }
 
+    fun discord(pack: FIXModelPack, sha1: String) {
+        caches[pack]?.discordCachedValue(sha1)
+    }
+
 }

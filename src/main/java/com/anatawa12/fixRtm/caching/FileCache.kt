@@ -95,6 +95,11 @@ class FileCache<TValue>(
         }
     }
 
+    fun discordCachedValue(sha1: String) {
+        require(isHex40IgnoreCase(sha1)) { "invalid sha hash" }
+        getFile(sha1).delete()
+    }
+
     private fun getFile(sha1In: String): File {
         val sha1 = sha1In.toLowerCase()
         if (withTwoCharDir) {
