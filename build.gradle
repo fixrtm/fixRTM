@@ -72,6 +72,7 @@ dependencies {
     }
     shade "org.mozilla:rhino:1.7.12"
 
+    compileOnly files(file("run/fixrtm-cache/script-compiled-class"))
     compileOnly files(sourceSets.main.jasm.outputDir)
     //compileOnly files(new File(projectDir, "mods/rtm.deobf.jar"),
     //        new File(projectDir, "mods/ngtlib.deobf.jar"))
