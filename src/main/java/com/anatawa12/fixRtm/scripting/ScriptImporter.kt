@@ -1,6 +1,9 @@
 package com.anatawa12.fixRtm.scripting
 
 import com.anatawa12.fixRtm.io.FIXFileLoader
+import com.anatawa12.fixRtm.io.FIXModelPack
+import com.anatawa12.fixRtm.io.FIXResource
+import net.minecraft.client.resources.IResource
 import net.minecraft.util.ResourceLocation
 import org.mozilla.javascript.*
 import java.util.concurrent.ConcurrentHashMap
@@ -18,13 +21,15 @@ object ScriptImporter {
 
     fun getScript(name: String): Script {
         val resourceLocation = ResourceLocation(name)
-        val script = FIXFileLoader.getInputStream(resourceLocation).reader().use { it.readText() }
-        return makeScript(resourceLocation, script)
+        val resource = FIXFileLoader.getResource(resourceLocation)
+        val script = resource.inputStream.reader().use { it.readText() }
+        return makeScript(resourceLocation, script, resource.pack)
     }
 
-    fun makeScript(name: ResourceLocation, script: String): Script {
+    fun makeScript(location: ResourceLocation, script: String, pack: FIXModelPack? = null): Script {
         val script = preprocessScript(script)
-        return ScriptCompiledClassCache.compile(script, name.toString())
+        val name = if (pack != null) "$location(${pack.file.name})" else "$location"
+        return ScriptCompiledClassCache.compile(script, name)
     }
 
     private val allDependenceScripts = ConcurrentHashMap<ResourceLocation, Map<ResourceLocation, String>>()
