@@ -55,6 +55,11 @@ class RhinoTransformer : IClassTransformer {
             val writer = ClassWriter(0)
             reader.accept(ClassCompilerVisitor(writer), 0)
             return writer.toByteArray()
+        } else if (name == NativeJavaClass_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(NativeJavaClassVisitor(writer), 0)
+            return writer.toByteArray()
         }
         return basicClass
     }
@@ -229,6 +234,100 @@ class RhinoTransformer : IClassTransformer {
 
     }
 
+    class NativeJavaClassVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitMethod(access: Int, name: String?, desc: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor? {
+            var mv = super.visitMethod(access, name, desc, signature, exceptions)
+            if (name == NativeJavaClass_has_name && desc == NativeJavaClass_has_desc) {
+                val returnTrue = Label()
+
+                mv.visitCode()
+
+                mv.visitVarInsn(ALOAD, 0)
+                mv.visitFieldInsn(GETFIELD, NativeJavaClass_internal, "members", "L$JavaMembers_internal;")
+                mv.visitVarInsn(ALOAD, 1)
+                mv.visitLdcInsn(1)
+                mv.visitMethodInsn(INVOKEVIRTUAL, JavaMembers_internal, "has", "(L$String_internal;Z)Z", false)
+                mv.visitJumpInsn(IFNE, returnTrue)
+
+                mv.visitLdcInsn("__javaObject__")
+                mv.visitVarInsn(ALOAD, 1)
+                mv.visitMethodInsn(INVOKEVIRTUAL, String_internal, Object_equals_name, Object_equals_desc, false)
+                mv.visitJumpInsn(IFNE, returnTrue)
+
+                mv.visitLdcInsn("class")
+                mv.visitVarInsn(ALOAD, 1)
+                mv.visitMethodInsn(INVOKEVIRTUAL, String_internal, Object_equals_name, Object_equals_desc, false)
+                mv.visitJumpInsn(IFNE, returnTrue)
+
+                mv.visitLdcInsn(0)
+                mv.visitInsn(IRETURN)
+
+                mv.visitFrame(F_SAME, 0, null, 0, null)
+                mv.visitLabel(returnTrue)
+
+                mv.visitLdcInsn(1)
+                mv.visitInsn(IRETURN)
+
+                mv.visitMaxs(3, 3)
+                mv.visitEnd()
+
+                mv = null
+            } else if (name == NativeJavaClass_get_name && desc == NativeJavaClass_get_desc) {
+                mv = NativeJavaClassGetVisitor(mv)
+            }
+            return mv
+        }
+    }
+
+    class NativeJavaClassGetVisitor(visitor: MethodVisitor) : MethodVisitor(ASM5, visitor) {
+        var state = START
+
+        override fun visitLdcInsn(cst: Any?) {
+            if (cst == "__javaObject__") {
+                state = AFTER_LDC_JavaObject
+            }
+            super.visitLdcInsn(cst)
+        }
+
+        override fun visitJumpInsn(opcode: Int, label: Label) {
+            if (state == AFTER_LDC_JavaObject && opcode == IFEQ) {
+                state = AFTER_IFEQ
+                val ifNot = label
+                val ifClass = Label()
+                super.visitJumpInsn(IFNE, ifClass)
+                super.visitLdcInsn("class")
+                super.visitVarInsn(ALOAD , 1)
+                super.visitMethodInsn(INVOKEVIRTUAL, String_internal, Object_equals_name, Object_equals_desc, false)
+                super.visitJumpInsn(IFEQ, ifNot)
+                super.visitLabel(ifClass)
+                super.visitFrame(F_APPEND, 3, arrayOf("org/mozilla/javascript/Context", "org/mozilla/javascript/Scriptable", "org/mozilla/javascript/WrapFactory"), 0, null)
+                return
+            }
+            super.visitJumpInsn(opcode, label)
+        }
+
+        override fun visitFrame(type: Int, nLocal: Int, local: Array<out Any>?, nStack: Int, stack: Array<out Any>?) {
+            if (state == AFTER_IFEQ) {
+                state = END
+                super.visitFrame(F_SAME, 0, null, 0, null)
+                return
+            }
+            super.visitFrame(type, nLocal, local, nStack, stack)
+        }
+
+        override fun visitEnd() {
+            check(state == END) { "logic failed" }
+            super.visitEnd()
+        }
+
+        companion object {
+            private const val START = 0
+            private const val AFTER_LDC_JavaObject = 1
+            private const val AFTER_IFEQ = 2
+            private const val END = 3
+        }
+    }
+
     class InsertCodeAtFirstVisitor(visitor: MethodVisitor, private val function: MethodVisitor.() -> Unit)
         : MethodVisitor(ASM5, visitor) {
         private var visited = false
@@ -252,5 +351,19 @@ class RhinoTransformer : IClassTransformer {
         const val Scriptable_internal = "org/mozilla/javascript/Scriptable"
         const val Scriptable_NOT_FOUND_name = "NOT_FOUND"
         const val Scriptable_NOT_FOUND_desc = "L${"java/lang/Object"};"
+
+        const val JavaMembers_internal = "org/mozilla/javascript/JavaMembers"
+
+        const val NativeJavaClass_name = "org.mozilla.javascript.NativeJavaClass"
+        const val NativeJavaClass_internal = "org/mozilla/javascript/NativeJavaClass"
+        const val NativeJavaClass_has_name = "has"
+        const val NativeJavaClass_has_desc = "(L${"java/lang/String"};L${"org/mozilla/javascript/Scriptable"};)Z"
+        const val NativeJavaClass_get_name = "get"
+        const val NativeJavaClass_get_desc = "(L${"java/lang/String"};L${"org/mozilla/javascript/Scriptable"};)L${"java/lang/Object"};"
+
+        const val String_internal = "java/lang/String"
+        const val Object_equals_name = "equals"
+        const val Object_equals_desc = "(L${"java/lang/Object"};)Z"
+
     }
 }
