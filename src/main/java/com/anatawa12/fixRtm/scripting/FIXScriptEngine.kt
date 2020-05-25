@@ -72,6 +72,7 @@ class FIXScriptEngine : ScriptEngine, Invocable {
     override fun invokeFunction(name: String?, vararg args: Any?): Any {
         val func = (scope[name] as? Function) ?: throw ScriptException("$name is not function")
         usingContext { ctx ->
+            ctx.wrapFactory.isJavaPrimitiveWrap = false
             return func.call(ctx, func.parentScope, null, args)
         }
     }
