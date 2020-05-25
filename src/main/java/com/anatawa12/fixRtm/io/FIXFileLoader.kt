@@ -43,9 +43,11 @@ object FIXFileLoader {
 
     fun getFiles(): List<File> {
         if (!FMLLaunchHandler.isDeobfuscatedEnvironment())
-            return minecraftDir.resolve("mods").listFiles()!!.asList()
+            return (minecraftDir.resolve("mods").listFiles()!!.asList()
+                    + minecraftDir.resolve("mods/1.12.2").listFiles()!!.asList())
         else
             return (minecraftDir.resolve("mods").listFiles()!!.asList()
+                    + minecraftDir.resolve("mods/1.12.2").listFiles()!!.asList()
                     + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore('!')))))
     }
 
