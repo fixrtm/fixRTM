@@ -576,10 +576,58 @@ index 5d26e9d..84909bf 100644
      areturn
  L_0005:
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-index e394adf..b6c8387 100644
+index e394adf..1adc650 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-@@ -665,20 +665,39 @@ L_000a:
+@@ -634,24 +634,46 @@ L_0029:
+     .stack use locals
+     .end stack
+     return
+ L_002d:
+ .end method
+ 
+ .method public hasPermission (Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;)Z
+     .limit stack 5
+     .limit local 3
+ L_0000:
+-    .line 140
+     .var 0 is this Ljp/ngt/ngtlib/util/PermissionManager; from L_0000 to L_002c
+     .var 1 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_002c
+     .var 2 is category Ljava/lang/String; from L_0000 to L_002c
++
++    .line 2146
++    getstatic com/anatawa12/fixRtm/asm/config/MainConfig/addNegativePermissionEnabled Z
++    ifeq L_if_has_negative_permit
++    .line 2147
++    aload 0
++    ldc "negative."
++    aload 2
++    invokevirtual java/lang/String/concat (Ljava/lang/String;)Ljava/lang/String;
++    invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
++    aload 1
++    invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
++    invokeinterface java/util/List/contains (Ljava/lang/Object;)Z
++    ifeq L_if_has_negative_permit
++    goto L_no_permission
++L_if_has_negative_permit:
++    .line 140
++    .stack
++        locals Object jp/ngt/ngtlib/util/PermissionManager
++        locals Object net/minecraft/entity/player/EntityPlayer
++        locals Object java/lang/String
++    .end stack
++
+     aload 0
+     aload 1
+     invokevirtual jp/ngt/ngtlib/util/PermissionManager/isOp (Lnet/minecraft/entity/player/EntityPlayer;)Z
+     ifeq L_000a
+ L_0006:
+     .line 142
+     iconst_1
+     ireturn
+ L_000a:
+     .line 146
+@@ -665,20 +687,40 @@ L_000a:
      invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
@@ -608,6 +656,7 @@ index e394adf..b6c8387 100644
 +    iconst_1
 +    ireturn
 +L_if_has_not_all_permit:
++L_no_permission:
 +
      .line 152
      .stack use locals
@@ -619,7 +668,7 @@ index e394adf..b6c8387 100644
      iconst_0
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
-@@ -704,20 +723,32 @@ L_0000:
+@@ -704,20 +746,32 @@ L_0000:
      .var 1 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_003f
      getstatic jp/ngt/ngtlib/util/PermissionManager/DEBUG_MODE Z
      ifne L_000a
