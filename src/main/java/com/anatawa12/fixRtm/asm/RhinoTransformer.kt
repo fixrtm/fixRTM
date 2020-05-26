@@ -1,5 +1,22 @@
 package com.anatawa12.fixRtm.asm
 
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_compileToClassFiles_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_compileToClassFiles_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_implDecompile_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_implDecompile_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_internal
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_generateNativeFunctionOverrides_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_generateNativeFunctionOverrides_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_internal
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_scriptOrFnNodes_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_scriptOrFnNodes_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_sourceString_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_sourceString_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_decompile_desc
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_decompile_name
+import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_name
 import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
 import com.anatawa12.fixRtm.scripting.RhinoHooks
 import net.minecraft.launchwrapper.IClassTransformer
@@ -22,6 +39,21 @@ class RhinoTransformer : IClassTransformer {
             val reader = ClassReader(basicClass!!)
             val writer = ClassWriter(0)
             reader.accept(NativeStringVisitor(writer), 0)
+            return writer.toByteArray()
+        } else if (name == NativeFunction_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(NativeFunctionVisitor(writer), 0)
+            return writer.toByteArray()
+        } else if (name == Codegen_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(CodegenVisitor(writer), 0)
+            return writer.toByteArray()
+        } else if (name == ClassCompiler_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(ClassCompilerVisitor(writer), 0)
             return writer.toByteArray()
         }
         return basicClass
@@ -140,6 +172,61 @@ class RhinoTransformer : IClassTransformer {
             }
             super.visitEnd()
         }
+    }
+
+    class NativeFunctionVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<out String>?): MethodVisitor {
+            if (name == NativeFunction_decompile_name && desc == NativeFunction_decompile_desc) {
+                return super.visitMethod(ACC_PUBLIC, name, desc, signature, exceptions)
+            }
+            return super.visitMethod(access, name, desc, signature, exceptions)
+        }
+    }
+
+    class CodegenVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<out String>?): MethodVisitor {
+            var mv = super.visitMethod(access, name, desc, signature, exceptions)
+            if (name == Codegen_generateNativeFunctionOverrides_name && desc == Codegen_generateNativeFunctionOverrides_desc) {
+                mv = InsertCodeAtFirstVisitor(mv) {
+                    visitVarInsn(ALOAD, 1)
+                    visitVarInsn(ALOAD, 0)
+                    visitFieldInsn(GETFIELD, Codegen_internal, Codegen_scriptOrFnNodes_name, Codegen_scriptOrFnNodes_desc)
+                    visitVarInsn(ALOAD, 0)
+                    visitFieldInsn(GETFIELD, Codegen_internal, Codegen_sourceString_name, Codegen_sourceString_desc)
+                    visitMethodInsn(INVOKESTATIC, CodeGenHooks_internal, CodeGenHooks_implDecompile_name, CodeGenHooks_implDecompile_desc, false)
+                }
+            }
+            return mv
+        }
+
+        override fun visitEnd() {
+            visitField(ACC_PUBLIC, Codegen_sourceString_name, Codegen_sourceString_desc, null, null).apply {
+                visitEnd()
+            }
+            super.visitEnd()
+        }
+    }
+
+    class ClassCompilerVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitMethod(access: Int, name: String, desc: String, signature: String?, exceptions: Array<out String>?): MethodVisitor {
+            var mv = super.visitMethod(access, name, desc, signature, exceptions)
+            if (name == ClassCompiler_compileToClassFiles_name && desc == ClassCompiler_compileToClassFiles_desc) {
+                mv = ClassCompilerCompileToClassFilesVisitor(mv)
+            }
+            return mv
+        }
+    }
+
+    class ClassCompilerCompileToClassFilesVisitor(mv: MethodVisitor) : MethodVisitor(ASM5, mv) {
+        override fun visitVarInsn(opcode: Int, `var`: Int) {
+            super.visitVarInsn(opcode, `var`)
+            if (opcode == ASTORE && `var` == 13) {
+                visitVarInsn(ALOAD, 13)
+                visitVarInsn(ALOAD, 1)
+                visitFieldInsn(PUTFIELD, Codegen_internal, Codegen_sourceString_name, Codegen_sourceString_desc)
+            }
+        }
+
     }
 
     class InsertCodeAtFirstVisitor(visitor: MethodVisitor, private val function: MethodVisitor.() -> Unit)
