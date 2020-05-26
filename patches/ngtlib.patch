@@ -1,5 +1,5 @@
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
-index 89cf20c..bb3eb7d 100644
+index 89cf20c..87dcf37 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/command/CommandPermit.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/command/CommandPermit.jasm
 @@ -42,56 +42,57 @@ L_0004:
@@ -86,7 +86,7 @@ index 89cf20c..bb3eb7d 100644
          locals Object "[Ljava/lang/String;"
          locals Object net/minecraft/entity/player/EntityPlayerMP
      .end stack
-@@ -102,44 +103,46 @@ L_0019:
+@@ -102,44 +103,45 @@ L_0019:
      .line 48
      aload 3
      iconst_0
@@ -98,9 +98,9 @@ index 89cf20c..bb3eb7d 100644
      .line 50
      getstatic jp/ngt/ngtlib/util/PermissionManager/INSTANCE Ljp/ngt/ngtlib/util/PermissionManager;
 -    aload 4
+-    invokevirtual jp/ngt/ngtlib/util/PermissionManager/showPermissionList (Lnet/minecraft/entity/player/EntityPlayer;)V
 +    aload 2
-+    invokestatic jp/ngt/ngtlib/command/CommandPermit/getCommandSenderAsPlayer (Lnet/minecraft/command/ICommandSender;)Lnet/minecraft/entity/player/EntityPlayerMP;
-     invokevirtual jp/ngt/ngtlib/util/PermissionManager/showPermissionList (Lnet/minecraft/entity/player/EntityPlayer;)V
++    invokevirtual jp/ngt/ngtlib/util/PermissionManager/showPermissionList (Lnet/minecraft/command/ICommandSender;)V
  L_0026:
      .line 51
      return
@@ -136,7 +136,7 @@ index 89cf20c..bb3eb7d 100644
      .line 56
      return
  L_0044:
-@@ -168,21 +171,22 @@ L_0057:
+@@ -168,21 +170,22 @@ L_0057:
      .var 6 is target Ljava/lang/String; from L_0057 to L_007c
      aload 3
      iconst_0
@@ -160,7 +160,7 @@ index 89cf20c..bb3eb7d 100644
      .line 68
      .stack
          locals Object jp/ngt/ngtlib/command/CommandPermit
-@@ -195,58 +199,59 @@ L_0069:
+@@ -195,58 +198,59 @@ L_0069:
      .end stack
      aload 3
      iconst_0
@@ -576,10 +576,124 @@ index 5d26e9d..84909bf 100644
      areturn
  L_0005:
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-index e394adf..b6c8387 100644
+index e394adf..a1a1ff1 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/util/PermissionManager.jasm
 +++ b/src/main/ngtlib/jp/ngt/ngtlib/util/PermissionManager.jasm
-@@ -665,20 +665,39 @@ L_000a:
+@@ -403,35 +403,46 @@ L_0011:
+     aload 0
+     getfield jp/ngt/ngtlib/util/PermissionManager/permissionMap Ljava/util/Map;
+     aload 1
+     invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
+     checkcast java/util/List
+     areturn
+ L_001a:
+ .end method
+ 
+ .method public showPermissionList (Lnet/minecraft/entity/player/EntityPlayer;)V
++    .limit stack 2
++    .limit local 2
++
++    aload 0
++    aload 1
++    invokevirtual jp/ngt/ngtlib/util/PermissionManager/showPermissionList (Lnet/minecraft/command/ICommandSender;)V
++    return
++
++.end method
++
++.method public showPermissionList (Lnet/minecraft/command/ICommandSender;)V
+     .limit stack 3
+     .limit local 7
+ L_0000:
+     .line 98
+     .var 0 is this Ljp/ngt/ngtlib/util/PermissionManager; from L_0000 to L_004b
+-    .var 1 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_004b
++    .var 1 is player Lnet/minecraft/command/ICommandSender; from L_0000 to L_004b
+     aload 0
+     getfield jp/ngt/ngtlib/util/PermissionManager/permissionMap Ljava/util/Map;
+     invokeinterface java/util/Map/entrySet ()Ljava/util/Set;
+     invokeinterface java/util/Set/iterator ()Ljava/util/Iterator;
+     astore 2
+ L_0007:
+     .stack
+         locals Object jp/ngt/ngtlib/util/PermissionManager
+-        locals Object net/minecraft/entity/player/EntityPlayer
++        locals Object net/minecraft/command/ICommandSender
+         locals Object java/util/Iterator
+     .end stack
+     aload 2
+     invokeinterface java/util/Iterator/hasNext ()Z
+     ifeq L_0047
+     aload 2
+     invokeinterface java/util/Iterator/next ()Ljava/lang/Object;
+     checkcast java/util/Map$Entry
+     astore 3
+ L_0010:
+@@ -455,21 +466,21 @@ L_0016:
+ L_0020:
+     .line 102
+     aload 3
+     invokeinterface java/util/Map$Entry/getValue ()Ljava/lang/Object;
+     checkcast java/util/List
+     invokeinterface java/util/List/iterator ()Ljava/util/Iterator;
+     astore 5
+ L_0027:
+     .stack
+         locals Object jp/ngt/ngtlib/util/PermissionManager
+-        locals Object net/minecraft/entity/player/EntityPlayer
++        locals Object net/minecraft/command/ICommandSender
+         locals Object java/util/Iterator
+         locals Object java/util/Map$Entry
+         locals Object java/lang/StringBuilder
+         locals Object java/util/Iterator
+     .end stack
+     aload 5
+     invokeinterface java/util/Iterator/hasNext ()Z
+     ifeq L_003b
+     aload 5
+     invokeinterface java/util/Iterator/next ()Ljava/lang/Object;
+@@ -484,39 +495,39 @@ L_0030:
+     ldc ","
+     invokevirtual java/lang/StringBuilder/append (Ljava/lang/String;)Ljava/lang/StringBuilder;
+     pop
+ L_0038:
+     .line 105
+     goto L_0027
+ L_003b:
+     .line 106
+     .stack
+         locals Object jp/ngt/ngtlib/util/PermissionManager
+-        locals Object net/minecraft/entity/player/EntityPlayer
++        locals Object net/minecraft/command/ICommandSender
+         locals Object java/util/Iterator
+         locals Object java/util/Map$Entry
+         locals Object java/lang/StringBuilder
+     .end stack
+     aload 1
+     aload 4
+     invokevirtual java/lang/StringBuilder/toString ()Ljava/lang/String;
+     iconst_0
+     anewarray java/lang/Object
+     invokestatic jp/ngt/ngtlib/io/NGTLog/sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
+ L_0044:
+     .line 107
+     goto L_0007
+ L_0047:
+     .line 108
+     .stack
+         locals Object jp/ngt/ngtlib/util/PermissionManager
+-        locals Object net/minecraft/entity/player/EntityPlayer
++        locals Object net/minecraft/command/ICommandSender
+     .end stack
+     return
+ L_004b:
+ .end method
+ 
+ .method public addPermission (Lnet/minecraft/entity/player/EntityPlayer;Ljava/lang/String;Ljava/lang/String;)V
+     .limit stack 5
+     .limit local 4
+ L_0000:
+     .line 112
+@@ -665,20 +676,39 @@ L_000a:
      invokevirtual jp/ngt/ngtlib/util/PermissionManager/getPlayerList (Ljava/lang/String;)Ljava/util/List;
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
@@ -619,7 +733,7 @@ index e394adf..b6c8387 100644
      iconst_0
      aload 1
      invokevirtual net/minecraft/entity/player/EntityPlayer/getName ()Ljava/lang/String;
-@@ -704,20 +723,32 @@ L_0000:
+@@ -704,20 +734,32 @@ L_0000:
      .var 1 is player Lnet/minecraft/entity/player/EntityPlayer; from L_0000 to L_003f
      getstatic jp/ngt/ngtlib/util/PermissionManager/DEBUG_MODE Z
      ifne L_000a
