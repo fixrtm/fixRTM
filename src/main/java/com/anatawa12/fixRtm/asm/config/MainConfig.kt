@@ -59,6 +59,12 @@ object MainConfig {
             true,
             "adds a permission meaning all permissions are approved")
 
+    @JvmField
+    val addNegativePermissionEnabled = config.getBoolean(
+            "addNegativePermission", categoryBetterNgtLib,
+            true,
+            "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+
     init {
         if (config.hasChanged()) {
             config.save()
