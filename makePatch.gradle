@@ -45,9 +45,9 @@ task unzipFixRTM(type: Copy) {
     dependsOn build
 
     from (zipTree(fixRtmBuiltJar)){
-        exclude ("jp/ngt/**/*")
-        exclude ("jp/ngt")
-        exclude ("jp")
+        include("**/*.class")
+        exclude("jp/**/*.class")
+        exclude("jp/**")
     }
 
     destinationDir = unzippedJarDir
