@@ -87,6 +87,175 @@ index 5ca3be3..92dcff4 100644
  
  .method public onBogieUpdate ()V
      .limit stack 2
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
+index 50ba737..56abb88 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
+@@ -66,20 +66,23 @@
+ .field private final loadedChunks Ljava/util/Set;
+     .signature "Ljava/util/Set<Lnet/minecraft/util/math/ChunkPos;>;"
+ .end field
+ 
+ .field private prevChunkCoordX I
+ .end field
+ 
+ .field private prevChunkCoordZ I
+ .end field
+ 
++.field private prevChunkLoaderRadius I
++.end field
++
+ .method public <init> (Lnet/minecraft/world/World;)V
+     .limit stack 3
+     .limit local 2
+ L_0000:
+     .line 89
+     .var 0 is this Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0000 to L_0030
+     .var 1 is world Lnet/minecraft/world/World; from L_0000 to L_0030
+     aload 0
+     aload 1
+     invokespecial jp/ngt/rtm/entity/vehicle/EntityVehicleBase/<init> (Lnet/minecraft/world/World;)V
+@@ -4649,21 +4652,21 @@ L_0000:
+     .line 1174
+     .var 0 is this Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0000 to L_0005
+     .var 1 is target Lnet/minecraft/util/math/RayTraceResult; from L_0000 to L_0005
+     aload 0
+     invokestatic jp/ngt/rtm/item/ItemTrain/convertFormationAsItem (Ljp/ngt/rtm/entity/train/EntityTrainBase;)Lnet/minecraft/item/ItemStack;
+     areturn
+ L_0005:
+ .end method
+ 
+ .method private updateChunks ()V
+-    .limit stack 2
++    .limit stack 3
+     .limit local 1
+ L_0000:
+     .line 1187
+     .var 0 is this Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0000 to L_001f
+     aload 0
+     invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/isChunkLoaderEnable ()Z
+     ifeq L_000a
+ L_0005:
+     .line 1189
+     aload 0
+@@ -4683,20 +4686,28 @@ L_000f:
+     aload 0
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/chunkCoordX I
+     putfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkCoordX I
+ L_0016:
+     .line 1197
+     aload 0
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/chunkCoordZ I
+     putfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkCoordZ I
++
++    .line 11197
++    aload 0
++    aload 0
++    getstatic jp/ngt/rtm/entity/train/util/TrainState$TrainStateType/ChunkLoader Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;
++    invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/getVehicleState (Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;)B
++    putfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkLoaderRadius I
++
+ L_001c:
+     .line 1198
+     return
+ L_001f:
+ .end method
+ 
+ .method public isChunkLoaderEnable ()Z
+     .limit stack 2
+     .limit local 1
+ L_0000:
+@@ -4776,25 +4787,20 @@ L_000c:
+     aload 0
+     getstatic jp/ngt/rtm/entity/train/util/TrainState$TrainStateType/ChunkLoader Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;
+     invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/getVehicleState (Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;)B
+     istore 2
+ L_0012:
+     .line 1222
+     .var 2 is depth I from L_0012 to L_002a
+     aload 1
+     invokevirtual net/minecraftforge/common/ForgeChunkManager$Ticket/getModData ()Lnet/minecraft/nbt/NBTTagCompound;
+     pop
+-L_0017:
+-    .line 1223
+-    aload 1
+-    iload 2
+-    invokevirtual net/minecraftforge/common/ForgeChunkManager$Ticket/setChunkListDepth (I)V
+ L_001c:
+     .line 1224
+     aload 1
+     aload 0
+     invokevirtual net/minecraftforge/common/ForgeChunkManager$Ticket/bindEntity (Lnet/minecraft/entity/Entity;)V
+ L_0021:
+     .line 1225
+     aload 0
+     aload 1
+     invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/setChunkTicket (Lnet/minecraftforge/common/ForgeChunkManager$Ticket;)V
+@@ -4890,36 +4896,62 @@ L_0007:
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
+     ifnonnull L_0011
+     aload 0
+     invokespecial jp/ngt/rtm/entity/train/EntityTrainBase/requestTicket ()Z
+     ifne L_0011
+     return
+ L_0011:
+     .line 1259
+     .stack use locals
+     .end stack
++
++    aload 0
++    getstatic jp/ngt/rtm/entity/train/util/TrainState$TrainStateType/ChunkLoader Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;
++    invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/getVehicleState (Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;)B
++    aload 0
++    getfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkLoaderRadius I
++    if_icmpne L_should_setupChunks
++
+     iload 1
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkCoordX I
+     if_icmpne L_001c
+     iload 2
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/prevChunkCoordZ I
+     if_icmpeq L_0023
++L_should_setupChunks:
+ L_001c:
+     .line 1261
+     .stack use locals
+     .end stack
+     aload 0
+     iload 1
+     iload 2
+     invokespecial jp/ngt/rtm/entity/train/EntityTrainBase/setupChunks (II)V
++
++    aload 0
++    getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
++    aload 0
++    getstatic jp/ngt/rtm/entity/train/util/TrainState$TrainStateType/ChunkLoader Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;
++    invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/getVehicleState (Ljp/ngt/rtm/entity/train/util/TrainState$TrainStateType;)B
++    iconst_2
++    imul
++    iconst_1
++    iadd
++    dup
++    imul
++    ldc "rtm"
++    invokestatic net/minecraftforge/common/ForgeChunkManager/getMaxChunkDepthFor (Ljava/lang/String;)I
++    invokestatic java/lang/Math/min (II)I
++    invokevirtual net/minecraftforge/common/ForgeChunkManager$Ticket/setChunkListDepth (I)V
++
+ L_0023:
+     .line 1264
+     .stack use locals
+     .end stack
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/loadedChunks Ljava/util/Set;
+     invokeinterface java/util/Set/iterator ()Ljava/util/Iterator;
+     astore 3
+ L_002a:
+     .stack
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.jasm
 index 08fdfe9..a7f5e63 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm
