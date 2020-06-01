@@ -88,7 +88,7 @@ index 5ca3be3..92dcff4 100644
  .method public onBogieUpdate ()V
      .limit stack 2
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
-index 50ba737..56abb88 100644
+index 50ba737..796060f 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
 @@ -66,20 +66,23 @@
@@ -115,6 +115,32 @@ index 50ba737..56abb88 100644
      aload 0
      aload 1
      invokespecial jp/ngt/rtm/entity/vehicle/EntityVehicleBase/<init> (Lnet/minecraft/world/World;)V
+@@ -101,23 +104,23 @@ L_0011:
+     iconst_1
+     putfield jp/ngt/rtm/entity/train/EntityTrainBase/onRail Z
+ L_0016:
+     .line 81
+     aload 0
+     sipush 2880
+     putfield jp/ngt/rtm/entity/train/EntityTrainBase/brakeAirCount I
+ L_001b:
+     .line 1180
+     aload 0
+-    new java/util/HashSet
++    new java/util/LinkedHashSet
+     dup
+-    invokespecial java/util/HashSet/<init> ()V
++    invokespecial java/util/LinkedHashSet/<init> ()V
+     putfield jp/ngt/rtm/entity/train/EntityTrainBase/loadedChunks Ljava/util/Set;
+ L_0022:
+     .line 90
+     aload 0
+     ldc 2.75f
+     ldc 1.1875f
+     invokevirtual jp/ngt/rtm/entity/train/EntityTrainBase/setSize (FF)V
+ L_0028:
+     .line 91
+     aload 0
 @@ -4649,21 +4652,21 @@ L_0000:
      .line 1174
      .var 0 is this Ljp/ngt/rtm/entity/train/EntityTrainBase; from L_0000 to L_0005
@@ -256,6 +282,62 @@ index 50ba737..56abb88 100644
      astore 3
  L_002a:
      .stack
+@@ -4935,20 +4967,27 @@ L_002a:
+     invokeinterface java/util/Iterator/next ()Ljava/lang/Object;
+     checkcast net/minecraft/util/math/ChunkPos
+     astore 4
+ L_0033:
+     .line 1266
+     .var 4 is chunk Lnet/minecraft/util/math/ChunkPos; from L_0033 to L_0039
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
+     aload 4
+     invokestatic net/minecraftforge/common/ForgeChunkManager/forceChunk (Lnet/minecraftforge/common/ForgeChunkManager$Ticket;Lnet/minecraft/util/math/ChunkPos;)V
++
++    .line 11266
++    aload 0
++    getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
++    aload 4
++    invokestatic net/minecraftforge/common/ForgeChunkManager/reorderChunk (Lnet/minecraftforge/common/ForgeChunkManager$Ticket;Lnet/minecraft/util/math/ChunkPos;)V
++
+ L_0039:
+     .line 1268
+     goto L_002a
+ L_003c:
+     .line 1269
+     .stack
+         locals Object jp/ngt/rtm/entity/train/EntityTrainBase
+         locals Integer
+         locals Integer
+     .end stack
+@@ -4958,20 +4997,27 @@ L_003c:
+     iload 2
+     invokespecial net/minecraft/util/math/ChunkPos/<init> (II)V
+     astore 3
+ L_0045:
+     .line 1270
+     .var 3 is myChunk Lnet/minecraft/util/math/ChunkPos; from L_0045 to L_004b
+     aload 0
+     getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
+     aload 3
+     invokestatic net/minecraftforge/common/ForgeChunkManager/forceChunk (Lnet/minecraftforge/common/ForgeChunkManager$Ticket;Lnet/minecraft/util/math/ChunkPos;)V
++
++    .line 11270
++    aload 0
++    getfield jp/ngt/rtm/entity/train/EntityTrainBase/ticket Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
++    aload 3
++    invokestatic net/minecraftforge/common/ForgeChunkManager/reorderChunk (Lnet/minecraftforge/common/ForgeChunkManager$Ticket;Lnet/minecraft/util/math/ChunkPos;)V
++
+ L_004b:
+     .line 1272
+     .stack use locals
+     .end stack
+     return
+ L_004f:
+ .end method
+ 
+ .method private setupChunks (II)V
+     .limit stack 5
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/util/Formation.jasm
 index 08fdfe9..a7f5e63 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/util/Formation.jasm
@@ -1640,3 +1722,118 @@ index 34f470e..019c243 100644
          locals Object java/lang/String
          locals Object java/util/Map
          locals Object java/util/Iterator
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/world/RTMChunkManager.jasm b/src/main/rtm/jp/ngt/rtm/world/RTMChunkManager.jasm
+index 478c0e0..02bf660 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/world/RTMChunkManager.jasm
++++ b/src/main/rtm/jp/ngt/rtm/world/RTMChunkManager.jasm
+@@ -66,108 +66,33 @@ L_0019:
+         locals Object jp/ngt/rtm/world/RTMChunkManager
+         locals Object net/minecraftforge/event/entity/EntityEvent$EnteringChunk
+     .end stack
+     return
+ L_001d:
+ .end method
+ 
+ .method public getChunksAround (Ljava/util/Set;III)V
+     .signature "(Ljava/util/Set<Lnet/minecraft/util/math/ChunkPos;>;III)V"
+     .limit stack 5
+-    .limit local 7
++    .limit local 5
+ L_0000:
+     .line 50
+     .var 0 is this Ljp/ngt/rtm/world/RTMChunkManager; from L_0000 to L_0035
+     .var 1 is set Ljava/util/Set; signature "Ljava/util/Set<Lnet/minecraft/util/math/ChunkPos;>;" from L_0000 to L_0035
+     .var 2 is xChunk I from L_0000 to L_0035
+     .var 3 is zChunk I from L_0000 to L_0035
+     .var 4 is radius I from L_0000 to L_0035
+     aload 1
+-    invokeinterface java/util/Set/clear ()V
+-L_0004:
+-    .line 51
+-    iload 2
+-    iload 4
+-    isub
+-    istore 5
+-L_000a:
+-    .var 5 is xx I from L_000a to L_0031
+-    .stack
+-        locals Object jp/ngt/rtm/world/RTMChunkManager
+-        locals Object java/util/Set
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-    .end stack
+-    iload 5
+     iload 2
+-    iload 4
+-    iadd
+-    if_icmpgt L_0031
+-L_0011:
+-    .line 53
+-    iload 3
+-    iload 4
+-    isub
+-    istore 6
+-L_0017:
+-    .var 6 is zz I from L_0017 to L_002c
+-    .stack
+-        locals Object jp/ngt/rtm/world/RTMChunkManager
+-        locals Object java/util/Set
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-    .end stack
+-    iload 6
+     iload 3
+     iload 4
+-    iadd
+-    if_icmpgt L_002c
+-L_001e:
+-    .line 55
+-    aload 1
+-    new net/minecraft/util/math/ChunkPos
+-    dup
+-    iload 5
+-    iload 6
+-    invokespecial net/minecraft/util/math/ChunkPos/<init> (II)V
+-    invokeinterface java/util/Set/add (Ljava/lang/Object;)Z
+-    pop
+-L_0028:
+-    .line 53
+-    iinc 6 1
+-    goto L_0017
+-L_002c:
+-    .line 51
+-    .stack
+-        locals Object jp/ngt/rtm/world/RTMChunkManager
+-        locals Object java/util/Set
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-    .end stack
+-    iinc 5 1
+-    goto L_000a
+-L_0031:
+-    .line 58
+-    .stack
+-        locals Object jp/ngt/rtm/world/RTMChunkManager
+-        locals Object java/util/Set
+-        locals Integer
+-        locals Integer
+-        locals Integer
+-    .end stack
++    invokestatic com/anatawa12/fixRtm/rtm/world/RTMChunkManagerKt/getChunksAround (Ljava/util/Set;III)V
+     return
+ L_0035:
+ .end method
+ 
+ .method public getNewTicket (Lnet/minecraft/world/World;Lnet/minecraftforge/common/ForgeChunkManager$Type;)Lnet/minecraftforge/common/ForgeChunkManager$Ticket;
+     .limit stack 3
+     .limit local 3
+ L_0000:
+     .line 62
+     .var 0 is this Ljp/ngt/rtm/world/RTMChunkManager; from L_0000 to L_0007
