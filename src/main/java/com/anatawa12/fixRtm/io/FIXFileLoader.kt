@@ -62,17 +62,19 @@ object FIXFileLoader {
 
     private fun loadModelPack(file: File): FIXModelPack? {
         try {
-            if (file.isFile) {
-                if (file.extension != "jar" && file.extension != "zip") return null
-                return ZipModelPack(file)
-            } else {
-                return DirectoryModelPack(file)
-            }
-        } catch (e: IllegalArgumentException) {
-            if (file.isFile) {
-                return ZipModelPack(file, MS932)
-            } else {
-                throw e
+            try {
+                if (file.isFile) {
+                    if (file.extension != "jar" && file.extension != "zip") return null
+                    return ZipModelPack(file)
+                } else {
+                    return DirectoryModelPack(file)
+                }
+            } catch (e: IllegalArgumentException) {
+                if (file.isFile) {
+                    return ZipModelPack(file, MS932)
+                } else {
+                    throw e
+                }
             }
         } catch (e: Throwable) {
             logger.error("trying to construct model pack: ${file.name}", e)
