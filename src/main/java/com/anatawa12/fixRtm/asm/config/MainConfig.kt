@@ -30,6 +30,12 @@ object MainConfig {
             "caches compiled script and executed environment")
 
     @JvmField
+    val useNashorn = config.getBoolean(
+            "useNashorn", categoryModelLoading,
+            true,
+            "use nashorn to execute script (cachedScripts never enabled)")
+
+    @JvmField
     val reduceConstructModelLog = config.getBoolean(
             "reduceConstructModelLog", categoryModelLoading,
             true,
