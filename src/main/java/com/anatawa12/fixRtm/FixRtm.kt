@@ -4,7 +4,6 @@ import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
-import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
 import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
@@ -48,7 +47,7 @@ object FixRtm {
         NativeJavaObject.canConvert(0, Object::class.java)// load
         RhinoHooks.load()// load
         FIXFileLoader.load() // init
-        if (MainConfig.cachedScripts) {
+        if (MainConfig.useOurScripting) {
             ExecutedScriptCache.load()// init
             loadFIXScriptUtil()// init
             PrimitiveJavaHelper.load()// init
