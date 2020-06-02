@@ -6,6 +6,10 @@ import com.anatawa12.fixRtm.caching.ModelPackBasedCache
 import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
+import com.anatawa12.fixRtm.scripting.rhino.FIXRhinoScriptEngine
+import com.anatawa12.fixRtm.scripting.rhino.ImportScriptRhinoFunctionImpl
+import com.anatawa12.fixRtm.scripting.rhino.ScriptCompiledClassCache
+import com.anatawa12.fixRtm.scripting.rhino.usingContext
 import com.anatawa12.fixRtm.utils.DigestUtils
 import jp.ngt.rtm.modelpack.ModelPackManager
 import net.minecraft.util.ResourceLocation
@@ -19,7 +23,7 @@ val baseScope = usingContext {
 
     it.initStandardObjects(scope)
 
-    ScriptImporter.init(scope)
+    ImportScriptRhinoFunctionImpl.init(scope)
 
     scope.sealObject()
 
@@ -59,17 +63,17 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
 
     // first, try cache
     getScriptAndDoScriptByCache(filePath, resource.pack, dependencies)?.let { scope ->
-        val engine = FIXScriptEngine()
+        val engine = FIXRhinoScriptEngine()
         engine.scope = scope
         return engine
     }
 
     // then evalute
-    val engine = FIXScriptEngine()
+    val engine = FIXRhinoScriptEngine()
     usingContext { cx ->
         val scope = makeNewScope()
 
-        val script = ScriptImporter.makeScript(filePath, scriptStr, resource.pack)
+        val script = ImportScriptRhinoFunctionImpl.makeScript(filePath, scriptStr, resource.pack)
 
         script.exec(cx, scope)
 

@@ -1,6 +1,5 @@
-package com.anatawa12.fixRtm.scripting
+package com.anatawa12.fixRtm.scripting.rhino
 
-import org.mozilla.classfile.ByteCode
 import org.mozilla.classfile.ByteCode.*
 import org.mozilla.classfile.ClassFileWriter
 import org.mozilla.classfile.ClassFileWriter.classNameToSignature
@@ -95,8 +94,8 @@ object CodeGenHooks {
     const val NativeFunction_decompile_name = "decompile"
     const val NativeFunction_decompile_desc = "(II)L${"java/lang/String"};"
 
-    const val CodeGenHooks_name = "com.anatawa12.fixRtm.scripting.CodeGenHooks"
-    const val CodeGenHooks_internal = "com/anatawa12/fixRtm/scripting/CodeGenHooks"
+    const val CodeGenHooks_name = "com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks"
+    const val CodeGenHooks_internal = "com/anatawa12/fixRtm/scripting/rhino/CodeGenHooks"
 
     const val CodeGenHooks_implDecompile_name = "implDecompile"
     const val CodeGenHooks_implDecompile_desc = "(L${"org/mozilla/classfile/ClassFileWriter"};[L${"org/mozilla/javascript/ast/ScriptNode"};L${"java/lang/String"};)V"

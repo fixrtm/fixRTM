@@ -40,7 +40,7 @@ object MainConfig {
     init {
         val cachedScriptsEnabled = config.getCategory(categoryModelLoading).remove("cachedScriptsEnabled")
         if (cachedScriptsEnabled != null) { // cachedScriptsEnabledがある
-            val categoryModelLoadingProp = config.getCategory("scriptingMode").get(categoryModelLoading)!!
+            val categoryModelLoadingProp = config.getCategory(categoryModelLoading).get("scriptingMode")!!
             if (categoryModelLoadingProp.string.toLowerCase() == ScriptingMode.defaultConfigValue) { // scriptingModeがuse default
                 if (!cachedScriptsEnabled.boolean) { // cached scriptがdisable
                     categoryModelLoadingProp.setValue(ScriptingMode.BetterWithNashorn.configValue)

@@ -6,8 +6,8 @@ import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
-import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
-import com.anatawa12.fixRtm.scripting.RhinoHooks
+import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
+import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
