@@ -1,6 +1,5 @@
 package com.anatawa12.fixRtm.scripting.rhino
 
-import com.anatawa12.fixRtm.scripting.baseScope
 import org.mozilla.javascript.*
 
 @Suppress("FunctionName")
@@ -22,7 +21,7 @@ object PrimitiveJavaHelper {
         return wrapFunctionForString(stringObject.get(name, start))
     }
 
-    private val stringObject = usingContext { NativeJavaObject(baseScope, "", null) }
+    private val stringObject = usingContext { NativeJavaObject(RhinoScriptRuntimeImpl.baseScope, "", null) }
 
     private fun wrapFunctionForString(scriptable: Any?): Any? {
         if (scriptable is NativeJavaMethod)

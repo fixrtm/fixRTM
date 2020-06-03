@@ -2,139 +2,47 @@
 
 package com.anatawa12.fixRtm.scripting
 
-import com.anatawa12.fixRtm.caching.ModelPackBasedCache
-import com.anatawa12.fixRtm.fixCacheDir
+import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.io.FIXFileLoader
-import com.anatawa12.fixRtm.io.FIXModelPack
-import com.anatawa12.fixRtm.scripting.rhino.FIXRhinoScriptEngine
-import com.anatawa12.fixRtm.scripting.rhino.ImportScriptRhinoFunctionImpl
-import com.anatawa12.fixRtm.scripting.rhino.ScriptCompiledClassCache
-import com.anatawa12.fixRtm.scripting.rhino.usingContext
-import com.anatawa12.fixRtm.utils.DigestUtils
+import com.anatawa12.fixRtm.scripting.rhino.RhinoScriptRuntimeImpl
 import jp.ngt.rtm.modelpack.ModelPackManager
 import net.minecraft.util.ResourceLocation
-import org.mozilla.javascript.ImporterTopLevel
-import org.mozilla.javascript.ScriptableObject
-import org.mozilla.javascript.TopLevel
 import javax.script.ScriptEngine
 
-val baseScope = usingContext {
-    val scope = TopLevel()
-
-    it.initStandardObjects(scope)
-
-    ImportScriptRhinoFunctionImpl.init(scope)
-
-    scope.sealObject()
-
-    scope
+val scriptRuntime: IScriptRuntime<*, *> = when (MainConfig.scriptingMode) {
+    MainConfig.ScriptingMode.CacheWithRhino -> RhinoScriptRuntimeImpl
+    MainConfig.ScriptingMode.BetterWithNashorn -> TODO()
+    MainConfig.ScriptingMode.UseRtmNormal -> IScriptRuntime.AssertingRuntime
 }
 
 fun loadFIXScriptUtil() {}
 
-private fun makeNewScope(): ScriptableObject = usingContext {
-    it.applicationClassLoader = ScriptCompiledClassCache.Loader
+@Suppress("unused")
+fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine
+        = com.anatawa12.fixRtm.scripting.getScriptAndDoScript(fileName)
 
-    val scope = ImporterTopLevel(it, false)
-    scope.prototype = baseScope
-    return scope
-}
-
-fun makeNewScopeWithCache(cache: ExecutedScript): ScriptableObject? {
-    usingContext {
-        ScriptCompiledClassCache.initContext(it)
-        return cache.getScope(baseScope)
-    }
-}
-
-fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: ScriptableObject): ExecutedScript {
-    usingContext {
-        ScriptCompiledClassCache.initContext(it)
-        return ExecutedScript(dependencies, scope, baseScope)
-    }
+@Suppress("unused")
+fun getScriptAndDoScript(fileName: String): ScriptEngine {
+    return getScriptAndDoScript(scriptRuntime, fileName)
 }
 
 @Suppress("unused")
-fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine {
+fun <CompiledScript, Engine : ScriptEngine> getScriptAndDoScript(runtime: IScriptRuntime<CompiledScript, Engine>, fileName: String): ScriptEngine {
     val filePath = ResourceLocation(fileName)
     val resource = FIXFileLoader.getResource(filePath)
     val scriptStr = resource.inputStream.reader().use { it.readText() }
-    val dependencies = makeDependenciesData(ScriptImporter.getAllDependenceScripts(filePath, scriptStr))
+    val dependencies = ScriptImporter.getAllDependenceScripts(filePath, scriptStr)
 
-    // first, try cache
-    getScriptAndDoScriptByCache(filePath, resource.pack, dependencies)?.let { scope ->
-        val engine = FIXRhinoScriptEngine()
-        engine.scope = scope
-        return engine
-    }
+    runtime.getCachedEngine(filePath, resource, dependencies)?.let { return it }
 
     // then evalute
-    val engine = FIXRhinoScriptEngine()
-    usingContext { cx ->
-        val scope = makeNewScope()
+    val script = runtime.compile(filePath, scriptStr, resource.pack)
 
-        val script = ImportScriptRhinoFunctionImpl.makeScript(filePath, scriptStr, resource.pack)
-
-        script.exec(cx, scope)
-
-        engine.scope = scope
-    }
+    val engine = runtime.exec(script)
 
     // add to cache
 
-    ExecutedScriptCache.add(resource.pack, filePath, makeExecutedScript(dependencies, engine.scope))
+    runtime.cache(resource.pack, filePath, dependencies, engine)
 
     return engine
 }
-
-fun getScriptAndDoScriptByCache(filePath: ResourceLocation, pack: FIXModelPack, dependencies: Map<String, ByteArray>): ScriptableObject? {
-    val cache = ExecutedScriptCache.getScript(pack, filePath) ?: return null
-
-    // verify cache
-    if (cache.dependencies.keys != dependencies.keys) return null
-
-    for ((name, hash) in dependencies) {
-        if (!cache.dependencies[name]!!.contentEquals(hash)) return null
-    }
-
-    // load cache
-
-    val newScope = makeNewScopeWithCache(cache)
-    if (newScope == null) {
-        ExecutedScriptCache.discord(pack, filePath)
-    }
-    return newScope
-}
-
-fun makeDependenciesData(dependencies: Map<ResourceLocation, String>): Map<String, ByteArray> {
-    val data = mutableMapOf<String, ByteArray>()
-    for ((name, script) in dependencies) {
-        data[name.toString()] = DigestUtils.sha1(script)
-    }
-    return data
-}
-
-@Suppress("unused")
-fun getScriptAndDoScript(fileName: String): ScriptEngine = ModelPackManager.INSTANCE.getScriptAndDoScript(fileName)
-
-object ExecutedScriptCache {
-    private val cache = ModelPackBasedCache(
-            fixCacheDir.resolve("excluded-script"),
-            0x0000 to ExecutedScript.Serializer
-    )
-
-    fun getScript(pack: FIXModelPack, filePath: ResourceLocation): ExecutedScript? {
-        return cache.get(pack, DigestUtils.sha1Hex(filePath.toString()), ExecutedScript.Serializer)
-    }
-
-    fun add(pack: FIXModelPack, filePath: ResourceLocation, executedScript: ExecutedScript) {
-        cache.put(pack, DigestUtils.sha1Hex(filePath.toString()), executedScript)
-    }
-
-    fun discord(pack: FIXModelPack, filePath: ResourceLocation) {
-        cache.discord(pack, DigestUtils.sha1Hex(filePath.toString()))
-    }
-
-    fun load() {}
-}
-

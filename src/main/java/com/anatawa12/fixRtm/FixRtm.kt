@@ -5,10 +5,10 @@ import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
-import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
+import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
+import com.anatawa12.fixRtm.scripting.rhino.ExecutedScriptCache
 import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
 import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
-import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -45,12 +45,19 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         NativeJavaObject.canConvert(0, Object::class.java)// load
-        RhinoHooks.load()// load
         FIXFileLoader.load() // init
-        if (MainConfig.useOurScripting) {
-            ExecutedScriptCache.load()// init
-            loadFIXScriptUtil()// init
-            PrimitiveJavaHelper.load()// init
+        when (MainConfig.scriptingMode) {
+            MainConfig.ScriptingMode.CacheWithRhino -> {
+                loadFIXScriptUtil()// init
+                ExecutedScriptCache.load()// init
+                PrimitiveJavaHelper.load()// init
+                RhinoHooks.load()// load
+            }
+            MainConfig.ScriptingMode.BetterWithNashorn -> {
+            }
+            MainConfig.ScriptingMode.UseRtmNormal -> {
+                // nop
+            }
         }
         if (e.side == Side.CLIENT) registerGenerators()
     }
