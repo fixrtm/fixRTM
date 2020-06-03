@@ -6,6 +6,7 @@ import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
+import com.anatawa12.fixRtm.scripting.nashorn.CompiledImportedScriptCache
 import com.anatawa12.fixRtm.scripting.rhino.ExecutedScriptCache
 import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
 import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
@@ -15,6 +16,7 @@ import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IReloadableResourceManager
 import net.minecraft.item.Item
+import net.minecraft.launchwrapper.Launch
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
@@ -54,6 +56,8 @@ object FixRtm {
                 RhinoHooks.load()// load
             }
             MainConfig.ScriptingMode.BetterWithNashorn -> {
+                Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
+                CompiledImportedScriptCache.load() // load
             }
             MainConfig.ScriptingMode.UseRtmNormal -> {
                 // nop
