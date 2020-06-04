@@ -61,8 +61,6 @@ class DummyModelObject(val aabb: AxisAlignedBB,
         }
         GL11.glRotated(rotate1, rotate.x, rotate.y, rotate.z)
 
-        val renderer = Minecraft.getMinecraft().fontRenderer
-
         aabb.apply {
             Minecraft.getMinecraft().renderEngine.bindTexture(resourceLocation)
 
