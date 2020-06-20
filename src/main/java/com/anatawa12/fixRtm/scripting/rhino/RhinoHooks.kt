@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.scripting
+package com.anatawa12.fixRtm.scripting.rhino
 
 import org.mozilla.javascript.*
 
@@ -8,8 +8,8 @@ object CoerceTypeImplFailed
  * hooks used from Rhino by transformer
  */
 object RhinoHooks {
-    const val className = "com.anatawa12.fixRtm.scripting.RhinoHooks"
-    const val internalClassName = "com/anatawa12/fixRtm/scripting/RhinoHooks"
+    const val className = "com.anatawa12.fixRtm.scripting.rhino.RhinoHooks"
+    const val internalClassName = "com/anatawa12/fixRtm/scripting/rhino/RhinoHooks"
 
     const val coerceTypeImpl_name = "coerceTypeImpl"
     const val coerceTypeImpl_desc = "(L${"java/lang/Class"};L${"java/lang/Object"};)L${"java/lang/Object"};"

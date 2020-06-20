@@ -1,10 +1,10 @@
-package com.anatawa12.fixRtm.scripting
+package com.anatawa12.fixRtm.scripting.rhino
 
 import org.mozilla.javascript.*
 
 @Suppress("FunctionName")
 object PrimitiveJavaHelper {
-    const val internalClassName = "com/anatawa12/fixRtm/scripting/PrimitiveJavaHelper"
+    const val internalClassName = "com/anatawa12/fixRtm/scripting/rhino/PrimitiveJavaHelper"
 
     const val NativeString_name = "org.mozilla.javascript.NativeString"
     const val NativeString_internal = "org/mozilla/javascript/NativeString"
@@ -21,11 +21,11 @@ object PrimitiveJavaHelper {
         return wrapFunctionForString(stringObject.get(name, start))
     }
 
-    private val stringObject = usingContext { NativeJavaObject(baseScope, "", null) }
+    private val stringObject = usingContext { NativeJavaObject(RhinoScriptRuntimeImpl.baseScope, "", null) }
 
     private fun wrapFunctionForString(scriptable: Any?): Any? {
         if (scriptable is NativeJavaMethod)
-            return FixRTMWrappedFunction(scriptable, ::getStringInstance)
+            return FixRTMWrappedFunction(scriptable, PrimitiveJavaHelper::getStringInstance)
         else
             return scriptable
     }

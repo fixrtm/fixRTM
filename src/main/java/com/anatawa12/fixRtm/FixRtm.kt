@@ -4,18 +4,19 @@ import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
-import com.anatawa12.fixRtm.ngtlib.renderer.model.CachedPolygonModel
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
-import com.anatawa12.fixRtm.scripting.ExecutedScriptCache
-import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
-import com.anatawa12.fixRtm.scripting.RhinoHooks
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
+import com.anatawa12.fixRtm.scripting.nashorn.CompiledImportedScriptCache
+import com.anatawa12.fixRtm.scripting.rhino.ExecutedScriptCache
+import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
+import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IReloadableResourceManager
 import net.minecraft.item.Item
+import net.minecraft.launchwrapper.Launch
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
@@ -46,12 +47,21 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         NativeJavaObject.canConvert(0, Object::class.java)// load
-        RhinoHooks.load()// load
         FIXFileLoader.load() // init
-        if (MainConfig.cachedScripts) {
-            ExecutedScriptCache.load()// init
-            loadFIXScriptUtil()// init
-            PrimitiveJavaHelper.load()// init
+        when (MainConfig.scriptingMode) {
+            MainConfig.ScriptingMode.CacheWithRhino -> {
+                loadFIXScriptUtil()// init
+                ExecutedScriptCache.load()// init
+                PrimitiveJavaHelper.load()// init
+                RhinoHooks.load()// load
+            }
+            MainConfig.ScriptingMode.BetterWithNashorn -> {
+                Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
+                CompiledImportedScriptCache.load() // load
+            }
+            MainConfig.ScriptingMode.UseRtmNormal -> {
+                // nop
+            }
         }
         if (e.side == Side.CLIENT) registerGenerators()
     }

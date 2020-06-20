@@ -1,12 +1,11 @@
-package com.anatawa12.fixRtm.scripting
+package com.anatawa12.fixRtm.scripting.rhino
 
 import org.mozilla.javascript.Function
-import org.mozilla.javascript.NativeObject
 import org.mozilla.javascript.ScriptableObject
 import java.io.Reader
 import javax.script.*
 
-class FIXScriptEngine : ScriptEngine, Invocable {
+class FIXRhinoScriptEngine : ScriptEngine, Invocable {
     lateinit var scope: ScriptableObject
 
     override fun createBindings(): Bindings {

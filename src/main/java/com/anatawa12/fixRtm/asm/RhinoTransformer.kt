@@ -1,24 +1,24 @@
 package com.anatawa12.fixRtm.asm
 
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_compileToClassFiles_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_compileToClassFiles_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.ClassCompiler_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_implDecompile_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_implDecompile_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.CodeGenHooks_internal
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_generateNativeFunctionOverrides_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_generateNativeFunctionOverrides_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_internal
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_scriptOrFnNodes_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_scriptOrFnNodes_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_sourceString_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.Codegen_sourceString_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_decompile_desc
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_decompile_name
-import com.anatawa12.fixRtm.scripting.CodeGenHooks.NativeFunction_name
-import com.anatawa12.fixRtm.scripting.PrimitiveJavaHelper
-import com.anatawa12.fixRtm.scripting.RhinoHooks
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.ClassCompiler_compileToClassFiles_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.ClassCompiler_compileToClassFiles_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.ClassCompiler_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.CodeGenHooks_implDecompile_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.CodeGenHooks_implDecompile_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.CodeGenHooks_internal
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_generateNativeFunctionOverrides_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_generateNativeFunctionOverrides_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_internal
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_scriptOrFnNodes_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_scriptOrFnNodes_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_sourceString_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.Codegen_sourceString_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.NativeFunction_decompile_desc
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.NativeFunction_decompile_name
+import com.anatawa12.fixRtm.scripting.rhino.CodeGenHooks.NativeFunction_name
+import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
+import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 import org.objectweb.asm.Opcodes.*
@@ -346,7 +346,7 @@ class RhinoTransformer : IClassTransformer {
     companion object {
         const val NativeJavaObject_name = "org.mozilla.javascript.NativeJavaObject"
         const val NativeJavaObject_internal = "org/mozilla/javascript/NativeJavaObject"
-        const val CoerceTypeImplFailed_internal = "com/anatawa12/fixRtm/scripting/CoerceTypeImplFailed"
+        const val CoerceTypeImplFailed_internal = "com/anatawa12/fixRtm/scripting/rhino/CoerceTypeImplFailed"
         const val IdScriptableObject_internal = "org/mozilla/javascript/IdScriptableObject"
         const val Scriptable_internal = "org/mozilla/javascript/Scriptable"
         const val Scriptable_NOT_FOUND_name = "NOT_FOUND"

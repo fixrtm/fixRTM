@@ -1,6 +1,9 @@
 package com.anatawa12.fixRtm.asm.config
 
+import com.anatawa12.fixRtm.Loggers
+import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.fml.common.FMLLog
 import net.minecraftforge.fml.common.Loader
 
 object MainConfig {
@@ -23,11 +26,41 @@ object MainConfig {
             true,
             "caches obj, mqo model.")
 
+    private val scriptingModeStr = config.getString(
+            "scriptingMode", categoryModelLoading,
+            "use-default",
+            "scripting mode. the value is one of the list below:\n" +
+                    "cache-with-rhino    : the fastest mode but not stable. some script may make error.\n" +
+                    "better-with-nashorn : same runtime as RTM but a little faster than RTM.\n" +
+                    "use-rtm-normal      : same as RTM. this is the slowest mode.\n" +
+                    "use-default         : use default mode.\n")
+
+    val scriptingMode: ScriptingMode
+
+    init {
+        val cachedScriptsEnabled = config.getCategory(categoryModelLoading).remove("cachedScriptsEnabled")
+        if (cachedScriptsEnabled != null) { // cachedScriptsEnabledがある
+            val categoryModelLoadingProp = config.getCategory(categoryModelLoading).get("scriptingMode")!!
+            if (categoryModelLoadingProp.string.toLowerCase() == ScriptingMode.defaultConfigValue) { // scriptingModeがuse default
+                if (!cachedScriptsEnabled.boolean) { // cached scriptがdisable
+                    categoryModelLoadingProp.setValue(ScriptingMode.BetterWithNashorn.configValue)
+                }
+            }
+        }
+        var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.toLowerCase())
+        if (scriptingMode == null) {
+            if (scriptingModeStr.toLowerCase() == ScriptingMode.defaultConfigValue) {
+                scriptingMode = ScriptingMode.default
+            } else {
+                Loggers.getLogger("Config").fatal("your scriptingMode is not valid so we use default.")
+                scriptingMode = ScriptingMode.default
+            }
+        }
+        this.scriptingMode = scriptingMode
+    }
+
     @JvmField
-    val cachedScripts = config.getBoolean(
-            "cachedScriptsEnabled", categoryModelLoading,
-            true,
-            "caches compiled script and executed environment")
+    val useOurScripting = scriptingMode != ScriptingMode.UseRtmNormal
 
     @JvmField
     val reduceConstructModelLog = config.getBoolean(
@@ -68,6 +101,23 @@ object MainConfig {
     init {
         if (config.hasChanged()) {
             config.save()
+        }
+    }
+
+    enum class ScriptingMode(val configValue: String) {
+        CacheWithRhino("cache-with-rhino"),
+        BetterWithNashorn("better-with-nashorn"),
+        UseRtmNormal("use-rtm-normal"),
+        ;
+
+        companion object {
+            private val byConfigValue = values().associateBy { it.configValue }
+
+            fun getByConfigValue(value: String) = byConfigValue[value]
+
+            val default = CacheWithRhino
+
+            const val defaultConfigValue = "use-default"
         }
     }
 }

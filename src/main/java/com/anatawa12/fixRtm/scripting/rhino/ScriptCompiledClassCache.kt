@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.scripting
+package com.anatawa12.fixRtm.scripting.rhino
 
 import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.fixCacheDir
