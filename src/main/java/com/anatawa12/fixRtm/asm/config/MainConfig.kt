@@ -33,20 +33,11 @@ object MainConfig {
                     "cache-with-rhino    : the fastest mode but not stable. some script may make error.\n" +
                     "better-with-nashorn : same runtime as RTM but a little faster than RTM.\n" +
                     "use-rtm-normal      : same as RTM. this is the slowest mode.\n" +
-                    "use-default         : use default mode.\n")
+                    "use-default         : use default mode. currently use-rtm-normal.\n")
 
     val scriptingMode: ScriptingMode
 
     init {
-        val cachedScriptsEnabled = config.getCategory(categoryModelLoading).remove("cachedScriptsEnabled")
-        if (cachedScriptsEnabled != null) { // cachedScriptsEnabledがある
-            val categoryModelLoadingProp = config.getCategory(categoryModelLoading).get("scriptingMode")!!
-            if (categoryModelLoadingProp.string.toLowerCase() == ScriptingMode.defaultConfigValue) { // scriptingModeがuse default
-                if (!cachedScriptsEnabled.boolean) { // cached scriptがdisable
-                    categoryModelLoadingProp.setValue(ScriptingMode.BetterWithNashorn.configValue)
-                }
-            }
-        }
         var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.toLowerCase())
         if (scriptingMode == null) {
             if (scriptingModeStr.toLowerCase() == ScriptingMode.defaultConfigValue) {
@@ -115,7 +106,7 @@ object MainConfig {
 
             fun getByConfigValue(value: String) = byConfigValue[value]
 
-            val default = BetterWithNashorn
+            val default = UseRtmNormal
 
             const val defaultConfigValue = "use-default"
         }
