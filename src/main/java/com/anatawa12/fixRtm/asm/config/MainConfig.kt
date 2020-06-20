@@ -115,7 +115,7 @@ object MainConfig {
 
             fun getByConfigValue(value: String) = byConfigValue[value]
 
-            val default = CacheWithRhino
+            val default = BetterWithNashorn
 
             const val defaultConfigValue = "use-default"
         }
