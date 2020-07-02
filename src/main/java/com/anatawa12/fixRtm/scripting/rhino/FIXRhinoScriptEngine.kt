@@ -72,7 +72,9 @@ class FIXRhinoScriptEngine : ScriptEngine, Invocable {
         val func = (scope[name] as? Function) ?: throw ScriptException("$name is not function")
         usingContext { ctx ->
             ctx.wrapFactory.isJavaPrimitiveWrap = false
-            return func.call(ctx, func.parentScope, null, args)
+            return func.call(ctx, func.parentScope, null, args
+                    .map { ctx.wrapFactory.wrap(ctx, scope, it, null) }
+                    .toTypedArray())
         }
     }
 
