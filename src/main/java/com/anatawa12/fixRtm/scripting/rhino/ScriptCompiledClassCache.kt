@@ -82,7 +82,11 @@ object ScriptCompiledClassCache {
             } catch (e: IOException) {
                 throw ClassNotFoundException(name)
             }
-            val clazz = defineClass(name, bytes, 0, bytes.size)
+            val clazz = try {
+                defineClass(name, bytes, 0, bytes.size)
+            } catch (e: ClassFormatError) {
+                throw ClassNotFoundException(name)
+            }
             if (Script::class.java.isAssignableFrom(clazz)) {
                 loadScriptClass(clazz as Class<out Script>)
             }
