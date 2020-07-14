@@ -1,32 +1,32 @@
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm b/src/main/rtm/jp/ngt/rtm/RTMItem.jasm
-index 2297030..17edb7e 100644
+index 3762a0f..ee55f17 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMItem.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/RTMItem.jasm
 @@ -667,21 +667,21 @@ L_0012:
  L_0018:
-     .line 153
+     .line 154
      getstatic jp/ngt/rtm/RTMItem/itemtrain Lnet/minecraft/item/Item;
      iconst_3
      ldc "item_train_3"
      invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
  L_001e:
-     .line 154
+     .line 155
      getstatic jp/ngt/rtm/RTMItem/itemtrain Lnet/minecraft/item/Item;
      bipush 127
 -    ldc "item_train_127"
 +    ldc "item_train_fixrtm_test"
      invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
  L_0024:
-     .line 155
+     .line 156
      getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
      iconst_0
      ldc "item_npc_0"
      invokestatic jp/ngt/rtm/RTMItem/registerItemModel (Lnet/minecraft/item/Item;ILjava/lang/String;)V
  L_002a:
-     .line 156
+     .line 157
      getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 5ca3be3..92dcff4 100644
+index 58704f1..5e741cc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 @@ -128,20 +128,22 @@ L_0020:
@@ -88,7 +88,7 @@ index 5ca3be3..92dcff4 100644
  .method public onBogieUpdate ()V
      .limit stack 2
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
-index 50ba737..796060f 100644
+index 2fe97f1..299abdb 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
 @@ -66,20 +66,23 @@
@@ -405,7 +405,7 @@ index 08fdfe9..a7f5e63 100644
  L_0000:
      .line 404
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index b252a06..595c970 100644
+index 7ae932e..c99504a 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 @@ -271,20 +271,22 @@ L_0061:
@@ -1215,7 +1215,7 @@ index e05f400..1418cc5 100644
  .end method
  
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
-index 2945cc2..a90bdee 100644
+index a1ac675..2fcbda9 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 @@ -350,20 +350,23 @@ L_0009:
@@ -1272,7 +1272,7 @@ index 6e5c39c..e670ca1 100644
      .var 5 is x D from L_0032 to L_0078
      aload 1
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
-index d2c0e4b..6ffb4cc 100644
+index aa59bb1..c959d84 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
 @@ -527,20 +527,22 @@ L_000f:
@@ -1562,7 +1562,7 @@ index 283bb01..efd8f8d 100644
      invokespecial java/lang/RuntimeException/<init> (Ljava/lang/String;Ljava/lang/Throwable;)V
      athrow
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
-index 7cd3941..be222d2 100644
+index 222fb92..39ecbf5 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/RTMRenderers.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/render/RTMRenderers.jasm
 @@ -20,30 +20,48 @@ L_0005:
