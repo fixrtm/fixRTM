@@ -1,0 +1,31 @@
+super: jp/ngt/rtm/modelpack/cfg/ModelConfig
+name: acceleration
+type: F
+
+name: maxSpeed
+type: F
+
+name: model
+type: Ljp/ngt/rtm/modelpack/cfg/ModelConfig$ModelSource;
+
+name: name
+type: Ljava/lang/String;
+
+name: radius
+type: F
+
+name: teethCount
+type: I
+
+name: transmissionRatioOFF
+type: [F
+
+name: transmissionRatioON
+type: [F
+
+name: type
+type: Ljp/ngt/rtm/block/tileentity/MechanismType;
+
+name: useRedstonePower
+type: Z
+
