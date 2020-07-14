@@ -147,8 +147,7 @@ test {
     useJUnitPlatform()
 }
 
-runClient.outputs.upToDateWhen { false }
-runServer.outputs.upToDateWhen { false }
+runClient.inputs.property("always_changed", new Date())
 
 apply from: "./processMods.gradle"
 apply from: "./makePatch.gradle"
