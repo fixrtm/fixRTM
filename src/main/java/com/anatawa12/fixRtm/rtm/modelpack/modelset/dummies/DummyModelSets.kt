@@ -12,9 +12,7 @@ import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.cfg.*
 import jp.ngt.rtm.modelpack.model.ModelBogie
 import jp.ngt.rtm.modelpack.modelset.*
-import jp.ngt.rtm.render.BasicRailPartsRenderer
-import jp.ngt.rtm.render.ModelObject
-import jp.ngt.rtm.render.WirePartsRenderer
+import jp.ngt.rtm.render.*
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.Vec3d
@@ -25,12 +23,16 @@ import java.lang.reflect.Field
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT) {
+fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT, script: String? = null) {
     val name = this.config.name
+    val renderer = if (script != null) RTMRenderers.getRendererWithScript<PartsRenderer<*, *>>(ModelPackManager.INSTANCE.getResource(script), "false")
+    else BasicPartsRenderer<Any, ModelSetBase<*>>()
     modelObj = ModelObject(model,
             arrayOf(
                     TextureSet(DummyModelObject.material, 0, false, false)
-            ))
+            ),
+            renderer
+    )
     modelObj.renderer.init(this, modelObj)
     buttonTexture = GeneratedResourcePack.addImage(createButtonTexture(name))
 }
