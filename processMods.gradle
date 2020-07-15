@@ -35,7 +35,7 @@ static String deObfuscatedJarPath(String path) {
 
 task deObfuscateRTM(type: DeObfuscateJar) {
     dependsOn downloadRTM
-    dependsOn extractMcpMappings
+    dependsOn genSrgs
 
     srgFile = srgMcpsrgFile
     obfuscatedJar = downloadRTM.to
@@ -44,7 +44,7 @@ task deObfuscateRTM(type: DeObfuscateJar) {
 
 task deObfuscateNgtLib(type: DeObfuscateJar) {
     dependsOn downloadNgtLib
-    dependsOn extractMcpMappings
+    dependsOn genSrgs
 
     srgFile = srgMcpsrgFile
     obfuscatedJar = downloadNgtLib.to
