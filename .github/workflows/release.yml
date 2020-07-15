@@ -17,69 +17,63 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
+      - name: prepare git user data
+        run: |
+          git config --global user.name 'anatawa12'
+          git config --global user.email 'anatawa12@users.noreply.github.com'
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
 
-      - name: prepare build
-        run: echo ${{ github.event.inputs.version_name }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 8
 
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: 8
-#
-#      - name: prepare build
-#        run: ./scripts/prepare-release-build.sh
-#
-#      - uses: eskatos/gradle-command-action@v1
-#        with:
-#          arguments: prepareMods
-#
-#      - name: apply patches
-#        run: ./apply_patch.sh
-#
-#      - name: setup workspace
-#        uses: eskatos/gradle-command-action@v1
-#        with:
-#          arguments: setupCiWorkspace
-#
-#      - name: Build
-#        uses: eskatos/gradle-command-action@v1
-#        with:
-#          arguments: build
-#
-#      - name: Create normal Release
-#        if: ${{ github.event.action == 'publish-release' }}
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: ${{ github.ref }}
-#          body:
-#          draft: true
-#          # prerelease if snapshot
-#          prerelease: false
-#
-#      - name: Create Snapshot Release
-#        if: ${{ github.event.action == 'publish-snapshot' }}
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: ${{ github.ref }}
-#          body:
-#          draft: true
-#          prerelease: true
-#
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: ./build/libs/fixRtm-2.0.11.jar
-#          asset_name: my-artifact.zip
-#          asset_content_type: application/zip
-#
+      - name: update for release and push
+        id: prepare_build
+        run: ./scripts/update_for_release.sh
+        env:
+          VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
+
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: prepareMods
+
+      - name: apply patches
+        run: ./apply_patch.sh
+
+      - name: setup workspace
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: setupCiWorkspace
+
+      - name: Build
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
+
+      - name: Create Release
+        id: create_release
+        if: ${{ github.event.action == 'publish-release' }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.prepare_build.outputs.version_name }}
+          release_name: ${{ steps.prepare_build.outputs.version_name }}
+          draft: true
+          prerelease: ${{ steps.prepare_build.outputs.prerelease }}
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.prepare_build.outputs.asset_path }}
+          asset_name: ${{ steps.prepare_build.outputs.asset_name }}
+          asset_content_type: application/java-archive
