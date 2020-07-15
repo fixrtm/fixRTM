@@ -25,6 +25,9 @@ type: Ljp/ngt/rtm/modelpack/ResourceType;
 name: RRS
 type: Ljp/ngt/rtm/modelpack/ResourceType;
 
+name: MECHANISM
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
 name: CONNECTOR
 type: Ljp/ngt/rtm/modelpack/ResourceType;
 
@@ -119,5 +122,8 @@ name: VEHICLE_SHIP
 type: Ljp/ngt/rtm/modelpack/ResourceType;
 
 name: VEHICLE_TROLLEY
+type: Ljp/ngt/rtm/modelpack/ResourceType;
+
+name: VEHICLE_LIFT
 type: Ljp/ngt/rtm/modelpack/ResourceType;
 

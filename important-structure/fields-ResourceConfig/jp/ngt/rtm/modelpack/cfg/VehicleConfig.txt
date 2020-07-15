@@ -11,6 +11,9 @@ type: F
 name: friction
 type: [F
 
+name: gripPos
+type: [F
+
 name: hoveringSpeed
 type: F
 
