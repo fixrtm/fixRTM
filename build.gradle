@@ -143,6 +143,14 @@ compileKotlin {
         //freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
 }
+
+task makeSourceDir {
+    doLast {
+        new File(buildDir, "sources/main/java").mkdirs()
+    }
+}
+compileJava.dependsOn(makeSourceDir)
+
 test {
     useJUnitPlatform()
 }
