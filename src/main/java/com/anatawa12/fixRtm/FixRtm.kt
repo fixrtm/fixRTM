@@ -77,6 +77,7 @@ object FixRtm {
         DummyModelPackManager.registerDummyClass(DummyModelSetTrain::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetVehicle::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetWire::class.java)
+        DummyModelPackManager.registerDummyClass(DummyModelSetMechanism::class.java)
         DummyModelPackManager.registerDummyClass(DummyTextureSetRRS::class.java)
         DummyModelPackManager.registerDummyClass(DummyTextureSetSignboard::class.java)
         DummyModelPackManager.registerDummyClass(DummyTextureSetFlag::class.java)

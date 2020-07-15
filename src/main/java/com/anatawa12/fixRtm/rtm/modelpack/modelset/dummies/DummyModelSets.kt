@@ -7,14 +7,13 @@ import jp.ngt.ngtlib.renderer.model.IModelNGT
 import jp.ngt.ngtlib.renderer.model.Material
 import jp.ngt.ngtlib.renderer.model.TextureSet
 import jp.ngt.rtm.RTMResource.*
+import jp.ngt.rtm.block.tileentity.MechanismType
 import jp.ngt.rtm.modelpack.ModelPackManager
 import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.cfg.*
 import jp.ngt.rtm.modelpack.model.ModelBogie
 import jp.ngt.rtm.modelpack.modelset.*
-import jp.ngt.rtm.render.BasicRailPartsRenderer
-import jp.ngt.rtm.render.ModelObject
-import jp.ngt.rtm.render.WirePartsRenderer
+import jp.ngt.rtm.render.*
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.AxisAlignedBB
 import net.minecraft.util.math.Vec3d
@@ -25,12 +24,16 @@ import java.lang.reflect.Field
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT) {
+fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT, script: String? = null) {
     val name = this.config.name
+    val renderer = if (script != null) RTMRenderers.getRendererWithScript<PartsRenderer<*, *>>(ModelPackManager.INSTANCE.getResource(script), "false")
+    else BasicPartsRenderer<Any, ModelSetBase<*>>()
     modelObj = ModelObject(model,
             arrayOf(
                     TextureSet(DummyModelObject.material, 0, false, false)
-            ))
+            ),
+            renderer
+    )
     modelObj.renderer.init(this, modelObj)
     buttonTexture = GeneratedResourcePack.addImage(createButtonTexture(name))
 }
@@ -276,6 +279,51 @@ class DummyModelSetWire(name: String) : ModelSetWire( // ok
 
     companion object {
         var WireConfig.exName: String by ReflectValue.make("name")
+    }
+}
+
+class DummyModelSetMechanism(name: String) : ModelSetMechanism( // ok
+        MechanismConfig.getDummy()
+                .apply { this.exName = name }
+                .apply { this.radius = 0.5f }
+                .apply { this.type = MechanismType.GEAR }
+                .apply { this.maxSpeed = Float.POSITIVE_INFINITY }
+                .apply { this.teethCount = 36 }) {
+    override fun constructOnClient() {
+        constructOnClientDummy(MultiModelObject(
+                DummyModelObject(AxisAlignedBB(
+                        -0.0625, 0.0, -0.0625,
+                        +0.0625, 1.0, +0.0625),
+                        config.name, setOf()),
+
+                DummyModelObject(AxisAlignedBB(
+                        -0.5000, 0.3750, +0.5000,
+                        +0.0625, 0.6250, +0.0625),
+                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                        Vec3d(0.0, 1.0, 0.0), 000.0),
+                DummyModelObject(AxisAlignedBB(
+                        -0.5000, 0.3750, +0.5000,
+                        +0.0625, 0.6250, +0.0625),
+                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                        Vec3d(0.0, 1.0, 0.0), 090.0),
+                DummyModelObject(AxisAlignedBB(
+                        -0.5000, 0.3750, +0.5000,
+                        +0.0625, 0.6250, +0.0625),
+                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                        Vec3d(0.0, 1.0, 0.0), 180.0),
+                DummyModelObject(AxisAlignedBB(
+                        -0.5000, 0.3750, +0.5000,
+                        +0.0625, 0.6250, +0.0625),
+                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                        Vec3d(0.0, 1.0, 0.0), 270.0)
+        ),
+                "fix-rtm:scripts/render-gear.js")
+    }
+
+    override fun constructOnServer() {}
+
+    companion object {
+        var MechanismConfig.exName: String by ReflectValue.make("name")
     }
 }
 
