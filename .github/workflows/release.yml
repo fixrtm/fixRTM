@@ -1,7 +1,5 @@
 name: Release
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   workflow_dispatch:
     inputs:
@@ -12,12 +10,9 @@ on:
 
 jobs:
   release:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
       - name: prepare git user data
         run: |
           git config --global user.name 'anatawa12'
