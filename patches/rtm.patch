@@ -1530,6 +1530,63 @@ index d1831ec..7eeb299 100644
      aload 0
      iconst_4
      anewarray jp/ngt/rtm/rail/util/Point
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/ModelObject.jasm b/src/main/rtm/jp/ngt/rtm/render/ModelObject.jasm
+index 43af393..9336590 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/ModelObject.jasm
++++ b/src/main/rtm/jp/ngt/rtm/render/ModelObject.jasm
+@@ -605,20 +605,52 @@ L_001d:
+     iconst_0
+     anewarray java/lang/Object
+     invokespecial jp/ngt/rtm/render/ModelObject/getPartsRenderer "(Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/IModelNGT;[Ljava/lang/Object;)Ljp/ngt/rtm/render/PartsRenderer;"
+     putfield jp/ngt/rtm/render/ModelObject/renderer Ljp/ngt/rtm/render/PartsRenderer;
+ L_0027:
+     .line 122
+     return
+ L_002a:
+ .end method
+ 
++.method public <init> "(Ljp/ngt/ngtlib/renderer/model/IModelNGT;[Ljp/ngt/ngtlib/renderer/model/TextureSet;Ljp/ngt/rtm/render/PartsRenderer;)V"
++    .limit stack 5
++    .limit local 4
++L_start:
++    .var 0 is this Ljp/ngt/rtm/render/ModelObject; from L_start to L_end
++    .var 1 is par1 Ljp/ngt/ngtlib/renderer/model/IModelNGT; from L_start to L_end
++    .var 2 is par2 "[Ljp/ngt/ngtlib/renderer/model/TextureSet;" from L_start to L_end
++    .var 3 is par3 "Ljp/ngt/rtm/render/PartsRenderer;" from L_start to L_end
++    aload 0
++    invokespecial java/lang/Object/<init> ()V
++    aload 0
++    aload 1
++    putfield jp/ngt/rtm/render/ModelObject/model Ljp/ngt/ngtlib/renderer/model/IModelNGT;
++    aload 0
++    aload 2
++    putfield jp/ngt/rtm/render/ModelObject/textures "[Ljp/ngt/ngtlib/renderer/model/TextureSet;"
++    aload 0
++    iconst_0
++    putfield jp/ngt/rtm/render/ModelObject/light Z
++    aload 0
++    iconst_0
++    putfield jp/ngt/rtm/render/ModelObject/alphaBlend Z
++    aload 0
++    iconst_1
++    putfield jp/ngt/rtm/render/ModelObject/useTexture Z
++    aload 0
++    aload 3
++    putfield jp/ngt/rtm/render/ModelObject/renderer Ljp/ngt/rtm/render/PartsRenderer;
++    return
++L_end:
++.end method
++
+ .method public static getDummy ()Ljp/ngt/rtm/render/ModelObject;
+     .limit stack 13
+     .limit local 0
+ L_0000:
+     .line 126
+     getstatic jp/ngt/rtm/render/ModelObject/DUMMY Ljp/ngt/rtm/render/ModelObject;
+     ifnonnull L_002a
+ L_0004:
+     .line 128
+     new jp/ngt/rtm/render/ModelObject
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/PartsRenderer.jasm b/src/main/rtm/jp/ngt/rtm/render/PartsRenderer.jasm
 index 283bb01..efd8f8d 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/render/PartsRenderer.jasm
