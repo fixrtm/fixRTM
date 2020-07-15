@@ -1,0 +1,87 @@
+name: Release
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_dispatch:
+    types:
+      publish-snapshot:
+      publish-release:
+        inputs:
+          version_name:
+            description: name of versuib
+            required: true
+
+jobs:
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: prepare build
+        run: echo ${{ github.event.action }}
+
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: 8
+#
+#      - name: prepare build
+#        run: ./scripts/prepare-release-build.sh
+#
+#      - uses: eskatos/gradle-command-action@v1
+#        with:
+#          arguments: prepareMods
+#
+#      - name: apply patches
+#        run: ./apply_patch.sh
+#
+#      - name: setup workspace
+#        uses: eskatos/gradle-command-action@v1
+#        with:
+#          arguments: setupCiWorkspace
+#
+#      - name: Build
+#        uses: eskatos/gradle-command-action@v1
+#        with:
+#          arguments: build
+#
+#      - name: Create normal Release
+#        if: ${{ github.event.action == 'publish-release' }}
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: ${{ github.ref }}
+#          body:
+#          draft: true
+#          # prerelease if snapshot
+#          prerelease: false
+#
+#      - name: Create Snapshot Release
+#        if: ${{ github.event.action == 'publish-snapshot' }}
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: ${{ github.ref }}
+#          body:
+#          draft: true
+#          prerelease: true
+#
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: ./build/libs/fixRtm-2.0.11.jar
+#          asset_name: my-artifact.zip
+#          asset_content_type: application/zip
+#
