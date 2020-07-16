@@ -29,6 +29,7 @@ jobs:
         id: prepare_build
         run: ./scripts/update_for_release.sh
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
 
       - name: prepare mods
@@ -57,6 +58,7 @@ jobs:
         with:
           tag_name: ${{ steps.prepare_build.outputs.version_name }}
           release_name: ${{ steps.prepare_build.outputs.version_name }}
+          body_path: ${{ steps.prepare_build.outputs.release_note_path }}
           draft: true
           prerelease: ${{ steps.prepare_build.outputs.prerelease }}
 
