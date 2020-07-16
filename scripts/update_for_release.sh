@@ -37,13 +37,15 @@ rm "$tmp_file"
 
 git commit -am "$version_name"
 git push
+git tag "$version_name"
+git push origin "$version_name"
 
 # 出力設定
 
 asset_path="./build/libs/fixRtm-$version_name.jar"
 asset_name="fixRtm-$version_name.jar"
 
-echo "::set-output version_name=$version_name"
-echo "::set-output prerelease=$prerelease"
-echo "::set-output asset_path=$asset_path"
-echo "::set-output asset_name=$asset_name"
+echo "::set-output name=version_name::$version_name"
+echo "::set-output name=prerelease::$prerelease"
+echo "::set-output name=asset_path::$asset_path"
+echo "::set-output name=asset_name::$asset_name"

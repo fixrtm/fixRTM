@@ -20,8 +20,6 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
 
       - uses: actions/setup-java@v1
         with:
@@ -33,7 +31,8 @@ jobs:
         env:
           VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
 
-      - uses: eskatos/gradle-command-action@v1
+      - name: prepare mods
+        uses: eskatos/gradle-command-action@v1
         with:
           arguments: prepareMods
 
@@ -52,7 +51,6 @@ jobs:
 
       - name: Create Release
         id: create_release
-        if: ${{ github.event.action == 'publish-release' }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
