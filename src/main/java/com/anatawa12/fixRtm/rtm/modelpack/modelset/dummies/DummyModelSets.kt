@@ -317,7 +317,7 @@ class DummyModelSetMechanism(name: String) : ModelSetMechanism( // ok
                         config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
                         Vec3d(0.0, 1.0, 0.0), 270.0)
         ),
-                "fix-rtm:scripts/render-gear.js")
+                "minecraft:fix-rtm/scripts/render-gear.js")
     }
 
     override fun constructOnServer() {}
