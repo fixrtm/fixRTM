@@ -15,8 +15,8 @@ jobs:
     steps:
       - name: prepare git user data
         run: |
-          git config --global user.name 'anatawa12'
-          git config --global user.email 'anatawa12@users.noreply.github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
