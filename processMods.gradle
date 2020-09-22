@@ -14,7 +14,7 @@ task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
 
 task downloadRTM (type: DownloadModJar) {
     projectId = 288988
-    version = "2.4.20"
+    version = "2.4.21"
     to = new File(projectDir, "mods/rtm.jar")
 }
 

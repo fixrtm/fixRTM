@@ -1215,7 +1215,7 @@ index e05f400..1418cc5 100644
  .end method
  
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
-index a1ac675..2fcbda9 100644
+index 05b0fa4..e80bd03 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 @@ -350,20 +350,23 @@ L_0009:
