@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.scripting.rhino
 
+import jdk.nashorn.api.scripting.JSObject
 import org.mozilla.javascript.*
 
 object CoerceTypeImplFailed
@@ -165,6 +166,17 @@ object RhinoHooks {
      */
     @JvmStatic
     private fun getSizeRank(aType: Class<*>?): Int = error("implement by transformer")
+
+    const val wrapAsJavaObject_name = "wrapAsJavaObject"
+    const val wrapAsJavaObject_desc = "(L${"org/mozilla/javascript/Scriptable"};L${"java/lang/Object"};" +
+            "L${"java/lang/Class"};)L${"org/mozilla/javascript/Scriptable"};"
+
+    @JvmStatic
+    private fun wrapAsJavaObject(scope: Scriptable?, obj: Any, staticType: Class<*>): Scriptable? {
+        if (obj is JSObjectImpl) return obj.body
+        if (obj is JSObject) return NativeJSObject(scope, obj)
+        return NativeJavaObject(scope, obj, staticType)
+    }
 
     fun load() {}
 }

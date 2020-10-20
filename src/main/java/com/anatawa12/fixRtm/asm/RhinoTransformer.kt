@@ -60,6 +60,11 @@ class RhinoTransformer : IClassTransformer {
             val writer = ClassWriter(0)
             reader.accept(NativeJavaClassVisitor(writer), 0)
             return writer.toByteArray()
+        } else if (name == WrapFactory_name) {
+            val reader = ClassReader(basicClass!!)
+            val writer = ClassWriter(0)
+            reader.accept(WrapFactoryVisitor(writer), 0)
+            return writer.toByteArray()
         }
         return basicClass
     }
@@ -328,6 +333,37 @@ class RhinoTransformer : IClassTransformer {
         }
     }
 
+    class WrapFactoryVisitor(visitor: ClassVisitor): ClassVisitor(ASM5, visitor) {
+        override fun visitMethod(
+            access: Int,
+            name: String?,
+            desc: String?,
+            signature: String?,
+            exceptions: Array<out String>?
+        ): MethodVisitor {
+            var mv = super.visitMethod(access, name, desc, signature, exceptions)
+            if (name == WrapFactory_wrapAsJavaObject_name && desc == WrapFactory_wrapAsJavaObject_desc) {
+                mv.visitCode()
+
+                mv.visitVarInsn(ALOAD, 2)
+                mv.visitVarInsn(ALOAD, 3)
+                mv.visitVarInsn(ALOAD, 4)
+
+                mv.visitMethodInsn(INVOKESTATIC, RhinoHooks.internalClassName,
+                    RhinoHooks.wrapAsJavaObject_name,
+                    RhinoHooks.wrapAsJavaObject_desc, false)
+
+                mv.visitInsn(ARETURN)
+
+                mv.visitMaxs(3, 5)
+                mv.visitEnd()
+
+                mv = null
+            }
+            return mv
+        }
+    }
+
     class InsertCodeAtFirstVisitor(visitor: MethodVisitor, private val function: MethodVisitor.() -> Unit)
         : MethodVisitor(ASM5, visitor) {
         private var visited = false
@@ -351,6 +387,11 @@ class RhinoTransformer : IClassTransformer {
         const val Scriptable_internal = "org/mozilla/javascript/Scriptable"
         const val Scriptable_NOT_FOUND_name = "NOT_FOUND"
         const val Scriptable_NOT_FOUND_desc = "L${"java/lang/Object"};"
+        const val WrapFactory_name = "org.mozilla.javascript.WrapFactory"
+        const val WrapFactory_internal = "org/mozilla/javascript/WrapFactory"
+        const val WrapFactory_wrapAsJavaObject_name = "wrapAsJavaObject"
+        const val WrapFactory_wrapAsJavaObject_desc = "(L${"org/mozilla/javascript/Context"};" +
+                "L${Scriptable_internal};L${"java/lang/Object"};L${"java/lang/Object"};)L${Scriptable_internal};"
 
         const val JavaMembers_internal = "org/mozilla/javascript/JavaMembers"
 
