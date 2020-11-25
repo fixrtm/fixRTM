@@ -196,6 +196,75 @@ index b1ebe90..ca347ed 100644
          locals Integer
          locals Integer
          locals Integer
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/ShapedRecipes55.jasm b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.jasm
+index efa5432..1758664 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/ShapedRecipes55.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/ShapedRecipes55.jasm
+@@ -587,27 +587,27 @@ L_0018:
+     .line 155
+     aload 1
+     aload 2
+     invokestatic jp/ngt/ngtlib/item/ItemUtil/isItemEqual (Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z
+     ireturn
+ L_001e:
+     .line 158
+     .stack use locals
+     .end stack
+     aload 1
+-    invokestatic net/minecraftforge/oredict/OreDictionary/getOreIDs "(Lnet/minecraft/item/ItemStack;)[I"
++    invokestatic com/anatawa12/fixRtm/ngtlib/item/craft/OreDictionaryUtil/getOreIDs "(Lnet/minecraft/item/ItemStack;)[I"
+     astore 3
+ L_0024:
+     .line 159
+     .var 3 is ids0 "[I" from L_0024 to L_006b
+     aload 2
+-    invokestatic net/minecraftforge/oredict/OreDictionary/getOreIDs "(Lnet/minecraft/item/ItemStack;)[I"
++    invokestatic com/anatawa12/fixRtm/ngtlib/item/craft/OreDictionaryUtil/getOreIDs "(Lnet/minecraft/item/ItemStack;)[I"
+     astore 4
+ L_0029:
+     .line 160
+     .var 4 is ids1 "[I" from L_0029 to L_006b
+     aload 3
+     arraylength
+     ifle L_005f
+     aload 4
+     arraylength
+     ifle L_005f
+@@ -673,32 +673,29 @@ L_0057:
+         locals Object jp/ngt/ngtlib/item/craft/ShapedRecipes55
+         locals Object net/minecraft/item/ItemStack
+         locals Object net/minecraft/item/ItemStack
+         locals Object "[I"
+         locals Object "[I"
+         locals Integer
+     .end stack
+     iinc 5 1
+     goto L_0035
+ L_005c:
++L_005f:
++    .line 175
+     .stack
+         locals Object jp/ngt/ngtlib/item/craft/ShapedRecipes55
+         locals Object net/minecraft/item/ItemStack
+         locals Object net/minecraft/item/ItemStack
+         locals Object "[I"
+         locals Object "[I"
+     .end stack
+-    goto L_0066
+-L_005f:
+-    .line 175
+-    .stack use locals
+-    .end stack
+     aload 1
+     aload 2
+     invokestatic jp/ngt/ngtlib/item/ItemUtil/isItemEqual (Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Z
+     ireturn
+ L_0066:
+     .line 177
+     .stack use locals
+     .end stack
+     iconst_0
+     ireturn
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
 index a2f9d39..27e8e57 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
