@@ -25,6 +25,142 @@ index 3762a0f..ee55f17 100644
  L_002a:
      .line 157
      getstatic jp/ngt/rtm/RTMItem/itemMotorman Lnet/minecraft/item/Item;
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMRecipe.jasm b/src/main/rtm/jp/ngt/rtm/RTMRecipe.jasm
+index e14c0e6..5de27d3 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/RTMRecipe.jasm
++++ b/src/main/rtm/jp/ngt/rtm/RTMRecipe.jasm
+@@ -5771,95 +5771,131 @@ L_15e8:
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_handgun Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     iconst_4
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_handgun"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_15f7:
+     .line 488
+     getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_rifle Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     bipush 12
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_rifle"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_1606:
+     .line 489
+     getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_alr Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     bipush 12
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_alr"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_1615:
+     .line 490
+     getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_sr Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     bipush 12
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_sr"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_1624:
+     .line 491
+     getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_smg Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     iconst_4
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_smg"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_1633:
+     .line 492
+     getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+     new jp/ngt/ngtlib/item/craft/RepairRecipe
+     dup
+     getstatic jp/ngt/rtm/RTMItem/magazine_amr Lnet/minecraft/item/Item;
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/bullet Lnet/minecraft/item/Item;
+     iconst_1
+     bipush 16
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+     invokespecial jp/ngt/ngtlib/item/craft/RepairRecipe/<init> (Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemStack;)V
++    new net/minecraft/util/ResourceLocation
++    dup
++    ldc "rtm"
++    ldc "_magazine_amr"
++    invokespecial net/minecraft/util/ResourceLocation/<init> (Ljava/lang/String;Ljava/lang/String;)V
++    invokevirtual jp/ngt/ngtlib/item/craft/RepairRecipe/setRegistryName (Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/item/crafting/IRecipe;
+     invokevirtual jp/ngt/ngtlib/item/craft/RecipeManager/addRecipeToManager (Lnet/minecraft/item/crafting/IRecipe;)Lnet/minecraft/item/crafting/IRecipe;
+     pop
+ L_1642:
+     .line 495
+     new net/minecraft/item/ItemStack
+     dup
+     getstatic jp/ngt/rtm/RTMItem/material Lnet/minecraft/item/Item;
+     bipush 64
+     iconst_4
+     invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 index 58704f1..5e741cc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
