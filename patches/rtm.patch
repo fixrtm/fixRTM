@@ -161,6 +161,68 @@ index e14c0e6..5de27d3 100644
      bipush 64
      iconst_4
      invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm b/src/main/rtm/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm
+index d9b0787..a04bd4e 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm
+@@ -200,42 +200,43 @@ L_0062:
+     .end stack
+     aload 0
+     getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
+     invokevirtual net/minecraft/entity/ai/EntityAIBase/shouldExecute ()Z
+     ireturn
+ L_0069:
+ .end method
+ 
+ .method private dismount ()V
+     .limit stack 2
+-    .limit local 1
+-L_0000:
+-    .line 77
+-    .var 0 is this Ljp/ngt/rtm/entity/ai/EntityAITravelByTrain; from L_0000 to L_0013
+-    aload 0
+-    getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/npc Ljp/ngt/rtm/entity/npc/EntityNPC;
+-    aconst_null
+-    invokevirtual jp/ngt/rtm/entity/npc/EntityNPC/startRiding (Lnet/minecraft/entity/Entity;)Z
+-    pop
+-L_0007:
+-    .line 78
++    .limit local 2
++L_begin:
++    .line 10077
++    .var 0 is this Ljp/ngt/rtm/entity/ai/EntityAITravelByTrain; from L_begin to L_end
+     aload 0
+     getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/npc Ljp/ngt/rtm/entity/npc/EntityNPC;
+     invokevirtual jp/ngt/rtm/entity/npc/EntityNPC/getRidingEntity ()Lnet/minecraft/entity/Entity;
+     checkcast jp/ngt/rtm/entity/train/parts/EntityFloor
++    astore 1
++L_floor_begin:
++    .line 10078
++    .var 1 is floor Ljp/ngt/rtm/entity/train/parts/EntityFloor; from L_floor_begin to L_end
++    aload 0
++    getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/npc Ljp/ngt/rtm/entity/npc/EntityNPC;
++    invokevirtual jp/ngt/rtm/entity/npc/EntityNPC/dismountRidingEntity ()V
++    .line 10079
++    aload 1
+     aload 0
+     getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/npc Ljp/ngt/rtm/entity/npc/EntityNPC;
+     invokevirtual jp/ngt/rtm/entity/train/parts/EntityFloor/onDismount (Lnet/minecraft/entity/Entity;)V
+-L_0010:
+-    .line 79
++    .line 10080
+     return
+-L_0013:
++L_end:
+ .end method
+ 
+ .method public shouldContinueExecuting ()Z
+     .limit stack 3
+     .limit local 2
+ L_0000:
+     .line 84
+     .var 0 is this Ljp/ngt/rtm/entity/ai/EntityAITravelByTrain; from L_0000 to L_006e
+     aload 0
+     getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 index 58704f1..5e741cc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
