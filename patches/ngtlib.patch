@@ -169,6 +169,33 @@ index ea31691..427b9b6 100644
  
  .method public static varargs sendChatMessage "(Lnet/minecraft/command/ICommandSender;Ljava/lang/String;[Ljava/lang/Object;)V"
      .limit stack 5
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.jasm b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.jasm
+index b1ebe90..ca347ed 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/item/craft/RecipeManager.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/item/craft/RecipeManager.jasm
+@@ -409,21 +409,21 @@ L_0105:
+         locals Integer
+         locals Integer
+         locals Integer
+         locals Object java/util/Map
+         locals Object "[Lnet/minecraft/item/ItemStack;"
+         locals Integer
+         locals Integer
+     .end stack
+     aload 7
+     iload 8
+-    aconst_null
++    getstatic net/minecraft/item/ItemStack/EMPTY Lnet/minecraft/item/ItemStack;
+     aastore
+ L_010c:
+     .line 94
+     .stack
+         locals Object net/minecraft/item/ItemStack
+         locals Object "[Ljava/lang/Object;"
+         locals Object java/lang/String
+         locals Integer
+         locals Integer
+         locals Integer
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm b/src/main/ngtlib/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
 index a2f9d39..27e8e57 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/renderer/model/ModelLoader.jasm
