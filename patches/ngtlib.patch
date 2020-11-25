@@ -1,3 +1,56 @@
+diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/NGTCore.jasm b/src/main/ngtlib/jp/ngt/ngtlib/NGTCore.jasm
+index ca24a0c..cc0c492 100644
+--- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/NGTCore.jasm
++++ b/src/main/ngtlib/jp/ngt/ngtlib/NGTCore.jasm
+@@ -258,42 +258,44 @@ L_008e:
+     invokevirtual net/minecraftforge/fml/common/network/simpleimpl/SimpleNetworkWrapper/registerMessage (Ljava/lang/Class;Ljava/lang/Class;ILnet/minecraftforge/fml/relauncher/Side;)V
+ L_0096:
+     .line 108
+     getstatic jp/ngt/ngtlib/NGTCore/NETWORK_WRAPPER Lnet/minecraftforge/fml/common/network/simpleimpl/SimpleNetworkWrapper;
+     ldc class Ljp/ngt/ngtlib/network/PacketProtection;
+     ldc class Ljp/ngt/ngtlib/network/PacketProtection;
+     iconst_4
+     getstatic net/minecraftforge/fml/relauncher/Side/CLIENT Lnet/minecraftforge/fml/relauncher/Side;
+     invokevirtual net/minecraftforge/fml/common/network/simpleimpl/SimpleNetworkWrapper/registerMessage (Ljava/lang/Class;Ljava/lang/Class;ILnet/minecraftforge/fml/relauncher/Side;)V
+ L_009e:
++
++    .line 1116
++    getstatic net/minecraftforge/common/MinecraftForge/EVENT_BUS Lnet/minecraftforge/fml/common/eventhandler/EventBus;
++    getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
++    invokevirtual net/minecraftforge/fml/common/eventhandler/EventBus/register (Ljava/lang/Object;)V
++
+     .line 109
+     return
+ L_00a1:
+ .end method
+ 
+ .method public init (Lnet/minecraftforge/fml/common/event/FMLInitializationEvent;)V
+     .annotation visible net/minecraftforge/fml/common/Mod$EventHandler
+     .end annotation
+     .limit stack 7
+     .limit local 3
+     .catch java/io/IOException from L_001d to L_0021 using L_0024
+ L_0000:
+     .line 114
+     .var 0 is this Ljp/ngt/ngtlib/NGTCore; from L_0000 to L_0030
+     .var 1 is event Lnet/minecraftforge/fml/common/event/FMLInitializationEvent; from L_0000 to L_0030
+     getstatic jp/ngt/ngtlib/NGTCore/proxy Ljp/ngt/ngtlib/CommonProxy;
+     invokevirtual jp/ngt/ngtlib/CommonProxy/init ()V
+ L_0004:
+-    .line 116
+-    getstatic net/minecraftforge/common/MinecraftForge/EVENT_BUS Lnet/minecraftforge/fml/common/eventhandler/EventBus;
+-    getstatic jp/ngt/ngtlib/item/craft/RecipeManager/INSTANCE Ljp/ngt/ngtlib/item/craft/RecipeManager;
+-    invokevirtual net/minecraftforge/fml/common/eventhandler/EventBus/register (Ljava/lang/Object;)V
+ L_0009:
+     .line 117
+     getstatic net/minecraftforge/common/MinecraftForge/EVENT_BUS Lnet/minecraftforge/fml/common/eventhandler/EventBus;
+     new jp/ngt/ngtlib/event/NGTEventHandler
+     dup
+     invokespecial jp/ngt/ngtlib/event/NGTEventHandler/<init> ()V
+     invokevirtual net/minecraftforge/fml/common/eventhandler/EventBus/register (Ljava/lang/Object;)V
+ L_0010:
+     .line 119
+     getstatic jp/ngt/ngtlib/util/Usage/INSTANCE Ljp/ngt/ngtlib/util/Usage;
 diff --git a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/NGTLog.jasm b/src/main/ngtlib/jp/ngt/ngtlib/io/NGTLog.jasm
 index ea31691..427b9b6 100644
 --- a/mods/ngtlib.deobf.jar.src.processed/jp/ngt/ngtlib/io/NGTLog.jasm
