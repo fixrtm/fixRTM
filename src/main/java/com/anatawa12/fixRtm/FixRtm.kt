@@ -44,13 +44,13 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
+        Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {
                 loadFIXScriptUtil()// init
                 ExecutedScriptCache.load()// init
             }
             MainConfig.ScriptingMode.BetterWithNashorn -> {
-                Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
                 CompiledImportedScriptCache.load() // load
             }
             MainConfig.ScriptingMode.UseRtmNormal -> {
