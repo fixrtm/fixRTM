@@ -7,7 +7,7 @@ import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import com.anatawa12.fixRtm.scripting.nashorn.CompiledImportedScriptCache
-import com.anatawa12.fixRtm.scripting.rhino.ExecutedScriptCache
+import com.anatawa12.fixRtm.scripting.sai.ExecutedScriptCache
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -45,7 +45,7 @@ object FixRtm {
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
         when (MainConfig.scriptingMode) {
-            MainConfig.ScriptingMode.CacheWithRhino -> {
+            MainConfig.ScriptingMode.CacheWithSai -> {
                 loadFIXScriptUtil()// init
                 ExecutedScriptCache.load()// init
             }

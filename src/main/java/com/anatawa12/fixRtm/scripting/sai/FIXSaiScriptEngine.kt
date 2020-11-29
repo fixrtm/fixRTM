@@ -1,11 +1,11 @@
-package com.anatawa12.fixRtm.scripting.rhino
+package com.anatawa12.fixRtm.scripting.sai
 
-import org.mozilla.javascript.Function
-import org.mozilla.javascript.ScriptableObject
+import com.anatawa12.sai.Function
+import com.anatawa12.sai.ScriptableObject
 import java.io.Reader
 import javax.script.*
 
-class FIXRhinoScriptEngine : ScriptEngine, Invocable {
+class FIXSaiScriptEngine : ScriptEngine, Invocable {
     lateinit var scope: ScriptableObject
 
     override fun createBindings(): Bindings {

@@ -1,8 +1,8 @@
 package com.anatawa12.fixRtm.scripting
 
 import com.anatawa12.fixRtm.io.FIXFileLoader
+import com.anatawa12.sai.ScriptRuntime
 import net.minecraft.util.ResourceLocation
-import org.mozilla.javascript.ScriptRuntime
 import java.util.concurrent.ConcurrentHashMap
 
 

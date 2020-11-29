@@ -1,4 +1,4 @@
-package com.anatawa12.fixRtm.scripting.rhino
+package com.anatawa12.fixRtm.scripting.sai
 
 import com.anatawa12.fixRtm.caching.ModelPackBasedCache
 import com.anatawa12.fixRtm.fixCacheDir
@@ -7,24 +7,24 @@ import com.anatawa12.fixRtm.io.FIXResource
 import com.anatawa12.fixRtm.scripting.ExecutedScript
 import com.anatawa12.fixRtm.scripting.IScriptRuntime
 import com.anatawa12.fixRtm.utils.DigestUtils
+import com.anatawa12.sai.ImporterTopLevel
+import com.anatawa12.sai.Script
+import com.anatawa12.sai.ScriptableObject
+import com.anatawa12.sai.TopLevel
 import net.minecraft.util.ResourceLocation
-import org.mozilla.javascript.ImporterTopLevel
-import org.mozilla.javascript.Script
-import org.mozilla.javascript.ScriptableObject
-import org.mozilla.javascript.TopLevel
 
-object RhinoScriptRuntimeImpl : IScriptRuntime<Script, FIXRhinoScriptEngine> {
-    override fun getCachedEngine(filePath: ResourceLocation, resource: FIXResource, dependencies: Map<ResourceLocation, String>): FIXRhinoScriptEngine? {
+object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
+    override fun getCachedEngine(filePath: ResourceLocation, resource: FIXResource, dependencies: Map<ResourceLocation, String>): FIXSaiScriptEngine? {
         return getScriptAndDoScriptByCache(filePath, resource.pack, makeDependenciesData(dependencies))
-                ?.let { scope -> FIXRhinoScriptEngine().also { it.scope = scope } }
+                ?.let { scope -> FIXSaiScriptEngine().also { it.scope = scope } }
     }
 
-    override fun compile(script: String, fileName: String, engine: FIXRhinoScriptEngine?): Script =usingContext { cx ->
+    override fun compile(script: String, fileName: String, engine: FIXSaiScriptEngine?): Script =usingContext { cx ->
         return ScriptCompiledClassCache.compile(script, fileName)
     }
 
-    override fun exec(script: Script): FIXRhinoScriptEngine {
-        val engine = FIXRhinoScriptEngine()
+    override fun exec(script: Script): FIXSaiScriptEngine {
+        val engine = FIXSaiScriptEngine()
         usingContext { cx ->
             val scope = makeNewScope()
 
@@ -36,7 +36,7 @@ object RhinoScriptRuntimeImpl : IScriptRuntime<Script, FIXRhinoScriptEngine> {
         return engine
     }
 
-    override fun cache(pack: FIXModelPack, filePath: ResourceLocation, dependencies: Map<ResourceLocation, String>, engine: FIXRhinoScriptEngine) {
+    override fun cache(pack: FIXModelPack, filePath: ResourceLocation, dependencies: Map<ResourceLocation, String>, engine: FIXSaiScriptEngine) {
         ExecutedScriptCache.add(pack, filePath, makeExecutedScript(makeDependenciesData(dependencies), engine.scope))
     }
 
@@ -45,7 +45,7 @@ object RhinoScriptRuntimeImpl : IScriptRuntime<Script, FIXRhinoScriptEngine> {
 
         it.initStandardObjects(scope)
 
-        ImportScriptRhinoFunctionImpl.init(scope)
+        ImportScriptSaiFunctionImpl.init(scope)
 
         scope.sealObject()
 

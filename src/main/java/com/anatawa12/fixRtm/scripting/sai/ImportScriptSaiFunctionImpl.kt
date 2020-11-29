@@ -1,13 +1,13 @@
-package com.anatawa12.fixRtm.scripting.rhino
+package com.anatawa12.fixRtm.scripting.sai
 
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
 import com.anatawa12.fixRtm.scripting.ScriptImporter
+import com.anatawa12.sai.*
 import net.minecraft.util.ResourceLocation
-import org.mozilla.javascript.*
 
 
-object ImportScriptRhinoFunctionImpl : BaseFunction() {
+object ImportScriptSaiFunctionImpl : BaseFunction() {
     fun getScript(name: String): Script {
         val resourceLocation = ResourceLocation(name)
         val resource = FIXFileLoader.getResource(resourceLocation)
@@ -41,8 +41,8 @@ object ImportScriptRhinoFunctionImpl : BaseFunction() {
     fun init(scope: ScriptableObject) {
         usingContext { cx ->
             scope.defineProperty(
-                    ImportScriptRhinoFunctionImpl.functionName,
-                    ImportScriptRhinoFunctionImpl,
+                    ImportScriptSaiFunctionImpl.functionName,
+                    ImportScriptSaiFunctionImpl,
                     ScriptableObject.READONLY or ScriptableObject.DONTENUM
             )
         }

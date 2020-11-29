@@ -2,10 +2,10 @@ package com.anatawa12.fixRtm.scripting
 
 import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.caching.TaggedFileManager
-import org.mozilla.javascript.Scriptable
-import org.mozilla.javascript.ScriptableObject
-import org.mozilla.javascript.serialize.ScriptableInputStream
-import org.mozilla.javascript.serialize.ScriptableOutputStream
+import com.anatawa12.sai.Scriptable
+import com.anatawa12.sai.ScriptableObject
+import com.anatawa12.sai.serialize.ScriptableInputStream
+import com.anatawa12.sai.serialize.ScriptableOutputStream
 import java.io.*
 
 class ExecutedScript private constructor(
@@ -16,9 +16,9 @@ class ExecutedScript private constructor(
         val scopeData: ByteArray?
 ) {
     constructor(
-            dependencies: Map<String, ByteArray>,
-            scope: ScriptableObject,
-            base: Scriptable
+        dependencies: Map<String, ByteArray>,
+        scope: ScriptableObject,
+        base: Scriptable
     ): this(
             dependencies, writeScopeData(scope, base)
     ) {

@@ -1,7 +1,6 @@
-package com.anatawa12.fixRtm.scripting.rhino
+package com.anatawa12.fixRtm.scripting.sai
 
-import org.mozilla.javascript.Context
-
+import com.anatawa12.sai.Context
 
 inline fun <T> usingContext(script: (Context) -> T): T{
     val context = Context.enter()

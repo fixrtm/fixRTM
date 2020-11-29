@@ -1,14 +1,14 @@
-package com.anatawa12.fixRtm.scripting.rhino
+package com.anatawa12.fixRtm.scripting.sai
 
 import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.fixCacheDir
 import com.anatawa12.fixRtm.mkParent
 import com.anatawa12.fixRtm.utils.DigestUtils
-import org.mozilla.javascript.CompilerEnvirons
-import org.mozilla.javascript.Context
-import org.mozilla.javascript.Script
-import org.mozilla.javascript.optimizer.ClassCompiler
-import org.mozilla.javascript.tools.ToolErrorReporter
+import com.anatawa12.sai.CompilerEnvirons
+import com.anatawa12.sai.Context
+import com.anatawa12.sai.Script
+import com.anatawa12.sai.optimizer.ClassCompiler
+import com.anatawa12.sai.tools.ToolErrorReporter
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
