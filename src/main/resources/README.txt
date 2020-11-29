@@ -14,8 +14,9 @@ This software uses Kotlin, a programming language and libraries made by JetBrain
 This software uses jbsdiff, a library made by malensek and contributors
   published under 2-Clause BSD License (see jbsdiff-LICENSE.txt).
 
-This software uses rhino, a library made by mozilla and contributors
-  published under Mozilla Public License Version 2.0 (see rhino-LICENSE.txt).
+This software uses Sai, a JavaScript runtime library made by anatawa12 and other contributors,
+  a fork of Rhino, the one made by Mozilla foundation and contributors
+  published under Mozilla Public License Version 2.0 (see sai-LICENSE.txt).
 
 This software is made with Intellij IDEA, a IDE made by JetBrains s.r.o. and contributors.
 
