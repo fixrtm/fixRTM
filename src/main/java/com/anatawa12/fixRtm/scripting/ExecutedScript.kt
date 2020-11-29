@@ -97,6 +97,15 @@ class ExecutedScript private constructor(
                 logger.error("reading scope data: ", e)
                 return null
             } catch (e: ClassNotFoundException) {
+                // if about mozilla, should be ignored
+                if (e.message.toString().startsWith("org.mozilla.javascript"))
+                    return null
+                logger.error("reading scope data: ", e)
+                return null
+            } catch (e: NoClassDefFoundError) {
+                // if about mozilla, should be ignored
+                if (e.message.toString().startsWith("org/mozilla/javascript"))
+                    return null
                 logger.error("reading scope data: ", e)
                 return null
             }
