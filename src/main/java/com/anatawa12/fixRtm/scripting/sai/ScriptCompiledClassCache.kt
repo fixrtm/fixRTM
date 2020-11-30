@@ -32,6 +32,7 @@ object ScriptCompiledClassCache {
         try {
             return Loader.loadClass(className).newInstance() as Script
         } catch (e: ClassNotFoundException) {
+        } catch (e: NoClassDefFoundError) {
         } catch (e: ClassCastException) {
         }
         processCompiled(compiler.compileToClassFiles(source, filename, 1, className)).also {

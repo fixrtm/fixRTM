@@ -70,7 +70,7 @@ dependencies {
     shade ("io.sigpipe:jbsdiff:1.0") {
         exclude group: "org.apache.commons", module: "commons-compress"
     }
-    shade "com.anatawa12.sai:sai:0.0.1"
+    shade "com.anatawa12.sai:sai:0.0.2"
 
     compileOnly files(file("run/fixrtm-cache/script-compiled-class"))
     compileOnly files(sourceSets.main.jasm.outputDir)
