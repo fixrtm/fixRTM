@@ -73,10 +73,13 @@ class ExecutedScript private constructor(
         private fun writeScopeData(scope: ScriptableObject, base: Scriptable): ByteArray? {
             try {
                 val baos = ByteArrayOutputStream()
-                ScriptableOutputStream(baos, base).use { stream ->
+                ObjectOutputStream(baos).use { stream ->
                     stream.writeObject(scope)
                 }
                 return baos.toByteArray()
+            } catch (e: NotSerializableException) {
+                logger.error("cannot serialize scope data: {}", e.toString())
+                return null
             } catch (e: IOException) {
                 logger.error("writing scope data: ", e)
                 return null
@@ -90,23 +93,16 @@ class ExecutedScript private constructor(
             if (data == null) return null
             try {
                 val bais = ByteArrayInputStream(data)
-                ScriptableInputStream(bais, base).use { stream ->
+                ObjectInputStream(bais).use { stream ->
                     return stream.readObject() as ScriptableObject
                 }
             } catch (e: IOException) {
-                logger.error("reading scope data: ", e)
                 return null
             } catch (e: ClassNotFoundException) {
-                // if about mozilla, should be ignored
-                if (e.message.toString().startsWith("org.mozilla.javascript"))
-                    return null
-                logger.error("reading scope data: ", e)
                 return null
             } catch (e: NoClassDefFoundError) {
-                // if about mozilla, should be ignored
-                if (e.message.toString().startsWith("org/mozilla/javascript"))
-                    return null
-                logger.error("reading scope data: ", e)
+                return null
+            } catch (e: ClassCastException) {
                 return null
             }
         }
