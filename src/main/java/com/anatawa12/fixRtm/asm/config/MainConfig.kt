@@ -30,7 +30,7 @@ object MainConfig {
             "scriptingMode", categoryModelLoading,
             "use-default",
             "scripting mode. the value is one of the list below:\n" +
-                    "cache-with-rhino    : the fastest mode but not stable. some script may make error.\n" +
+                    "cache-with-sai      : the fastest mode but not stable. some script may make error.\n" +
                     "better-with-nashorn : same runtime as RTM but a little faster than RTM.\n" +
                     "use-rtm-normal      : same as RTM. this is the slowest mode.\n" +
                     "use-default         : use default mode. currently use-rtm-normal.\n")
@@ -95,14 +95,16 @@ object MainConfig {
         }
     }
 
-    enum class ScriptingMode(val configValue: String) {
-        CacheWithRhino("cache-with-rhino"),
+    enum class ScriptingMode(vararg val configValues: String) {
+        CacheWithSai("cache-with-sai", "cache-with-rhino"),
         BetterWithNashorn("better-with-nashorn"),
         UseRtmNormal("use-rtm-normal"),
         ;
 
         companion object {
-            private val byConfigValue = values().associateBy { it.configValue }
+            private val byConfigValue = values()
+                .flatMap { it.configValues.map { k -> k to it } }
+                .toMap()
 
             fun getByConfigValue(value: String) = byConfigValue[value]
 

@@ -1,4 +1,4 @@
-The majority of Rhino is licensed under the MPL 2.0:
+The majority of Sau is licensed under the MPL 2.0:
 
 Mozilla Public License Version 2.0
 ==================================

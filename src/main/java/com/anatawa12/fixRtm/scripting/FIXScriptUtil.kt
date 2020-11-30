@@ -5,13 +5,13 @@ package com.anatawa12.fixRtm.scripting
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.scripting.nashorn.NashornScriptRuntimeImpl
-import com.anatawa12.fixRtm.scripting.rhino.RhinoScriptRuntimeImpl
+import com.anatawa12.fixRtm.scripting.sai.SaiScriptRuntimeImpl
 import jp.ngt.rtm.modelpack.ModelPackManager
 import net.minecraft.util.ResourceLocation
 import javax.script.ScriptEngine
 
 val scriptRuntime: IScriptRuntime<*, *> = when (MainConfig.scriptingMode) {
-    MainConfig.ScriptingMode.CacheWithRhino -> RhinoScriptRuntimeImpl
+    MainConfig.ScriptingMode.CacheWithSai -> SaiScriptRuntimeImpl
     MainConfig.ScriptingMode.BetterWithNashorn -> NashornScriptRuntimeImpl
     MainConfig.ScriptingMode.UseRtmNormal -> IScriptRuntime.AssertingRuntime
 }

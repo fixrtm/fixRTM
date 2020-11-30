@@ -40,7 +40,6 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
 
     override fun getASMTransformerClass(): Array<String>? = arrayOf(
             "com.anatawa12.fixRtm.asm.PreprocessorTransformer",
-            "com.anatawa12.fixRtm.asm.RhinoTransformer"
     )
 
     override fun getSetupClass(): String? = null

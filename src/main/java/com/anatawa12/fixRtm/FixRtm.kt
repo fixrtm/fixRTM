@@ -7,9 +7,7 @@ import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import com.anatawa12.fixRtm.scripting.nashorn.CompiledImportedScriptCache
-import com.anatawa12.fixRtm.scripting.rhino.ExecutedScriptCache
-import com.anatawa12.fixRtm.scripting.rhino.PrimitiveJavaHelper
-import com.anatawa12.fixRtm.scripting.rhino.RhinoHooks
+import com.anatawa12.fixRtm.scripting.sai.ExecutedScriptCache
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -32,7 +30,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
-import org.mozilla.javascript.NativeJavaObject
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -46,14 +43,11 @@ object FixRtm {
 
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
-        NativeJavaObject.canConvert(0, Object::class.java)// load
         FIXFileLoader.load() // init
         when (MainConfig.scriptingMode) {
-            MainConfig.ScriptingMode.CacheWithRhino -> {
+            MainConfig.ScriptingMode.CacheWithSai -> {
                 loadFIXScriptUtil()// init
                 ExecutedScriptCache.load()// init
-                PrimitiveJavaHelper.load()// init
-                RhinoHooks.load()// load
             }
             MainConfig.ScriptingMode.BetterWithNashorn -> {
                 Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
