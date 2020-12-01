@@ -1469,6 +1469,33 @@ index 6e5c39c..e670ca1 100644
      .line 100
      .var 5 is x D from L_0032 to L_0078
      aload 1
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockLargeRailBase.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockLargeRailBase.jasm
+index 0f3bed0..50f2a01 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockLargeRailBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/rail/BlockLargeRailBase.jasm
+@@ -1162,21 +1162,21 @@ L_0011:
+     .line 269
+     .stack
+         locals Object jp/ngt/rtm/rail/BlockLargeRailBase
+         locals Object net/minecraft/block/state/IBlockState
+         locals Object net/minecraft/util/math/RayTraceResult
+         locals Object net/minecraft/world/World
+         locals Object net/minecraft/util/math/BlockPos
+         locals Object net/minecraft/entity/player/EntityPlayer
+         locals Object jp/ngt/rtm/rail/TileEntityLargeRailCore
+     .end stack
+-    aconst_null
++    getstatic net/minecraft/item/ItemStack/EMPTY Lnet/minecraft/item/ItemStack;
+     areturn
+ L_0016:
+ .end method
+ 
+ .method public getAiPathNodeType (Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/pathfinding/PathNodeType;
+     .limit stack 3
+     .limit local 4
+ L_0000:
+     .line 275
+     .var 0 is this Ljp/ngt/rtm/rail/BlockLargeRailBase; from L_0000 to L_000f
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm b/src/main/rtm/jp/ngt/rtm/rail/BlockMarker.jasm
 index aa59bb1..c959d84 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/rail/BlockMarker.jasm
