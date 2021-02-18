@@ -659,7 +659,7 @@ index 5298b6c..b941866 100644
      .stack
          locals Object jp/ngt/rtm/entity/vehicle/RenderVehicleBase
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
-index 137db20..730442e 100644
+index 137db20..8000f15 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.jasm
 @@ -616,20 +616,30 @@ L_0051:
@@ -746,6 +746,171 @@ index 137db20..730442e 100644
      .limit local 2
  L_0000:
      .line 215
+@@ -745,164 +780,22 @@ L_0016:
+         locals Object java/util/List
+     .end stack
+     return
+ L_001a:
+ .end method
+ 
+ .method public static trackingVehicle (Lnet/minecraft/entity/Entity;)Z
+     .limit stack 3
+     .limit local 7
+ L_0000:
+-    .line 232
+-    .var 0 is par1 Lnet/minecraft/entity/Entity; from L_0000 to L_0079
+-    aload 0
+-    instanceof jp/ngt/rtm/entity/vehicle/EntityVehicleBase
+-    ifne L_000f
+-    aload 0
+-    instanceof jp/ngt/rtm/entity/train/EntityBogie
+-    ifne L_000f
+-L_0008:
+-    .line 234
+-    new java/lang/IllegalArgumentException
+-    dup
+-    ldc "This entity is not Vehicle"
+-    invokespecial java/lang/IllegalArgumentException/<init> (Ljava/lang/String;)V
+-    athrow
+-L_000f:
+-    .line 237
+-    .stack
+-        locals Object net/minecraft/entity/Entity
+-    .end stack
+-    aload 0
+-    getfield net/minecraft/entity/Entity/world Lnet/minecraft/world/World;
+-    instanceof net/minecraft/world/WorldServer
+-    ifeq L_0070
+-L_0016:
+-    .line 239
+-    aload 0
+-    getfield net/minecraft/entity/Entity/world Lnet/minecraft/world/World;
+-    checkcast net/minecraft/world/WorldServer
+-    invokevirtual net/minecraft/world/WorldServer/getEntityTracker ()Lnet/minecraft/entity/EntityTracker;
+-    astore 1
+-L_001d:
+-    .line 240
+-    .var 1 is tracker Lnet/minecraft/entity/EntityTracker; from L_001d to L_0070
+-    aload 1
+-    invokestatic jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/getTrackedEntities (Lnet/minecraft/entity/EntityTracker;)Ljava/util/Set;
+-    astore 2
+-L_0022:
+-    .line 241
+-    .var 2 is trackedEntities Ljava/util/Set; signature "Ljava/util/Set<Lnet/minecraft/entity/EntityTrackerEntry;>;" from L_0022 to L_0070
+-    aload 2
+-    ifnull L_0070
+-L_0026:
+-    .line 243
+-    new jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry
+-    dup
+-    aload 0
+-    invokespecial jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/<init> (Lnet/minecraft/entity/Entity;)V
+-    astore 3
+-L_002d:
+-    .line 244
+-    .var 3 is tte Ljp/ngt/rtm/entity/vehicle/VehicleTrackerEntry; from L_002d to L_0070
+-    aconst_null
+-    astore 4
+-L_0031:
+-    .line 245
+-    .var 4 is trackerEntry Lnet/minecraft/entity/EntityTrackerEntry; from L_0031 to L_0070
+-    aload 2
+-    invokeinterface java/util/Set/iterator ()Ljava/util/Iterator;
+-    astore 5
+-L_0036:
+-    .stack
+-        locals Object net/minecraft/entity/Entity
+-        locals Object net/minecraft/entity/EntityTracker
+-        locals Object java/util/Set
+-        locals Object jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry
+-        locals Object net/minecraft/entity/EntityTrackerEntry
+-        locals Object java/util/Iterator
+-    .end stack
+-    aload 5
+-    invokeinterface java/util/Iterator/hasNext ()Z
+-    ifeq L_0055
+-    aload 5
+-    invokeinterface java/util/Iterator/next ()Ljava/lang/Object;
+-    checkcast net/minecraft/entity/EntityTrackerEntry
+-    astore 6
+-L_003f:
+-    .line 247
+-    .var 6 is entry Lnet/minecraft/entity/EntityTrackerEntry; from L_003f to L_0051
+-    aload 6
+-    ifnull L_0051
+-    aload 6
+-    aload 3
+-    invokevirtual net/minecraft/entity/EntityTrackerEntry/equals (Ljava/lang/Object;)Z
+-    ifeq L_0051
+-L_0047:
+-    .line 249
+-    aload 6
+-    instanceof jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry
+-    ifne L_0055
+-L_004c:
+-    .line 251
+-    aload 6
+-    astore 4
+-    goto L_0055
+-L_0051:
+-    .line 255
+-    .stack use locals
+-    .end stack
+-    goto L_0036
+-L_0055:
+-    .line 257
+-    .stack
+-        locals Object net/minecraft/entity/Entity
+-        locals Object net/minecraft/entity/EntityTracker
+-        locals Object java/util/Set
+-        locals Object jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry
+-        locals Object net/minecraft/entity/EntityTrackerEntry
+-    .end stack
+-    aload 4
+-    ifnull L_0070
+-L_005a:
+-    .line 259
+-    aload 2
+-    aload 4
+-    invokeinterface java/util/Set/remove (Ljava/lang/Object;)Z
+-    pop
+-L_0060:
+-    .line 260
+-    aload 3
+-    aload 4
+-    getfield net/minecraft/entity/EntityTrackerEntry/trackingPlayers Ljava/util/Set;
+-    invokevirtual jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry/setPlayers (Ljava/util/Set;)V
+-L_0066:
+-    .line 261
+-    aload 2
+-    aload 3
+-    invokeinterface java/util/Set/add (Ljava/lang/Object;)Z
+-    pop
+-L_006c:
+-    .line 262
+     iconst_1
+     ireturn
+-L_0070:
+-    .line 267
+-    .stack
+-        locals Object net/minecraft/entity/Entity
+-    .end stack
+-    ldc "Failed to change tracking entry (VTE)"
+-    invokestatic jp/ngt/ngtlib/io/NGTLog/debug (Ljava/lang/String;)V
+-L_0075:
+-    .line 268
+-    iconst_0
+-    ireturn
+ L_0079:
+ .end method
+ 
+ .method protected static getTrackedEntities (Lnet/minecraft/entity/EntityTracker;)Ljava/util/Set;
+     .signature "(Lnet/minecraft/entity/EntityTracker;)Ljava/util/Set<Lnet/minecraft/entity/EntityTrackerEntry;>;"
+     .limit stack 6
+     .limit local 1
+ L_0000:
+     .line 273
+     .var 0 is tracker Lnet/minecraft/entity/EntityTracker; from L_0000 to L_0011
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm
 index d0e484a..b7325e4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.jasm

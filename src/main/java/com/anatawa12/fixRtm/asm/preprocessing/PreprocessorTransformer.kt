@@ -1,5 +1,6 @@
-package com.anatawa12.fixRtm.asm
+package com.anatawa12.fixRtm.asm.preprocessing
 
+import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*

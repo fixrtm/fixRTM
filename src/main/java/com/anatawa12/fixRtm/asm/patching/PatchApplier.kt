@@ -1,13 +1,11 @@
-package com.anatawa12.fixRtm.asm
+package com.anatawa12.fixRtm.asm.patching
 
 import com.anatawa12.fixRtm.Loggers
 import io.sigpipe.jbsdiff.Patch
 import net.minecraft.launchwrapper.IClassTransformer
-import org.apache.logging.log4j.LogManager
 import java.io.ByteArrayOutputStream
 import java.security.MessageDigest
 
-@Suppress("unused")
 class PatchApplier : IClassTransformer {
     override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
         val patch = getPatchAndSha1(name)
