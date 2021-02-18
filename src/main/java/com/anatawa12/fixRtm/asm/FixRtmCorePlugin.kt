@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.asm
 
+import com.anatawa12.fixRtm.asm.hooking.HookingFixRtmCorePlugin
 import com.anatawa12.fixRtm.asm.patching.PatchingFixRtmCorePlugin
 import com.anatawa12.fixRtm.asm.preprocessing.PreprocessingFixRtmCorePlugin
 import net.minecraft.launchwrapper.Launch
@@ -32,6 +33,7 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
         val classes = arrayOf(
             PreprocessingFixRtmCorePlugin::class,
             PatchingFixRtmCorePlugin::class,
+            HookingFixRtmCorePlugin::class,
         )
         for (clazz in classes) {
             loadCoreMod.invoke(null, classLoader, clazz.qualifiedName!!, jar)
