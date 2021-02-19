@@ -1189,7 +1189,7 @@ index 1ae0f4c..622f680 100644
  L_0000:
      .line 6
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
-index 09bef39..c998070 100644
+index 09bef39..5f24081 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
 @@ -1,13 +1,13 @@
@@ -1207,6 +1207,30 @@ index 09bef39..c998070 100644
  .end field
  
  .field private loading Z
+@@ -174,20 +174,23 @@ L_0023:
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/constructOnClient ()V
+ L_0028:
+     .line 67
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/finishConstruct ()V
+ L_002c:
+     .line 69
+     .stack use locals
+     .end stack
++    aload 1
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/CONSTRUCTED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    invokestatic com/anatawa12/fixRtm/UtilsKt/setState (Ljp/ngt/rtm/modelpack/modelset/ResourceSet;Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;)V
+     ldc "Construct Model : %s (%d / %d)"
+     iconst_3
+     anewarray java/lang/Object
+     dup
+     iconst_0
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/getConfig ()Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/getName ()Ljava/lang/String;
+     aastore
+     dup
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 index 0a49c17..d210f43 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm

@@ -137,6 +137,7 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 
 fun File.mkParent(): File = apply { parentFile.mkdirs() }
 
+// warn: used by assembly code
 private val modelStateValues = ModelState.values()
 var ResourceSet<*>.state
     get() = modelStateValues[stateId]
