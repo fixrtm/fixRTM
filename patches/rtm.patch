@@ -1412,6 +1412,34 @@ index e05f400..1418cc5 100644
  L_007d:
  .end method
  
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
+index c462237..b269810 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
+@@ -10,20 +10,23 @@
+ 
+ .field public final dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ .end field
+ 
+ .field private isDummySet Z
+ .end field
+ 
+ .field public md5 "[B"
+ .end field
+ 
++.field public stateId I
++.end field
++
+ .method public <init> ()V
+     .limit stack 4
+     .limit local 1
+ L_0000:
+     .line 19
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ResourceSet; signature "Ljp/ngt/rtm/modelpack/modelset/ResourceSet<TT;>;" from L_0000 to L_001b
+     aload 0
+     invokespecial java/lang/Object/<init> ()V
+ L_0004:
+     .line 20
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index 05b0fa4..e80bd03 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm
