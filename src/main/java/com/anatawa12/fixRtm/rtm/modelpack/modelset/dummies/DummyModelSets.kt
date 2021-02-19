@@ -24,15 +24,20 @@ import java.lang.reflect.Field
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+// marker interface
+interface IFixRTMDummyModelSet
+
 fun ModelSetBase<*>.constructOnClientDummy(model: IModelNGT, script: String? = null) {
     val name = this.config.name
-    val renderer = if (script != null) RTMRenderers.getRendererWithScript<PartsRenderer<*, *>>(ModelPackManager.INSTANCE.getResource(script), "false")
-    else BasicPartsRenderer<Any, ModelSetBase<*>>()
+    val renderer =
+        if (script != null) RTMRenderers.getRendererWithScript<PartsRenderer<*, *>>(ModelPackManager.INSTANCE.getResource(
+            script), "false")
+        else BasicPartsRenderer<Any, ModelSetBase<*>>()
     modelObj = ModelObject(model,
-            arrayOf(
-                    TextureSet(DummyModelObject.material, 0, false, false)
-            ),
-            renderer
+        arrayOf(
+            TextureSet(DummyModelObject.material, 0, false, false)
+        ),
+        renderer
     )
     modelObj.renderer.init(this, modelObj)
     buttonTexture = GeneratedResourcePack.addImage(createButtonTexture(name))
@@ -56,10 +61,14 @@ fun createButtonTexture(name: String): BufferedImage {
 }
 
 class DummyModelSetConnector(name: String) : ModelSetConnector( // ex
-        ConnectorConfig.getDummy().apply { this.exName = name }) {
+    ConnectorConfig.getDummy().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-            -0.5, -0.25, -0.25,
-            0.25, 0.25, 0.25), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST), Vec3d(0.0, 0.0, 1.0), 90.0))
+        -0.5, -0.25, -0.25,
+        0.25, 0.25, 0.25),
+        config.name,
+        setOf(EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST),
+        Vec3d(0.0, 0.0, 1.0),
+        90.0))
 
     override fun constructOnServer() {}
 
@@ -69,10 +78,11 @@ class DummyModelSetConnector(name: String) : ModelSetConnector( // ex
 }
 
 class DummyModelSetContainer(name: String) : ModelSetContainer( // ok
-        ContainerConfig.getDummy().apply { this.exName = name }.apply { offset = floatArrayOf(0f, 0f, 0f) }) {
+    ContainerConfig.getDummy().apply { this.exName = name }.apply { offset = floatArrayOf(0f, 0f, 0f) }),
+    IFixRTMDummyModelSet {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-            -1.5, 2.5, -1.5,
-            1.5, 0.0, 1.5), config.name, setOf(*EnumFacing.VALUES)))
+        -1.5, 2.5, -1.5,
+        1.5, 0.0, 1.5), config.name, setOf(*EnumFacing.VALUES)))
 
     override fun constructOnServer() {}
 
@@ -82,10 +92,10 @@ class DummyModelSetContainer(name: String) : ModelSetContainer( // ok
 }
 
 class DummyModelSetFirearm(name: String) : ModelSetFirearm(// ok
-        FirearmConfig.getDummyConfig().apply { this.exName = name }) {
+    FirearmConfig.getDummyConfig().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-            -1.5, 0.0, -1.5,
-            1.5, 2.5, 1.5), config.name, setOf(*EnumFacing.VALUES)))
+        -1.5, 0.0, -1.5,
+        1.5, 2.5, 1.5), config.name, setOf(*EnumFacing.VALUES)))
 
     override fun constructOnServer() {}
 
@@ -95,15 +105,15 @@ class DummyModelSetFirearm(name: String) : ModelSetFirearm(// ok
 }
 
 class DummyModelSetMachine(name: String, val type: ResourceType<MachineConfig, ModelSetMachine>) : ModelSetMachine(// ok
-        MachineConfig.getDummy().apply { this.exName = name }) {
+    MachineConfig.getDummy().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         println(type.name)
         println(type.subType)
         when (type) {
             MACHINE_ANTENNA_RECEIVE, MACHINE_ANTENNA_SEND ->
                 constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                        -0.5, 0.0, -0.5,
-                        0.5, 0.0625, 0.5), config.name, setOf(*EnumFacing.VALUES)))
+                    -0.5, 0.0, -0.5,
+                    0.5, 0.0625, 0.5), config.name, setOf(*EnumFacing.VALUES)))
             MACHINE_GATE ->
                 constructOnClientDummy(DummyModelObject(AxisAlignedBB(
                         -0.375, 0.0, -0.375,
@@ -128,10 +138,11 @@ class DummyModelSetMachine(name: String, val type: ResourceType<MachineConfig, M
 }
 
 class DummyModelSetNPC(name: String) : ModelSetNPC( // ok
-        NPCConfig.getDummy().apply { this.exName = name }.apply { offset = floatArrayOf(0f, 0f, 0f) }) {
+    NPCConfig.getDummy().apply { this.exName = name }.apply { offset = floatArrayOf(0f, 0f, 0f) }),
+    IFixRTMDummyModelSet {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-            -0.3, 0.0, -0.3,
-            0.3, 1.8, 0.3), config.name, setOf(*EnumFacing.VALUES)))
+        -0.3, 0.0, -0.3,
+        0.3, 1.8, 0.3), config.name, setOf(*EnumFacing.VALUES)))
 
     override fun constructOnServer() {}
 
@@ -140,18 +151,21 @@ class DummyModelSetNPC(name: String) : ModelSetNPC( // ok
     }
 }
 
-class DummyModelSetOrnament(name: String, val type: ResourceType<OrnamentConfig, ModelSetOrnament>) : ModelSetOrnament( // ok
-        OrnamentConfig.getDummy().apply { this.exName = name }) {
+class DummyModelSetOrnament(name: String, val type: ResourceType<OrnamentConfig, ModelSetOrnament>) :
+    ModelSetOrnament( // ok
+        OrnamentConfig.getDummy().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         when (type) {
             ORNAMENT_SCAFFOLD ->
                 constructOnClientDummy(
-                        MultiModelObject(
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.5, -0.4375,
-                                        0.5, -0.4375, 0.4375), config.name, setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.5, -0.5,
+                    MultiModelObject(
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.5, -0.4375,
+                            0.5, -0.4375, 0.4375),
+                            config.name,
+                            setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.5, -0.5,
                                         0.5, 0.5, -0.4375), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH)),
                                 DummyModelObject(AxisAlignedBB(
                                         -0.5, -0.5, 0.4375,
@@ -194,11 +208,11 @@ class DummyModelSetOrnament(name: String, val type: ResourceType<OrnamentConfig,
 }
 
 class DummyModelSetRail(name: String) : ModelSetRail(
-        RailConfig.getDummy().apply { this.exName = name }) {
+    RailConfig.getDummy().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                -0.5, 0.0, -0.5,
-                0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)))
+            -0.5, 0.0, -0.5,
+            0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)))
         val f = modelObj::class.java.getField("renderer")
         f.isAccessible = true
         f.set(modelObj, BasicRailPartsRenderer())
@@ -213,10 +227,11 @@ class DummyModelSetRail(name: String) : ModelSetRail(
 }
 
 class DummyModelSetSignal(name: String) : ModelSetSignal(
-        SignalConfig.getDummyConfig().apply { this.exName = name }) {
+    SignalConfig.getDummyConfig().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() = constructOnClientDummy(DummyModelObject(AxisAlignedBB(
         -0.5, 0.0, -0.5,
-        0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)  ))
+        0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)))
+
     override fun constructOnServer() {}
 
     companion object {
@@ -225,13 +240,16 @@ class DummyModelSetSignal(name: String) : ModelSetSignal(
 }
 
 class DummyModelSetTrain(name: String) : ModelSetTrain( // ok
-        TrainConfig.getDummyConfig().apply { this.exName = name }) {
+    TrainConfig.getDummyConfig().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                -1.375, -1.1875, -1.375,
-                1.375, 0.0, 1.375), config.name, setOf(*EnumFacing.VALUES)))
+            -1.375, -1.1875, -1.375,
+            1.375, 0.0, 1.375), config.name, setOf(*EnumFacing.VALUES)))
         this.bogieModels = arrayOfNulls(2)
-        val tex = TextureSet(Material(0.toByte(), ModelPackManager.INSTANCE.getResource("textures/train/hoge.png")), 0, false, false)
+        val tex = TextureSet(Material(0.toByte(), ModelPackManager.INSTANCE.getResource("textures/train/hoge.png")),
+            0,
+            false,
+            false)
         val model = ModelObject(ModelBogie(), arrayOf(tex))
         model.renderer.init(this, model)
         this.bogieModels[1] = model
@@ -246,11 +264,11 @@ class DummyModelSetTrain(name: String) : ModelSetTrain( // ok
 }
 
 class DummyModelSetVehicle(name: String) : ModelSetVehicle( // ok
-        VehicleConfig.getDummy().apply { this.exName = name }) {
+    VehicleConfig.getDummy().apply { this.exName = name }), IFixRTMDummyModelSet {
     override fun constructOnClient() =
-            constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                    -1.5, 0.0, -1.5,
-                    1.5, 1.125, 1.5), config.name, setOf(*EnumFacing.VALUES)))
+        constructOnClientDummy(DummyModelObject(AxisAlignedBB(
+            -1.5, 0.0, -1.5,
+            1.5, 1.125, 1.5), config.name, setOf(*EnumFacing.VALUES)))
 
     override fun constructOnServer() {}
 
@@ -260,15 +278,15 @@ class DummyModelSetVehicle(name: String) : ModelSetVehicle( // ok
 }
 
 class DummyModelSetWire(name: String) : ModelSetWire( // ok
-        WireConfig.getDummy()
-                .apply { this.exName = name }
-                .apply { sectionLength = 1.0f }) {
+    WireConfig.getDummy()
+        .apply { this.exName = name }
+        .apply { sectionLength = 1.0f }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                -0.0, -0.0625, -0.0625,
-                1.0, 0.0625, 0.0625),
-                config.name, setOf(), Vec3d(0.0, 0.0, 1.0),
-                90.0))
+            -0.0, -0.0625, -0.0625,
+            1.0, 0.0625, 0.0625),
+            config.name, setOf(), Vec3d(0.0, 0.0, 1.0),
+            90.0))
         val f = modelObj::class.java.getField("renderer")
         f.isAccessible = true
         f.set(modelObj, WirePartsRenderer(false))
@@ -283,22 +301,22 @@ class DummyModelSetWire(name: String) : ModelSetWire( // ok
 }
 
 class DummyModelSetMechanism(name: String) : ModelSetMechanism( // ok
-        MechanismConfig.getDummy()
-                .apply { this.exName = name }
-                .apply { this.radius = 0.5f }
-                .apply { this.type = MechanismType.GEAR }
-                .apply { this.maxSpeed = Float.POSITIVE_INFINITY }
-                .apply { this.teethCount = 36 }) {
+    MechanismConfig.getDummy()
+        .apply { this.exName = name }
+        .apply { this.radius = 0.5f }
+        .apply { this.type = MechanismType.GEAR }
+        .apply { this.maxSpeed = Float.POSITIVE_INFINITY }
+        .apply { this.teethCount = 36 }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         constructOnClientDummy(MultiModelObject(
-                DummyModelObject(AxisAlignedBB(
-                        -0.0625, 0.0, -0.0625,
-                        +0.0625, 1.0, +0.0625),
-                        config.name, setOf()),
+            DummyModelObject(AxisAlignedBB(
+                -0.0625, 0.0, -0.0625,
+                +0.0625, 1.0, +0.0625),
+                config.name, setOf()),
 
-                DummyModelObject(AxisAlignedBB(
-                        -0.5000, 0.3750, +0.5000,
-                        +0.0625, 0.6250, +0.0625),
+            DummyModelObject(AxisAlignedBB(
+                -0.5000, 0.3750, +0.5000,
+                +0.0625, 0.6250, +0.0625),
                         config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
                         Vec3d(0.0, 1.0, 0.0), 000.0),
                 DummyModelObject(AxisAlignedBB(
@@ -327,7 +345,7 @@ class DummyModelSetMechanism(name: String) : ModelSetMechanism( // ok
     }
 }
 
-class DummyTextureSetRRS(name: String) : TextureSetRRS(RRSConfig(name)) {
+class DummyTextureSetRRS(name: String) : TextureSetRRS(RRSConfig(name)), IFixRTMDummyModelSet {
     override fun constructOnClient() {
 
         this.texture = ResourceLocationCustom("minecraft", this.config.texture)
@@ -336,7 +354,9 @@ class DummyTextureSetRRS(name: String) : TextureSetRRS(RRSConfig(name)) {
     override fun constructOnServer() {}
 }
 
-class DummyTextureSetSignboard(name: String) : TextureSetSignboard(TextureSetSignboard().dummyConfig.also { it.texture = name }.also { it.init() }) {
+class DummyTextureSetSignboard(name: String) :
+    TextureSetSignboard(TextureSetSignboard().dummyConfig.also { it.texture = name }.also { it.init() }),
+    IFixRTMDummyModelSet {
     override fun constructOnClient() {
         this.texture = ResourceLocationCustom("minecraft", this.config.texture)
     }
@@ -344,7 +364,8 @@ class DummyTextureSetSignboard(name: String) : TextureSetSignboard(TextureSetSig
     override fun constructOnServer() {}
 }
 
-class DummyTextureSetFlag(name: String) : TextureSetFlag(TextureSetFlag().dummyConfig.also { it.texture = name }.also { it.init() }) {
+class DummyTextureSetFlag(name: String) :
+    TextureSetFlag(TextureSetFlag().dummyConfig.also { it.texture = name }.also { it.init() }), IFixRTMDummyModelSet {
     override fun constructOnClient() {
         this.texture = ResourceLocationCustom("minecraft", this.config.texture)
     }
