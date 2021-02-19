@@ -870,7 +870,7 @@ index aefff78..27c3d26 100644
      invokestatic jp/ngt/rtm/sound/SpeakerSounds/getInstance (Z)Ljp/ngt/rtm/sound/SpeakerSounds;
      invokevirtual jp/ngt/rtm/sound/SpeakerSounds/syncSoundList ()V
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-index 79fab25..8c22920 100644
+index 79fab25..d36e1c0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 @@ -12,29 +12,29 @@
@@ -889,7 +889,8 @@ index 79fab25..8c22920 100644
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
- .field private final smpModelSetMap Ljava/util/Map;
+-.field private final smpModelSetMap Ljava/util/Map;
++.field public final smpModelSetMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
