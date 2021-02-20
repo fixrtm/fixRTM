@@ -2,15 +2,24 @@ package com.anatawa12.fixRtm.utils
 
 import java.io.OutputStream
 
-class Base64OutputStream(private val out: OutputStream) : OutputStream() {
-    // the index next char should be put to
+class Base64OutputStream @JvmOverloads constructor(
+    private val out: OutputStream,
+    private val addPadding: Boolean = false,
+    private val addNewLinePer64: Boolean = false,
+) : OutputStream() {
+    // 0..63
+    private var emittedCount = 0
+
+    // 0..2: the index next char should be put to.
     private var bufIndex = 0
     private val buf = ByteArray(3)
-    private val outBuf = ByteArray(4)
+
+    // 4 digests and one '\n'
+    private val outBuf = ByteArray(5)
 
     override fun write(b: Int) {
         buf[bufIndex++] = b.toByte()
-        if (bufIndex == 3) emitBuf()
+        if (bufIndex == 3) emitWriteBuf()
     }
 
     override fun write(b: ByteArray, off: Int, len: Int) {
@@ -36,13 +45,13 @@ class Base64OutputStream(private val out: OutputStream) : OutputStream() {
             1 -> {
                 buf[1] = b[off]
                 buf[2] = b[off + 1]
-                emitBuf()
+                emitWriteBuf()
                 off += 2
                 len -= 2
             }
             2 -> {
                 buf[2] = b[off]
-                emitBuf()
+                emitWriteBuf()
                 off += 1
                 len -= 1
             }
@@ -66,21 +75,28 @@ class Base64OutputStream(private val out: OutputStream) : OutputStream() {
         }
         assert(len % 3 == 0) { "len % 3 != 0: $len" }
 
-        val writeBuf = ByteArray(len / 3 * 4)
+        val writeBuf = ByteArray(computeWriteBufSize(len))
+        var writeIndex = 0
         for (i in 0 until len / 3) {
-            emit(b, off + i * 3, writeBuf, i * 4)
+            writeIndex += emit(b, off + i * 3, writeBuf, writeIndex)
         }
-        out.write(writeBuf)
+        out.write(writeBuf, 0, writeIndex)
     }
 
-    private fun emitBuf() {
-        emit(buf, 0, outBuf, 0)
-        out.write(outBuf)
+    private fun computeWriteBufSize(srcLen: Int): Int {
+        val baseLen = srcLen / 3 * 4
+        if (!addNewLinePer64) return baseLen
+        return baseLen + (emittedCount + baseLen) / 64
+    }
+
+    private fun emitWriteBuf() {
+        val cnt = emit(buf, 0, outBuf, 0)
+        out.write(outBuf, 0, cnt)
         bufIndex = 0
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private fun emit(buf: ByteArray, bufStart: Int, outBuf: ByteArray, outBufStart: Int) {
+    private fun emit(buf: ByteArray, bufStart: Int, outBuf: ByteArray, outBufStart: Int): Int {
         val bits = buf[bufStart + 0].toUByte().toInt().shl(16)
             .or(buf[bufStart + 1].toUByte().toInt().shl(8))
             .or(buf[bufStart + 2].toUByte().toInt().shl(0))
@@ -88,6 +104,18 @@ class Base64OutputStream(private val out: OutputStream) : OutputStream() {
         outBuf[outBufStart + 1] = base64_chars[bits.ushr(12).and(mask)]
         outBuf[outBufStart + 2] = base64_chars[bits.ushr(6).and(mask)]
         outBuf[outBufStart + 3] = base64_chars[bits.ushr(0).and(mask)]
+        emittedCount += 4
+        if (emittedCount == 64) emittedCount = 0
+        if (addNewLinePer64) {
+            if (emittedCount == 0) {
+                outBuf[outBufStart + 4] = '\n'.toByte()
+                return 5
+            } else {
+                return 4
+            }
+        } else {
+            return 4
+        }
     }
 
     override fun close() {
@@ -95,8 +123,15 @@ class Base64OutputStream(private val out: OutputStream) : OutputStream() {
             for (i in bufIndex until buf.size) {
                 buf[i] = 0
             }
-            emit(buf, 0, outBuf, 0)
-            out.write(outBuf, 0, bufIndex + 1)
+            val bufLen = emit(buf, 0, outBuf, 0)
+            if (addPadding) {
+                for (i in bufIndex + 1..3) {
+                    outBuf[i] = '='.toByte()
+                }
+                out.write(outBuf, 0, bufLen)
+            } else {
+                out.write(outBuf, 0, bufIndex + 1)
+            }
         }
 
         out.close()
