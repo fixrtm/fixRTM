@@ -6,6 +6,7 @@ class Base64OutputStream @JvmOverloads constructor(
     private val out: OutputStream,
     private val addPadding: Boolean = false,
     private val addNewLinePer64: Boolean = false,
+    private val addNewLineAtEnd: Boolean = false,
 ) : OutputStream() {
     // 0..63
     private var emittedCount = 0
@@ -123,15 +124,26 @@ class Base64OutputStream @JvmOverloads constructor(
             for (i in bufIndex until buf.size) {
                 buf[i] = 0
             }
-            val bufLen = emit(buf, 0, outBuf, 0)
+            var bufLen = emit(buf, 0, outBuf, 0)
             if (addPadding) {
                 for (i in bufIndex + 1..3) {
                     outBuf[i] = '='.toByte()
                 }
+                if (addNewLineAtEnd && bufLen != 5) {
+                    outBuf[4] = '\n'.toByte()
+                    bufLen++
+                }
                 out.write(outBuf, 0, bufLen)
             } else {
-                out.write(outBuf, 0, bufIndex + 1)
+                if (addNewLineAtEnd) {
+                    outBuf[bufIndex + 1] = '\n'.toByte()
+                    out.write(outBuf, 0, bufIndex + 2)
+                } else {
+                    out.write(outBuf, 0, bufIndex + 1)
+                }
             }
+        } else if (addNewLineAtEnd && emittedCount != 0) {
+            out.write('\n'.toInt())
         }
 
         out.close()
