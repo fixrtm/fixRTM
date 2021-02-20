@@ -25,12 +25,10 @@ import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
-import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLConstructionEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 import java.awt.Color
@@ -169,14 +167,7 @@ object FixRtm {
         }
     }
 
-    @SubscribeEvent
-    fun tick(e: TickEvent.ClientTickEvent) {
-        if (e.phase == TickEvent.Phase.END)
-            proxy.tick()
-    }
 
-    @field:SidedProxy(clientSide = "com.anatawa12.fixRtm.ClientProxy", serverSide = "com.anatawa12.fixRtm.ServerProxy")
-    lateinit var proxy: CommonProxy
 
     @Mod.InstanceFactory
     @JvmStatic
