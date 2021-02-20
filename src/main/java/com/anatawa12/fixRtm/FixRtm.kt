@@ -20,6 +20,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
+import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
 import net.minecraftforge.fml.common.SidedProxy
@@ -44,6 +45,8 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
+        if (MainConfig.addModelPackInformationInCrashReport)
+            FMLCommonHandler.instance().registerCrashCallable(RTMModelPackInfoCrashCallable)
         Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {

@@ -1,9 +1,7 @@
 package com.anatawa12.fixRtm.asm.config
 
 import com.anatawa12.fixRtm.Loggers
-import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.fml.common.FMLLog
 import net.minecraftforge.fml.common.Loader
 
 object MainConfig {
@@ -79,15 +77,21 @@ object MainConfig {
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
-            "addAllowAllPermission", categoryBetterNgtLib,
-            true,
-            "adds a permission meaning all permissions are approved")
+        "addAllowAllPermission", categoryBetterNgtLib,
+        true,
+        "adds a permission meaning all permissions are approved")
 
     @JvmField
     val addNegativePermissionEnabled = config.getBoolean(
-            "addNegativePermission", categoryBetterNgtLib,
-            true,
-            "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+        "addNegativePermission", categoryBetterNgtLib,
+        true,
+        "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+
+    @JvmField
+    val addModelPackInformationInCrashReport = config.getBoolean(
+        "addModelPackInformationInCrashReport", categoryBetterNgtLib,
+        true,
+        "adds model pack information in the crash report. This flag may make your crash report fat.")
 
     init {
         if (config.hasChanged()) {
