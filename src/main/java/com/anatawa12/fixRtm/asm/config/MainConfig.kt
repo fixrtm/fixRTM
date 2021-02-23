@@ -65,15 +65,21 @@ object MainConfig {
 
     @JvmField
     val markerDistanceMoreRealPosition = config.getBoolean(
-            "markerDistancesMoreRealPosition", categoryBetterRtm,
-            true,
-            "shows distance signs of marker at more real position")
+        "markerDistancesMoreRealPosition", categoryBetterRtm,
+        true,
+        "shows distance signs of marker at more real position")
 
     @JvmField
     val changeTestTrainTextureEnabled = config.getBoolean(
-            "changeTestTrainTexture", categoryBetterRtm,
-            true,
-            "change texture for test train to make easy to identify test train and electric train")
+        "changeTestTrainTexture", categoryBetterRtm,
+        true,
+        "change texture for test train to make easy to identify test train and electric train")
+
+    @JvmField
+    val addModelPackInformationInCrashReport = config.getBoolean(
+        "addModelPackInformationInCrashReport", categoryBetterRtm,
+        true,
+        "adds model pack information in the crash report. This flag may make your crash report fat.")
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
@@ -86,12 +92,6 @@ object MainConfig {
         "addNegativePermission", categoryBetterNgtLib,
         true,
         "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
-
-    @JvmField
-    val addModelPackInformationInCrashReport = config.getBoolean(
-        "addModelPackInformationInCrashReport", categoryBetterNgtLib,
-        true,
-        "adds model pack information in the crash report. This flag may make your crash report fat.")
 
     init {
         if (config.hasChanged()) {
