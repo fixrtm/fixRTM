@@ -24,8 +24,11 @@ object RTMModelPackInfoCrashCallable : ICrashCallable {
                     .append(" models")
             }
             append("\n" +
-                    "\tThe data below included the data about all models. the data is pom format\n" +
-                    "\tand body is gzip-ed json. This data can be decoded at https://fixrtm.github.io/crash_report_model_info_parser.html\n" +
+                    "\tThe data below included the data about all models. the data is pom-like(but returned per 128 chars)\n" +
+                    "\tand body is gzip-ed json. If you want not to include this data to crash-report, \n" +
+                    "\tyou can disable from 'better_rtm.addModelPackInformationInCrashReport' in config/fix-rtm.cfg\n" +
+                    "\tThis data can be decoded at https://fixrtm.github.io/crash_report_model_info_parser.html\n" +
+                    "\tIf you want to know which file the model is included in, You can analyze with it.\n" +
                     "\n" +
                     "-----BEGIN REAL TRAIN MOD MODEL PACK INFORMATION-----\n")
 
