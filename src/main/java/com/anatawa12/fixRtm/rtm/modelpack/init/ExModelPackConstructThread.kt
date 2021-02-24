@@ -4,7 +4,6 @@ import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
 import com.anatawa12.fixRtm.rtm.modelpack.ModelState
-import com.anatawa12.fixRtm.state
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
