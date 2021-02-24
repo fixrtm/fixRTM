@@ -2,6 +2,8 @@ package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
+import com.anatawa12.fixRtm.crash.RTMAllModelPackInfoCrashCallable
+import com.anatawa12.fixRtm.crash.RTMSmallModelPackInfoCrashCallable
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
@@ -20,6 +22,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.fml.client.registry.ClientRegistry
+import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
 import net.minecraftforge.fml.common.SidedProxy
@@ -44,6 +47,10 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
+        if (MainConfig.addModelPackInformationInAllCrashReports)
+            FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
+        else
+            FMLCommonHandler.instance().registerCrashCallable(RTMSmallModelPackInfoCrashCallable)
         Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {

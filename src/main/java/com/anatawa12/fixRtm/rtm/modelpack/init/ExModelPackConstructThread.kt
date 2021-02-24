@@ -3,6 +3,7 @@ package com.anatawa12.fixRtm.rtm.modelpack.init
 import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
+import com.anatawa12.fixRtm.rtm.modelpack.ModelState
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
 import jp.ngt.ngtlib.util.NGTUtilClient
@@ -106,6 +107,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
                 set.constructOnClient()
                 set.finishConstruct()
             }
+            set.state = ModelState.CONSTRUCTED
             val index = index.incrementAndGet()
             lastLoadedModelName = set.config.name
             Preprocessor.ifDisabled(MainConfig::reduceConstructModelLog.name)

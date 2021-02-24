@@ -1,9 +1,7 @@
 package com.anatawa12.fixRtm.asm.config
 
 import com.anatawa12.fixRtm.Loggers
-import net.minecraftforge.common.config.Config
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.fml.common.FMLLog
 import net.minecraftforge.fml.common.Loader
 
 object MainConfig {
@@ -67,27 +65,34 @@ object MainConfig {
 
     @JvmField
     val markerDistanceMoreRealPosition = config.getBoolean(
-            "markerDistancesMoreRealPosition", categoryBetterRtm,
-            true,
-            "shows distance signs of marker at more real position")
+        "markerDistancesMoreRealPosition", categoryBetterRtm,
+        true,
+        "shows distance signs of marker at more real position")
 
     @JvmField
     val changeTestTrainTextureEnabled = config.getBoolean(
-            "changeTestTrainTexture", categoryBetterRtm,
-            true,
-            "change texture for test train to make easy to identify test train and electric train")
+        "changeTestTrainTexture", categoryBetterRtm,
+        true,
+        "change texture for test train to make easy to identify test train and electric train")
+
+    @JvmField
+    val addModelPackInformationInAllCrashReports = config.getBoolean(
+        "addModelPackInformationInAllCrashReports", categoryBetterRtm,
+        true,
+        "adds model pack information about all models in compressed format in all crash reports. " +
+                "This may make your crash report very fat.")
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
-            "addAllowAllPermission", categoryBetterNgtLib,
-            true,
-            "adds a permission meaning all permissions are approved")
+        "addAllowAllPermission", categoryBetterNgtLib,
+        true,
+        "adds a permission meaning all permissions are approved")
 
     @JvmField
     val addNegativePermissionEnabled = config.getBoolean(
-            "addNegativePermission", categoryBetterNgtLib,
-            true,
-            "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+        "addNegativePermission", categoryBetterNgtLib,
+        true,
+        "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
 
     init {
         if (config.hasChanged()) {

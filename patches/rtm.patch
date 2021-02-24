@@ -1035,10 +1035,10 @@ index aefff78..27c3d26 100644
      invokestatic jp/ngt/rtm/sound/SpeakerSounds/getInstance (Z)Ljp/ngt/rtm/sound/SpeakerSounds;
      invokevirtual jp/ngt/rtm/sound/SpeakerSounds/syncSoundList ()V
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-index 79fab25..8c22920 100644
+index 79fab25..0d592e0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
-@@ -12,29 +12,29 @@
+@@ -12,32 +12,35 @@
  .field private static final SC_INCLUDE Ljava/util/regex/Pattern;
  .end field
  
@@ -1054,7 +1054,8 @@ index 79fab25..8c22920 100644
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
- .field private final smpModelSetMap Ljava/util/Map;
+-.field private final smpModelSetMap Ljava/util/Map;
++.field public final smpModelSetMap Ljava/util/Map;
      .signature "Ljava/util/Map<Ljp/ngt/rtm/modelpack/ResourceType;Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;>;"
  .end field
  
@@ -1063,6 +1064,9 @@ index 79fab25..8c22920 100644
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
  
++.field public final modelSetMapLock Ljava/util/concurrent/locks/ReadWriteLock;
++.end field
++
  .field public final unconstructSets Ljava/util/List;
      .signature "Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
  .end field
@@ -1070,7 +1074,37 @@ index 79fab25..8c22920 100644
  .field private final modelCache Ljava/util/Map;
      .signature "Ljava/util/Map<Ljava/lang/String;Ljp/ngt/ngtlib/renderer/model/IModelNGT;>;"
  .end field
-@@ -472,20 +472,26 @@ L_00ec:
+ 
+ .field private final resourceCache Ljava/util/Map;
+     .signature "Ljava/util/Map<Ljava/lang/String;Ljava/util/Map<Ljava/lang/String;Lnet/minecraft/util/ResourceLocation;>;>;"
+@@ -69,20 +72,26 @@ L_0000:
+     aload 0
+     invokespecial java/lang/Object/<init> ()V
+ L_0004:
+     .line 57
+     aload 0
+     new java/util/HashMap
+     dup
+     bipush 32
+     invokespecial java/util/HashMap/<init> (I)V
+     putfield jp/ngt/rtm/modelpack/ModelPackManager/typeMap Ljava/util/Map;
++    .line 10059
++    aload 0
++    new java/util/concurrent/locks/ReentrantReadWriteLock
++    dup
++    invokespecial java/util/concurrent/locks/ReentrantReadWriteLock/<init> ()V
++    putfield jp/ngt/rtm/modelpack/ModelPackManager/modelSetMapLock Ljava/util/concurrent/locks/ReadWriteLock;
+ L_000c:
+     .line 59
+     aload 0
+     new java/util/HashMap
+     dup
+     sipush 256
+     invokespecial java/util/HashMap/<init> (I)V
+     putfield jp/ngt/rtm/modelpack/ModelPackManager/allModelSetMap Ljava/util/Map;
+ L_0014:
+     .line 61
+@@ -472,20 +481,26 @@ L_00ec:
      aload 8
      invokevirtual jp/ngt/rtm/modelpack/init/ModelPackLoadThread/setBarValue (IILjava/lang/String;)V
  L_00f3:
@@ -1097,7 +1131,7 @@ index 79fab25..8c22920 100644
      pop
  L_0102:
      .line 148
-@@ -701,20 +707,26 @@ L_0012:
+@@ -701,20 +716,26 @@ L_0012:
  L_0019:
      .line 218
      .var 7 is json Ljava/lang/String; from L_0019 to L_002a
@@ -1124,7 +1158,33 @@ index 79fab25..8c22920 100644
  L_0028:
      areturn
  L_002a:
-@@ -799,21 +811,39 @@ L_001b:
+@@ -751,21 +772,24 @@ L_0036:
+     ldc "Can\'t load model"
+     aload 2
+     invokevirtual java/io/File/getAbsolutePath ()Ljava/lang/String;
+     invokespecial jp/ngt/rtm/modelpack/ModelPackException/<init> (Ljava/lang/String;Ljava/lang/String;)V
+     athrow
+ L_0040:
+ .end method
+ 
+ .method public registerResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;Ljava/lang/String;)Ljava/lang/String;
+     .limit stack 7
+-    .limit local 5
++    .limit local 6
++
++    .catch * from L_start to L_end using L_handler
++
+ L_0000:
+     .line 231
+     .var 0 is this Ljp/ngt/rtm/modelpack/ModelPackManager; from L_0000 to L_0054
+     .var 1 is type Ljp/ngt/rtm/modelpack/ResourceType; from L_0000 to L_0054
+     .var 2 is cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig; from L_0000 to L_0054
+     .var 3 is origJson Ljava/lang/String; from L_0000 to L_0054
+     aload 2
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/init ()V
+ L_0004:
+     .line 232
+@@ -799,33 +823,91 @@ L_001b:
      dup
      iconst_0
      aload 2
@@ -1156,6 +1216,13 @@ index 79fab25..8c22920 100644
 +
  L_002b:
      .line 236
++
++    aload 0
++    getfield jp/ngt/rtm/modelpack/ModelPackManager/modelSetMapLock Ljava/util/concurrent/locks/ReadWriteLock;
++    invokeinterface java/util/concurrent/locks/ReadWriteLock/writeLock ()Ljava/util/concurrent/locks/Lock;
++    invokeinterface java/util/concurrent/locks/Lock/lock ()V
++L_start:
++
      aload 0
      getfield jp/ngt/rtm/modelpack/ModelPackManager/allModelSetMap Ljava/util/Map;
      aload 1
@@ -1164,7 +1231,52 @@ index 79fab25..8c22920 100644
      aload 2
      invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/getName ()Ljava/lang/String;
      aload 4
-@@ -956,26 +986,34 @@ L_0048:
+     invokeinterface java/util/Map/put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     pop
++
++L_end:
++    .line 10243
++    aload 0
++    getfield jp/ngt/rtm/modelpack/ModelPackManager/modelSetMapLock Ljava/util/concurrent/locks/ReadWriteLock;
++    invokeinterface java/util/concurrent/locks/ReadWriteLock/writeLock ()Ljava/util/concurrent/locks/Lock;
++    invokeinterface java/util/concurrent/locks/Lock/unlock ()V
++    goto L_handler_end
++L_handler:
++    .stack
++        locals Object jp/ngt/rtm/modelpack/ModelPackManager
++        locals Object jp/ngt/rtm/modelpack/ResourceType
++        locals Object jp/ngt/rtm/modelpack/cfg/ResourceConfig
++        locals Object java/lang/String
++        locals Object jp/ngt/rtm/modelpack/modelset/ResourceSet
++        stacks Object java/lang/Throwable
++    .end stack
++    astore 5
++    aload 0
++    getfield jp/ngt/rtm/modelpack/ModelPackManager/modelSetMapLock Ljava/util/concurrent/locks/ReadWriteLock;
++    invokeinterface java/util/concurrent/locks/ReadWriteLock/writeLock ()Ljava/util/concurrent/locks/Lock;
++    invokeinterface java/util/concurrent/locks/Lock/unlock ()V
++    aload 5
++    athrow
++L_handler_end:
++    .stack
++        locals Object jp/ngt/rtm/modelpack/ModelPackManager
++        locals Object jp/ngt/rtm/modelpack/ResourceType
++        locals Object jp/ngt/rtm/modelpack/cfg/ResourceConfig
++        locals Object java/lang/String
++        locals Object jp/ngt/rtm/modelpack/modelset/ResourceSet
++    .end stack
++
+ L_0037:
+     .line 237
+     aload 0
+     getfield jp/ngt/rtm/modelpack/ModelPackManager/unconstructSets Ljava/util/List;
+     aload 4
+     invokeinterface java/util/List/add (Ljava/lang/Object;)Z
+     pop
+ L_003e:
+     .line 238
+     aload 4
+@@ -956,26 +1038,34 @@ L_0048:
  L_004b:
      .line 260
      .stack
@@ -1200,7 +1312,7 @@ index 79fab25..8c22920 100644
  L_0000:
      .line 266
      .var 0 is this Ljp/ngt/rtm/modelpack/ModelPackManager; from L_0000 to L_0068
-@@ -1190,20 +1228,21 @@ L_002e:
+@@ -1190,20 +1280,21 @@ L_002e:
  .method public getResourceSet (Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)Ljp/ngt/rtm/modelpack/modelset/ResourceSet;
      .signature "<T:Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>(Ljp/ngt/rtm/modelpack/ResourceType;Ljava/lang/String;)TT;"
      .limit stack 4
@@ -1222,7 +1334,7 @@ index 79fab25..8c22920 100644
  L_0009:
      .line 313
      aload 1
-@@ -1266,64 +1305,34 @@ L_002b:
+@@ -1266,64 +1357,34 @@ L_002b:
      invokeinterface java/util/Map/get (Ljava/lang/Object;)Ljava/lang/Object;
      checkcast jp/ngt/rtm/modelpack/modelset/ResourceSet
      astore 6
@@ -1235,10 +1347,10 @@ index 79fab25..8c22920 100644
      .line 321
 -    aload 0
 -    getfield jp/ngt/rtm/modelpack/ModelPackManager/dummyMap Ljava/util/Map;
--    aload 1
+     aload 1
 -    getfield jp/ngt/rtm/modelpack/ResourceType/hasSubType Z
 -    ifeq L_0043
-     aload 1
+-    aload 1
 -    getfield jp/ngt/rtm/modelpack/ResourceType/subType Ljava/lang/String;
 -    goto L_0047
 -L_0043:
@@ -1292,7 +1404,7 @@ index 79fab25..8c22920 100644
      .signature "(Ljp/ngt/rtm/modelpack/ResourceType;)Ljava/util/List<Ljp/ngt/rtm/modelpack/modelset/ResourceSet;>;"
      .limit stack 3
      .limit local 4
-@@ -2093,10 +2102,31 @@ L_0018:
+@@ -2093,10 +2154,31 @@ L_0018:
      ldc "UTF-8"
      aastore
      dup
@@ -1353,7 +1465,7 @@ index 1ae0f4c..622f680 100644
  L_0000:
      .line 6
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
-index 09bef39..c998070 100644
+index 09bef39..5f24081 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.jasm
 @@ -1,13 +1,13 @@
@@ -1371,6 +1483,30 @@ index 09bef39..c998070 100644
  .end field
  
  .field private loading Z
+@@ -174,20 +174,23 @@ L_0023:
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/constructOnClient ()V
+ L_0028:
+     .line 67
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/finishConstruct ()V
+ L_002c:
+     .line 69
+     .stack use locals
+     .end stack
++    aload 1
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/CONSTRUCTED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    invokestatic com/anatawa12/fixRtm/UtilsKt/setState (Ljp/ngt/rtm/modelpack/modelset/ResourceSet;Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;)V
+     ldc "Construct Model : %s (%d / %d)"
+     iconst_3
+     anewarray java/lang/Object
+     dup
+     iconst_0
+     aload 1
+     invokevirtual jp/ngt/rtm/modelpack/modelset/ResourceSet/getConfig ()Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokevirtual jp/ngt/rtm/modelpack/cfg/ResourceConfig/getName ()Ljava/lang/String;
+     aastore
+     dup
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
 index 0a49c17..d210f43 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.jasm
@@ -1577,6 +1713,82 @@ index e05f400..1418cc5 100644
  L_007d:
  .end method
  
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
+index c462237..bc67ca4 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
+@@ -10,20 +10,23 @@
+ 
+ .field public final dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ .end field
+ 
+ .field private isDummySet Z
+ .end field
+ 
+ .field public md5 "[B"
+ .end field
+ 
++.field public state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++.end field
++
+ .method public <init> ()V
+     .limit stack 4
+     .limit local 1
+ L_0000:
+     .line 19
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ResourceSet; signature "Ljp/ngt/rtm/modelpack/modelset/ResourceSet<TT;>;" from L_0000 to L_001b
+     aload 0
+     invokespecial java/lang/Object/<init> ()V
+ L_0004:
+     .line 20
+@@ -40,20 +43,23 @@ L_000a:
+     getfield jp/ngt/rtm/modelpack/modelset/ResourceSet/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokespecial jp/ngt/rtm/modelpack/state/DataFormatter/<init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ L_0013:
+     .line 22
+     aload 0
+     iconst_1
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/isDummySet Z
+ L_0018:
+     .line 23
++    aload 0
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/INITIALIZED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
+     return
+ L_001b:
+ .end method
+ 
+ .method public <init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     .signature "(TT;)V"
+     .limit stack 4
+     .limit local 2
+ L_0000:
+     .line 26
+@@ -75,20 +81,23 @@ L_0009:
+     getfield jp/ngt/rtm/modelpack/modelset/ResourceSet/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokespecial jp/ngt/rtm/modelpack/state/DataFormatter/<init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ L_0012:
+     .line 29
+     aload 0
+     iconst_0
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/isDummySet Z
+ L_0017:
+     .line 30
++    aload 0
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/INITIALIZED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
+     return
+ L_001a:
+ .end method
+ 
+ .method public constructOnServer ()V
+     .limit stack 0
+     .limit local 1
+ L_0000:
+     .line 33
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ResourceSet; signature "Ljp/ngt/rtm/modelpack/modelset/ResourceSet<TT;>;" from L_0000 to L_0003
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index 05b0fa4..e80bd03 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm

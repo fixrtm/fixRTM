@@ -126,7 +126,7 @@ fun DataInput.readUTFNullable(): String? = closeScope {
                         .toChar()
             }
             else -> throw UTFDataFormatException(
-                    "malformed input around byte $byteI")
+                "malformed input around byte $byteI")
         }
     }
 
