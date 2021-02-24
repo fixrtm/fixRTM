@@ -3,6 +3,7 @@ package com.anatawa12.fixRtm
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.crash.RTMAllModelPackInfoCrashCallable
+import com.anatawa12.fixRtm.crash.RTMSmallModelPackInfoCrashCallable
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
@@ -48,6 +49,8 @@ object FixRtm {
         FIXFileLoader.load() // init
         if (MainConfig.addModelPackInformationInAllCrashReports)
             FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
+        else
+            FMLCommonHandler.instance().registerCrashCallable(RTMSmallModelPackInfoCrashCallable)
         Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {
