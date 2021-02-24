@@ -2,6 +2,7 @@ buildscript {
     ext.kotlin_version = '1.4.20'
     ext.jasm_version = '1.0.7'
     repositories {
+        mavenLocal()
         jcenter()
         maven {
             name = "forge"
@@ -14,6 +15,7 @@ buildscript {
         classpath("com.anatawa12.jasm:jasm-gradle-plugin:$jasm_version") {
             exclude(group: "org.ow2.asm", module: "asm-debug-all")
         }
+        classpath("com.anatawa12.java-stab-gen:gradle-library:1.0.0")
     }
 }
 
@@ -137,6 +139,20 @@ jar {
                 'FMLAT': 'fix-rtm_at.cfg',
         )
     }
+}
+
+def compileJasmOutput = compileJasm.dir
+
+import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
+task generateJavaStab(type: GenerateJavaStab) {
+    generatedDir = file("$buildDir/generated/stab")
+    classpath = files(compileJasmOutput)
+    dependsOn(compileJasm)
+}
+compileKotlin {
+    dependsOn(generateJavaStab)
+    source(generateJavaStab.generatedDir)
+    include("**/*.java")
 }
 
 compileKotlin {
