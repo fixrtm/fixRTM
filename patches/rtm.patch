@@ -224,7 +224,7 @@ index d9b0787..a04bd4e 100644
      aload 0
      getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 58704f1..ad80d19 100644
+index 58704f1..3abb3c3 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 @@ -1547,24 +1547,34 @@ L_0012:
@@ -262,6 +262,30 @@ index 58704f1..ad80d19 100644
  
  .method public onBogieUpdate ()V
      .limit stack 2
+@@ -3260,10 +3270,23 @@ L_0000:
+     putstatic jp/ngt/rtm/entity/train/EntityBogie/TRAIN_ID Lnet/minecraft/network/datasync/DataParameter;
+ L_0006:
+     .line 44
+     ldc class Ljp/ngt/rtm/entity/train/EntityBogie;
+     getstatic net/minecraft/network/datasync/DataSerializers/BYTE Lnet/minecraft/network/datasync/DataSerializer;
+     invokestatic net/minecraft/network/datasync/EntityDataManager/createKey (Ljava/lang/Class;Lnet/minecraft/network/datasync/DataSerializer;)Lnet/minecraft/network/datasync/DataParameter;
+     putstatic jp/ngt/rtm/entity/train/EntityBogie/BOGIE_STATE Lnet/minecraft/network/datasync/DataParameter;
+     return
+ .end method
+ 
++.method public onRemovedFromWorld ()V
++    .limit stack 1
++    .limit local 1
++    .var 0 is this Ljp/ngt/rtm/entity/train/EntityBogie; from L_start to L_end
++L_start:
++    aload 0
++    invokespecial net/minecraft/entity/Entity/onRemovedFromWorld ()V
++    aload 0
++    invokestatic com/anatawa12/fixRtm/rtm/entity/train/EntityBogieKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/train/EntityBogie;)V
++    return
++L_end:
++.end method
++
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
 index 2fe97f1..299abdb 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
@@ -513,6 +537,34 @@ index 2fe97f1..299abdb 100644
  
  .method private setupChunks (II)V
      .limit stack 5
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
+index 7ae932e..de406b2 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
+@@ -2570,10 +2570,23 @@ L_000d:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 722
+     .var 0 is this Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase; signature "Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase<TT;>;" from L_0000 to L_0004
+     aconst_null
+     areturn
+ L_0004:
+ .end method
+ 
++.method public onRemovedFromWorld ()V
++    .limit stack 1
++    .limit local 1
++    .var 0 is this Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase; signature "Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase<TT;>;" from L_start to L_end
++L_start:
++    aload 0
++    invokespecial jp/ngt/ngtlib/entity/EntityCustom/onRemovedFromWorld ()V
++    aload 0
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++L_end:
++.end method
++
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm
 index 5298b6c..b941866 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm
