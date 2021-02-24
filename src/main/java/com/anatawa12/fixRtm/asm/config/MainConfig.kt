@@ -76,10 +76,11 @@ object MainConfig {
         "change texture for test train to make easy to identify test train and electric train")
 
     @JvmField
-    val addModelPackInformationInCrashReport = config.getBoolean(
-        "addModelPackInformationInCrashReport", categoryBetterRtm,
+    val addModelPackInformationInAllCrashReports = config.getBoolean(
+        "addModelPackInformationInAllCrashReports", categoryBetterRtm,
         true,
-        "adds model pack information in the crash report. This flag may make your crash report fat.")
+        "adds model pack information about all models in compressed format in all crash reports. " +
+                "This may make your crash report very fat.")
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(

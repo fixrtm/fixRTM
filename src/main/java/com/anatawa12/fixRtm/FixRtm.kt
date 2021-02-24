@@ -45,8 +45,8 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
-        if (MainConfig.addModelPackInformationInCrashReport)
-            FMLCommonHandler.instance().registerCrashCallable(RTMModelPackInfoCrashCallable)
+        if (MainConfig.addModelPackInformationInAllCrashReports)
+            FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
         Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {
