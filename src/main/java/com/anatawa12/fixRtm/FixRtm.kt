@@ -2,6 +2,7 @@ package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
+import com.anatawa12.fixRtm.crash.RTMAllModelPackInfoCrashCallable
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
