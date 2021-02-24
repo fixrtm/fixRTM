@@ -1,11 +1,9 @@
 package com.anatawa12.fixRtm
 
-import com.anatawa12.fixRtm.rtm.modelpack.ModelState
 import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
-import jp.ngt.rtm.modelpack.modelset.ResourceSet
 import net.minecraftforge.fml.common.Loader
 import java.io.*
 import java.nio.charset.Charset
@@ -136,11 +134,3 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 }
 
 fun File.mkParent(): File = apply { parentFile.mkdirs() }
-
-// warn: used by assembly code
-private val modelStateValues = ModelState.values()
-var ResourceSet<*>.state
-    get() = modelStateValues[stateId]
-    set(value) {
-        stateId = value.ordinal
-    }

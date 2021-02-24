@@ -1549,7 +1549,7 @@ index e05f400..1418cc5 100644
  .end method
  
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
-index c462237..b269810 100644
+index c462237..bc67ca4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
 @@ -10,20 +10,23 @@
@@ -1563,7 +1563,7 @@ index c462237..b269810 100644
  .field public md5 "[B"
  .end field
  
-+.field public stateId I
++.field public state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
 +.end field
 +
  .method public <init> ()V
@@ -1576,6 +1576,54 @@ index c462237..b269810 100644
      invokespecial java/lang/Object/<init> ()V
  L_0004:
      .line 20
+@@ -40,20 +43,23 @@ L_000a:
+     getfield jp/ngt/rtm/modelpack/modelset/ResourceSet/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokespecial jp/ngt/rtm/modelpack/state/DataFormatter/<init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ L_0013:
+     .line 22
+     aload 0
+     iconst_1
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/isDummySet Z
+ L_0018:
+     .line 23
++    aload 0
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/INITIALIZED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
+     return
+ L_001b:
+ .end method
+ 
+ .method public <init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     .signature "(TT;)V"
+     .limit stack 4
+     .limit local 2
+ L_0000:
+     .line 26
+@@ -75,20 +81,23 @@ L_0009:
+     getfield jp/ngt/rtm/modelpack/modelset/ResourceSet/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     invokespecial jp/ngt/rtm/modelpack/state/DataFormatter/<init> (Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;)V
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/dataFormatter Ljp/ngt/rtm/modelpack/state/DataFormatter;
+ L_0012:
+     .line 29
+     aload 0
+     iconst_0
+     putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/isDummySet Z
+ L_0017:
+     .line 30
++    aload 0
++    getstatic com/anatawa12/fixRtm/rtm/modelpack/ModelState/INITIALIZED Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
++    putfield jp/ngt/rtm/modelpack/modelset/ResourceSet/state Lcom/anatawa12/fixRtm/rtm/modelpack/ModelState;
+     return
+ L_001a:
+ .end method
+ 
+ .method public constructOnServer ()V
+     .limit stack 0
+     .limit local 1
+ L_0000:
+     .line 33
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ResourceSet; signature "Ljp/ngt/rtm/modelpack/modelset/ResourceSet<TT;>;" from L_0000 to L_0003
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/state/ResourceState.jasm
 index 05b0fa4..e80bd03 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/state/ResourceState.jasm

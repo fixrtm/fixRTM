@@ -1,7 +1,6 @@
 package com.anatawa12.fixRtm.crash
 
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.IFixRTMDummyModelSet
-import com.anatawa12.fixRtm.state
 import com.anatawa12.fixRtm.utils.Base64OutputStream
 import com.anatawa12.fixRtm.utils.ToStringOutputStream
 import com.google.gson.GsonBuilder
