@@ -147,6 +147,7 @@ object CachedPolygonModel {
         }
 
 
+        @Suppress("REDUNDANT_ELSE_IN_WHEN")
         private fun writeVecAccuracy(writer: DataOutput, value: VecAccuracy) = when (value) {
             VecAccuracy.LOW -> writer.writeByte(0)
             VecAccuracy.MEDIUM -> writer.writeByte(1)

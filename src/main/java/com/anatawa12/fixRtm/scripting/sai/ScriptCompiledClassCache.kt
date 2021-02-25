@@ -54,7 +54,7 @@ object ScriptCompiledClassCache {
         .map { (name, code) -> name as String to code as ByteArray }
         .toMap()
 
-    private fun getClassName(source: String, filename: String): String {
+    private fun getClassName(source: String, @Suppress("UNUSED_PARAMETER") filename: String): String {
         return basePackage + DigestUtils.sha1Hex(source)
     }
 
@@ -89,6 +89,7 @@ object ScriptCompiledClassCache {
                 throw ClassNotFoundException(name)
             }
             if (Script::class.java.isAssignableFrom(clazz)) {
+                @Suppress("UNCHECKED_CAST")
                 loadScriptClass(clazz as Class<out Script>)
             }
             return clazz

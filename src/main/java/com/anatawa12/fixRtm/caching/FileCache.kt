@@ -35,7 +35,7 @@ class FileCache<TValue>(
     fun loadAll() {
         baseDir.listFiles()
             ?.asSequence().orEmpty()
-            .also { filesInBaseDir ->
+            .let { filesInBaseDir ->
                 if (withTwoCharDir) {
                     filesInBaseDir
                         .filter { it.isDirectory }

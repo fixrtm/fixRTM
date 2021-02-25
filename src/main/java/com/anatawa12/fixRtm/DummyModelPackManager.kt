@@ -37,6 +37,7 @@ object DummyModelPackManager {
 
     @JvmStatic
     fun <S : ResourceSet<C>, C : ResourceConfig> getSet(type: ResourceType<C, S>, name: String): S {
+        @Suppress("UNCHECKED_CAST")
         if (!useDummyModelSet()) return ModelPackManager.INSTANCE.dummyMap[type.subType ?: type.name]!! as S
         return getModelSetMap(type)[name] ?: registerResourceSet(type, name)
     }

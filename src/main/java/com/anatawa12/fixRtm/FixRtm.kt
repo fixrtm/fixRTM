@@ -96,6 +96,7 @@ object FixRtm {
     }
 
     @Mod.EventHandler
+    @Suppress("UNUSED_PARAMETER")
     fun init(e: FMLInitializationEvent) {
     }
 
@@ -110,6 +111,7 @@ object FixRtm {
     }
 
     @SubscribeEvent
+    @Suppress("UNUSED_PARAMETER")
     fun registerModel(e: ModelRegistryEvent) {
         ClientRegistry.registerTileEntity(TestTileEntity::class.java, "test", TestSPRenderer)
         DummyModelObject.init()

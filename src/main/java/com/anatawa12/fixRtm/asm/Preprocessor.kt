@@ -2,6 +2,7 @@ package com.anatawa12.fixRtm.asm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig
 
+@Suppress("UNUSED_PARAMETER")
 object Preprocessor {
     /**
      * keep bytecode below if property named  [name] in [MainConfig] is true

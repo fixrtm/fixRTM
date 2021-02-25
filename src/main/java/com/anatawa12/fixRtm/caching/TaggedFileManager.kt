@@ -39,6 +39,7 @@ class TaggedFileManager {
     private fun <T : Any> computeSerializerFor(clazz: Class<T>): Serializer<T> {
         for (serializer in map.values) {
             if (serializer.type.isAssignableFrom(clazz)) {
+                @Suppress("UNCHECKED_CAST")
                 return serializer as Serializer<T>
             }
         }

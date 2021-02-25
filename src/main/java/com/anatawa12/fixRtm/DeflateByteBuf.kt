@@ -15,6 +15,7 @@ import java.nio.charset.Charset
 import java.util.zip.Deflater
 import java.util.zip.Deflater.BEST_COMPRESSION
 
+@Suppress("UsePropertyAccessSyntax", "DEPRECATION")
 class DeflateByteBuf(private val writeTo: ByteBuf) : ByteBuf() {
     private val base = Unpooled.buffer()!!
 
@@ -28,6 +29,7 @@ class DeflateByteBuf(private val writeTo: ByteBuf) : ByteBuf() {
         def.setInput(readBuf)
         println("inpit size: ${readBuf?.size}")
         def.finish()
+        @Suppress("UNUSED_VALUE")
         readBuf = null
         val buf = ByteArray(1024)
         while (!def.finished()) {

@@ -23,7 +23,7 @@ object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
             ?.let { scope -> FIXSaiScriptEngine().also { it.scope = scope } }
     }
 
-    override fun compile(script: String, fileName: String, engine: FIXSaiScriptEngine?): Script = usingContext { cx ->
+    override fun compile(script: String, fileName: String, engine: FIXSaiScriptEngine?): Script = usingContext {
         return ScriptCompiledClassCache.compile(script, fileName)
     }
 

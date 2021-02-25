@@ -16,7 +16,7 @@ fun getThreadGroup() = System.getSecurityManager()?.threadGroup ?: Thread.curren
 fun threadFactoryWithPrefix(prefix: String, group: ThreadGroup = getThreadGroup()) = object : ThreadFactory {
     private val threadNumber = AtomicInteger(1)
 
-    override fun newThread(r: Runnable?): Thread? {
+    override fun newThread(r: Runnable?): Thread {
         val t = Thread(group, r,
             "$prefix-" + threadNumber.getAndIncrement(),
             0)
@@ -52,6 +52,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     var utflen = 0
 
     for (c in string) {
+        @Suppress("NAME_SHADOWING")
         val c = c.toInt()
         if (c in 0x0001..0x007F) {
             utflen++
@@ -67,8 +68,9 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     if (utflen >= 0xFFFF)
         throw UTFDataFormatException("encoded string too long: $utflen bytes")
 
-    var count = 0;
+    var count = 0
     for (c in string) {
+        @Suppress("NAME_SHADOWING")
         val c = c.toInt()
         if (c >= 0x0001 && c <= 0x007F) {
             bytes[count++] = c.toByte()
