@@ -1,14 +1,10 @@
 package com.anatawa12.fixRtm.network
 
-import net.minecraftforge.fml.common.network.NetworkRegistry
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 import net.minecraft.entity.player.EntityPlayerMP
-import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler
-
-
-
+import net.minecraftforge.fml.relauncher.Side
 
 
 object NetworkHandler {
@@ -16,6 +12,7 @@ object NetworkHandler {
 
     @JvmStatic internal fun init() {
         registerMessage(SentAllModels, SentAllModels::class.java, 0x01, Side.CLIENT)
+        registerMessage(NotifyUntracked, NotifyUntracked::class.java, 0x02, Side.SERVER)
     }
 
     @JvmStatic private fun <REQ : IMessage, REPLY : IMessage?> registerMessage(messageHandler: IMessageHandler<REQ, REPLY>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
