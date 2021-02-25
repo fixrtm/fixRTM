@@ -4,7 +4,9 @@ import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
+import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.util.math.RayTraceResult
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
 import java.io.*
@@ -12,6 +14,7 @@ import java.nio.charset.Charset
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicInteger
+
 
 fun getThreadGroup() = System.getSecurityManager()?.threadGroup ?: Thread.currentThread().threadGroup!!
 
@@ -140,3 +143,13 @@ fun File.mkParent(): File = apply { parentFile.mkdirs() }
 
 val EntityPlayerMP.modList get() = NetworkDispatcher.get(this.connection.netManager).modList
 val EntityPlayerMP.hasFixRTM get() = modList.containsKey(FixRtm.MODID)
+
+@Suppress("unused")
+fun Entity.rayTraceBothSide(blockReachDistance: Double, partialTicks: Float): RayTraceResult? {
+    val eyePosition = getPositionEyes(partialTicks)
+    val lookDir = getLook(partialTicks)
+    val endPosition = eyePosition
+        .add(lookDir.x * blockReachDistance, lookDir.y * blockReachDistance, lookDir.z * blockReachDistance)
+    return world.rayTraceBlocks(eyePosition, endPosition,
+        false, false, true)
+}

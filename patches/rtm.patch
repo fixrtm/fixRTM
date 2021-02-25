@@ -917,6 +917,33 @@ index aefff78..27c3d26 100644
      iconst_1
      invokestatic jp/ngt/rtm/sound/SpeakerSounds/getInstance (Z)Ljp/ngt/rtm/sound/SpeakerSounds;
      invokevirtual jp/ngt/rtm/sound/SpeakerSounds/syncSoundList ()V
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemPaintTool.jasm b/src/main/rtm/jp/ngt/rtm/item/ItemPaintTool.jasm
+index 6b219b0..a3fe52d 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/item/ItemPaintTool.jasm
++++ b/src/main/rtm/jp/ngt/rtm/item/ItemPaintTool.jasm
+@@ -606,21 +606,21 @@ L_0015:
+         stacks Float
+     .end stack
+     fstore 5
+ L_0018:
+     .line 108
+     .var 5 is f0 F from L_0018 to L_0065
+     aload 4
+     fload 5
+     f2d
+     fconst_0
+-    invokevirtual net/minecraft/entity/player/EntityPlayer/rayTrace (DF)Lnet/minecraft/util/math/RayTraceResult;
++    invokestatic com/anatawa12/fixRtm/UtilsKt/rayTraceBothSide (Lnet/minecraft/entity/Entity;DF)Lnet/minecraft/util/math/RayTraceResult;
+     astore 6
+ L_0020:
+     .line 109
+     .var 6 is mop Lnet/minecraft/util/math/RayTraceResult; from L_0020 to L_0065
+     aload 6
+     ifnull L_0065
+ L_0024:
+     .line 111
+     aload 6
+     invokevirtual net/minecraft/util/math/RayTraceResult/getBlockPos ()Lnet/minecraft/util/math/BlockPos;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/ModelPackManager.jasm
 index 79fab25..0d592e0 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/ModelPackManager.jasm
