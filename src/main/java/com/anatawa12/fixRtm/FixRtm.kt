@@ -25,12 +25,10 @@ import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
-import net.minecraftforge.fml.common.SidedProxy
 import net.minecraftforge.fml.common.event.FMLConstructionEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 import java.awt.Color
@@ -43,6 +41,11 @@ object FixRtm {
     const val MODID = "fix-rtm"
     lateinit var modMetadata: ModMetadata
             private set
+
+    lateinit var metadata: ModMetadata
+        private set
+    val VERSION
+        get() = metadata.version!!
 
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
@@ -69,6 +72,7 @@ object FixRtm {
 
     @Mod.EventHandler
     fun preInit(e: FMLPreInitializationEvent) {
+        metadata = e.modMetadata
         DummyModelPackManager.registerDummyClass(DummyModelSetConnector::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetContainer::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetFirearm::class.java)
@@ -158,6 +162,8 @@ object FixRtm {
     fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
         if (mods[RTMCore.MODID] != RTMCore.VERSION)
             return false
+        if (mods[MODID]?.equals(VERSION) == false)
+            return false
         if (remoteSide == Side.SERVER) {
             // on client
             serverHasFixRTM = mods.containsKey(MODID)
@@ -169,14 +175,7 @@ object FixRtm {
         }
     }
 
-    @SubscribeEvent
-    fun tick(e: TickEvent.ClientTickEvent) {
-        if (e.phase == TickEvent.Phase.END)
-            proxy.tick()
-    }
 
-    @field:SidedProxy(clientSide = "com.anatawa12.fixRtm.ClientProxy", serverSide = "com.anatawa12.fixRtm.ServerProxy")
-    lateinit var proxy: CommonProxy
 
     @Mod.InstanceFactory
     @JvmStatic

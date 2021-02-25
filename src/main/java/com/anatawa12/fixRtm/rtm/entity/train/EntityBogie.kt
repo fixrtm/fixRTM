@@ -1,10 +1,12 @@
-@file:JvmName("EntityBogieKt")
-
 package com.anatawa12.fixRtm.rtm.entity.train
 
-import com.anatawa12.fixRtm.VehicleTrackerEntryFix
+import com.anatawa12.fixRtm.FixRtm
+import com.anatawa12.fixRtm.network.NetworkHandler
+import com.anatawa12.fixRtm.network.NotifyUntracked
 import jp.ngt.rtm.entity.train.EntityBogie
 
-fun EntityBogie.constructor() {
-    VehicleTrackerEntryFix.addInstance(this)
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER", "unused")
+fun EntityBogie.onRemovedFromWorld() {
+    if (FixRtm.serverHasFixRTM)
+        NetworkHandler.sendPacketServer(NotifyUntracked(entityId))
 }
