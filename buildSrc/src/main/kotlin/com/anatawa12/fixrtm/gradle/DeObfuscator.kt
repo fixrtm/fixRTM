@@ -51,6 +51,7 @@ class DeObfuscator(srgFile: File) {
         val classMap: Map<String, String>
         val fieldMap: Map<String, String>
         val methodMap: Map<String, String>
+
         init {
             val classMap = mutableMapOf<String, String>()
             val fieldMap = mutableMapOf<String, String>()
@@ -70,11 +71,8 @@ class DeObfuscator(srgFile: File) {
         }
 
         override fun map(typeName: String): String = classMap[typeName] ?: typeName
-        override fun mapFieldName(owner: String, name: String, desc: String): String
-                = fieldMap[name] ?: name
-        override fun mapMethodName(owner: String, name: String, desc: String): String
-                = methodMap[name] ?: name
-        override fun mapInvokeDynamicMethodName(name: String, desc: String): String
-                = methodMap[name] ?: name
+        override fun mapFieldName(owner: String, name: String, desc: String): String = fieldMap[name] ?: name
+        override fun mapMethodName(owner: String, name: String, desc: String): String = methodMap[name] ?: name
+        override fun mapInvokeDynamicMethodName(name: String, desc: String): String = methodMap[name] ?: name
     }
 }

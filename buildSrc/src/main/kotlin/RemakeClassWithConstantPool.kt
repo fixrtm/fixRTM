@@ -1,17 +1,19 @@
-import io.sigpipe.jbsdiff.Diff
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileTree
-import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import java.io.File
-import java.security.MessageDigest
 
 open class RemakeClassWithConstantPool : DefaultTask() {
-    @InputFiles var oldFiles: FileTree = project.files().asFileTree
-    @InputFiles var newFiles: FileTree = project.files().asFileTree
-    @OutputDirectory var outTo: File? = null
+    @InputFiles
+    var oldFiles: FileTree = project.files().asFileTree
+    @InputFiles
+    var newFiles: FileTree = project.files().asFileTree
+    @OutputDirectory
+    var outTo: File? = null
 
     @TaskAction
     fun run() {
@@ -19,8 +21,8 @@ open class RemakeClassWithConstantPool : DefaultTask() {
         val newFiles = getAllFiles(newFiles)
         val outTo = outTo ?: error("outTo not inited")
 
-        check ((oldFiles.keys - newFiles.keys).isEmpty()) { "some files are deleted: ${oldFiles.keys - newFiles.keys}" }
-        check ((newFiles.keys - oldFiles.keys).isEmpty()) { "some files are added: ${newFiles.keys - oldFiles.keys}" }
+        check((oldFiles.keys - newFiles.keys).isEmpty()) { "some files are deleted: ${oldFiles.keys - newFiles.keys}" }
+        check((newFiles.keys - oldFiles.keys).isEmpty()) { "some files are added: ${newFiles.keys - oldFiles.keys}" }
 
         for ((newPath, newFile) in newFiles) {
             val oldFile = oldFiles[newPath]
@@ -38,8 +40,8 @@ open class RemakeClassWithConstantPool : DefaultTask() {
 
     private fun remakeClass(oldBytes: ByteArray, readBytes: ByteArray): ByteArray {
         return ClassWriter(ClassReader(oldBytes), 0)
-                .also { ClassReader(readBytes).accept(it, 0) }
-                .toByteArray()
+            .also { ClassReader(readBytes).accept(it, 0) }
+            .toByteArray()
     }
 
     private fun getAllFiles(fileTree: FileTree): Map<String, File> {

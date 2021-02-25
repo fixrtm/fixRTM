@@ -57,7 +57,7 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
-configurations{
+configurations {
     shade
     compile.extendsFrom shade
 }
@@ -69,7 +69,7 @@ repositories {
 dependencies {
     shade "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     shade group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.0'
-    shade ("io.sigpipe:jbsdiff:1.0") {
+    shade("io.sigpipe:jbsdiff:1.0") {
         exclude group: "org.apache.commons", module: "commons-compress"
     }
     shade "com.anatawa12.sai:sai:0.0.2"
@@ -126,15 +126,15 @@ runClient {
 }
 
 jar {
-    configurations.shade.each {dep ->
-        from(project.zipTree(dep)){
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)) {
             exclude 'META-INF', 'META-INF/**'
             exclude 'LICENSE.txt'
         }
     }
 
     manifest {
-        attributes("FMLCorePlugin" : "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+        attributes("FMLCorePlugin": "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
                 "FMLCorePluginContainsFMLMod": "*",
                 'FMLAT': 'fix-rtm_at.cfg',
         )
@@ -144,6 +144,7 @@ jar {
 def compileJasmOutput = compileJasm.dir
 
 import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
+
 task generateJavaStab(type: GenerateJavaStab) {
     generatedDir = file("$buildDir/generated/stab")
     classpath = files(compileJasmOutput)

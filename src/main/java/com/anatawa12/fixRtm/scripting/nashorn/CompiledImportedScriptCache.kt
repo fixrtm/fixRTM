@@ -24,11 +24,10 @@ object CompiledImportedScriptCache {
 
     val engine get() = threaded.engine
 
-    fun makeCompiled(script: String, fileName: String): CompiledScript
-            = threaded.makeCompiled(script, fileName)
+    fun makeCompiled(script: String, fileName: String): CompiledScript = threaded.makeCompiled(script, fileName)
 
-    fun makeCompiled(engine: NashornScriptEngine?, script: String, fileName: String): CompiledScript
-            = threadedByEngine(engine).makeCompiled(script, fileName)
+    fun makeCompiled(engine: NashornScriptEngine?, script: String, fileName: String): CompiledScript =
+        threadedByEngine(engine).makeCompiled(script, fileName)
 
     fun load() {
         // load

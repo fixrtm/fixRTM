@@ -3,7 +3,7 @@ package com.anatawa12.fixRtm.scripting.sai
 import com.anatawa12.sai.Context
 import com.anatawa12.sai.ContextFactory
 
-inline fun <T> usingContext(script: (Context) -> T): T{
+inline fun <T> usingContext(script: (Context) -> T): T {
     var oldContext: Context? = null
     return try {
         oldContext = Context.getCurrentContext()

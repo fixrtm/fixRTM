@@ -8,14 +8,22 @@ import net.minecraftforge.fml.relauncher.Side
 
 
 object NetworkHandler {
-    @JvmStatic private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("fix-rtm")
+    @JvmStatic
+    private val INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("fix-rtm")
 
-    @JvmStatic internal fun init() {
+    @JvmStatic
+    internal fun init() {
         registerMessage(SentAllModels, SentAllModels::class.java, 0x01, Side.CLIENT)
         registerMessage(NotifyUntracked, NotifyUntracked::class.java, 0x02, Side.SERVER)
     }
 
-    @JvmStatic private fun <REQ : IMessage, REPLY : IMessage?> registerMessage(messageHandler: IMessageHandler<REQ, REPLY>, requestMessageType: Class<REQ>, discriminator: Int, sendTo: Side) {
+    @JvmStatic
+    private fun <REQ : IMessage, REPLY : IMessage?> registerMessage(
+        messageHandler: IMessageHandler<REQ, REPLY>,
+        requestMessageType: Class<REQ>,
+        discriminator: Int,
+        sendTo: Side,
+    ) {
         INSTANCE.registerMessage(messageHandler, requestMessageType, discriminator, sendTo)
     }
 

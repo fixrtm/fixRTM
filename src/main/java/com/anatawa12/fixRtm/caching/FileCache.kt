@@ -3,15 +3,16 @@ package com.anatawa12.fixRtm.caching
 import com.anatawa12.fixRtm.mkParent
 import java.io.*
 import java.util.*
-import java.util.concurrent.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ExecutorService
 
 class FileCache<TValue>(
-        private val baseDir: File,
-        private val baseDigest: String,
-        private val executor: ExecutorService,
-        private val serialize: (OutputStream, TValue) -> Unit,
-        private val deserialize: (InputStream) -> TValue,
-        private val withTwoCharDir: Boolean = true
+    private val baseDir: File,
+    private val baseDigest: String,
+    private val executor: ExecutorService,
+    private val serialize: (OutputStream, TValue) -> Unit,
+    private val deserialize: (InputStream) -> TValue,
+    private val withTwoCharDir: Boolean = true,
 ) {
     private val cache = ConcurrentHashMap<String, TValue>()
     private var writings = Collections.newSetFromMap<String>(ConcurrentHashMap())
@@ -33,25 +34,25 @@ class FileCache<TValue>(
 
     fun loadAll() {
         baseDir.listFiles()
-                ?.asSequence().orEmpty()
-                .also { filesInBaseDir ->
-                    if (withTwoCharDir) {
-                        filesInBaseDir
-                                .filter { it.isDirectory }
-                                .filter { isHex2(it.name) }
-                                .flatMap { it.listFiles()?.asSequence().orEmpty() }
-                    } else {
-                        filesInBaseDir
-                    }
+            ?.asSequence().orEmpty()
+            .also { filesInBaseDir ->
+                if (withTwoCharDir) {
+                    filesInBaseDir
+                        .filter { it.isDirectory }
+                        .filter { isHex2(it.name) }
+                        .flatMap { it.listFiles()?.asSequence().orEmpty() }
+                } else {
+                    filesInBaseDir
                 }
-                .filter { it.isFile }
-                .filter { isHex40(it.name) }
-                .forEach { file ->
-                    executor.submit {
-                        if (cache[file.name] == null)
-                            readCache(file, file.name)
-                    }
+            }
+            .filter { it.isFile }
+            .filter { isHex40(it.name) }
+            .forEach { file ->
+                executor.submit {
+                    if (cache[file.name] == null)
+                        readCache(file, file.name)
                 }
+            }
     }
 
     private fun getCacheValue(sha1: String) = cache[sha1]
@@ -68,7 +69,7 @@ class FileCache<TValue>(
     private fun readCache(file: File, sha1: String): TValue? {
         try {
             return deserialize(file.inputStream().buffered())
-                    .also { cache[sha1] = it }
+                .also { cache[sha1] = it }
         } catch (e: IOException) {
             file.delete()
             return null
@@ -104,7 +105,7 @@ class FileCache<TValue>(
         val sha1 = sha1In.toLowerCase()
         if (withTwoCharDir) {
             return baseDir.resolve(sha1.substring(0, 2))
-                    .resolve(sha1)
+                .resolve(sha1)
         } else {
             return baseDir.resolve(sha1)
         }
@@ -119,11 +120,11 @@ class FileCache<TValue>(
     }
 
     companion object {
-        private fun hexDigest(c: Char) = c in '0' .. '9' || c in 'a' .. 'f'
+        private fun hexDigest(c: Char) = c in '0'..'9' || c in 'a'..'f'
         private fun isHex2(v: String) = v.length == 2 && v.all { hexDigest(it) }
         private fun isHex40(v: String) = v.length == 40 && v.all { hexDigest(it) }
 
-        private fun hexDigestIgnoreCase(c: Char) = c in '0' .. '9' || c in 'a' .. 'f' || c in 'A' .. 'F'
+        private fun hexDigestIgnoreCase(c: Char) = c in '0'..'9' || c in 'a'..'f' || c in 'A'..'F'
         private fun isHex40IgnoreCase(v: String) = v.length == 40 && v.all { hexDigestIgnoreCase(it) }
     }
 }

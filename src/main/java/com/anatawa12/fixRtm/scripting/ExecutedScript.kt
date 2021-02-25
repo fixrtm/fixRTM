@@ -4,23 +4,21 @@ import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.caching.TaggedFileManager
 import com.anatawa12.sai.Scriptable
 import com.anatawa12.sai.ScriptableObject
-import com.anatawa12.sai.serialize.ScriptableInputStream
-import com.anatawa12.sai.serialize.ScriptableOutputStream
 import java.io.*
 
 class ExecutedScript private constructor(
-        /**
-         * dependency name and sha1 hash of script.
-         */
-        val dependencies: Map<String, ByteArray>,
-        val scopeData: ByteArray?
+    /**
+     * dependency name and sha1 hash of script.
+     */
+    val dependencies: Map<String, ByteArray>,
+    val scopeData: ByteArray?,
 ) {
     constructor(
         dependencies: Map<String, ByteArray>,
         scope: ScriptableObject,
-        base: Scriptable
-    ): this(
-            dependencies, writeScopeData(scope, base)
+        base: Scriptable,
+    ) : this(
+        dependencies, writeScopeData(scope, base)
     ) {
         for ((name, hash) in dependencies) {
             require(hash.size == 20) { "dependencies[$name] is not valid sha1: size is not 20" }
@@ -60,8 +58,8 @@ class ExecutedScript private constructor(
             val scopeData = stream.readBytes()
 
             return ExecutedScript(
-                    dependencies,
-                    scopeData
+                dependencies,
+                scopeData
             )
         }
     }

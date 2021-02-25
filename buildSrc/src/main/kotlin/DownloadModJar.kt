@@ -11,8 +11,10 @@ import kotlin.properties.Delegates
 open class DownloadModJar : DefaultTask() {
     var projectId: Int by Delegates.notNull()
 
-    @OutputFile lateinit var to: File
-    @Input lateinit var version: String
+    @OutputFile
+    lateinit var to: File
+    @Input
+    lateinit var version: String
 
     @TaskAction
     fun download() {
@@ -24,10 +26,10 @@ open class DownloadModJar : DefaultTask() {
             error("project#$projectId files not found")
 
         val file = files.get()
-                .filterNot { "1.12.2" !in it.gameVersionStrings() }
-                .filter { version in it.displayName() }
-                .singleOrNull()
-                ?: error("project#$projectId version $version not found or found two or more")
+            .filterNot { "1.12.2" !in it.gameVersionStrings() }
+            .filter { version in it.displayName() }
+            .singleOrNull()
+            ?: error("project#$projectId version $version not found or found two or more")
 
         println("file name is: ${file.displayName()}, id: ${file.id()}")
 

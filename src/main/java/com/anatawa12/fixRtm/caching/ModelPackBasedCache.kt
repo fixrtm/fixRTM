@@ -3,13 +3,11 @@ package com.anatawa12.fixRtm.caching
 import com.anatawa12.fixRtm.fixRTMCommonExecutor
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.io.FIXModelPack
-import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import java.io.File
-import java.util.concurrent.Executors
 
 class ModelPackBasedCache(
-        baseDir: File,
-        vararg serializers: Pair<Int, TaggedFileManager.Serializer<*>>
+    baseDir: File,
+    vararg serializers: Pair<Int, TaggedFileManager.Serializer<*>>,
 ) {
     private val caches: Map<FIXModelPack, FileCache<Any>>
     private val taggedFileManager = TaggedFileManager()
@@ -31,12 +29,12 @@ class ModelPackBasedCache(
 
         for (modelPack in FIXFileLoader.allModelPacks) {
             val cache = FileCache(
-                    baseDir = baseDir.resolve(modelPack.file.name),
-                    baseDigest = modelPack.sha1Hash,
-                    executor = fixRTMCommonExecutor,
-                    serialize = taggedFileManager::serialize,
-                    deserialize = taggedFileManager::deserialize,
-                    withTwoCharDir = false
+                baseDir = baseDir.resolve(modelPack.file.name),
+                baseDigest = modelPack.sha1Hash,
+                executor = fixRTMCommonExecutor,
+                serialize = taggedFileManager::serialize,
+                deserialize = taggedFileManager::deserialize,
+                withTwoCharDir = false
             )
             cache.loadAll()
             caches[modelPack] = cache

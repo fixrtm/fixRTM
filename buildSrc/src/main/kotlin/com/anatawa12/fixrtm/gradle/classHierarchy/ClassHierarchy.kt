@@ -8,8 +8,7 @@ import java.io.File
 class ClassHierarchy {
     var classes = mutableMapOf<String, HClass>()
 
-    fun getByInternalName(internalName: String)
-            = classes.getOrPut(internalName, { HClass(this, internalName) })
+    fun getByInternalName(internalName: String) = classes.getOrPut(internalName, { HClass(this, internalName) })
 
     fun load(classFile: ByteArray) {
         val node = ClassNode().also { ClassReader(classFile).accept(it, 0) }

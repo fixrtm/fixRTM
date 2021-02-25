@@ -64,7 +64,7 @@ class FIXSaiScriptEngine : ScriptEngine, Invocable {
         TODO("Not yet implemented")
     }
 
-    override fun invokeMethod(thiz: Any , name: String, vararg args: Any?): Any {
+    override fun invokeMethod(thiz: Any, name: String, vararg args: Any?): Any {
         TODO("Not yet implemented")
     }
 
@@ -73,8 +73,8 @@ class FIXSaiScriptEngine : ScriptEngine, Invocable {
         usingContext { ctx ->
             ctx.wrapFactory.isJavaPrimitiveWrap = false
             return func.call(ctx, func.parentScope, null, args
-                    .map { ctx.wrapFactory.wrap(ctx, scope, it, null) }
-                    .toTypedArray())
+                .map { ctx.wrapFactory.wrap(ctx, scope, it, null) }
+                .toTypedArray())
         }
     }
 

@@ -41,9 +41,9 @@ object ImportScriptSaiFunctionImpl : BaseFunction() {
     fun init(scope: ScriptableObject) {
         usingContext { cx ->
             scope.defineProperty(
-                    ImportScriptSaiFunctionImpl.functionName,
-                    ImportScriptSaiFunctionImpl,
-                    ScriptableObject.READONLY or ScriptableObject.DONTENUM
+                ImportScriptSaiFunctionImpl.functionName,
+                ImportScriptSaiFunctionImpl,
+                ScriptableObject.READONLY or ScriptableObject.DONTENUM
             )
         }
     }

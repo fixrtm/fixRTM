@@ -20,7 +20,7 @@ object ImportScriptNashornFunctionImpl : AbstractJSObject() {
         val resource = FIXFileLoader.getResource(resourceLocation)
         val script = resource.inputStream.reader().use { it.readText() }
         return NashornScriptRuntimeImpl.compile(resourceLocation, script, resource.pack,
-                engine = engine?.let { FIXNashornScriptEngine(it, ctx) })
+            engine = engine?.let { FIXNashornScriptEngine(it, ctx) })
     }
 
     override fun call(thiz: Any?, vararg args: Any?): Any? {

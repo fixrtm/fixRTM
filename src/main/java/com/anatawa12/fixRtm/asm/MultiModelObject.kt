@@ -50,5 +50,6 @@ class MultiModelObject(vararg val bases: IModelNGT) : IModelNGT {
 
         floatArrayOf(nx, ny, nz, px, py, pz)
     }
+
     override fun getSize(): FloatArray = _size
 }

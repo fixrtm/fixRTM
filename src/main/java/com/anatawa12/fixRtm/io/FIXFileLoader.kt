@@ -12,7 +12,6 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URI
 import java.nio.charset.Charset
-import java.util.*
 import java.util.zip.ZipFile
 
 object FIXFileLoader {
@@ -48,7 +47,8 @@ object FIXFileLoader {
         else
             return (minecraftDir.resolve("mods").listFiles()!!.asList()
                     + minecraftDir.resolve("mods/1.12.2").listFiles()?.asList().orEmpty()
-                    + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore('!')))))
+                    + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore(
+                '!')))))
     }
 
     fun getResource(location: ResourceLocation): FIXResource {

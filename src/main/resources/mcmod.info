@@ -1,16 +1,18 @@
 [
-{
-  "modid": "fix-rtm",
-  "name": "Fix RTM",
-  "description": "Fix RTM's bugs made by anatawa12",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["anatawa12"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "fix-rtm",
+    "name": "Fix RTM",
+    "description": "Fix RTM's bugs made by anatawa12",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "anatawa12"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
 ]

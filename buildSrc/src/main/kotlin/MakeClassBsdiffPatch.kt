@@ -1,18 +1,22 @@
 import io.sigpipe.jbsdiff.Diff
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileTree
-import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.*
-import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassWriter
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.security.MessageDigest
 
 open class MakeClassBsdiffPatch : DefaultTask() {
-    @InputFiles var oldFiles: FileTree = project.files().asFileTree
-    @InputFiles var newFiles: FileTree = project.files().asFileTree
-    @OutputDirectory var outTo: File? = null
-    @Input var patchPrefix: String? = null
+    @InputFiles
+    var oldFiles: FileTree = project.files().asFileTree
+    @InputFiles
+    var newFiles: FileTree = project.files().asFileTree
+    @OutputDirectory
+    var outTo: File? = null
+    @Input
+    var patchPrefix: String? = null
 
     @TaskAction
     fun run() {
@@ -21,8 +25,8 @@ open class MakeClassBsdiffPatch : DefaultTask() {
         val outTo = outTo ?: error("outTo not inited")
         val patchPrefix = patchPrefix ?: error("patchPrefix not inited")
 
-        check ((oldFiles.keys - newFiles.keys).isEmpty()) { "some files are deleted: ${oldFiles.keys - newFiles.keys}" }
-        check ((newFiles.keys - oldFiles.keys).isEmpty()) { "some files are added: ${newFiles.keys - oldFiles.keys}" }
+        check((oldFiles.keys - newFiles.keys).isEmpty()) { "some files are deleted: ${oldFiles.keys - newFiles.keys}" }
+        check((newFiles.keys - oldFiles.keys).isEmpty()) { "some files are added: ${newFiles.keys - oldFiles.keys}" }
 
         val patchDir = outTo.resolve(patchPrefix)
         val sha1 = MessageDigest.getInstance("SHA-1")

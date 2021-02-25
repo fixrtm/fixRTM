@@ -116,12 +116,12 @@ class DummyModelSetMachine(name: String, val type: ResourceType<MachineConfig, M
                     0.5, 0.0625, 0.5), config.name, setOf(*EnumFacing.VALUES)))
             MACHINE_GATE ->
                 constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                        -0.375, 0.0, -0.375,
-                        0.375, 3.0, 0.375), config.name, setOf(*EnumFacing.VALUES)))
+                    -0.375, 0.0, -0.375,
+                    0.375, 3.0, 0.375), config.name, setOf(*EnumFacing.VALUES)))
             else ->
                 constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                        -0.5, 0.0, -0.5,
-                        0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)))
+                    -0.5, 0.0, -0.5,
+                    0.5, 1.0, 0.5), config.name, setOf(*EnumFacing.VALUES)))
         }
     }
 
@@ -131,7 +131,8 @@ class DummyModelSetMachine(name: String, val type: ResourceType<MachineConfig, M
         override val dummyFor: Class<out ResourceSet<MachineConfig>>
             get() = ModelSetMachine::class.java
 
-        override fun make(name: String, type: ResourceType<MachineConfig, ModelSetMachine>): ModelSetMachine = DummyModelSetMachine(name, type)
+        override fun make(name: String, type: ResourceType<MachineConfig, ModelSetMachine>): ModelSetMachine =
+            DummyModelSetMachine(name, type)
 
         var MachineConfig.exName: String by ReflectValue.make("name")
     }
@@ -166,32 +167,36 @@ class DummyModelSetOrnament(name: String, val type: ResourceType<OrnamentConfig,
                             setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
                         DummyModelObject(AxisAlignedBB(
                             -0.5, -0.5, -0.5,
-                                        0.5, 0.5, -0.4375), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH)),
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.5, 0.4375,
-                                        0.5, 0.5, 0.5), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH))
-                        ))
+                            0.5, 0.5, -0.4375), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH)),
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.5, 0.4375,
+                            0.5, 0.5, 0.5), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH))
+                    ))
 
             ORNAMENT_STAIR ->
                 constructOnClientDummy(
-                        MultiModelObject(
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.0, -0.4375,
-                                        0.0, 0.5, 0.4375), config.name, setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.0, -0.5, -0.4375,
-                                        0.5, -0.0, 0.4375), config.name, setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.5, -0.5,
-                                        0.5, 0.5, -0.4375), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH)),
-                                DummyModelObject(AxisAlignedBB(
-                                        -0.5, -0.5, 0.4375,
-                                        0.5, 0.5, 0.5), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH))
-                        ))
+                    MultiModelObject(
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.0, -0.4375,
+                            0.0, 0.5, 0.4375),
+                            config.name,
+                            setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
+                        DummyModelObject(AxisAlignedBB(
+                            -0.0, -0.5, -0.4375,
+                            0.5, -0.0, 0.4375),
+                            config.name,
+                            setOf(EnumFacing.DOWN, EnumFacing.UP, EnumFacing.WEST, EnumFacing.EAST)),
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.5, -0.5,
+                            0.5, 0.5, -0.4375), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH)),
+                        DummyModelObject(AxisAlignedBB(
+                            -0.5, -0.5, 0.4375,
+                            0.5, 0.5, 0.5), config.name, setOf(EnumFacing.NORTH, EnumFacing.SOUTH))
+                    ))
             else ->
                 constructOnClientDummy(DummyModelObject(AxisAlignedBB(
-                        -0.5, -0.5, -0.5,
-                        0.5, 0.5, 0.5), config.name, setOf(*EnumFacing.VALUES)))
+                    -0.5, -0.5, -0.5,
+                    0.5, 0.5, 0.5), config.name, setOf(*EnumFacing.VALUES)))
         }
     }
 
@@ -201,7 +206,8 @@ class DummyModelSetOrnament(name: String, val type: ResourceType<OrnamentConfig,
         override val dummyFor: Class<out ResourceSet<OrnamentConfig>>
             get() = ModelSetOrnament::class.java
 
-        override fun make(name: String, type: ResourceType<OrnamentConfig, ModelSetOrnament>): ModelSetOrnament = DummyModelSetOrnament(name, type)
+        override fun make(name: String, type: ResourceType<OrnamentConfig, ModelSetOrnament>): ModelSetOrnament =
+            DummyModelSetOrnament(name, type)
 
         var OrnamentConfig.exName: String by ReflectValue.make("name")
     }
@@ -317,25 +323,25 @@ class DummyModelSetMechanism(name: String) : ModelSetMechanism( // ok
             DummyModelObject(AxisAlignedBB(
                 -0.5000, 0.3750, +0.5000,
                 +0.0625, 0.6250, +0.0625),
-                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
-                        Vec3d(0.0, 1.0, 0.0), 000.0),
-                DummyModelObject(AxisAlignedBB(
-                        -0.5000, 0.3750, +0.5000,
-                        +0.0625, 0.6250, +0.0625),
-                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
-                        Vec3d(0.0, 1.0, 0.0), 090.0),
-                DummyModelObject(AxisAlignedBB(
-                        -0.5000, 0.3750, +0.5000,
-                        +0.0625, 0.6250, +0.0625),
-                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
-                        Vec3d(0.0, 1.0, 0.0), 180.0),
-                DummyModelObject(AxisAlignedBB(
-                        -0.5000, 0.3750, +0.5000,
-                        +0.0625, 0.6250, +0.0625),
-                        config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
-                        Vec3d(0.0, 1.0, 0.0), 270.0)
+                config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                Vec3d(0.0, 1.0, 0.0), 000.0),
+            DummyModelObject(AxisAlignedBB(
+                -0.5000, 0.3750, +0.5000,
+                +0.0625, 0.6250, +0.0625),
+                config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                Vec3d(0.0, 1.0, 0.0), 090.0),
+            DummyModelObject(AxisAlignedBB(
+                -0.5000, 0.3750, +0.5000,
+                +0.0625, 0.6250, +0.0625),
+                config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                Vec3d(0.0, 1.0, 0.0), 180.0),
+            DummyModelObject(AxisAlignedBB(
+                -0.5000, 0.3750, +0.5000,
+                +0.0625, 0.6250, +0.0625),
+                config.name, setOf(EnumFacing.UP, EnumFacing.DOWN),
+                Vec3d(0.0, 1.0, 0.0), 270.0)
         ),
-                "minecraft:fix-rtm/scripts/render-gear.js")
+            "minecraft:fix-rtm/scripts/render-gear.js")
     }
 
     override fun constructOnServer() {}
@@ -383,7 +389,10 @@ class ReflectValue<in R, T>(private val reflect: Field) : ReadWriteProperty<R, T
     }
 
     companion object {
-        fun <R, T> make(clazz: Class<R>, name: String) = ReflectValue<R, T>(clazz.getDeclaredField(name).apply { isAccessible = true })
-        inline fun <reified R, T> make(name: String) = ReflectValue<R, T>(R::class.java.getDeclaredField(name).apply { isAccessible = true })
+        fun <R, T> make(clazz: Class<R>, name: String) =
+            ReflectValue<R, T>(clazz.getDeclaredField(name).apply { isAccessible = true })
+
+        inline fun <reified R, T> make(name: String) =
+            ReflectValue<R, T>(R::class.java.getDeclaredField(name).apply { isAccessible = true })
     }
 }

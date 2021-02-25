@@ -14,8 +14,8 @@ import java.io.*
 
 object CachedPolygonModel {
     private val cache = ModelPackBasedCache(
-            fixCacheDir.resolve("polygon-model"),
-            0x0000 to Serializer
+        fixCacheDir.resolve("polygon-model"),
+        0x0000 to Serializer
     )
 
     val type = FileType("fixrtm-cached-polygon-model-file", "fixrtm cached polygon model file.")
@@ -42,7 +42,7 @@ object CachedPolygonModel {
         }
     }
 
-    private class CachedModel(file: InputStream): PolygonModel() {
+    private class CachedModel(file: InputStream) : PolygonModel() {
         private val materials = mutableMapOf<String, Material>()
 
         init {
@@ -99,18 +99,18 @@ object CachedPolygonModel {
 
         private fun readVertex(reader: DataInput): Vertex {
             return Vertex.create(
-                    reader.readFloat(),
-                    reader.readFloat(),
-                    reader.readFloat(),
-                    accuracy
+                reader.readFloat(),
+                reader.readFloat(),
+                reader.readFloat(),
+                accuracy
             )
         }
 
         private fun readTextureCoordinate(reader: DataInput): TextureCoordinate {
             return TextureCoordinate.create(
-                    reader.readFloat(),
-                    reader.readFloat(),
-                    accuracy
+                reader.readFloat(),
+                reader.readFloat(),
+                accuracy
             )
         }
 

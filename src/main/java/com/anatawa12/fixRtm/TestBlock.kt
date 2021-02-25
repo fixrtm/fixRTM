@@ -16,13 +16,13 @@ import org.lwjgl.opengl.GL11
 object TestBlock : BlockContainerCustom(Material.WOOD) {
     init {
         setRegistryName("test")
-		//setLightLevel(1.0f)
+        //setLightLevel(1.0f)
     }
 
     override fun createNewTileEntity(worldIn: World, meta: Int): TileEntity? = TestTileEntity()
 }
 
-object TestItem : ItemBlock(TestBlock){
+object TestItem : ItemBlock(TestBlock) {
     init {
         setRegistryName("test")
     }
@@ -35,11 +35,21 @@ fun FontRenderer.drawCenterString(value: String, x: Int, y: Int, color: Int = 0,
     val with = getStringWidth(value)
     drawString(value, x - with / 2.0f, y - 4f, color, dropShadow)
 }
-object TestSPRenderer: TileEntitySpecialRenderer<TestTileEntity>() {
+
+object TestSPRenderer : TileEntitySpecialRenderer<TestTileEntity>() {
     val dummyModelObject = DummyModelObject(AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 1.0),
-            "test block",
-            EnumFacing.VALUES.toSet())
-    override fun render(te: TestTileEntity, x: Double, y: Double, z: Double, partialTicks: Float, destroyStage: Int, alpha: Float) {
+        "test block",
+        EnumFacing.VALUES.toSet())
+
+    override fun render(
+        te: TestTileEntity,
+        x: Double,
+        y: Double,
+        z: Double,
+        partialTicks: Float,
+        destroyStage: Int,
+        alpha: Float,
+    ) {
         GL11.glPushMatrix()
         GL11.glTranslated(x, y, z)
 

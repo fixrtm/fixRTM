@@ -36,11 +36,12 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import kotlin.math.max
 
-@Mod(modid = FixRtm.MODID, dependencies = "required:${RTMCore.MODID}@${RTMCore.VERSION};required:${NGTCore.MODID}@${NGTCore.VERSION};")
+@Mod(modid = FixRtm.MODID,
+    dependencies = "required:${RTMCore.MODID}@${RTMCore.VERSION};required:${NGTCore.MODID}@${NGTCore.VERSION};")
 object FixRtm {
     const val MODID = "fix-rtm"
     lateinit var modMetadata: ModMetadata
-            private set
+        private set
 
     lateinit var metadata: ModMetadata
         private set
@@ -118,22 +119,22 @@ object FixRtm {
     fun registerGenerators() {
         Minecraft.getMinecraft().defaultResourcePacks.add(GeneratedResourcePack)
         Minecraft.getMinecraft().resourceManager
-                .let { it as IReloadableResourceManager }
-                .registerReloadListener(GeneratedResourcePack)
+            .let { it as IReloadableResourceManager }
+            .registerReloadListener(GeneratedResourcePack)
 
         if (changeTestTrainTextureEnabled) {
             GeneratedResourcePack.addImageGenerator("textures/generated/items/item_test_train.png") {
                 try {
                     val baseBackImage = Minecraft.getMinecraft().resourceManager
-                            .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
-                            .inputStream.let { ImageIO.read(it) }
+                        .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
+                        .inputStream.let { ImageIO.read(it) }
                     val testTrainText = Minecraft.getMinecraft().resourceManager
-                            .getResource(ResourceLocation(MODID, "textures/template/test_train_text.png"))
-                            .inputStream.let { ImageIO.read(it) }
+                        .getResource(ResourceLocation(MODID, "textures/template/test_train_text.png"))
+                        .inputStream.let { ImageIO.read(it) }
                     val img = BufferedImage(
-                            max(baseBackImage.width, testTrainText.width),
-                            max(baseBackImage.height, testTrainText.height),
-                            BufferedImage.TYPE_INT_ARGB)
+                        max(baseBackImage.width, testTrainText.width),
+                        max(baseBackImage.height, testTrainText.height),
+                        BufferedImage.TYPE_INT_ARGB)
 
                     val graphics = img.createGraphics()
 
@@ -148,8 +149,8 @@ object FixRtm {
         } else {
             GeneratedResourcePack.addFileGenerator("textures/generated/items/item_test_train.png") {
                 Minecraft.getMinecraft().resourceManager
-                        .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
-                        .inputStream.readBytes()
+                    .getResource(ResourceLocation("rtm:textures/items/item_ec.png"))
+                    .inputStream.readBytes()
             }
         }
     }
@@ -174,7 +175,6 @@ object FixRtm {
             return true
         }
     }
-
 
 
     @Mod.InstanceFactory

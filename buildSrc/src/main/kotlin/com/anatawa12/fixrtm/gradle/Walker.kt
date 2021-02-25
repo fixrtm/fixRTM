@@ -1,7 +1,7 @@
 package com.anatawa12.fixrtm.gradle
 
 
-import java.util.ArrayDeque
+import java.util.*
 
 /**
  * An enumeration to describe possible walk directions.
@@ -11,6 +11,7 @@ import java.util.ArrayDeque
 enum class WalkDirection {
     /** Depth-first search, directory is visited BEFORE its files */
     TOP_DOWN,
+
     /** Depth-first search, directory is visited AFTER its files */
     BOTTOM_UP
     // Do we want also breadth-first search?
@@ -26,9 +27,9 @@ enum class WalkDirection {
  * If the file path given does not exist, walker iterates nothing, i.e. it's equivalent to an empty sequence.
  */
 class TreeWalk<Element> internal constructor(
-        private val start: Element,
-        private val listFiles: Element.() -> Sequence<Element>,
-        private val direction: WalkDirection = WalkDirection.TOP_DOWN
+    private val start: Element,
+    private val listFiles: Element.() -> Sequence<Element>,
+    private val direction: WalkDirection = WalkDirection.TOP_DOWN
 ) : Sequence<Element> {
 
     override fun iterator(): Iterator<Element> = FileTreeWalkIterator()
@@ -142,16 +143,21 @@ class TreeWalk<Element> internal constructor(
  *
  * @param direction walk direction, top-down (by default) or bottom-up.
  */
-fun <Element> Element.walk(direction: WalkDirection = WalkDirection.TOP_DOWN, listFiles: Element.() -> Sequence<Element>): TreeWalk<Element> = TreeWalk(this, listFiles, direction)
+fun <Element> Element.walk(
+    direction: WalkDirection = WalkDirection.TOP_DOWN,
+    listFiles: Element.() -> Sequence<Element>
+): TreeWalk<Element> = TreeWalk(this, listFiles, direction)
 
 /**
  * Gets a sequence for visiting this directory and all its content in top-down order.
  * Depth-first search is used and directories are visited before all their files.
  */
-fun <Element> Element.walkTopDown(listFiles: Element.() -> Sequence<Element>): TreeWalk<Element> = walk(WalkDirection.TOP_DOWN, listFiles)
+fun <Element> Element.walkTopDown(listFiles: Element.() -> Sequence<Element>): TreeWalk<Element> =
+    walk(WalkDirection.TOP_DOWN, listFiles)
 
 /**
  * Gets a sequence for visiting this directory and all its content in bottom-up order.
  * Depth-first search is used and directories are visited after all their files.
  */
-fun <Element> Element.walkBottomUp(listFiles: Element.() -> Sequence<Element>): TreeWalk<Element> = walk(WalkDirection.BOTTOM_UP, listFiles)
+fun <Element> Element.walkBottomUp(listFiles: Element.() -> Sequence<Element>): TreeWalk<Element> =
+    walk(WalkDirection.BOTTOM_UP, listFiles)

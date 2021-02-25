@@ -16,7 +16,11 @@ object NashornScriptRuntimeImpl : IScriptRuntime<CompiledScript, FIXNashornScrip
      * nashorn does not support executed cache so always return null.
      * @return always null
      */
-    override fun getCachedEngine(filePath: ResourceLocation, resource: FIXResource, dependencies: Map<ResourceLocation, String>): FIXNashornScriptEngine? {
+    override fun getCachedEngine(
+        filePath: ResourceLocation,
+        resource: FIXResource,
+        dependencies: Map<ResourceLocation, String>,
+    ): FIXNashornScriptEngine? {
         return null
     }
 
@@ -40,7 +44,12 @@ object NashornScriptRuntimeImpl : IScriptRuntime<CompiledScript, FIXNashornScrip
         return FIXNashornScriptEngine(engine, context)
     }
 
-    override fun cache(pack: FIXModelPack, filePath: ResourceLocation, dependencies: Map<ResourceLocation, String>, engine: FIXNashornScriptEngine) {
+    override fun cache(
+        pack: FIXModelPack,
+        filePath: ResourceLocation,
+        dependencies: Map<ResourceLocation, String>,
+        engine: FIXNashornScriptEngine,
+    ) {
         // not supported so nop
     }
 }

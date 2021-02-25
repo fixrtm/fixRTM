@@ -5,8 +5,8 @@ import java.io.Reader
 import javax.script.*
 
 class FIXNashornScriptEngine(
-        val baseEngine: NashornScriptEngine,
-        private val context: ScriptContext
+    val baseEngine: NashornScriptEngine,
+    private val context: ScriptContext,
 ) : ScriptEngine by baseEngine, Compilable, Invocable {
 
     override fun getFactory(): ScriptEngineFactory {

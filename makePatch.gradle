@@ -1,4 +1,3 @@
-
 def buildDir = file("${buildDir}/fixrtm")
 
 def oldRTM = file("${projectDir}/mods/rtm.jar")
@@ -12,8 +11,8 @@ def remadeClassesDir = file("$buildDir/remade-classes")
 def unzippedNgtsDir = file("$buildDir/unzipped-ngts")
 
 task unzipNgtsDir(type: Copy) {
-    from (zipTree(oldRTM) + zipTree(oldNGTLib)) {
-        include ("**/*.class")
+    from(zipTree(oldRTM) + zipTree(oldNGTLib)) {
+        include("**/*.class")
     }
     into unzippedNgtsDir
 }
@@ -24,7 +23,7 @@ task remakeClasses(type: RemakeClassWithConstantPool) {
 
     oldFiles = fileTree(unzippedNgtsDir)
     newFiles = zipTree(fixRtmBuiltJar).matching {
-        include ("jp/ngt/**/*.class")
+        include("jp/ngt/**/*.class")
     }
     outTo = remadeClassesDir
 }
@@ -44,7 +43,7 @@ task makeRtmPatch(type: MakeClassBsdiffPatch) {
 task unzipFixRTM(type: Copy) {
     dependsOn build
 
-    from (zipTree(fixRtmBuiltJar)){
+    from(zipTree(fixRtmBuiltJar)) {
         include("**/*.class")
         exclude("jp/**/*.class")
         exclude("jp/**")
@@ -58,11 +57,11 @@ task makeFixrtmJar(type: Jar) {
     dependsOn makeRtmPatch
     dependsOn unzipFixRTM
 
-    from ("src/main/resources") {
+    from("src/main/resources") {
         include "mcmod.info"
         expand "version": project.version, "mcversion": project.minecraft.version
     }
-    from ("src/main/resources") {
+    from("src/main/resources") {
         exclude "mcmod.info"
     }
     from unzippedJarDir
@@ -73,7 +72,7 @@ task makeFixrtmJar(type: Jar) {
     version = project.version
 
     manifest {
-        attributes("FMLCorePlugin" : "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+        attributes("FMLCorePlugin": "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
                 "FMLCorePluginContainsFMLMod": "*",
                 'FMLAT': 'fix-rtm_at.cfg',
         )

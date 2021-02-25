@@ -13,16 +13,16 @@ fun eraseNullForModelSet(inSet: ResourceSet<*>?, type: ResourceType<*, *>): Reso
     if (inSet != null) return inSet
     if (type.hasSubType) {
         return ModelPackManager.INSTANCE.dummyMap[type.name]
-                ?: (ModelPackManager.INSTANCE.dummyMap[type.subType])
-                ?: error("ResourceType(${type.name}) and ResourceType(${type.subType}) don't have dummy ResourceSet")
+            ?: (ModelPackManager.INSTANCE.dummyMap[type.subType])
+            ?: error("ResourceType(${type.name}) and ResourceType(${type.subType}) don't have dummy ResourceSet")
     } else {
         return ModelPackManager.INSTANCE.dummyMap[type.name]
-                ?: error("ResourceType(${type.name}) don't have dummyMap")
+            ?: error("ResourceType(${type.name}) don't have dummyMap")
     }
 }
 
 @Suppress("unused") // Used with Transform
-fun <K, V>MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: String): Map<K, V> {
+fun <K, V> MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: String): Map<K, V> {
     if (map == null)
         throw ModelFormatException("sound.json for $domain is invalid.")
     return map
