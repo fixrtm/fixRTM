@@ -14,12 +14,16 @@ import com.anatawa12.sai.TopLevel
 import net.minecraft.util.ResourceLocation
 
 object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
-    override fun getCachedEngine(filePath: ResourceLocation, resource: FIXResource, dependencies: Map<ResourceLocation, String>): FIXSaiScriptEngine? {
+    override fun getCachedEngine(
+        filePath: ResourceLocation,
+        resource: FIXResource,
+        dependencies: Map<ResourceLocation, String>,
+    ): FIXSaiScriptEngine? {
         return getScriptAndDoScriptByCache(filePath, resource.pack, makeDependenciesData(dependencies))
-                ?.let { scope -> FIXSaiScriptEngine().also { it.scope = scope } }
+            ?.let { scope -> FIXSaiScriptEngine().also { it.scope = scope } }
     }
 
-    override fun compile(script: String, fileName: String, engine: FIXSaiScriptEngine?): Script =usingContext { cx ->
+    override fun compile(script: String, fileName: String, engine: FIXSaiScriptEngine?): Script = usingContext {
         return ScriptCompiledClassCache.compile(script, fileName)
     }
 
@@ -36,7 +40,12 @@ object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
         return engine
     }
 
-    override fun cache(pack: FIXModelPack, filePath: ResourceLocation, dependencies: Map<ResourceLocation, String>, engine: FIXSaiScriptEngine) {
+    override fun cache(
+        pack: FIXModelPack,
+        filePath: ResourceLocation,
+        dependencies: Map<ResourceLocation, String>,
+        engine: FIXSaiScriptEngine,
+    ) {
         ExecutedScriptCache.add(pack, filePath, makeExecutedScript(makeDependenciesData(dependencies), engine.scope))
     }
 
@@ -68,13 +77,18 @@ object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
         return cache.getScope(baseScope)
     }
 
-    private fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: ScriptableObject): ExecutedScript = usingContext {
-        ScriptCompiledClassCache.initContext(it)
+    private fun makeExecutedScript(dependencies: Map<String, ByteArray>, scope: ScriptableObject): ExecutedScript =
+        usingContext {
+            ScriptCompiledClassCache.initContext(it)
 
-        return ExecutedScript(dependencies, scope, baseScope)
-    }
+            return ExecutedScript(dependencies, scope, baseScope)
+        }
 
-    private fun getScriptAndDoScriptByCache(filePath: ResourceLocation, pack: FIXModelPack, dependencies: Map<String, ByteArray>): ScriptableObject? {
+    private fun getScriptAndDoScriptByCache(
+        filePath: ResourceLocation,
+        pack: FIXModelPack,
+        dependencies: Map<String, ByteArray>,
+    ): ScriptableObject? {
         val cache = ExecutedScriptCache.getScript(pack, filePath) ?: return null
 
         // verify cache
@@ -104,8 +118,8 @@ object SaiScriptRuntimeImpl : IScriptRuntime<Script, FIXSaiScriptEngine> {
 
 object ExecutedScriptCache {
     private val cache = ModelPackBasedCache(
-            fixCacheDir.resolve("excluded-script"),
-            0x0000 to ExecutedScript.Serializer
+        fixCacheDir.resolve("excluded-script"),
+        0x0000 to ExecutedScript.Serializer
     )
 
     fun getScript(pack: FIXModelPack, filePath: ResourceLocation): ExecutedScript? {

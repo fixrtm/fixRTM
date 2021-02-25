@@ -13,14 +13,14 @@ class TaggedFileManager {
 
     fun deserialize(stream: InputStream): Any {
         val serializer = map[readVInt(stream)]
-                ?: throw IOException("invalid stream: invalid id")
+            ?: throw IOException("invalid stream: invalid id")
         return serializer.deserialize(stream)
     }
 
     fun serialize(stream: OutputStream, value: Any) {
         val serializer = getSerializerFor(value)
         val id = map.inverse()[serializer]
-                ?: throw IOException("serializer for ${value.javaClass} is not register")
+            ?: throw IOException("serializer for ${value.javaClass} is not register")
         writeVInt(stream, id)
         serializer.serialize(stream, value)
     }
@@ -39,6 +39,7 @@ class TaggedFileManager {
     private fun <T : Any> computeSerializerFor(clazz: Class<T>): Serializer<T> {
         for (serializer in map.values) {
             if (serializer.type.isAssignableFrom(clazz)) {
+                @Suppress("UNCHECKED_CAST")
                 return serializer as Serializer<T>
             }
         }

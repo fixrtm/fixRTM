@@ -16,10 +16,10 @@ fun getThreadGroup() = System.getSecurityManager()?.threadGroup ?: Thread.curren
 fun threadFactoryWithPrefix(prefix: String, group: ThreadGroup = getThreadGroup()) = object : ThreadFactory {
     private val threadNumber = AtomicInteger(1)
 
-    override fun newThread(r: Runnable?): Thread? {
+    override fun newThread(r: Runnable?): Thread {
         val t = Thread(group, r,
-                "$prefix-" + threadNumber.getAndIncrement(),
-                0)
+            "$prefix-" + threadNumber.getAndIncrement(),
+            0)
         if (t.isDaemon) t.isDaemon = false
         if (t.priority != Thread.NORM_PRIORITY) t.priority = Thread.NORM_PRIORITY
         return t
@@ -33,18 +33,17 @@ val minecraftDir = Loader.instance().configDir.parentFile!!
 val fixCacheDir = minecraftDir.resolve("fixrtm-cache")
 val MS932 = Charset.forName("MS932")
 val fixRTMCommonExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-        threadFactoryWithPrefix("fixrtm-common-executor"))
+    threadFactoryWithPrefix("fixrtm-common-executor"))
 
-fun File.directoryDigestBaseStream()
-        = SequenceInputStream(Iterators.asEnumeration(
-        this.sortedWalk()
-                .flatMap {
-                    sequenceOf(
-                            it.toRelativeString(this).byteInputStream(),
-                            it.inputStream().buffered()
-                    )
-                }
-                .iterator()
+fun File.directoryDigestBaseStream() = SequenceInputStream(Iterators.asEnumeration(
+    this.sortedWalk()
+        .flatMap {
+            sequenceOf(
+                it.toRelativeString(this).byteInputStream(),
+                it.inputStream().buffered()
+            )
+        }
+        .iterator()
 ))
 
 fun DataOutput.writeUTFNullable(string: String?) = closeScope {
@@ -53,6 +52,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     var utflen = 0
 
     for (c in string) {
+        @Suppress("NAME_SHADOWING")
         val c = c.toInt()
         if (c in 0x0001..0x007F) {
             utflen++
@@ -68,8 +68,9 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     if (utflen >= 0xFFFF)
         throw UTFDataFormatException("encoded string too long: $utflen bytes")
 
-    var count = 0;
+    var count = 0
     for (c in string) {
+        @Suppress("NAME_SHADOWING")
         val c = c.toInt()
         if (c >= 0x0001 && c <= 0x007F) {
             bytes[count++] = c.toByte()
@@ -110,8 +111,8 @@ fun DataInput.readUTFNullable(): String? = closeScope {
                 val char2 = bytes[byteI - 1].toInt()
                 if (char2 and 0xC0 != 0x80) throw UTFDataFormatException("malformed input around byte $byteI")
                 chars[charI++] = (c and 0x1F shl 6)
-                        .or(char2 and 0x3F)
-                        .toChar()
+                    .or(char2 and 0x3F)
+                    .toChar()
             }
             14 -> {
                 /* 1110 xxxx  10xx xxxx  10xx xxxx */
@@ -121,9 +122,9 @@ fun DataInput.readUTFNullable(): String? = closeScope {
                 val char3 = bytes[byteI - 1].toInt()
                 if (char2 and 0xC0 != 0x80 || char3 and 0xC0 != 0x80) throw UTFDataFormatException("malformed input around byte " + (byteI - 1))
                 chars[charI++] = (c and 0x0F shl 12)
-                        .or(char2 and 0x3F shl 6)
-                        .or(char3 and 0x3F shl 0)
-                        .toChar()
+                    .or(char2 and 0x3F shl 6)
+                    .or(char3 and 0x3F shl 0)
+                    .toChar()
             }
             else -> throw UTFDataFormatException(
                 "malformed input around byte $byteI")

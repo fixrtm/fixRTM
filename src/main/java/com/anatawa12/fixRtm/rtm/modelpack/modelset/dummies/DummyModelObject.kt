@@ -15,12 +15,14 @@ import org.lwjgl.opengl.GL11
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 
-class DummyModelObject(val aabb: AxisAlignedBB,
-                       val name: String,
-                       val drawFaces: Set<EnumFacing>,
-                       val rotate: Vec3d = Vec3d.ZERO,
-                       val rotate1: Double = 0.0,
-                       val nameOnly: Boolean = false) : IModelNGT {
+class DummyModelObject(
+    val aabb: AxisAlignedBB,
+    val name: String,
+    val drawFaces: Set<EnumFacing>,
+    val rotate: Vec3d = Vec3d.ZERO,
+    val rotate1: Double = 0.0,
+    val nameOnly: Boolean = false,
+) : IModelNGT {
     override fun getMaterials() = Companion.materials
 
     val aabbGlListId by lazy { getGlListId(aabb) }
@@ -130,6 +132,7 @@ class DummyModelObject(val aabb: AxisAlignedBB,
         fun init() {
             baseImage = ImageIO.read(Minecraft.getMinecraft().resourceManager.getResource(resourceLocation).inputStream)
         }
+
         val material = Material(0, resourceLocation)
         val materials = mapOf(DummyModelPackManager.getDummyName("") to Material(0, null))
 

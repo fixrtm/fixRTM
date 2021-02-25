@@ -18,7 +18,8 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.atomic.AtomicInteger
 
-class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) : ModelPackConstructThread(threadSide, parent) {
+class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoadThread) :
+    ModelPackConstructThread(threadSide, parent) {
     @Volatile
     private var loading = true
     private var index = AtomicInteger(0)
@@ -74,7 +75,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         guiUpdateThread.start()
 
         val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+            threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
 
         val futures = mutableListOf<Future<*>>()
 
@@ -117,9 +118,11 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             Preprocessor.whatever(MainConfig::reduceConstructModelLog.name)
         } catch (throwable: Throwable) {
             if (set.config.file == null) {
-                throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)", throwable)
+                throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)",
+                    throwable)
             } else {
-                throw ModelConstructingException("constructing resource: ${set.config.name} (source file: ${set.config.file})", throwable)
+                throw ModelConstructingException("constructing resource: ${set.config.name} (source file: ${set.config.file})",
+                    throwable)
             }
         }
     }

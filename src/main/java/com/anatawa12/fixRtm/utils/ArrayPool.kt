@@ -2,11 +2,10 @@ package com.anatawa12.fixRtm.utils
 
 import java.io.Closeable
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ArrayPool<TArray>(
-        private val factory: (Int) -> TArray,
-        private val size: TArray.() -> Int
+    private val factory: (Int) -> TArray,
+    private val size: TArray.() -> Int,
 ) {
     private val using = BitSet()
     private val arrays = ArrayList<CloseableArray<TArray>>(0x10)
@@ -29,7 +28,7 @@ class ArrayPool<TArray>(
 
     fun release(ary: TArray) {
         val closeable = arrays.firstOrNull { it.array === ary }
-                ?: throw IllegalArgumentException("the array is not created from this")
+            ?: throw IllegalArgumentException("the array is not created from this")
         closeable.close()
     }
 
@@ -44,8 +43,8 @@ class ArrayPool<TArray>(
         val array: TArray
     }
 
-    private inner class CloseableArrayImpl(override val array: TArray, private val index: Int)
-        : CloseableArray<TArray> {
+    private inner class CloseableArrayImpl(override val array: TArray, private val index: Int) :
+        CloseableArray<TArray> {
         override fun close() {
             using[index] = false
         }
@@ -57,7 +56,7 @@ class ArrayPool<TArray>(
         }
         private val pChar: ThreadLocal<ArrayPool<CharArray>> = ThreadLocal.withInitial {
             ArrayPool(::CharArray) { size }
-         }
+        }
 
         val bytePool get() = pByte.get()
         val charPool get() = pChar.get()

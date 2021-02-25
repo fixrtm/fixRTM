@@ -9,6 +9,7 @@ import java.io.File
 open class PrintStaticFields : DefaultTask() {
     @InputFiles
     var files: FileTree = project.files().asFileTree
+
     @OutputFile
     var outTo: File? = null
     var ofClass: String? = null
@@ -32,6 +33,6 @@ open class PrintStaticFields : DefaultTask() {
         }
 
         outTo.apply { parentFile.mkdirs() }
-                .writeText(file)
+            .writeText(file)
     }
 }

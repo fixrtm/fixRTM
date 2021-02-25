@@ -44,17 +44,17 @@ object ScriptCompiledClassCache {
         }
 
         val clazz = Loader.loadClass(className)
-        check (Script::class.java.isAssignableFrom(clazz)) { "compiled code is not Script type" }
+        check(Script::class.java.isAssignableFrom(clazz)) { "compiled code is not Script type" }
         return clazz.newInstance() as Script
     }
 
     private fun processCompiled(compileToClassFiles: Array<Any>) = compileToClassFiles
-            .asSequence()
-            .chunked(2)
-            .map { (name, code) -> name as String to code as ByteArray }
-            .toMap()
+        .asSequence()
+        .chunked(2)
+        .map { (name, code) -> name as String to code as ByteArray }
+        .toMap()
 
-    private fun getClassName(source: String, filename: String): String {
+    private fun getClassName(source: String, @Suppress("UNUSED_PARAMETER") filename: String): String {
         return basePackage + DigestUtils.sha1Hex(source)
     }
 
@@ -89,6 +89,7 @@ object ScriptCompiledClassCache {
                 throw ClassNotFoundException(name)
             }
             if (Script::class.java.isAssignableFrom(clazz)) {
+                @Suppress("UNCHECKED_CAST")
                 loadScriptClass(clazz as Class<out Script>)
             }
             return clazz

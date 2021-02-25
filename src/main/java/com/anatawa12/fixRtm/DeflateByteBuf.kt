@@ -14,8 +14,8 @@ import java.nio.channels.ScatteringByteChannel
 import java.nio.charset.Charset
 import java.util.zip.Deflater
 import java.util.zip.Deflater.BEST_COMPRESSION
-import java.util.zip.Deflater.BEST_SPEED
 
+@Suppress("UsePropertyAccessSyntax", "DEPRECATION")
 class DeflateByteBuf(private val writeTo: ByteBuf) : ByteBuf() {
     private val base = Unpooled.buffer()!!
 
@@ -29,9 +29,10 @@ class DeflateByteBuf(private val writeTo: ByteBuf) : ByteBuf() {
         def.setInput(readBuf)
         println("inpit size: ${readBuf?.size}")
         def.finish()
+        @Suppress("UNUSED_VALUE")
         readBuf = null
         val buf = ByteArray(1024)
-        while(!def.finished()) {
+        while (!def.finished()) {
             val len = def.deflate(buf)
             writeTo.writeBytes(buf, 0, len)
         }

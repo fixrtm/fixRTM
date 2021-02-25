@@ -1,11 +1,10 @@
 package com.anatawa12.fixrtm.gradle.classHierarchy
 
 import org.objectweb.asm.tree.ClassNode
-import java.lang.IllegalStateException
 
 class HClass(
-        val loader: ClassHierarchy,
-        val internalName: String
+    val loader: ClassHierarchy,
+    val internalName: String
 ) {
     internal var classNode: ClassNode? = null
     val isLoaded get() = classNode != null

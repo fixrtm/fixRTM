@@ -8,8 +8,10 @@ import java.io.File
 open class DeObfuscateJar : DefaultTask() {
     @InputFile
     var srgFile: File? = null
+
     @InputFile
     var obfuscatedJar: File? = null
+
     @OutputFile
     var deObfuscatedJar: File? = null
 

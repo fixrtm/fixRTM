@@ -18,6 +18,7 @@ RTMのバグを減らし、使いやすくする！
 
 - [RTM](https://www.curseforge.com/minecraft/mc-mods/realtrainmod) fixRTMのリリース時の最新バージョン
 - [NGT Lib](https://www.curseforge.com/minecraft/mc-mods/ngtlib) (RTMの前提mod)
-- [Minecraft Forge](https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html) 14.23.5.2847以降がサポートバージョンです。
+- [Minecraft Forge](https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html)
+  14.23.5.2847以降がサポートバージョンです。
 
 対応表は[こちら](version-map.md)

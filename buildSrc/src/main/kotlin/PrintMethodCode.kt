@@ -12,6 +12,7 @@ import java.io.PrintWriter
 open class PrintMethodCode : DefaultTask() {
     @InputFiles
     var files: FileTree = project.files().asFileTree
+
     @OutputFile
     var outTo: File? = null
     var ofClass: String? = null
@@ -31,7 +32,7 @@ open class PrintMethodCode : DefaultTask() {
             throw IllegalStateException("ofClass is not loaded")
 
         val method = theClass.methods.singleOrNull { it.name == methodName && it.desc == methodDesc }
-                ?: throw IllegalStateException("method is not loaded")
+            ?: throw IllegalStateException("method is not loaded")
 
         val node = method.node
         val printer = Textifier()

@@ -3,29 +3,34 @@ package com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.minecraft.client.resources.IResourceManager
-import net.minecraft.client.resources.IResourceManagerReloadListener
 import net.minecraft.client.resources.IResourcePack
 import net.minecraft.client.resources.data.IMetadataSection
 import net.minecraft.client.resources.data.MetadataSerializer
 import net.minecraft.util.ResourceLocation
 import java.awt.image.BufferedImage
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 import javax.imageio.ImageIO
 
-object GeneratedResourcePack : IResourcePack, IResourceManagerReloadListener {
+object GeneratedResourcePack : IResourcePack,
+    @Suppress("DEPRECATION") net.minecraft.client.resources.IResourceManagerReloadListener {
     private val DOMEIN = "fix-rtm"
-    private var nextId = 1;
+    private var nextId = 1
     private val resourceGenerators = mutableMapOf<String, () -> ResourceFile>()
     private val resources = mutableMapOf<String, ResourceFile>()
 
-    override fun resourceExists(location: ResourceLocation): Boolean
-            = location.namespace == DOMEIN && location.path in resourceGenerators
+    override fun resourceExists(location: ResourceLocation): Boolean =
+        location.namespace == DOMEIN && location.path in resourceGenerators
 
     override fun getPackImage(): BufferedImage {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun <T : IMetadataSection?> getPackMetadata(metadataSerializer: MetadataSerializer, metadataSectionName: String): T? {
+    override fun <T : IMetadataSection?> getPackMetadata(
+        metadataSerializer: MetadataSerializer,
+        metadataSectionName: String,
+    ): T? {
         try {
             return metadataSerializer.parseMetadataSection<T>(metadataSectionName, JsonObject().apply {
                 add("pack", JsonObject().apply {
@@ -45,9 +50,9 @@ object GeneratedResourcePack : IResourcePack, IResourceManagerReloadListener {
         var resource = resources[location.path]
         if (resource == null) {
             val generator = resourceGenerators[location.path]
-                    ?: throw FileNotFoundException(location.path)
+                ?: throw FileNotFoundException(location.path)
             resource = generator()
-            resources[location.path]= resource
+            resources[location.path] = resource
         }
         return resource.byteArray.inputStream()
     }

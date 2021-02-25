@@ -13,9 +13,12 @@ import java.util.zip.ZipFile
 
 open class CheckClassesSame : DefaultTask() {
     private val logger = LoggerFactory.getLogger("CheckClassesSame")
-    @InputFile var src: File? = null
-    @InputFile var dst: File? = null
-    @Input var rootPackage: String? = null
+    @InputFile
+    var src: File? = null
+    @InputFile
+    var dst: File? = null
+    @Input
+    var rootPackage: String? = null
 
     private val differences = mutableSetOf<Difference>()
 
@@ -33,8 +36,8 @@ open class CheckClassesSame : DefaultTask() {
         val srcClasses = mutableSetOf<String>()
 
         srcZip.entries().asSequence().forEach { srcEntry ->
-            if(!srcEntry.name.endsWith(".class")) return@forEach
-            if(!srcEntry.name.startsWith(rootPackagePath)) return@forEach
+            if (!srcEntry.name.endsWith(".class")) return@forEach
+            if (!srcEntry.name.startsWith(rootPackagePath)) return@forEach
             srcClasses.add(srcEntry.name)
             val dstEntry = dstZip.getEntry(srcEntry.name)
             if (dstEntry == null) return@forEach addDiff(Difference.ClassOnlyInSrc(srcEntry.name.removeSuffix(".class")))
@@ -45,8 +48,8 @@ open class CheckClassesSame : DefaultTask() {
         }
 
         srcZip.entries().asSequence().forEach { dstEntry ->
-            if(!dstEntry.name.endsWith(".class")) return@forEach
-            if(!dstEntry.name.startsWith(rootPackagePath)) return@forEach
+            if (!dstEntry.name.endsWith(".class")) return@forEach
+            if (!dstEntry.name.startsWith(rootPackagePath)) return@forEach
             if (dstEntry.name !in srcClasses)
                 addDiff(Difference.ClassOnlyInDst(dstEntry.name.removeSuffix(".class")))
         }
@@ -140,57 +143,70 @@ open class CheckClassesSame : DefaultTask() {
         if (srcInsn.opcode != dstInsn.opcode) return false
         if (srcInsn.javaClass != dstInsn.javaClass) return false
         when (srcInsn) {
-            is FieldInsnNode -> { dstInsn as FieldInsnNode
+            is FieldInsnNode -> {
+                dstInsn as FieldInsnNode
                 if (srcInsn.owner != dstInsn.owner) return false
                 if (srcInsn.name != dstInsn.name) return false
                 if (srcInsn.desc != dstInsn.desc) return false
             }
-            is IincInsnNode -> { dstInsn as IincInsnNode
+            is IincInsnNode -> {
+                dstInsn as IincInsnNode
                 if (srcInsn.`var` != dstInsn.`var`) return false
                 if (srcInsn.incr != dstInsn.incr) return false
             }
-            is InsnNode -> { dstInsn as InsnNode
+            is InsnNode -> {
+                dstInsn as InsnNode
             }
-            is IntInsnNode -> { dstInsn as IntInsnNode
+            is IntInsnNode -> {
+                dstInsn as IntInsnNode
                 if (srcInsn.operand != dstInsn.operand) return false
             }
-            is InvokeDynamicInsnNode -> { dstInsn as InvokeDynamicInsnNode
+            is InvokeDynamicInsnNode -> {
+                dstInsn as InvokeDynamicInsnNode
                 if (srcInsn.name != dstInsn.name) return false
                 if (srcInsn.desc != dstInsn.desc) return false
                 if (srcInsn.bsm != dstInsn.bsm) return false
                 if (!srcInsn.bsmArgs.contentEquals(dstInsn.bsmArgs)) return false
             }
-            is JumpInsnNode -> { dstInsn as JumpInsnNode
+            is JumpInsnNode -> {
+                dstInsn as JumpInsnNode
                 //if (srcInsn.label != dstInsn.label) return false
             }
-            is LdcInsnNode -> { dstInsn as LdcInsnNode
+            is LdcInsnNode -> {
+                dstInsn as LdcInsnNode
                 if (srcInsn.cst != dstInsn.cst) return false
             }
-            is LookupSwitchInsnNode -> { dstInsn as LookupSwitchInsnNode
+            is LookupSwitchInsnNode -> {
+                dstInsn as LookupSwitchInsnNode
                 //if (srcInsn.dflt != dstInsn.dflt) return false
                 if (srcInsn.keys != dstInsn.keys) return false
                 //if (srcInsn.labels != dstInsn.labels) return false
             }
-            is MethodInsnNode -> { dstInsn as MethodInsnNode
+            is MethodInsnNode -> {
+                dstInsn as MethodInsnNode
                 if (srcInsn.owner != dstInsn.owner) return false
                 if (srcInsn.name != dstInsn.name) return false
                 if (srcInsn.desc != dstInsn.desc) return false
                 if (srcInsn.itf != dstInsn.itf) return false
             }
-            is MultiANewArrayInsnNode -> { dstInsn as MultiANewArrayInsnNode
+            is MultiANewArrayInsnNode -> {
+                dstInsn as MultiANewArrayInsnNode
                 if (srcInsn.desc != dstInsn.desc) return false
                 if (srcInsn.dims != dstInsn.dims) return false
             }
-            is TableSwitchInsnNode -> { dstInsn as TableSwitchInsnNode
+            is TableSwitchInsnNode -> {
+                dstInsn as TableSwitchInsnNode
                 if (srcInsn.min != dstInsn.min) return false
                 if (srcInsn.max != dstInsn.max) return false
                 //if (srcInsn.dflt != dstInsn.dflt) return false
                 //if (srcInsn.labels != dstInsn.labels) return false
             }
-            is TypeInsnNode -> { dstInsn as TypeInsnNode
+            is TypeInsnNode -> {
+                dstInsn as TypeInsnNode
                 if (srcInsn.desc != dstInsn.desc) return false
             }
-            is VarInsnNode -> { dstInsn as VarInsnNode
+            is VarInsnNode -> {
+                dstInsn as VarInsnNode
                 if (srcInsn.`var` != dstInsn.`var`) return false
             }
             else -> error("Not yet implemented: ${srcInsn.javaClass.simpleName}")
@@ -198,9 +214,10 @@ open class CheckClassesSame : DefaultTask() {
         return true
     }
 
-    private fun readClass(byteArray: ByteArray): ClassNode
-            = ClassNode().apply { ClassReader(byteArray)
-            .accept(this, ClassReader.SKIP_DEBUG + ClassReader.SKIP_FRAMES) }
+    private fun readClass(byteArray: ByteArray): ClassNode = ClassNode().apply {
+        ClassReader(byteArray)
+            .accept(this, ClassReader.SKIP_DEBUG + ClassReader.SKIP_FRAMES)
+    }
 
     private fun <K, V> Map<K, V>.zipNullable(other: Map<K, V>): Map<K, Pair<V?, V?>> {
         val result = mutableMapOf<K, Pair<V?, V?>>()
@@ -225,12 +242,33 @@ open class CheckClassesSame : DefaultTask() {
         data class MethodOnlyInSrc(val owner: String, val name: String, val desc: String) : Difference()
         data class MethodOnlyInDst(val owner: String, val name: String, val desc: String) : Difference()
         data class ClassSignatureChanged(val className: String, val src: String?, val dst: String?) : Difference()
-        data class FieldSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
-        data class MethodSignatureChanged(val owner: String, val name: String, val desc: String, val src: String?, val dst: String?) : Difference()
+        data class FieldSignatureChanged(
+            val owner: String,
+            val name: String,
+            val desc: String,
+            val src: String?,
+            val dst: String?
+        ) : Difference()
+
+        data class MethodSignatureChanged(
+            val owner: String,
+            val name: String,
+            val desc: String,
+            val src: String?,
+            val dst: String?
+        ) : Difference()
+
         data class FieldAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
         data class MethodAccessChanged(val owner: String, val name: String, val desc: String) : Difference()
         data class FieldValueChanged(val owner: String, val name: String, val desc: String) : Difference()
-        data class MethodCodeChanged(val owner: String, val name: String, val desc: String, val source: List<AbstractInsnNode>, val patch: Patch<AbstractInsnNode>) : Difference()
+        data class MethodCodeChanged(
+            val owner: String,
+            val name: String,
+            val desc: String,
+            val source: List<AbstractInsnNode>,
+            val patch: Patch<AbstractInsnNode>
+        ) : Difference()
+
         data class AnnotationDefaultChanged(val owner: String, val name: String, val desc: String) : Difference()
     }
 }

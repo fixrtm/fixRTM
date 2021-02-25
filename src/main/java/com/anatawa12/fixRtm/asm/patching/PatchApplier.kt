@@ -15,7 +15,7 @@ class PatchApplier : IClassTransformer {
         }
         logger.trace("patch found for $name")
 
-        checkSha(patch.oldSha1, basicClass) {"sha1 digest not match for class: $name. please check your mod version"}
+        checkSha(patch.oldSha1, basicClass) { "sha1 digest not match for class: $name. please check your mod version" }
 
         if (patch.jbsdiff == null) return basicClass
 
@@ -27,7 +27,8 @@ class PatchApplier : IClassTransformer {
 
         if (patch.newSha1 == null) return basicClass
 
-        checkSha(patch.newSha1, patched) {"patched sha1 digest not match for class: $name. please check your mod version"}
+        checkSha(patch.newSha1,
+            patched) { "patched sha1 digest not match for class: $name. please check your mod version" }
 
         return patched
     }
@@ -35,16 +36,16 @@ class PatchApplier : IClassTransformer {
     private fun getPatchAndSha1(className: String): PatchAndSha1? {
         val classFilePath = "${className.replace('.', '/')}.class"
         return PatchAndSha1(
-                jbsdiff = getStream("$classFilePath.bsdiff")?.readBytes(),
-                oldSha1 = getStream("$classFilePath.old.sha1")?.readBytes() ?: return null,
-                newSha1 = getStream("$classFilePath.new.sha1")?.readBytes()
+            jbsdiff = getStream("$classFilePath.bsdiff")?.readBytes(),
+            oldSha1 = getStream("$classFilePath.old.sha1")?.readBytes() ?: return null,
+            newSha1 = getStream("$classFilePath.new.sha1")?.readBytes()
         )
     }
 
     private class PatchAndSha1(
-            val jbsdiff: ByteArray?,
-            val oldSha1: ByteArray,
-            val newSha1: ByteArray?
+        val jbsdiff: ByteArray?,
+        val oldSha1: ByteArray,
+        val newSha1: ByteArray?,
     )
 
     private inline fun checkSha(sha: ByteArray, file: ByteArray, message: () -> String) {

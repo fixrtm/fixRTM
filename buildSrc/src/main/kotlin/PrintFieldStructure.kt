@@ -12,6 +12,7 @@ import java.util.function.Predicate
 open class PrintFieldStructure : DefaultTask() {
     @InputFiles
     var files: FileTree = project.files().asFileTree
+
     @OutputDirectory
     var outTo: File? = null
     var superClass: String? = null
@@ -44,8 +45,8 @@ open class PrintFieldStructure : DefaultTask() {
             }
 
             outTo.resolve("${hClass.internalName}.txt")
-                    .apply { parentFile.mkdirs() }
-                    .writeText(file)
+                .apply { parentFile.mkdirs() }
+                .writeText(file)
         }
     }
 
@@ -64,11 +65,11 @@ open class PrintFieldStructure : DefaultTask() {
                 yieldAll(childClasses)
                 if (isLoaded) {
                     yieldAll(fields.asSequence()
-                            .filter { !it.isStatic }
-                            .filter { it.type[0] == 'L' }
-                            .map { it.type.substring(1, it.type.length - 1) }
-                            .map { loader.getByInternalName(it) }
-                            .toSet())
+                        .filter { !it.isStatic }
+                        .filter { it.type[0] == 'L' }
+                        .map { it.type.substring(1, it.type.length - 1) }
+                        .map { loader.getByInternalName(it) }
+                        .toSet())
                 }
             }
 

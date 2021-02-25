@@ -2,25 +2,24 @@ package com.anatawa12.fixRtm.scripting
 
 import com.anatawa12.fixRtm.Loggers
 import com.anatawa12.fixRtm.caching.TaggedFileManager
+import com.anatawa12.sai.Context
 import com.anatawa12.sai.Scriptable
 import com.anatawa12.sai.ScriptableObject
-import com.anatawa12.sai.serialize.ScriptableInputStream
-import com.anatawa12.sai.serialize.ScriptableOutputStream
 import java.io.*
 
 class ExecutedScript private constructor(
-        /**
-         * dependency name and sha1 hash of script.
-         */
-        val dependencies: Map<String, ByteArray>,
-        val scopeData: ByteArray?
+    /**
+     * dependency name and sha1 hash of script.
+     */
+    val dependencies: Map<String, ByteArray>,
+    val scopeData: ByteArray?,
 ) {
     constructor(
         dependencies: Map<String, ByteArray>,
         scope: ScriptableObject,
-        base: Scriptable
-    ): this(
-            dependencies, writeScopeData(scope, base)
+        base: Scriptable,
+    ) : this(
+        dependencies, writeScopeData(scope, base)
     ) {
         for ((name, hash) in dependencies) {
             require(hash.size == 20) { "dependencies[$name] is not valid sha1: size is not 20" }
@@ -35,6 +34,7 @@ class ExecutedScript private constructor(
         override fun serialize(stream: OutputStream, value: ExecutedScript) {
             if (value.scopeData == null)
                 throw IOException("this is not valid ExecutedScript, failed to make scopeData")
+            @Suppress("NAME_SHADOWING")
             val stream = DataOutputStream(stream)
             stream.writeInt(value.dependencies.size)
             for ((name, data) in value.dependencies) {
@@ -46,6 +46,7 @@ class ExecutedScript private constructor(
         }
 
         override fun deserialize(stream: InputStream): ExecutedScript {
+            @Suppress("NAME_SHADOWING")
             val stream = DataInputStream(stream)
 
             val dependencies = mutableMapOf<String, ByteArray>()
@@ -60,8 +61,8 @@ class ExecutedScript private constructor(
             val scopeData = stream.readBytes()
 
             return ExecutedScript(
-                    dependencies,
-                    scopeData
+                dependencies,
+                scopeData
             )
         }
     }
@@ -70,7 +71,10 @@ class ExecutedScript private constructor(
         /**
          * user have to set [Context]
          */
-        private fun writeScopeData(scope: ScriptableObject, base: Scriptable): ByteArray? {
+        private fun writeScopeData(
+            scope: ScriptableObject,
+            @Suppress("UNUSED_PARAMETER") base: Scriptable,
+        ): ByteArray? {
             try {
                 val baos = ByteArrayOutputStream()
                 ObjectOutputStream(baos).use { stream ->
@@ -89,7 +93,7 @@ class ExecutedScript private constructor(
         /**
          * user have to set [Context]
          */
-        private fun readScopeData(data: ByteArray?, base: Scriptable): ScriptableObject? {
+        private fun readScopeData(data: ByteArray?, @Suppress("UNUSED_PARAMETER") base: Scriptable): ScriptableObject? {
             if (data == null) return null
             try {
                 val bais = ByteArrayInputStream(data)

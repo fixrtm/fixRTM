@@ -19,8 +19,8 @@ val scriptRuntime: IScriptRuntime<*, *> = when (MainConfig.scriptingMode) {
 fun loadFIXScriptUtil() {}
 
 @Suppress("unused")
-fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine
-        = com.anatawa12.fixRtm.scripting.getScriptAndDoScript(fileName)
+fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine =
+    com.anatawa12.fixRtm.scripting.getScriptAndDoScript(fileName)
 
 @Suppress("unused")
 fun getScriptAndDoScript(fileName: String): ScriptEngine {
@@ -28,7 +28,10 @@ fun getScriptAndDoScript(fileName: String): ScriptEngine {
 }
 
 @Suppress("unused")
-fun <CompiledScript, Engine : ScriptEngine> getScriptAndDoScript(runtime: IScriptRuntime<CompiledScript, Engine>, fileName: String): ScriptEngine {
+fun <CompiledScript, Engine : ScriptEngine> getScriptAndDoScript(
+    runtime: IScriptRuntime<CompiledScript, Engine>,
+    fileName: String,
+): ScriptEngine {
     val filePath = ResourceLocation(fileName)
     val resource = FIXFileLoader.getResource(filePath)
     val scriptStr = resource.inputStream.reader().use { it.readText() }

@@ -16,6 +16,7 @@ object ImportScriptSaiFunctionImpl : BaseFunction() {
     }
 
     fun makeScript(location: ResourceLocation, script: String, pack: FIXModelPack? = null): Script {
+        @Suppress("NAME_SHADOWING")
         val script = ScriptImporter.preprocessScript(script)
         val name = if (pack != null) "$location(${pack.file.name})" else "$location"
         return ScriptCompiledClassCache.compile(script, name)
@@ -39,11 +40,11 @@ object ImportScriptSaiFunctionImpl : BaseFunction() {
     override fun getFunctionName(): String = ScriptImporter.importScriptFunctionName
 
     fun init(scope: ScriptableObject) {
-        usingContext { cx ->
+        usingContext {
             scope.defineProperty(
-                    ImportScriptSaiFunctionImpl.functionName,
-                    ImportScriptSaiFunctionImpl,
-                    ScriptableObject.READONLY or ScriptableObject.DONTENUM
+                ImportScriptSaiFunctionImpl.functionName,
+                ImportScriptSaiFunctionImpl,
+                ScriptableObject.READONLY or ScriptableObject.DONTENUM
             )
         }
     }
