@@ -5,8 +5,10 @@ import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.math.RayTraceResult
 import net.minecraftforge.fml.common.Loader
+import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
 import java.io.*
 import java.nio.charset.Charset
 import java.util.concurrent.Executors
@@ -138,6 +140,9 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 }
 
 fun File.mkParent(): File = apply { parentFile.mkdirs() }
+
+val EntityPlayerMP.modList get() = NetworkDispatcher.get(this.connection.netManager).modList
+val EntityPlayerMP.hasFixRTM get() = modList.containsKey(FixRtm.MODID)
 
 @Suppress("unused")
 fun Entity.rayTraceBothSide(blockReachDistance: Double, partialTicks: Float): RayTraceResult? {

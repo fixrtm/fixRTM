@@ -15,9 +15,13 @@ import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IReloadableResourceManager
+import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.Item
 import net.minecraft.launchwrapper.Launch
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.Style
+import net.minecraft.util.text.TextComponentString
+import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
@@ -29,6 +33,7 @@ import net.minecraftforge.fml.common.event.FMLConstructionEvent
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.PlayerEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 import java.awt.Color
@@ -175,6 +180,16 @@ object FixRtm {
             return true
         } else {
             return true
+        }
+    }
+
+    @SubscribeEvent
+    @Suppress("UNUSED_PARAMETER")
+    fun onPlayerLoggedIn(e: PlayerEvent.PlayerLoggedInEvent) {
+        if (!(e.player as EntityPlayerMP).hasFixRTM) {
+            e.player.sendMessage(TextComponentString("In this server, fixRTM is enabled. " +
+                    "It's recommended to use fixRTM even on client.")
+                .setStyle(Style().setColor(TextFormatting.YELLOW)))
         }
     }
 
