@@ -42,6 +42,11 @@ object FixRtm {
     lateinit var modMetadata: ModMetadata
             private set
 
+    lateinit var metadata: ModMetadata
+        private set
+    val VERSION
+        get() = metadata.version!!
+
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
@@ -67,6 +72,7 @@ object FixRtm {
 
     @Mod.EventHandler
     fun preInit(e: FMLPreInitializationEvent) {
+        metadata = e.modMetadata
         DummyModelPackManager.registerDummyClass(DummyModelSetConnector::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetContainer::class.java)
         DummyModelPackManager.registerDummyClass(DummyModelSetFirearm::class.java)
@@ -155,6 +161,8 @@ object FixRtm {
     @NetworkCheckHandler
     fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
         if (mods[RTMCore.MODID] != RTMCore.VERSION)
+            return false
+        if (mods[MODID]?.equals(VERSION) == false)
             return false
         if (remoteSide == Side.SERVER) {
             // on client
