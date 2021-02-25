@@ -3,7 +3,7 @@
 package com.anatawa12.fixRtm
 
 import jp.ngt.rtm.entity.train.EntityBogie
-import jp.ngt.rtm.entity.vehicle.EntityVehicle
+import jp.ngt.rtm.entity.vehicle.EntityVehicleBase
 import jp.ngt.rtm.entity.vehicle.VehicleTrackerEntry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityTrackerEntry
@@ -17,7 +17,7 @@ fun newEntityTrackerEntry(
 ): EntityTrackerEntry {
     if (entityIn is EntityBogie)
         return VehicleTrackerEntry(entityIn)
-    if (entityIn is EntityVehicle)
+    if (entityIn is EntityVehicleBase<*>)
         return VehicleTrackerEntry(entityIn)
     return EntityTrackerEntry(entityIn, rangeIn, maxRangeIn, updateFrequencyIn, sendVelocityUpdatesIn)
 }
