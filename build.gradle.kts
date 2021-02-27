@@ -1,7 +1,7 @@
 import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
 
 plugins {
-    kotlin("jvm")// version "1.4.20"
+    kotlin("jvm") version "1.4.20"
     id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
 }
@@ -177,3 +177,4 @@ runClient.outputs.upToDateWhen { false }
 
 apply(from = "./processMods.gradle")
 apply(from = "./makePatch.gradle")
+
