@@ -1,6 +1,4 @@
-@file:JvmName("HooksKt")
-
-package com.anatawa12.fixRtm
+package com.anatawa12.fixRtm.rtm.entity.vehicle
 
 import jp.ngt.rtm.entity.train.EntityBogie
 import jp.ngt.rtm.entity.vehicle.EntityVehicleBase
