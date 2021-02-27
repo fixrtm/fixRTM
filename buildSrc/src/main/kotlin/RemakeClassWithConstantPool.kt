@@ -47,8 +47,8 @@ open class RemakeClassWithConstantPool : DefaultTask() {
     private fun getAllFiles(fileTree: FileTree): Map<String, File> {
         val files = mutableMapOf<String, File>()
         fileTree.visit {
-            if (it.isDirectory) return@visit
-            files[it.path] = it.file
+            if (isDirectory) return@visit
+            files[path] = file
         }
         return files
     }

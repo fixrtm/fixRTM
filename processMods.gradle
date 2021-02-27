@@ -1,12 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "com.anatawa12.jasm:jasm-gradle-plugin:$jasm_version"
-    }
-}
-
 task CopyJarToTest(type: Copy, dependsOn: reobfJar) {
     from jar.archivePath
     into new File(projectDir, "../fixRtmTest/mods")

@@ -9,6 +9,7 @@ import java.io.File
 import kotlin.properties.Delegates
 
 open class DownloadModJar : DefaultTask() {
+    @get:Input
     var projectId: Int by Delegates.notNull()
 
     @OutputFile

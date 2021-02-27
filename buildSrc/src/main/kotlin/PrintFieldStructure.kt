@@ -3,9 +3,7 @@ import com.anatawa12.fixrtm.gradle.classHierarchy.HClass
 import com.anatawa12.fixrtm.gradle.walkBottomUp
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileTree
-import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 import java.io.File
 import java.util.function.Predicate
 
@@ -15,9 +13,19 @@ open class PrintFieldStructure : DefaultTask() {
 
     @OutputDirectory
     var outTo: File? = null
+
+    @Input
     var superClass: String? = null
+
+    @Input
     var exclusion: MutableSet<String> = mutableSetOf()
+
+    @Internal
     var condition: Predicate<String> = Predicate { true }
+
+    init {
+        outputs.upToDateWhen { false }
+    }
 
     @TaskAction
     fun run() {

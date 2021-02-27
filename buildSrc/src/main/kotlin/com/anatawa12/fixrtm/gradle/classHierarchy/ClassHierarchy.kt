@@ -20,8 +20,8 @@ class ClassHierarchy {
     fun load(classFiles: FileTree) {
         val files = mutableSetOf<File>()
         classFiles.visit {
-            if (it.isDirectory) return@visit
-            files.add(it.file)
+            if (isDirectory) return@visit
+            files.add(file)
         }
         for (file in files) {
             load(file.readBytes())
