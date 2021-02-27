@@ -1,17 +1,15 @@
 package com.anatawa12.fixRtm.asm.hooking
 
-import com.anatawa12.fixRtm.asm.Types
 import net.minecraft.launchwrapper.IClassTransformer
 import org.objectweb.asm.*
 
 class HookingTransformer : IClassTransformer {
     override fun transform(name: String?, transformedName: String?, basicClass: ByteArray?): ByteArray? {
         if (basicClass == null) return null
-        val isHooks = name == Types.hooksName
         val cw = ClassWriter(0)
         var cv: ClassVisitor = cw
         cv = MethodVisitingClassVisitor(cv, listOfNotNull(
-            ::NewEntityTrackerVisitor.takeUnless { isHooks },
+            ::NewEntityTrackerVisitor.takeUnless { name == "com.anatawa12.fixRtm.rtm.entity.vehicle.VehicleTrackerEntryKt" },
         ))
         ClassReader(basicClass).accept(cv, 0)
         return cw.toByteArray()
@@ -21,7 +19,7 @@ class HookingTransformer : IClassTransformer {
         var afterNew = false
 
         override fun visitTypeInsn(opcode: Int, type: String?) {
-            if (opcode == Opcodes.NEW && type == Types.entityTrackerEntryInternalName)
+            if (opcode == Opcodes.NEW && type == "net/minecraft/entity/EntityTrackerEntry")
                 afterNew = true
             super.visitTypeInsn(opcode, type)
         }
@@ -29,13 +27,13 @@ class HookingTransformer : IClassTransformer {
         override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, desc: String?, itf: Boolean) {
             if (afterNew
                 && opcode == Opcodes.INVOKESPECIAL
-                && owner == Types.entityTrackerEntryInternalName
+                && owner == "net/minecraft/entity/EntityTrackerEntry"
                 && name == "<init>"
                 && desc == "(Lnet/minecraft/entity/Entity;IIIZ)V"
             ) {
                 afterNew = false
                 super.visitMethodInsn(Opcodes.INVOKESTATIC,
-                    Types.hooksInternalName,
+                    "com/anatawa12/fixRtm/rtm/entity/vehicle/VehicleTrackerEntryKt",
                     "newEntityTrackerEntry",
                     "(Lnet/minecraft/entity/Entity;IIIZ)Lnet/minecraft/entity/EntityTrackerEntry;",
                     false)

@@ -2,7 +2,7 @@ package com.anatawa12.fixRtm.asm.hooking
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin
 
-
+@IFMLLoadingPlugin.SortingIndex(2000)
 class HookingFixRtmCorePlugin : IFMLLoadingPlugin {
     override fun getASMTransformerClass(): Array<String> = arrayOf(
         HookingTransformer::class.qualifiedName!!,
