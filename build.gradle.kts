@@ -45,7 +45,7 @@ minecraft {
 }
 
 val shade by configurations.creating
-configurations.compile.extendsFrom(shade)
+configurations.compile.get().extendsFrom(shade)
 
 repositories {
     jcenter()
