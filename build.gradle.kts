@@ -15,6 +15,12 @@ fun SourceSet.jasm(configure: Action<SourceDirectorySet>): Unit =
         .let { it as com.anatawa12.jasm.plugins.gradle.JasmSourceSetExtension }
         .jasm(configure)
 
+val SourceSet.jasm
+    get() =
+        (this as org.gradle.api.internal.HasConvention).convention.plugins["jasm"]
+            .let { it as com.anatawa12.jasm.plugins.gradle.JasmSourceSetExtension }
+            .jasm
+
 sourceSets {
     api {
         java {
@@ -52,7 +58,6 @@ repositories {
     mavenCentral()
 }
 
-val apiCompile by configurations.getting
 dependencies {
     shade(kotlin("stdlib-jdk7"))
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
@@ -62,9 +67,9 @@ dependencies {
     shade("com.anatawa12.sai:sai:0.0.2")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
-    //compileOnly(files(sourceSets.main.jasm.outputDir))//TODO
-    //compileOnly files(new File(projectDir, "mods/rtm.deobf.jar"),
-    //        new File(projectDir, "mods/ngtlib.deobf.jar"))
+    compileOnly(files(sourceSets.main.get().jasm.outputDir))
+    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
+        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
     apiCompile("org.twitter4j:twitter4j-core:4.0.7")
@@ -84,7 +89,7 @@ dependencies {
 val processResources by tasks.getting(Copy::class) {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
-    //inputs.property("mcversion", project.minecraft.version)//TODO
+    inputs.property("mcversion", project.minecraft.version)
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.get().resources.srcDirs) {
@@ -92,8 +97,8 @@ val processResources by tasks.getting(Copy::class) {
 
         // replace version and mcversion
         expand(mapOf(
-            "version" to project.version//, TODO
-            //"mcversion" to project.minecraft.version
+            "version" to project.version,
+            "mcversion" to project.minecraft.version
         ))
     }
 
