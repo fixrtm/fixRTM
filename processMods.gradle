@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.anatawa12.jasm:jasm-gradle-plugin:$jasm_version"
+        classpath "com.anatawa12.jasm:jasm-gradle-plugin:1.0.8"
     }
 }
 

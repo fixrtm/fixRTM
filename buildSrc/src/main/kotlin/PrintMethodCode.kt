@@ -1,6 +1,7 @@
 import com.anatawa12.fixrtm.gradle.classHierarchy.ClassHierarchy
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileTree
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
@@ -15,8 +16,14 @@ open class PrintMethodCode : DefaultTask() {
 
     @OutputFile
     var outTo: File? = null
+
+    @Input
     var ofClass: String? = null
+
+    @Input
     var methodName: String? = null
+
+    @Input
     var methodDesc: String? = null
 
     @TaskAction
