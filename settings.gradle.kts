@@ -1,13 +1,12 @@
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
         maven(url = "https://files.minecraftforge.net/maven") {
             name = "forge"
         }
     }
     dependencies {
-        // required by ForgeGradle
+        // required by ForgeGradle. see anatawa12/ForgeGradle-2.3#22
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.20")
         classpath("com.anatawa12.forge:ForgeGradle:2.3-1.0.+") {
             isChanging = true
