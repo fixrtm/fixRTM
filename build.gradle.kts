@@ -10,6 +10,11 @@ version = property("modVersion")!!
 group = property("modGroup")!!
 base { archivesBaseName = property("modBaseName")!!.toString() }
 
+fun SourceSet.jasm(configure: Action<SourceDirectorySet>): Unit =
+    (this as org.gradle.api.internal.HasConvention).convention.plugins["jasm"]
+        .let { it as com.anatawa12.jasm.plugins.gradle.JasmSourceSetExtension }
+        .jasm(configure)
+
 sourceSets {
     api {
         java {
@@ -17,9 +22,9 @@ sourceSets {
         }
     }
     main {
-        /*jasm {
+        jasm {
             srcDirs("src/main/rtm", "src/main/ngtlib")
-        }*/
+        }
         resources {
             srcDirs("src/main/rtmResources", "src/main/ngtlibResources")
         }
