@@ -10,6 +10,7 @@ buildscript {
         classpath("com.anatawa12.forge:ForgeGradle:2.3-1.0.+") {
             isChanging = true
         }
+        classpath("org.ow2.asm:asm-util:6.0")
         classpath("com.anatawa12.jasm:jasm-gradle-plugin:1.0.8") {
             exclude(group = "org.ow2.asm", module = "asm-debug-all")
         }
