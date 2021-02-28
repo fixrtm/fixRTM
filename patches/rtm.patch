@@ -224,7 +224,7 @@ index d9b0787..a04bd4e 100644
      aload 0
      getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 58704f1..3abb3c3 100644
+index 58704f1..630e10e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 @@ -1547,24 +1547,34 @@ L_0012:
@@ -262,7 +262,7 @@ index 58704f1..3abb3c3 100644
  
  .method public onBogieUpdate ()V
      .limit stack 2
-@@ -3260,10 +3270,23 @@ L_0000:
+@@ -3260,10 +3270,35 @@ L_0000:
      putstatic jp/ngt/rtm/entity/train/EntityBogie/TRAIN_ID Lnet/minecraft/network/datasync/DataParameter;
  L_0006:
      .line 44
@@ -284,6 +284,18 @@ index 58704f1..3abb3c3 100644
 +    invokestatic com/anatawa12/fixRtm/rtm/entity/train/EntityBogieKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/train/EntityBogie;)V
 +    return
 +L_end:
++.end method
++
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
@@ -538,7 +550,7 @@ index 2fe97f1..299abdb 100644
  .method private setupChunks (II)V
      .limit stack 5
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index 7ae932e..72d443b 100644
+index 7ae932e..183e740 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 @@ -1068,48 +1068,54 @@ L_0004:
@@ -597,7 +609,7 @@ index 7ae932e..72d443b 100644
      getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/posX D
      dsub
      aload 2
-@@ -2570,10 +2576,23 @@ L_000d:
+@@ -2570,10 +2576,35 @@ L_000d:
      .limit stack 1
      .limit local 1
  L_0000:
@@ -619,6 +631,18 @@ index 7ae932e..72d443b 100644
 +    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
 +    return
 +L_end:
++.end method
++
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm
