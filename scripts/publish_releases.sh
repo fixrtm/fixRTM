@@ -6,12 +6,12 @@ err_exit() {
 }
 
 # external variable check
-[ -z "$VERSION_NAME" ] || err_exit 'VERSION_NAME not found'
-[ -z "$ASSET_PATH" ]   || err_exit 'ASSET_PATH not found'
-[ -z "$GITHUB_TOKEN" ] || err_exit 'GITHUB_TOKEN not found'
-[ -z "$CURSE_TOKEN" ]  || err_exit 'CURSE_TOKEN not found'
-[ -z "$PRERELEASE" ]   || err_exit 'PRERELEASE not found'
-[ -z "$RELEASE_NOTE" ] || err_exit 'RELEASE_NOTE not found'
+[ -z "$VERSION_NAME" ] && err_exit 'VERSION_NAME not found'
+[ -z "$ASSET_PATH" ]   && err_exit 'ASSET_PATH not found'
+[ -z "$GITHUB_TOKEN" ] && err_exit 'GITHUB_TOKEN not found'
+[ -z "$CURSE_TOKEN" ]  && err_exit 'CURSE_TOKEN not found'
+[ -z "$PRERELEASE" ]   && err_exit 'PRERELEASE not found'
+[ -z "$RELEASE_NOTE" ] && err_exit 'RELEASE_NOTE not found'
 
 set -eu
 
