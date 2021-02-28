@@ -20,6 +20,8 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-java@v1
         with:
@@ -60,6 +62,10 @@ jobs:
         env:
           VERSION_NAME: ${{ steps.prepare_build.outputs.version_name }}
           ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
+          GITHUB_TOKEN: ${{ secrets.PUSH_KEY }}
+          CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
+          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
+          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
 
       - name: Create Release
         id: create_release
