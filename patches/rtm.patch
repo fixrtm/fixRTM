@@ -1498,7 +1498,7 @@ index 0a49c17..d210f43 100644
      .stack use locals
      .end stack
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
-index c1621a2..ef1f288 100644
+index c1621a2..3f646b8 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
 @@ -80,22 +80,35 @@ L_0000:
@@ -1607,8 +1607,108 @@ index c1621a2..ef1f288 100644
      checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
      getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/guiTexture Ljava/lang/String;
      invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResource (Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;
+@@ -208,20 +247,21 @@ L_0015:
+ L_0000:
+     .line 85
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetBase<TT;>;" from L_0000 to L_0006
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     areturn
+ L_0006:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 2
+ L_0000:
+     .line 91
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetBase<TT;>;" from L_0000 to L_000d
+     .var 1 is mc Lnet/minecraft/client/Minecraft; from L_0000 to L_000d
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
+index c0fdca1..eeb4fa7 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
+@@ -181,20 +181,21 @@ L_003c:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 56
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetNPC; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/NPCConfig/getDummy ()Ljp/ngt/rtm/modelpack/cfg/NPCConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 2
+ L_0000:
+     .line 63
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetNPC; from L_0000 to L_0013
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0013
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
+index c3ad96c..46c3723 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
+@@ -144,20 +144,21 @@ L_004a:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 57
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetSignal; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/SignalConfig/getDummyConfig ()Ljp/ngt/rtm/modelpack/cfg/SignalConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 3
+ L_0000:
+     .line 64
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetSignal; from L_0000 to L_001b
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_001b
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
+index 3255f60..9cd137a 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
+@@ -174,20 +174,21 @@ L_002c:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 63
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetTrain; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/TrainConfig/getDummyConfig ()Ljp/ngt/rtm/modelpack/cfg/TrainConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method protected renderPartsInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 5
+ L_0000:
+     .line 70
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetTrain; from L_0000 to L_0045
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0045
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
-index e05f400..1418cc5 100644
+index e05f400..3225355 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
 @@ -192,22 +192,35 @@ L_0068:
@@ -1647,6 +1747,28 @@ index e05f400..1418cc5 100644
  L_007d:
  .end method
  
+@@ -218,20 +231,21 @@ L_007d:
+ L_0000:
+     .line 70
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase<TT;>;" from L_0000 to L_0006
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig
+     areturn
+ L_0006:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 3
+ L_0000:
+     .line 77
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase<TT;>;" from L_0000 to L_0020
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0020
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
 index c462237..bc67ca4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
