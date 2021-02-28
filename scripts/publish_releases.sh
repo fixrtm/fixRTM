@@ -27,20 +27,11 @@ git push origin "$VERSION_NAME"
 # see https://www.curseforge.com/minecraft/mc-mods/fixrtm
 project_id=365235
 
-if [ "$PRERELEASE" == "true" ]; then
-  release_type="release"
-else
+# curse info
+if [ "$PRERELEASE" = "true" ]; then
   release_type="alpha"
+else
+  release_type="release"
 fi
 
-metadata_json_path=$(mktemp)
-
-node ./scripts/make_curse_json.js "$metadata_json_path" "$RELEASE_NOTE" 6756,7498,4458 "$release_type"
-UPLOAD_URL="https://minecraft.curseforge.com/api/projects/$project_id/upload-file"
-
-curl -sL \
-  -X POST \
-  -F "metadata=@$metadata_json_path;type=application/json" \
-  -F "file=@$ASSET_PATH;type=application/java-archive" \
-  -H "X-Api-Token: $CURSE_TOKEN" \
-  "$UPLOAD_URL"
+echo "::set-output name=curse_release_type::$release_type"
