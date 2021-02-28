@@ -35,6 +35,13 @@ else
     prerelease=false
 fi
 
+# バージョン情報をverify
+
+if echo "$version_name" | grep -Eq -v '^SNAPSHOT-[0-9-]+|[0-9.]+$' > /dev/null; then
+  echo "invalid version name: $version_name"
+  exit 255
+fi
+
 # 各ファイルのバージョン情報更新
 
 if [ "$prerelease" != "true" ]; then
@@ -108,9 +115,7 @@ rm "$tmp_file"
 # コミット
 
 git commit -am "$version_name"
-git push
 git tag "$version_name"
-git push origin "$version_name"
 
 # 出力設定
 

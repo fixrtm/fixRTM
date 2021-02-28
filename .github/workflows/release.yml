@@ -25,6 +25,10 @@ jobs:
         with:
           java-version: 8
 
+      - uses: install auto-changelog
+        id: install-auto-changelog
+        run: npm install -g auto-changelog
+
       - name: update for release and push
         id: prepare_build
         run: ./scripts/update_for_release.sh
@@ -49,6 +53,13 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: makeFixrtmJar
+
+      - name: push releases
+        id: publish_releases
+        run: ./scripts/publish_releases.sh
+        env:
+          VERSION_NAME: ${{ steps.prepare_build.outputs.version_name }}
+          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
 
       - name: Create Release
         id: create_release
