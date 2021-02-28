@@ -74,7 +74,7 @@ jobs:
           ./gradlew curseforge \
               -Pcom.anatawa12.curse.api-key="${{ secrets.CURSE_TOKEN }}" \
               -Pcom.anatawa12.curse.project-id=365235 \
-              -Pcom.anatawa12.curse.changelog-path="${{ steps.publish_releases.outputs.release_note_path }}" \
+              -Pcom.anatawa12.curse.changelog-path="${{ steps.prepare_build.outputs.release_note_path }}" \
               -Pcom.anatawa12.curse.release-type="${{ steps.publish_releases.outputs.curse_release_type }}"
 
       - name: Create Release
