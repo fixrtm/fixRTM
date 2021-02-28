@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.4.20"
     id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
+    id("com.matthewprenger.cursegradle") version "1.4.0"
 }
 
 version = property("modVersion")!!
@@ -183,3 +184,18 @@ runClient.outputs.upToDateWhen { false }
 apply(from = "./processMods.gradle")
 apply(from = "./makePatch.gradle")
 
+curseforge {
+    apiKey = project.findProperty("com.anatawa12.curse.api-key").toString()
+    project(closureOf<com.matthewprenger.cursegradle.CurseProject> {
+        id = project.findProperty("com.anatawa12.curse.project-id").toString()
+        changelogType = "markdown"
+        changelog = file(project.findProperty("com.anatawa12.curse.changelog-path").toString())
+        releaseType = project.findProperty("com.anatawa12.curse.release-type")?.toString() ?: "release"
+        relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
+            requiredDependency("realtrainmod")
+        })
+        gameVersionStrings.add("1.12.2")
+        gameVersionStrings.add("Forge")
+        gameVersionStrings.add("Java 8")
+    })
+}
