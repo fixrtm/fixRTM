@@ -1,3 +1,5 @@
+set -eu
+
 # utilities
 function get_latest_release() {
   curl -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/repos/$1/releases/latest" |
