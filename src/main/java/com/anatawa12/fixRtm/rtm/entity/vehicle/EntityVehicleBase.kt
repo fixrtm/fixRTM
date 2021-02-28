@@ -1,6 +1,7 @@
 package com.anatawa12.fixRtm.rtm.entity.vehicle
 
 import com.anatawa12.fixRtm.FixRtm
+import com.anatawa12.fixRtm.addEntityCrashInfoAboutModelSet
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.network.NotifyUntracked
 import jp.ngt.rtm.entity.vehicle.EntityVehicleBase
@@ -13,10 +14,5 @@ fun EntityVehicleBase<*>.onRemovedFromWorld() {
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER", "unused")
-fun EntityVehicleBase<*>.addEntityCrashInfo(category: CrashReportCategory) = try {
-    val cfg = resourceState.resourceSet.config
-    category.addCrashSection("ModelSet Name", cfg.name)
-    category.addCrashSection("ModelSet Source JSON Path", cfg.file ?: "no source")
-} catch (t: Throwable) {
-    category.addCrashSectionThrowable("Error Getting ModelSet", t)
-}
+fun EntityVehicleBase<*>.addEntityCrashInfo(category: CrashReportCategory) =
+    addEntityCrashInfoAboutModelSet(category) { resourceState?.resourceSet?.config }
