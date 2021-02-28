@@ -27,7 +27,7 @@ jobs:
         with:
           java-version: 8
 
-      - uses: install auto-changelog
+      - name: install auto-changelog
         id: install-auto-changelog
         run: npm i -g https://github.com/anatawa12/auto-changelog
 
