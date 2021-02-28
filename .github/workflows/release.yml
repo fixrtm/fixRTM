@@ -29,7 +29,7 @@ jobs:
 
       - name: install auto-changelog
         id: install-auto-changelog
-        run: npm i -g https://github.com/anatawa12/auto-changelog
+        run: sudo npm i -g https://github.com/anatawa12/auto-changelog
 
       - name: update for release and push
         id: prepare_build
