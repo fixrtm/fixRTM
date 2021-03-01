@@ -359,7 +359,7 @@ index d9b0787..a04bd4e 100644
      aload 0
      getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/EntityNPC.jasm b/src/main/rtm/jp/ngt/rtm/entity/npc/EntityNPC.jasm
-index 7f6b282..a38048a 100644
+index 7f6b282..f3911dc 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/EntityNPC.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/npc/EntityNPC.jasm
 @@ -1814,10 +1814,22 @@ L_0000:
@@ -378,15 +378,15 @@ index 7f6b282..a38048a 100644
 +    .limit local 2
 +    aload 0
 +    aload 1
-+    invokespecial jp/ngt/rtm/entity/train/parts/EntityCargo/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    invokespecial net/minecraft/entity/passive/EntityTameable/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/entity/npc/EntityNPCKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/npc/EntityNPC;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/entity/npc/EntityNPCKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/npc/EntityNPC;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 58704f1..630e10e 100644
+index 58704f1..1867b3c 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 @@ -1547,24 +1547,34 @@ L_0012:
@@ -453,10 +453,10 @@ index 58704f1..630e10e 100644
 +    .limit local 2
 +    aload 0
 +    aload 1
-+    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    invokespecial net/minecraft/entity/Entity/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/entity/train/EntityBogieKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/train/EntityBogie;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
@@ -712,7 +712,7 @@ index 2fe97f1..299abdb 100644
  .method private setupChunks (II)V
      .limit stack 5
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
-index dc9fda2..c7b02ce 100644
+index dc9fda2..08aa6ca 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
 @@ -311,10 +311,22 @@ L_0004:
@@ -734,12 +734,12 @@ index dc9fda2..c7b02ce 100644
 +    invokespecial jp/ngt/rtm/entity/train/parts/EntityCargo/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/entity/train/parts/EntityCargoWithModelKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/train/parts/EntityCargoWithModel;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/entity/train/parts/EntityCargoWithModelKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/train/parts/EntityCargoWithModel;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
-index 507bef1..573304c 100644
+index 507bef1..87bb354 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
 @@ -777,10 +777,22 @@ L_002d:
@@ -761,12 +761,12 @@ index 507bef1..573304c 100644
 +    invokespecial net/minecraft/entity/item/EntityMinecartEmpty/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityTrolleyKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/vehicle/EntityTrolley;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityTrolleyKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityTrolley;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index 7ae932e..183e740 100644
+index 7ae932e..4941cf5 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 @@ -1068,48 +1068,54 @@ L_0004:
@@ -857,7 +857,7 @@ index 7ae932e..183e740 100644
 +    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
