@@ -161,6 +161,141 @@ index e14c0e6..5de27d3 100644
      bipush 64
      iconst_4
      invokespecial net/minecraft/item/ItemStack/<init> (Lnet/minecraft/item/Item;II)V
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.jasm b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.jasm
+index 5c07478..d0f0b79 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.jasm
+@@ -470,10 +470,22 @@ L_0000:
+     iconst_1
+     ireturn
+ L_0004:
+ .end method
+ 
+ .method protected abstract getSubType ()Ljp/ngt/rtm/modelpack/ResourceType;
+     .limit stack 0
+     .limit local 0
+ .end method
+ 
++.method public addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/rtm/electric/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMachineBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMachineBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityMechanism.jasm b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityMechanism.jasm
+index fdf3a9d..448baad 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityMechanism.jasm
++++ b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityMechanism.jasm
+@@ -3066,10 +3066,22 @@ L_0017:
+     .limit local 2
+ L_0000:
+     .line 681
+     .var 0 is this Ljp/ngt/rtm/block/tileentity/TileEntityMechanism; from L_0000 to L_0004
+     .var 1 is par1 Ljp/ngt/rtm/modelpack/state/ResourceState; from L_0000 to L_0004
+     iconst_1
+     ireturn
+ L_0004:
+ .end method
+ 
++.method public addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/block/TileEntityCustom/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMechanismKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMechanism;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityOrnament.jasm b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityOrnament.jasm
+index 0137343..3b00327 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/block/tileentity/TileEntityOrnament.jasm
++++ b/src/main/rtm/jp/ngt/rtm/block/tileentity/TileEntityOrnament.jasm
+@@ -403,10 +403,22 @@ L_0000:
+     iconst_1
+     ireturn
+ L_0004:
+ .end method
+ 
+ .method protected abstract getSubType ()Ljp/ngt/rtm/modelpack/ResourceType;
+     .limit stack 0
+     .limit local 0
+ .end method
+ 
++.method public addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/block/TileEntityCustom/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityOrnamentKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityOrnament;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntityConnectorBase.jasm b/src/main/rtm/jp/ngt/rtm/electric/TileEntityConnectorBase.jasm
+index 4bdd58f..b328aba 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntityConnectorBase.jasm
++++ b/src/main/rtm/jp/ngt/rtm/electric/TileEntityConnectorBase.jasm
+@@ -484,10 +484,22 @@ L_0000:
+     getfield jp/ngt/rtm/electric/TileEntityConnectorBase/state Ljp/ngt/rtm/modelpack/state/ResourceState;
+     areturn
+ L_0005:
+ .end method
+ 
+ .method protected abstract getSubType ()Ljp/ngt/rtm/modelpack/ResourceType;
+     .limit stack 0
+     .limit local 0
+ .end method
+ 
++.method public addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/rtm/electric/TileEntityElectricalWiring/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntityConnectorBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntityConnectorBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntitySignal.jasm b/src/main/rtm/jp/ngt/rtm/electric/TileEntitySignal.jasm
+index 00291c7..00e66d4 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/electric/TileEntitySignal.jasm
++++ b/src/main/rtm/jp/ngt/rtm/electric/TileEntitySignal.jasm
+@@ -724,10 +724,22 @@ L_0005:
+     .limit local 1
+ L_0000:
+     .line 21
+     .var 0 is this Ljp/ngt/rtm/electric/TileEntitySignal; from L_0000 to L_0005
+     aload 0
+     invokevirtual jp/ngt/rtm/electric/TileEntitySignal/getResourceState ()Ljp/ngt/rtm/modelpack/state/ResourceStateWithBlock;
+     areturn
+ L_0005:
+ .end method
+ 
++.method public addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/block/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntitySignalKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntitySignal;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm b/src/main/rtm/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm
 index d9b0787..a04bd4e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.jasm
@@ -223,8 +358,35 @@ index d9b0787..a04bd4e 100644
      .var 0 is this Ljp/ngt/rtm/entity/ai/EntityAITravelByTrain; from L_0000 to L_006e
      aload 0
      getfield jp/ngt/rtm/entity/ai/EntityAITravelByTrain/activeTask Lnet/minecraft/entity/ai/EntityAIBase;
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/EntityNPC.jasm b/src/main/rtm/jp/ngt/rtm/entity/npc/EntityNPC.jasm
+index 7f6b282..a38048a 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/npc/EntityNPC.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/npc/EntityNPC.jasm
+@@ -1814,10 +1814,22 @@ L_0000:
+     putstatic jp/ngt/rtm/entity/npc/EntityNPC/USING_ITEM Lnet/minecraft/network/datasync/DataParameter;
+ L_0006:
+     .line 46
+     ldc class Ljp/ngt/rtm/entity/npc/EntityNPC;
+     getstatic net/minecraft/network/datasync/DataSerializers/STRING Lnet/minecraft/network/datasync/DataSerializer;
+     invokestatic net/minecraft/network/datasync/EntityDataManager/createKey (Ljava/lang/Class;Lnet/minecraft/network/datasync/DataSerializer;)Lnet/minecraft/network/datasync/DataParameter;
+     putstatic jp/ngt/rtm/entity/npc/EntityNPC/MENU Lnet/minecraft/network/datasync/DataParameter;
+     return
+ .end method
+ 
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/rtm/entity/train/parts/EntityCargo/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/npc/EntityNPCKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/npc/EntityNPC;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
-index 58704f1..3abb3c3 100644
+index 58704f1..630e10e 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityBogie.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/train/EntityBogie.jasm
 @@ -1547,24 +1547,34 @@ L_0012:
@@ -262,7 +424,7 @@ index 58704f1..3abb3c3 100644
  
  .method public onBogieUpdate ()V
      .limit stack 2
-@@ -3260,10 +3270,23 @@ L_0000:
+@@ -3260,10 +3270,35 @@ L_0000:
      putstatic jp/ngt/rtm/entity/train/EntityBogie/TRAIN_ID Lnet/minecraft/network/datasync/DataParameter;
  L_0006:
      .line 44
@@ -284,6 +446,18 @@ index 58704f1..3abb3c3 100644
 +    invokestatic com/anatawa12/fixRtm/rtm/entity/train/EntityBogieKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/train/EntityBogie;)V
 +    return
 +L_end:
++.end method
++
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/EntityTrainBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/EntityTrainBase.jasm
@@ -537,8 +711,62 @@ index 2fe97f1..299abdb 100644
  
  .method private setupChunks (II)V
      .limit stack 5
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
+index dc9fda2..c7b02ce 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.jasm
+@@ -311,10 +311,22 @@ L_0004:
+     iconst_1
+     ireturn
+ L_0008:
+ .end method
+ 
+ .method protected abstract getSubType ()Ljp/ngt/rtm/modelpack/ResourceType;
+     .limit stack 0
+     .limit local 0
+ .end method
+ 
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/rtm/entity/train/parts/EntityCargo/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/train/parts/EntityCargoWithModelKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/train/parts/EntityCargoWithModel;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
+index 507bef1..573304c 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
++++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityTrolley.jasm
+@@ -777,10 +777,22 @@ L_002d:
+     .stack
+         locals Object jp/ngt/rtm/entity/vehicle/EntityTrolley
+         locals Object net/minecraft/util/DamageSource
+         locals Float
+     .end stack
+     iconst_1
+     ireturn
+ L_0032:
+ .end method
+ 
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial net/minecraft/entity/item/EntityMinecartEmpty/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityTrolleyKt/addEntityCrashInfo (Lcom/anatawa12/fixRtm/rtm/entity/vehicle/EntityTrolley;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
++.end method
++
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
-index 7ae932e..72d443b 100644
+index 7ae932e..183e740 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.jasm
 @@ -1068,48 +1068,54 @@ L_0004:
@@ -597,7 +825,7 @@ index 7ae932e..72d443b 100644
      getfield jp/ngt/rtm/entity/vehicle/EntityVehicleBase/posX D
      dsub
      aload 2
-@@ -2570,10 +2576,23 @@ L_000d:
+@@ -2570,10 +2576,35 @@ L_000d:
      .limit stack 1
      .limit local 1
  L_0000:
@@ -619,6 +847,18 @@ index 7ae932e..72d443b 100644
 +    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/onRemovedFromWorld (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
 +    return
 +L_end:
++.end method
++
++.method public addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    .limit stack 2
++    .limit local 2
++    aload 0
++    aload 1
++    invokespecial jp/ngt/ngtlib/entity/EntityCustom/addEntityCrashInfo (Lnet/minecraft/crash/CrashReportCategory;)V
++    aload 0
++    aload 1
++    invokestatic com/anatawa12/fixRtm/rtm/entity/vehicle/EntityVehicleBaseKt/addEntityCrashInfo (Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    return
 +.end method
 +
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.jasm
@@ -1474,7 +1714,7 @@ index 0a49c17..d210f43 100644
      .stack use locals
      .end stack
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
-index c1621a2..ef1f288 100644
+index c1621a2..3f646b8 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetBase.jasm
 @@ -80,22 +80,35 @@ L_0000:
@@ -1583,8 +1823,108 @@ index c1621a2..ef1f288 100644
      checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
      getfield jp/ngt/rtm/modelpack/cfg/ModelConfig/guiTexture Ljava/lang/String;
      invokevirtual jp/ngt/rtm/modelpack/ModelPackManager/getResource (Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;
+@@ -208,20 +247,21 @@ L_0015:
+ L_0000:
+     .line 85
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetBase<TT;>;" from L_0000 to L_0006
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/ModelConfig
+     areturn
+ L_0006:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 2
+ L_0000:
+     .line 91
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetBase<TT;>;" from L_0000 to L_000d
+     .var 1 is mc Lnet/minecraft/client/Minecraft; from L_0000 to L_000d
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
+index c0fdca1..eeb4fa7 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetNPC.jasm
+@@ -181,20 +181,21 @@ L_003c:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 56
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetNPC; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/NPCConfig/getDummy ()Ljp/ngt/rtm/modelpack/cfg/NPCConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 2
+ L_0000:
+     .line 63
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetNPC; from L_0000 to L_0013
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0013
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
+index c3ad96c..46c3723 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.jasm
+@@ -144,20 +144,21 @@ L_004a:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 57
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetSignal; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/SignalConfig/getDummyConfig ()Ljp/ngt/rtm/modelpack/cfg/SignalConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 3
+ L_0000:
+     .line 64
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetSignal; from L_0000 to L_001b
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_001b
+diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
+index 3255f60..9cd137a 100644
+--- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
++++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.jasm
+@@ -174,20 +174,21 @@ L_002c:
+     .limit stack 1
+     .limit local 1
+ L_0000:
+     .line 63
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetTrain; from L_0000 to L_0004
+     invokestatic jp/ngt/rtm/modelpack/cfg/TrainConfig/getDummyConfig ()Ljp/ngt/rtm/modelpack/cfg/TrainConfig;
+     areturn
+ L_0004:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method protected renderPartsInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 5
+ L_0000:
+     .line 70
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetTrain; from L_0000 to L_0045
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0045
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
-index e05f400..1418cc5 100644
+index e05f400..3225355 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
 +++ b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.jasm
 @@ -192,22 +192,35 @@ L_0068:
@@ -1623,6 +1963,28 @@ index e05f400..1418cc5 100644
  L_007d:
  .end method
  
+@@ -218,20 +231,21 @@ L_007d:
+ L_0000:
+     .line 70
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase<TT;>;" from L_0000 to L_0006
+     aload 0
+     getfield jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase/cfg Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+     checkcast jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig
+     areturn
+ L_0006:
+ .end method
+ 
++# TODO: CrashReport when use java
+ .method public renderModelInGui (Lnet/minecraft/client/Minecraft;)V
+     .annotation visible net/minecraftforge/fml/relauncher/SideOnly
+         value e = net/minecraftforge/fml/relauncher/Side CLIENT
+     .end annotation
+     .limit stack 5
+     .limit local 3
+ L_0000:
+     .line 77
+     .var 0 is this Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase; signature "Ljp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase<TT;>;" from L_0000 to L_0020
+     .var 1 is par1 Lnet/minecraft/client/Minecraft; from L_0000 to L_0020
 diff --git a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm b/src/main/rtm/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm
 index c462237..bc67ca4 100644
 --- a/mods/rtm.deobf.jar.src.processed/jp/ngt/rtm/modelpack/modelset/ResourceSet.jasm

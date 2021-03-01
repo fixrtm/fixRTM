@@ -4,6 +4,8 @@ import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
+import jp.ngt.rtm.modelpack.cfg.ResourceConfig
+import net.minecraft.crash.CrashReportCategory
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.util.math.RayTraceResult
@@ -152,4 +154,20 @@ fun Entity.rayTraceBothSide(blockReachDistance: Double, partialTicks: Float): Ra
         .add(lookDir.x * blockReachDistance, lookDir.y * blockReachDistance, lookDir.z * blockReachDistance)
     return world.rayTraceBlocks(eyePosition, endPosition,
         false, false, true)
+}
+
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER", "unused")
+fun <T> T.addEntityCrashInfoAboutModelSet(
+    category: CrashReportCategory,
+    configGetter: T.() -> ResourceConfig?,
+) = try {
+    val cfg = configGetter()
+    if (cfg == null) {
+        category.addCrashSection("Parent Train ModelSet Name", "no modelpack detected")
+    } else {
+        category.addCrashSection("Parent Train ModelSet Name", cfg.name)
+        category.addCrashSection("Parent Train ModelSet Source JSON Path", cfg.file ?: "no source")
+    }
+} catch (t: Throwable) {
+    category.addCrashSectionThrowable("Error Getting ModelSet", t)
 }
