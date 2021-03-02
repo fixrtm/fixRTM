@@ -86,7 +86,7 @@ task copyNgtLibResources(type: Copy) {
     into(file("src/main/ngtlibResources"))
 }
 
-task decompileMods() {
+decompileMods {
     dependsOn disassembleRTM, disassembleNgtLib
 }
 
@@ -159,7 +159,7 @@ task printModelPackLoadMethodCode(type: PrintMethodCode) {
     methodDesc = "(Ljp/ngt/rtm/modelpack/init/ModelPackLoadThread;)V"
 }
 
-task prepareMods() {
+prepareMods {
     dependsOn decompileMods
     dependsOn archiveRTMResourcesZip
     dependsOn copyRTMResources, copyNgtLibResources

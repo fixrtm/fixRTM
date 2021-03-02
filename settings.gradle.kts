@@ -1,6 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
+            name = "ossrh-snapshot"
+        }
         maven(url = "https://files.minecraftforge.net/maven") {
             name = "forge"
         }
@@ -15,5 +18,8 @@ buildscript {
             exclude(group = "org.ow2.asm", module = "asm-debug-all")
         }
         classpath("com.anatawa12.java-stab-gen:gradle-library:1.0.0")
+        classpath("com.anatawa12.mod-patching:mod-patching-gradle-plugin:1.0.0-SNAPSHOT") {
+            isChanging = true
+        }
     }
 }

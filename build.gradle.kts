@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.4.20"
     id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
+    id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
 }
 
@@ -68,9 +69,9 @@ dependencies {
     shade("com.anatawa12.sai:sai:0.0.2")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
-    compileOnly(files(sourceSets.main.get().jasm.outputDir))
-    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
-        projectDir.resolve("mods/ngtlib.deobf.jar")))
+//    compileOnly(files(sourceSets.main.get().jasm.outputDir))
+//    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
+//        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
     apiCompile("org.twitter4j:twitter4j-core:4.0.7")
@@ -87,7 +88,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 }
 
-val processResources by tasks.getting(Copy::class) {
+fun Copy.configure() {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
     inputs.property("mcversion", project.minecraft.version)
@@ -107,6 +108,13 @@ val processResources by tasks.getting(Copy::class) {
     from(sourceSets.main.get().resources.srcDirs) {
         exclude("mcmod.info")
     }
+}
+
+val processResources by tasks.getting(Copy::class) {
+    configure()
+}
+val reprocessResources by tasks.getting(Copy::class) {
+    configure()
 }
 
 val runClient by tasks.getting(JavaExec::class) {
@@ -180,6 +188,25 @@ tasks.test {
 }
 
 runClient.outputs.upToDateWhen { false }
+
+@Suppress("SpellCheckingInspection")
+val rtm = mods.curse(id = "realtrainmod", version = "2.4.21") {
+    name = "rtm"
+    targetVersions("1.12.2")
+}
+
+@Suppress("SpellCheckingInspection")
+val ngtlib = mods.curse(id = "ngtlib", version = "2.4.18") {
+    name = "ngtlib"
+    targetVersions("1.12.2")
+}
+
+patching {
+    patch(rtm)
+    patch(ngtlib)
+    bsdiffPrefix = "com/anatawa12/fixRtm/asm/patches"
+    sourceNameSuffix = "(modified by fixrtm)"
+}
 
 apply(from = "./processMods.gradle")
 apply(from = "./makePatch.gradle")
