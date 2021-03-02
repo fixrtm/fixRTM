@@ -74,14 +74,14 @@ dependencies {
 //        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    apiCompile("org.twitter4j:twitter4j-core:4.0.7")
+    apiImplementation("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    apiCompile("com.github.sarxos:webcam-capture:0.3.12")
+    apiImplementation("com.github.sarxos:webcam-capture:0.3.12")
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    compile("org.twitter4j:twitter4j-core:4.0.7")
+    implementation("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    compile("com.github.sarxos:webcam-capture:0.3.12")
+    implementation("com.github.sarxos:webcam-capture:0.3.12")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
@@ -125,7 +125,7 @@ val runClient by tasks.getting(JavaExec::class) {
     // */
     //*
     if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password"))
-        args = args.orEmpty() + listOf(
+        args = args + listOf(
             "-username", project.property("minecraft.login.username").toString(),
             "-password", project.property("minecraft.login.password").toString()
         )
