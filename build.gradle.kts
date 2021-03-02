@@ -209,7 +209,6 @@ patching {
 }
 
 apply(from = "./processMods.gradle")
-apply(from = "./makePatch.gradle")
 
 curseforge {
     apiKey = project.findProperty("com.anatawa12.curse.api-key").toString()
