@@ -125,7 +125,8 @@ val runClient by tasks.getting(JavaExec::class) {
     // */
     //*
     if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password"))
-        args = args + listOf(
+        @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
+        args = args!! + listOf(
             "-username", project.property("minecraft.login.username").toString(),
             "-password", project.property("minecraft.login.password").toString()
         )
