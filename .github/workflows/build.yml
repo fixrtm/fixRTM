@@ -26,18 +26,21 @@ jobs:
         with:
           java-version: 8
 
-      - uses: eskatos/gradle-command-action@v1
+      - name: prepare patching environment
+        uses: eskatos/gradle-command-action@v1
         with:
-          arguments: prepareMods
+          arguments: preparePatchingEnvironment
 
       # Runs a single command using the runners shell
       - name: apply patches
-        run: ./apply_patch.sh
+        run: ./pm.apply-patches
 
-      - uses: eskatos/gradle-command-action@v1
+      - name: setup workspace
+        uses: eskatos/gradle-command-action@v1
         with:
           arguments: setupCiWorkspace
 
-      - uses: eskatos/gradle-command-action@v1
+      - name: build
+        uses: eskatos/gradle-command-action@v1
         with:
           arguments: build

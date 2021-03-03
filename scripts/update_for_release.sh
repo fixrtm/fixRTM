@@ -105,7 +105,7 @@ awk "$(sed "s/{MATCH}/[$version_name]/" scripts/extract-changelog.awk)" CHANGELO
 
 # 出力設定
 
-asset_path="./build/fixrtm/libs/fixRtm-$version_name.jar"
+asset_path="./build/libs/fixRtm-$version_name.jar"
 asset_name="fixRtm-$version_name.jar"
 
 echo "::set-output name=release_note_path::$release_note_path"
