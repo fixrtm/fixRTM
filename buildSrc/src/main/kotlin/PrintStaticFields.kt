@@ -29,9 +29,9 @@ open class PrintStaticFields : DefaultTask() {
 
         val file = buildString {
             for (field in theClass.fields.filter { it.isStatic }) {
-                appendln("name: ${field.name}")
-                appendln("type: ${field.type}")
-                appendln()
+                append("name: ${field.name}\n")
+                append("type: ${field.type}\n")
+                append("\n")
             }
         }
 
