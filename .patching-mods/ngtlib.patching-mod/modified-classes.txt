@@ -1,0 +1,8 @@
+jp.ngt.ngtlib.NGTCore
+jp.ngt.ngtlib.io.NGTLog
+jp.ngt.ngtlib.item.craft.RecipeManager
+jp.ngt.ngtlib.item.craft.ShapedRecipes55
+jp.ngt.ngtlib.renderer.model.ModelLoader
+jp.ngt.ngtlib.renderer.model.ObjModel
+jp.ngt.ngtlib.renderer.model.PolygonModel
+jp.ngt.ngtlib.util.PermissionManager

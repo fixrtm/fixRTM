@@ -1,0 +1,20 @@
+--- a/jp/ngt/ngtlib/NGTCore.java
++++ b/jp/ngt/ngtlib/NGTCore.java
+@@ -94,16 +94,16 @@
+       NETWORK_WRAPPER.registerMessage(PacketNoticeHandlerClient.class, PacketNotice.class, 0, Side.CLIENT);
+       NETWORK_WRAPPER.registerMessage(PacketNoticeHandlerServer.class, PacketNotice.class, 1, Side.SERVER);
+       NETWORK_WRAPPER.registerMessage(PacketNBTHandlerClient.class, PacketNBT.class, 2, Side.CLIENT);
+       NETWORK_WRAPPER.registerMessage(PacketNBTHandlerServer.class, PacketNBT.class, 3, Side.SERVER);
+       NETWORK_WRAPPER.registerMessage(PacketProtection.class, PacketProtection.class, 4, Side.CLIENT);
++      MinecraftForge.EVENT_BUS.register(RecipeManager.INSTANCE);
+    }
+ 
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+       proxy.init();
+-      MinecraftForge.EVENT_BUS.register(RecipeManager.INSTANCE);
+       MinecraftForge.EVENT_BUS.register(new NGTEventHandler());
+       Usage.INSTANCE.add(protection_key, -1, "usage.item.protection_key");
+ 
+       try {
+          PermissionManager.INSTANCE.load();

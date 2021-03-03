@@ -119,8 +119,8 @@ val reprocessResources by tasks.getting(Copy::class) {
 
 val runClient by tasks.getting(JavaExec::class) {
     environment("fml.coreMods.load", "com.anatawa12.fixRtm.asm.FixRtmCorePlugin")
-    /*
     systemProperties["legacy.debugClassLoading"] = "true"
+    /*
     systemProperties["legacy.debugClassLoadingSave"] = "true"
     // */
     //*
@@ -160,6 +160,7 @@ val generateJavaStab by tasks.creating(GenerateJavaStab::class) {
 }
 
 tasks.compileKotlin {
+    dependsOn(tasks.generateUnmodifieds.get())
     dependsOn(generateJavaStab)
     source(generateJavaStab.generatedDir!!)
     include("**/*.java")

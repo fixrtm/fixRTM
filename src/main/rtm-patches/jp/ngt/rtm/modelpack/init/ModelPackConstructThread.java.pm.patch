@@ -1,0 +1,27 @@
+--- a/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.java
++++ b/jp/ngt/rtm/modelpack/init/ModelPackConstructThread.java
+@@ -5,11 +5,11 @@
+ import jp.ngt.rtm.modelpack.ModelPackManager;
+ import jp.ngt.rtm.modelpack.modelset.ResourceSet;
+ import net.minecraft.crash.CrashReport;
+ import net.minecraftforge.fml.relauncher.Side;
+ 
+-public final class ModelPackConstructThread extends Thread {
++public class ModelPackConstructThread extends Thread {
+    private final Side threadSide;
+    private final ModelPackLoadThread parent;
+    private boolean loading;
+    private int index;
+    private boolean barStateChanged;
+@@ -45,10 +45,11 @@
+                resourceset.constructOnServer();
+             } else {
+                resourceset.constructOnClient();
+                resourceset.finishConstruct();
+             }
++            resourceset.state = com.anatawa12.fixRtm.rtm.modelpack.ModelState.CONSTRUCTED;
+ 
+             NGTLog.debug("Construct Model : %s (%d / %d)", new Object[]{resourceset.getConfig().getName(), this.index + 1, ModelPackManager.INSTANCE.unconstructSets.size()});
+             ++this.index;
+             if (this.parent.loadFinished) {
+                if (!this.barStateChanged) {

@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.java
++++ b/jp/ngt/rtm/modelpack/modelset/ModelSetSignal.java
+@@ -43,10 +43,11 @@
+ 
+    public SignalConfig getDummyConfig() {
+       return SignalConfig.getDummyConfig();
+    }
+ 
++   // TODO: CrashReport when use java
+    @SideOnly(Side.CLIENT)
+    public void renderModelInGui(Minecraft par1) {
+       SignalConfig signalconfig = (SignalConfig)this.getConfig();
+       this.modelObj.render((Object)null, signalconfig, 0, 0.0F);
+       this.modelObj.render((Object)null, signalconfig, 1, 0.0F);

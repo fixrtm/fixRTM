@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.java
++++ b/jp/ngt/rtm/entity/vehicle/WeatherEffectDummy.java
+@@ -57,6 +57,11 @@
+    protected void readEntityFromNBT(NBTTagCompound compound) {
+    }
+ 
+    protected void writeEntityToNBT(NBTTagCompound compound) {
+    }
++
++   @Override
++   public net.minecraft.util.math.AxisAlignedBB getEntityBoundingBox() {
++      return this.parent.getEntityBoundingBox();
++   }
+ }

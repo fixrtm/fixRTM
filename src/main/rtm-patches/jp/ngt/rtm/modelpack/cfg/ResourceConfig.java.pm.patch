@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/modelpack/cfg/ResourceConfig.java
++++ b/jp/ngt/rtm/modelpack/cfg/ResourceConfig.java
+@@ -5,10 +5,11 @@
+ public abstract class ResourceConfig {
+    public short version;
+    public boolean useCustomColor;
+    public String tags;
+    public ResourceConfig.DMInitValue[] defaultValues;
++   public java.io.File file;
+    /** @deprecated */
+    @Deprecated
+    public String defaultData;
+ 
+    public abstract String getName();

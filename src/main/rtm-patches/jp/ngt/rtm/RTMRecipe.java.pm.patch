@@ -1,0 +1,24 @@
+--- a/jp/ngt/rtm/RTMRecipe.java
++++ b/jp/ngt/rtm/RTMRecipe.java
+@@ -125,15 +125,15 @@
+       RecipeManager.addRecipe(new ItemStack(RTMItem.rifle, 1, 0), new Object[]{"SSSM ", "   WW", "     ", "     ", "     ", 'S', itemstack6, 'W', Blocks.PLANKS, 'M', new ItemStack(RTMItem.magazine_rifle, 1, 0)}).setRegistryName(new ResourceLocation("rtm", "rifle"));
+       RecipeManager.addRecipe(new ItemStack(RTMItem.autoloading_rifle, 1, 0), new Object[]{"SSSS ", " M II", "     ", "     ", "     ", 'S', itemstack6, 'I', itemstack, 'M', new ItemStack(RTMItem.magazine_alr, 1, 0)}).setRegistryName(new ResourceLocation("rtm", "autoloading_rifle"));
+       RecipeManager.addRecipe(new ItemStack(RTMItem.sniper_rifle, 1, 0), new Object[]{" SS  ", "SSSS ", " M II", "     ", "     ", 'S', itemstack6, 'I', itemstack, 'M', new ItemStack(RTMItem.magazine_sr, 1, 0)}).setRegistryName(new ResourceLocation("rtm", "sniper_rifle"));
+       RecipeManager.addRecipe(new ItemStack(RTMItem.smg, 1, 0), new Object[]{"SSSS ", " M II", "     ", "     ", "     ", 'S', itemstack6, 'I', itemstack, 'M', new ItemStack(RTMItem.magazine_smg, 1, 0)}).setRegistryName(new ResourceLocation("rtm", "smg"));
+       RecipeManager.addRecipe(new ItemStack(RTMItem.amr, 1, 0), new Object[]{" SS  ", "SSSS ", " M II", "     ", "     ", 'S', itemstack6, 'I', itemstack, 'M', new ItemStack(RTMItem.magazine_amr, 1, 0)}).setRegistryName(new ResourceLocation("rtm", "amr"));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_handgun, new ItemStack(RTMItem.bullet, 1, 4)));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_rifle, new ItemStack(RTMItem.bullet, 1, 12)));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_alr, new ItemStack(RTMItem.bullet, 1, 12)));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_sr, new ItemStack(RTMItem.bullet, 1, 12)));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_smg, new ItemStack(RTMItem.bullet, 1, 4)));
+-      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_amr, new ItemStack(RTMItem.bullet, 1, 16)));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_handgun, new ItemStack(RTMItem.bullet, 1, 4)).setRegistryName(new ResourceLocation("rtm:magazine_handgun")));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_rifle, new ItemStack(RTMItem.bullet, 1, 12)).setRegistryName(new ResourceLocation("rtm:magazine_rifle")));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_alr, new ItemStack(RTMItem.bullet, 1, 12)).setRegistryName(new ResourceLocation("rtm:magazine_alr")));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_sr, new ItemStack(RTMItem.bullet, 1, 12)).setRegistryName(new ResourceLocation("rtm:magazine_sr")));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_smg, new ItemStack(RTMItem.bullet, 1, 4)).setRegistryName(new ResourceLocation("rtm:magazine_smg")));
++      RecipeManager.INSTANCE.addRecipeToManager(new RepairRecipe(RTMItem.magazine_amr, new ItemStack(RTMItem.bullet, 1, 16)).setRegistryName(new ResourceLocation("rtm:magazine_amr")));
+       RecipeManager.addRecipe(new ItemStack(RTMItem.material, 64, 4), new Object[]{"RG   ", "GG   ", "     ", "     ", "     ", 'R', new ItemStack(Items.REDSTONE), 'G', new ItemStack(Items.GUNPOWDER)}).setRegistryName(new ResourceLocation("rtm", "gun_powder"));
+       GameRegistry.addSmelting(new ItemStack(Items.COAL, 1, 0), new ItemStack(RTMItem.coke), 0.25F);
+    }
+ }

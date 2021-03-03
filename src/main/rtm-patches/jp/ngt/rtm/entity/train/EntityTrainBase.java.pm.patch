@@ -1,0 +1,75 @@
+--- a/jp/ngt/rtm/entity/train/EntityTrainBase.java
++++ b/jp/ngt/rtm/entity/train/EntityTrainBase.java
+@@ -72,18 +72,19 @@
+    private static final int[] PANTO_POS_ZERO = new int[]{0, 0};
+    private Ticket ticket;
+    private final Set<ChunkPos> loadedChunks;
+    private int prevChunkCoordX;
+    private int prevChunkCoordZ;
++   private int prevChunkLoaderRadius;
+ 
+    public EntityTrainBase(World world) {
+       super(world);
+       this.bogieController = new BogieController();
+       this.brakeCount = 72;
+       this.onRail = true;
+       this.brakeAirCount = 2880;
+-      this.loadedChunks = new HashSet<ChunkPos>();
++      this.loadedChunks = new java.util.LinkedHashSet<ChunkPos>();
+       this.setSize(2.75F, 1.1875F);
+       this.noClip = true;
+    }
+ 
+    public EntityTrainBase(World world, String s) {
+@@ -890,10 +891,11 @@
+          this.releaseTicket();
+       }
+ 
+       this.prevChunkCoordX = this.chunkCoordX;
+       this.prevChunkCoordZ = this.chunkCoordZ;
++      this.prevChunkLoaderRadius = this.getVehicleState(TrainState.TrainStateType.ChunkLoader);
+    }
+ 
+    public boolean isChunkLoaderEnable() {
+       return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
+    }
+@@ -910,11 +912,10 @@
+    private boolean requestTicket() {
+       Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
+       if (ticket != null) {
+          int i = this.getVehicleState(TrainState.TrainStateType.ChunkLoader);
+          ticket.getModData();
+-         ticket.setChunkListDepth(i);
+          ticket.bindEntity(this);
+          this.setChunkTicket(ticket);
+          return true;
+       } else {
+          NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
+@@ -938,20 +939,26 @@
+       if (!this.world.isRemote) {
+          if (this.ticket == null && !this.requestTicket()) {
+             return;
+          }
+ 
+-         if (x != this.prevChunkCoordX || z != this.prevChunkCoordZ) {
++         if (this.getVehicleState(TrainState.TrainStateType.ChunkLoader) != this.prevChunkLoaderRadius
++                  || x != this.prevChunkCoordX || z != this.prevChunkCoordZ) {
+             this.setupChunks(x, z);
+          }
+ 
++         int chunkLoadSquareRadius = this.getVehicleState(TrainState.TrainStateType.ChunkLoader) * 2 + 1;
++         this.ticket.setChunkListDepth(Math.min(chunkLoadSquareRadius * chunkLoadSquareRadius, ForgeChunkManager.getMaxChunkDepthFor("rtm")));
++
+          for(ChunkPos chunkpos : this.loadedChunks) {
+             ForgeChunkManager.forceChunk(this.ticket, chunkpos);
++            ForgeChunkManager.reorderChunk(this.ticket, chunkpos);
+          }
+ 
+          ChunkPos chunkpos1 = new ChunkPos(x, z);
+          ForgeChunkManager.forceChunk(this.ticket, chunkpos1);
++         ForgeChunkManager.reorderChunk(this.ticket, chunkpos1);
+       }
+ 
+    }
+ 
+    private void setupChunks(int xChunk, int zChunk) {

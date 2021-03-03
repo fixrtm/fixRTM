@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ResourceSet.java
++++ b/jp/ngt/rtm/modelpack/modelset/ResourceSet.java
+@@ -8,10 +8,11 @@
+ public abstract class ResourceSet<T extends ResourceConfig> {
+    protected final T cfg;
+    public final DataFormatter dataFormatter;
+    private boolean isDummySet;
+    public byte[] md5;
++   public com.anatawa12.fixRtm.rtm.modelpack.ModelState state = com.anatawa12.fixRtm.rtm.modelpack.ModelState.INITIALIZED;
+ 
+    public ResourceSet() {
+       this.cfg = this.getDummyConfig();
+       this.dataFormatter = new DataFormatter(this.cfg);
+       this.isDummySet = true;

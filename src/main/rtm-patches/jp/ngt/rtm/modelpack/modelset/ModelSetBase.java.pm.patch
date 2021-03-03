@@ -1,0 +1,51 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ModelSetBase.java
++++ b/jp/ngt/rtm/modelpack/modelset/ModelSetBase.java
+@@ -32,24 +32,36 @@
+       super(par1);
+    }
+ 
+    public void constructOnServer() {
+       if (((ModelConfig)this.cfg).serverScriptPath != null) {
++         com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
+          this.serverSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(((ModelConfig)this.cfg).serverScriptPath));
++         com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
++         this.serverSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig)this.cfg).serverScriptPath);
++         com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
+       }
+ 
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public void constructOnClient() {
+       if (!this.isDummy()) {
+          if (((ModelConfig)this.cfg).serverScriptPath != null) {
++            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
+             this.serverSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(((ModelConfig)this.cfg).serverScriptPath));
++            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
++            this.serverSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig)this.cfg).serverScriptPath);
++            com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
+          }
+ 
+          if (((ModelConfig)this.cfg).guiScriptPath != null) {
++            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
+             this.guiSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(((ModelConfig)this.cfg).guiScriptPath));
++            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
++            this.guiSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig)this.cfg).guiScriptPath);
++            com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
+             this.guiTexture = ModelPackManager.INSTANCE.getResource(((ModelConfig)this.cfg).guiTexture);
+          }
+       }
+ 
+    }
+@@ -64,10 +76,11 @@
+ 
+    public T getConfig() {
+       return (T)(this.cfg);
+    }
+ 
++   // TODO: CrashReport when use java
+    @SideOnly(Side.CLIENT)
+    public void renderModelInGui(Minecraft mc) {
+       this.modelObj.render((Object)null, this.getConfig(), 0, 0.0F);
+    }
+ 

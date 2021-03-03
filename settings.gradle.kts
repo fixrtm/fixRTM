@@ -22,4 +22,6 @@ buildscript {
             isChanging = true
         }
     }
+    configurations.classpath.get().resolutionStrategy.cacheDynamicVersionsFor(10, "minutes")
+    configurations.classpath.get().resolutionStrategy.cacheChangingModulesFor(10, "minutes")
 }

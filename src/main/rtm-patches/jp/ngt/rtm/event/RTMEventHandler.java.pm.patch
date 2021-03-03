@@ -1,0 +1,23 @@
+--- a/jp/ngt/rtm/event/RTMEventHandler.java
++++ b/jp/ngt/rtm/event/RTMEventHandler.java
+@@ -15,15 +15,18 @@
+ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+ 
+ public final class RTMEventHandler {
+    @SubscribeEvent
+-   public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
++   public void onServerConnectionFromClient(net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerConnectionFromClientEvent event) {
+       if (NGTUtil.isSMP() || NGTUtil.openedLANWorld()) {
+-         ModelPackManager.INSTANCE.sendModelSetsToClient((EntityPlayerMP)event.player);
++         ModelPackManager.INSTANCE.sendModelSetsToClient(((net.minecraft.network.NetHandlerPlayServer)event.getHandler()).player);
+       }
++   }
+ 
++   @SubscribeEvent
++   public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
+       DecorationStore.INSTANCE.loadModels(event.player.getEntityWorld());
+       SpeakerSounds.getInstance(true).syncSoundList();
+    }
+ 
+    @SubscribeEvent

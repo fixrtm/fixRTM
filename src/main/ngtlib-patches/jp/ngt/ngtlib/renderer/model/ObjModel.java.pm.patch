@@ -1,0 +1,16 @@
+--- a/jp/ngt/ngtlib/renderer/model/ObjModel.java
++++ b/jp/ngt/ngtlib/renderer/model/ObjModel.java
+@@ -256,13 +256,9 @@
+ 
+    public FileType getType() {
+       return FileType.OBJ;
+    }
+ 
+-   public int getDrawMode() {
+-      return 4;
+-   }
+-
+    public Map<String, Material> getMaterials() {
+       return this.materials;
+    }
+ }
