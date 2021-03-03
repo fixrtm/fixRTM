@@ -7,7 +7,8 @@ import java.io.ByteArrayOutputStream
 import java.security.MessageDigest
 
 class PatchApplier : IClassTransformer {
-    override fun transform(name: String, transformedName: String, basicClass: ByteArray): ByteArray {
+    override fun transform(name: String, transformedName: String, basicClass: ByteArray?): ByteArray? {
+        if (basicClass == null) return null
         val patch = getPatchAndSha1(name)
         if (patch == null) {
             logger.trace("no patch found for $name")
