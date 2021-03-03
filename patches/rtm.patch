@@ -184,7 +184,7 @@ index 5c07478..d0f0b79 100644
 +    invokespecial jp/ngt/rtm/electric/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMachineBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMachineBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMachineBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMachineBase;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
@@ -211,7 +211,7 @@ index fdf3a9d..448baad 100644
 +    invokespecial jp/ngt/ngtlib/block/TileEntityCustom/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMechanismKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMechanism;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMechanismKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMechanism;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
@@ -238,7 +238,7 @@ index 0137343..3b00327 100644
 +    invokespecial jp/ngt/ngtlib/block/TileEntityCustom/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityOrnamentKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityOrnament;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityOrnamentKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityOrnament;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
@@ -265,7 +265,7 @@ index 4bdd58f..b328aba 100644
 +    invokespecial jp/ngt/rtm/electric/TileEntityElectricalWiring/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntityConnectorBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntityConnectorBase;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntityConnectorBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntityConnectorBase;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
@@ -292,7 +292,7 @@ index 00291c7..00e66d4 100644
 +    invokespecial jp/ngt/ngtlib/block/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
-+    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntitySignalKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntitySignal;Ljp/ngt/rtm/entity/vehicle/EntityVehicleBase;)V
++    invokestatic com/anatawa12/fixRtm/rtm/electric/TileEntitySignalKt/addInfoToCrashReport (Ljp/ngt/rtm/electric/TileEntitySignal;Lnet/minecraft/crash/CrashReportCategory;)V
 +    return
 +.end method
 +
