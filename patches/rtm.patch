@@ -181,7 +181,7 @@ index 5c07478..d0f0b79 100644
 +    .limit local 2
 +    aload 0
 +    aload 1
-+    invokespecial jp/ngt/rtm/electric/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
++    invokespecial jp/ngt/ngtlib/block/TileEntityPlaceable/addInfoToCrashReport (Lnet/minecraft/crash/CrashReportCategory;)V
 +    aload 0
 +    aload 1
 +    invokestatic com/anatawa12/fixRtm/rtm/block/tileentity/TileEntityMachineBaseKt/addInfoToCrashReport (Ljp/ngt/rtm/block/tileentity/TileEntityMachineBase;Lnet/minecraft/crash/CrashReportCategory;)V
