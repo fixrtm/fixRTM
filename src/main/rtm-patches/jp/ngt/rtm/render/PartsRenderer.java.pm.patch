@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/render/PartsRenderer.java
++++ b/jp/ngt/rtm/render/PartsRenderer.java
+@@ -66,11 +66,11 @@
+ 
+    private void execScriptFunc(String func, Object... args) {
+       try {
+          ScriptUtil.doScriptFunction(this.script, func, args);
+       } catch (Exception exception) {
+-         throw new RuntimeException("On init script : " + this.modelSet.getConfig().getName(), exception);
++         throw new RuntimeException("On " + func + " script : " + this.modelSet.getConfig().getName(), exception);
+       }
+    }
+ 
+    public Parts registerParts(Parts par1) {
+       this.partsList.add(par1);

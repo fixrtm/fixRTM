@@ -1,0 +1,19 @@
+--- a/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.java
++++ b/jp/ngt/rtm/entity/ai/EntityAITravelByTrain.java
+@@ -51,12 +51,14 @@
+          return this.activeTask.shouldExecute();
+       }
+    }
+ 
+    private void dismount() {
+-      this.npc.startRiding((Entity)null);
+-      ((EntityFloor)this.npc.getRidingEntity()).onDismount(this.npc);
++      EntityFloor floor = ((EntityFloor)this.npc.getRidingEntity());
++      assert floor != null;
++      this.npc.dismountRidingEntity();
++      floor.onDismount(this.npc);
+    }
+ 
+    public boolean shouldContinueExecuting() {
+       boolean flag = this.activeTask.shouldContinueExecuting();
+       if (!flag) {

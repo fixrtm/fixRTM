@@ -1,0 +1,35 @@
+--- a/jp/ngt/rtm/entity/train/EntityBogie.java
++++ b/jp/ngt/rtm/entity/train/EntityBogie.java
+@@ -297,11 +297,13 @@
+       } else {
+          boolean flag = false;
+       }
+ 
+       if (this.getTrain() == null) {
++         if (!this.world.isRemote) {
+          this.setDead();
++         }
+       }
+ 
+    }
+ 
+    public void onBogieUpdate() {
+@@ -584,6 +586,18 @@
+    }
+ 
+    public int getProhibitedAction() {
+       return 1;
+    }
++
++   @Override
++    public void onRemovedFromWorld() {
++        super.onRemovedFromWorld();
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.onRemovedFromWorld(this);
++    }
++
++    @Override
++    public void addEntityCrashInfo(net.minecraft.crash.CrashReportCategory category) {
++        super.addEntityCrashInfo(category);
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.addEntityCrashInfo(this, category);
++    }
+ }

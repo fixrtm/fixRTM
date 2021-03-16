@@ -179,3 +179,7 @@ gradle-app.setting
 /src/main/rtm
 /src/main/ngtlibResources
 /src/main/rtmResources
+
+/pm.*
+/src/main/ngtlib-1
+/src/main/rtm-1

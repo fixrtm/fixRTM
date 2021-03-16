@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.4.20"
     id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
+    id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
 }
 
@@ -68,26 +69,26 @@ dependencies {
     shade("com.anatawa12.sai:sai:0.0.2")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
-    compileOnly(files(sourceSets.main.get().jasm.outputDir))
-    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
-        projectDir.resolve("mods/ngtlib.deobf.jar")))
+//    compileOnly(files(sourceSets.main.get().jasm.outputDir))
+//    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
+//        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    apiCompile("org.twitter4j:twitter4j-core:4.0.7")
+    apiImplementation("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    apiCompile("com.github.sarxos:webcam-capture:0.3.12")
+    apiImplementation("com.github.sarxos:webcam-capture:0.3.12")
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    compile("org.twitter4j:twitter4j-core:4.0.7")
+    implementation("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    compile("com.github.sarxos:webcam-capture:0.3.12")
+    implementation("com.github.sarxos:webcam-capture:0.3.12")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 }
 
-val processResources by tasks.getting(Copy::class) {
+fun Copy.configure() {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
     inputs.property("mcversion", project.minecraft.version)
@@ -109,15 +110,23 @@ val processResources by tasks.getting(Copy::class) {
     }
 }
 
+val processResources by tasks.getting(Copy::class) {
+    configure()
+}
+val reprocessResources by tasks.getting(Copy::class) {
+    configure()
+}
+
 val runClient by tasks.getting(JavaExec::class) {
     environment("fml.coreMods.load", "com.anatawa12.fixRtm.asm.FixRtmCorePlugin")
-    /*
     systemProperties["legacy.debugClassLoading"] = "true"
+    /*
     systemProperties["legacy.debugClassLoadingSave"] = "true"
     // */
     //*
     if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password"))
-        args = args.orEmpty() + listOf(
+        @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
+        args = args!! + listOf(
             "-username", project.property("minecraft.login.username").toString(),
             "-password", project.property("minecraft.login.password").toString()
         )
@@ -151,6 +160,7 @@ val generateJavaStab by tasks.creating(GenerateJavaStab::class) {
 }
 
 tasks.compileKotlin {
+    dependsOn(tasks.generateUnmodifieds.get())
     dependsOn(generateJavaStab)
     source(generateJavaStab.generatedDir!!)
     include("**/*.java")
@@ -181,8 +191,26 @@ tasks.test {
 
 runClient.outputs.upToDateWhen { false }
 
+@Suppress("SpellCheckingInspection")
+val rtm = mods.curse(id = "realtrainmod", version = "2.4.21") {
+    name = "rtm"
+    targetVersions("1.12.2")
+}
+
+@Suppress("SpellCheckingInspection")
+val ngtlib = mods.curse(id = "ngtlib", version = "2.4.18") {
+    name = "ngtlib"
+    targetVersions("1.12.2")
+}
+
+patching {
+    patch(rtm)
+    patch(ngtlib)
+    bsdiffPrefix = "com/anatawa12/fixRtm/asm/patches"
+    sourceNameSuffix = "(modified by fixrtm)"
+}
+
 apply(from = "./processMods.gradle")
-apply(from = "./makePatch.gradle")
 
 curseforge {
     apiKey = project.findProperty("com.anatawa12.curse.api-key").toString()

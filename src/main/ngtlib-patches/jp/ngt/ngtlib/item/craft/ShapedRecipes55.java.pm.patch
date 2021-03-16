@@ -1,0 +1,31 @@
+--- a/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
++++ b/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
+@@ -99,12 +99,12 @@
+    private boolean itemMatches(ItemStack target, ItemStack inInventory) {
+       if ((inInventory != null || target == null) && (inInventory == null || target != null)) {
+          if (target.getItem() == Items.DYE) {
+             return ItemUtil.isItemEqual(target, inInventory);
+          } else {
+-            int[] aint = OreDictionary.getOreIDs(target);
+-            int[] aint1 = OreDictionary.getOreIDs(inInventory);
++            int[] aint = com.anatawa12.fixRtm.ngtlib.item.craft.OreDictionaryUtil.getOreIDs(target);
++            int[] aint1 = com.anatawa12.fixRtm.ngtlib.item.craft.OreDictionaryUtil.getOreIDs(inInventory);
+             if (aint.length > 0 && aint1.length > 0) {
+                for(int i = 0; i < aint.length; ++i) {
+                   for(int j = 0; j < aint1.length; ++j) {
+                      if (aint[i] == aint1[j]) {
+                         return true;
+@@ -112,12 +112,12 @@
+                   }
+                }
+ 
+                return false;
+             } else {
+-               return ItemUtil.isItemEqual(target, inInventory);
+             }
++               return ItemUtil.isItemEqual(target, inInventory);
+          }
+       } else {
+          return false;
+       }
+    }

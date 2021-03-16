@@ -39,13 +39,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
 
-      - name: prepare mods
+      - name: prepare patching environment
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: prepareMods
+          arguments: preparePatchingEnvironment
 
       - name: apply patches
-        run: ./apply_patch.sh
+        run: ./pm.apply-patches
 
       - name: setup workspace
         uses: eskatos/gradle-command-action@v1
@@ -55,7 +55,7 @@ jobs:
       - name: Build
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: makeFixrtmJar
+          arguments: build
 
       - name: push releases
         id: publish_releases

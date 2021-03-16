@@ -41,14 +41,14 @@ open class PrintFieldStructure : DefaultTask() {
         for (hClass in printClasses) {
             val file = buildString {
                 if (condition.test(hClass.internalName) && hClass.isLoaded) {
-                    appendln("super: ${hClass.parentClass?.internalName}")
+                    append("super: ${hClass.parentClass?.internalName}\n")
                     for (field in hClass.fields.filter { !it.isStatic }.sortedBy { it.name }) {
-                        appendln("name: ${field.name}")
-                        appendln("type: ${field.type}")
-                        appendln()
+                        append("name: ${field.name}\n")
+                        append("type: ${field.type}\n")
+                        append("\n")
                     }
                 } else {
-                    appendln("not loaded class")
+                    append("not loaded class\n")
                 }
             }
 

@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/rail/util/SwitchType.java
++++ b/jp/ngt/rtm/rail/util/SwitchType.java
+@@ -310,10 +310,14 @@
+ 
+             ++i;
+          }
+ 
+          arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
++
++         if (!com.anatawa12.fixRtm.UtilsKt.isAllNotNull(arailmapswitch))
++            return false;
++
+          this.railMaps = arailmapswitch;
+          this.points = new Point[4];
+          this.points[0] = new Point(railposition, arailmapswitch[0], arailmapswitch[2]);
+          this.points[1] = new Point(railposition1, arailmapswitch[1], arailmapswitch[2]);
+          this.points[2] = new Point(railposition == arailmapswitch[0].startRP ? arailmapswitch[0].endRP : arailmapswitch[0].startRP, arailmapswitch[0]);

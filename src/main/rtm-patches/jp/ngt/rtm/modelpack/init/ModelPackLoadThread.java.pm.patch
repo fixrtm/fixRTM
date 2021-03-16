@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
++++ b/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
+@@ -131,11 +131,11 @@
+          }
+       }
+ 
+       this.setBarMaxValue(0, ProgressStateHolder.ProgressState.values().length, "");
+       NGTLog.startTimer();
+-      ModelPackConstructThread modelpackconstructthread = new ModelPackConstructThread(this.threadSide, this);
++      com.anatawa12.fixRtm.rtm.modelpack.init.ExModelPackConstructThread modelpackconstructthread = new com.anatawa12.fixRtm.rtm.modelpack.init.ExModelPackConstructThread(this.threadSide, this);
+       modelpackconstructthread.start();
+       ModelPackManager.INSTANCE.load(this);
+ 
+       while(!modelpackconstructthread.setFinish()) {
+          sleep(500L);

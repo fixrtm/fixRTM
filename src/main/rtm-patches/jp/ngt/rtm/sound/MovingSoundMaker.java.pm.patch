@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/sound/MovingSoundMaker.java
++++ b/jp/ngt/rtm/sound/MovingSoundMaker.java
+@@ -93,10 +93,11 @@
+ 
+       try {
+          String s = NGTText.getText(new ResourceLocation(domain, "sounds.json"), true);
+          Map<String, MovingSoundMaker.SoundListDummy> map1 = (Map)NGTJson.getGson().fromJson(s, TYPE);
+ 
++         com.anatawa12.fixRtm.rtm.HooksKt.MovingSoundMaker_loadSoundJson_nullCheck(map, domain);
+          for(Entry<String, MovingSoundMaker.SoundListDummy> entry : map1.entrySet()) {
+             if (!(entry.getValue()).sounds.isEmpty()) {
+                Object object = (entry.getValue()).sounds.get(0);
+                String s1;
+                if (object instanceof Map) {

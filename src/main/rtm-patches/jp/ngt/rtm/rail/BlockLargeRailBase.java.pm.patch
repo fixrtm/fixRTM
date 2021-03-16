@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/rail/BlockLargeRailBase.java
++++ b/jp/ngt/rtm/rail/BlockLargeRailBase.java
+@@ -212,11 +212,11 @@
+       return tileentity instanceof TileEntityLargeRailBase ? ((TileEntityLargeRailBase)tileentity).getRailCore() : null;
+    }
+ 
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+       TileEntityLargeRailCore tileentitylargerailcore = getCore(world, pos);
+-      return tileentitylargerailcore != null ? ItemRail.copyItemFromRail(tileentitylargerailcore) : null;
++      return tileentitylargerailcore != null ? ItemRail.copyItemFromRail(tileentitylargerailcore) : ItemStack.EMPTY;
+    }
+ 
+    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
+       return this.preventMobMovement(world, pos) ? PathNodeType.BLOCKED : PathNodeType.RAIL;
+    }
