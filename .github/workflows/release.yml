@@ -9,7 +9,7 @@ on:
         default: 'snapshot-generated'
   schedule:
     # 0:00 in JST
-    - '0 15 * * *'
+    - cron: '0 15 * * *'
 
 jobs:
   release:
