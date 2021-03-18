@@ -1,5 +1,18 @@
 --- a/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
 +++ b/jp/ngt/ngtlib/item/craft/ShapedRecipes55.java
+@@ -83,11 +83,11 @@
+ 
+       return itemstack;
+    }
+ 
+    public ItemStack[] getRecipeItems() {
+-      ItemStack[] aitemstack = new ItemStack[25];
++      ItemStack[] aitemstack = com.anatawa12.fixRtm.UtilsKt.arrayOfItemStack(25);
+ 
+       for(int i = 0; i < 5 && i < this.recipeHeight; ++i) {
+          for(int j = 0; j < 5 && j < this.recipeWidth; ++j) {
+             aitemstack[i * 5 + j] = this.recipeItems[i * this.recipeWidth + j];
+          }
 @@ -99,12 +99,12 @@
     private boolean itemMatches(ItemStack target, ItemStack inInventory) {
        if ((inInventory != null || target == null) && (inInventory == null || target != null)) {
