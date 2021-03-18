@@ -1,3 +1,5 @@
+#!/bin/bash
+
 set -eu
 
 # utilities
@@ -30,14 +32,25 @@ tmp_file=$(make_temp)
 if [ "$VERSION_NAME_IN" == "snapshot-generated" ]; then
     version_name="$(date "+SNAPSHOT-%Y-%m-%d-%H-%M-%S")"
     prerelease=true
+    release_type=snapshot
+elif [ "$VERSION_NAME_IN" == "" ]; then
+    source "$(dirname "$0")/check_nightly_functions.sh"
+    if ! need_nightly_build; then
+      cancel
+      exit 0;
+    fi
+    version_name="$(date "+SNAPSHOT-%Y-%m-%d-NIGHTLY")"
+    prerelease=true
+    release_type=nightly
 else
     version_name="$VERSION_NAME_IN"
     prerelease=false
+    release_type=release
 fi
 
 # バージョン情報をverify
 
-if echo "$version_name" | grep -Eq -v '^SNAPSHOT-[0-9-]+|[0-9.]+$' > /dev/null; then
+if echo "$version_name" | grep -Eq -v '^SNAPSHOT-[0-9-]+(-NIGHTLY)?$|^[0-9.]+$' > /dev/null; then
   echo "invalid version name: $version_name"
   exit 255
 fi
@@ -67,7 +80,7 @@ if [ "$prerelease" != "true" ]; then
   changelog_tag_pattern='^[\d.]+$'
   changelog_file_path='CHANGELOG.md'
 else
-  changelog_tag_pattern='^SNAPSHOT-[0-9-]+|[\d.]+$'
+  changelog_tag_pattern='^SNAPSHOT-[0-9-]+(-NIGHTLY)?|[\d.]+$'
   changelog_file_path='CHANGELOG-SNAPSHOTS.md'
 fi
 
