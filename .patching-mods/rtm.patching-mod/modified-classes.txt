@@ -10,6 +10,7 @@ jp.ngt.rtm.entity.npc.EntityNPC
 jp.ngt.rtm.entity.train.EntityBogie
 jp.ngt.rtm.entity.train.EntityTrainBase
 jp.ngt.rtm.entity.train.parts.EntityCargoWithModel
+jp.ngt.rtm.entity.train.util.Formation
 jp.ngt.rtm.entity.vehicle.EntityTrolley
 jp.ngt.rtm.entity.vehicle.EntityVehicleBase
 jp.ngt.rtm.entity.vehicle.RenderVehicleBase
