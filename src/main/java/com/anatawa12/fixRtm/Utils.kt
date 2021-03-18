@@ -8,6 +8,7 @@ import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import net.minecraft.crash.CrashReportCategory
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayerMP
+import net.minecraft.item.ItemStack
 import net.minecraft.util.math.RayTraceResult
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
@@ -171,3 +172,5 @@ fun <T> T.addEntityCrashInfoAboutModelSet(
 } catch (t: Throwable) {
     category.addCrashSectionThrowable("Error Getting ModelSet", t)
 }
+
+fun arrayOfItemStack(size: Int) = Array(size) { ItemStack.EMPTY }
