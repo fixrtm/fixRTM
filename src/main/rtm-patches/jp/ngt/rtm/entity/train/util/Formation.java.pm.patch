@@ -1,2 +1,30 @@
 --- a/jp/ngt/rtm/entity/train/util/Formation.java
 +++ b/jp/ngt/rtm/entity/train/util/Formation.java
+@@ -9,10 +9,11 @@
+ import jp.ngt.rtm.network.PacketFormation;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.nbt.NBTTagList;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import org.jetbrains.annotations.Nullable;
+ 
+ public final class Formation {
+    public final long id;
+    public FormationEntry[] entries;
+    private EntityTrainBase controlCar;
+@@ -304,12 +305,13 @@
+    private void sendPacket() {
+       RTMCore.NETWORK_WRAPPER.sendToAll(new PacketFormation(this));
+    }
+ 
+    public boolean isFrontCar(EntityTrainBase train) {
+-      EntityTrainBase entitytrainbase = this.direction == 0 ? this.entries[0].train : this.entries[this.entries.length - 1].train;
+-      return train.equals(entitytrainbase);
++      FormationEntry entry = this.direction == 0 ? this.entries[0] : this.entries[this.entries.length - 1];
++      if (entry == null) return false;
++      return train.equals(entry.train);
+    }
+ 
+    public void updateTrainMovement() {
+       EntityTrainBase entitytrainbase = null;
+ 
