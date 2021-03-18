@@ -69,7 +69,6 @@ jobs:
           RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
 
       - name: Upload To CurseForge
-        if: false
         id: upload-curse
         run: >
           ./gradlew curseforge \
