@@ -61,8 +61,10 @@ repositories {
 }
 
 dependencies {
-    shade(kotlin("stdlib-jdk7"))
+    shade(kotlin("stdlib-jdk8"))
+    shade(kotlin("reflect"))
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+    shade("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.1.0")
     shade("io.sigpipe:jbsdiff:1.0") {
         exclude(group = "org.apache.commons", module = "commons-compress")
     }
