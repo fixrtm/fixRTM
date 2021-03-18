@@ -73,6 +73,7 @@ jobs:
 
       - name: Upload To CurseForge
         id: upload-curse
+        if: ${{ !steps.prepare_build.outputs.nightly }}
         run: >
           ./gradlew curseforge \
               -Pcom.anatawa12.curse.api-key="${{ secrets.CURSE_TOKEN }}" \
@@ -89,7 +90,6 @@ jobs:
           tag_name: ${{ steps.prepare_build.outputs.version_name }}
           release_name: ${{ steps.prepare_build.outputs.version_name }}
           body_path: ${{ steps.prepare_build.outputs.release_note_path }}
-          draft: true
           prerelease: ${{ steps.prepare_build.outputs.prerelease }}
 
       - name: Upload Release Asset

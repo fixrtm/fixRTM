@@ -32,7 +32,7 @@ tmp_file=$(make_temp)
 if [ "$VERSION_NAME_IN" == "snapshot-generated" ]; then
     version_name="$(date "+SNAPSHOT-%Y-%m-%d-%H-%M-%S")"
     prerelease=true
-    release_type=snapshot
+    nightly=false
 elif [ "$VERSION_NAME_IN" == "" ]; then
     source "$(dirname "$0")/check_nightly_functions.sh"
     if ! need_nightly_build; then
@@ -41,11 +41,11 @@ elif [ "$VERSION_NAME_IN" == "" ]; then
     fi
     version_name="$(date "+SNAPSHOT-%Y-%m-%d-NIGHTLY")"
     prerelease=true
-    release_type=nightly
+    nightly=true
 else
     version_name="$VERSION_NAME_IN"
     prerelease=false
-    release_type=release
+    nightly=false
 fi
 
 # バージョン情報をverify
@@ -128,3 +128,4 @@ echo "::set-output name=asset_path::$asset_path"
 echo "::set-output name=asset_name::$asset_name"
 echo "::set-output name=required_rtm::$required_rtm"
 echo "::set-output name=required_ngtlib::$required_ngtlib"
+echo "::set-output name=nightly::$nightly"
