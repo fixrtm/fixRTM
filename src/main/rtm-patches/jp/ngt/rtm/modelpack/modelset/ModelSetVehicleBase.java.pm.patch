@@ -19,9 +19,9 @@
           this.buttonTexture = ModelPackManager.INSTANCE.getResource(((VehicleBaseConfig)this.cfg).buttonTexture);
           this.rollsignTexture = ((VehicleBaseConfig)this.cfg).rollsignTexture == null ? null : ModelPackManager.INSTANCE.getResource(((VehicleBaseConfig)this.cfg).rollsignTexture);
           if (((VehicleBaseConfig)this.cfg).soundScriptPath != null) {
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
-             this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
 +            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
+             this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
++            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
 +            this.soundSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(this.getConfig().soundScriptPath);
 +            com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
           }
