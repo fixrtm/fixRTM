@@ -22,7 +22,7 @@
 +            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
              this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
 +            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
-+            this.soundSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
++            this.soundSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(this.getConfig().soundScriptPath);
 +            com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
           }
        }
