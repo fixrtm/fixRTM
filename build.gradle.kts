@@ -54,6 +54,9 @@ minecraft {
 
 val shade by configurations.creating
 configurations.compile.get().extendsFrom(shade)
+val embedd by configurations.creating
+configurations.compile.get().extendsFrom(embedd)
+shade.extendsFrom(embedd)
 
 repositories {
     jcenter()
@@ -61,7 +64,9 @@ repositories {
 }
 
 dependencies {
-    shade(kotlin("stdlib-jdk7"))
+    embedd(kotlin("stdlib-jdk7"))
+    embedd(kotlin("reflect"))
+    //shade(files(file("/Users/anatawa12/Downloads/kotlin-stdlib-1.2.71.jar")))
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
     shade("io.sigpipe:jbsdiff:1.0") {
         exclude(group = "org.apache.commons", module = "commons-compress")
@@ -134,18 +139,36 @@ val runClient by tasks.getting(JavaExec::class) {
 }
 
 val jar by tasks.getting(Jar::class) {
-    shade.forEach { dep ->
+    println(shade.toList())
+    println(embedd.toList())
+    (shade.toList() - embedd).forEach { dep ->
         from(project.zipTree(dep)) {
             exclude("META-INF", "META-INF/**")
             exclude("LICENSE.txt")
         }
     }
+    embedd.forEach { dep ->
+        from(dep) {
+            into("libs")
+        }
+    }
 
+    val kotlinVersion = project.plugins
+        .asSequence()
+        .mapNotNull { (it as? org.jetbrains.kotlin.gradle.plugin.KotlinBasePluginWrapper)?.kotlinPluginVersion }
+        .first()
     manifest {
         attributes(mapOf(
             "FMLCorePlugin" to "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
             "FMLCorePluginContainsFMLMod" to "*",
             "FMLAT" to "fix-rtm_at.cfg"
+        ))
+        val packageNameSuffix = """-[\d.]+\.jar$""".toRegex()
+        attributes(mapOf(
+            "MCKT-MF-Version" to "1",
+            "MCKT-KT-Version" to kotlinVersion,
+            "MCKT-KT-Parts" to embedd.joinToString(",") { packageNameSuffix.replace(it.name, "") },
+            "MCKT-KT-Jars" to embedd.joinToString(",") { "libs/${it.name}" }
         ))
     }
 }
