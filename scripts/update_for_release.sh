@@ -94,11 +94,13 @@ auto-changelog --commit-limit 0 \
     --tag-pattern "$changelog_tag_pattern"\
     -o "$changelog_file_path"
 
-# re-commit to add updated changelog
 git reset --soft HEAD^
+if [ "$nightly" != "true" ]; then
+# re-commit to add updated changelog
 git tag -d "$version_name"
 git commit -am "$version_name"
 git tag "$version_name"
+fi
 
 # release noteの抽出
 
