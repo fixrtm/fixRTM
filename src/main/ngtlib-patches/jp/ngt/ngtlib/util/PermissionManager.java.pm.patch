@@ -1,23 +1,36 @@
 --- a/jp/ngt/ngtlib/util/PermissionManager.java
 +++ b/jp/ngt/ngtlib/util/PermissionManager.java
-@@ -126,10 +126,16 @@
+@@ -126,26 +126,41 @@
        }
  
     }
  
     public boolean hasPermission(ICommandSender player, String category) {
++      boolean has = hasPermissionInternal(player, category);
++      if (!has)
++         NGTLog.sendChatMessage(player, "%s need permission (%s).", player.getName(), category);
++      return has;
++   }
++
++   public boolean hasPermissionInternal(ICommandSender player, String category) {
 +      if (com.anatawa12.fixRtm.asm.config.MainConfig.addNegativePermissionEnabled) {
 +         if (this.getPlayerList("negative.".concat(category)).contains(player.getName())) {
-+            NGTLog.sendChatMessageToAll("%s need permission (%s).", player.getName(), category);
 +            return false;
 +         }
 +      }
++      if (!category.equals("fixrtm.all_permit") && hasPermissionInternal(player, "fixrtm.all_permit"))
++         return true;
        if (this.isOp(player)) {
           return true;
        } else {
           List<String> list = this.getPlayerList(category);
           if (!list.contains(player.getName()) && !list.contains(ALL)) {
-@@ -142,10 +148,12 @@
+-            NGTLog.sendChatMessageToAll("%s need permission (%s).", player.getName(), category);
+             return false;
+          } else {
+             return true;
+          }
+       }
     }
  
     public boolean isOp(ICommandSender player) {
