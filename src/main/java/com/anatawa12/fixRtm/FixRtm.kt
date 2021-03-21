@@ -74,6 +74,8 @@ object FixRtm {
             }
         }
         if (e.side == Side.CLIENT) registerGenerators()
+        println(Any::class)
+        //FixRtm::class.members.isEmpty()
     }
 
     @Mod.EventHandler
