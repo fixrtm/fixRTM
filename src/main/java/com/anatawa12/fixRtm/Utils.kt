@@ -144,8 +144,8 @@ fun DataInput.readUTFNullable(): String? = closeScope {
 
 fun File.mkParent(): File = apply { parentFile.mkdirs() }
 
-val EntityPlayerMP.modList get() = NetworkDispatcher.get(this.connection.netManager).modList
-val EntityPlayerMP.hasFixRTM get() = modList.containsKey(FixRtm.MODID)
+val EntityPlayerMP.modList get() = NetworkDispatcher.get(this.connection.netManager)?.modList ?: emptyMap()
+val EntityPlayerMP.hasFixRTM get() = server.isSinglePlayer || modList.containsKey(FixRtm.MODID)
 
 @Suppress("unused")
 fun Entity.rayTraceBothSide(blockReachDistance: Double, partialTicks: Float): RayTraceResult? {
