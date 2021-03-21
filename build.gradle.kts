@@ -1,4 +1,5 @@
 import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.4.20"
@@ -6,6 +7,7 @@ plugins {
     id("net.minecraftforge.gradle.forge")
     id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 version = property("modVersion")!!
@@ -63,9 +65,7 @@ repositories {
 dependencies {
     shade(kotlin("stdlib-jdk7"))
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
-    shade("io.sigpipe:jbsdiff:1.0") {
-        exclude(group = "org.apache.commons", module = "commons-compress")
-    }
+    shade("io.sigpipe:jbsdiff:1.0")
     shade("com.anatawa12.sai:sai:0.0.2")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
@@ -79,9 +79,9 @@ dependencies {
     apiImplementation("com.github.sarxos:webcam-capture:0.3.12")
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    implementation("org.twitter4j:twitter4j-core:4.0.7")
+    compileOnly("org.twitter4j:twitter4j-core:4.0.7")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    implementation("com.github.sarxos:webcam-capture:0.3.12")
+    compileOnly("com.github.sarxos:webcam-capture:0.3.12")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
@@ -149,6 +149,40 @@ val jar by tasks.getting(Jar::class) {
         ))
     }
 }
+
+val shadowModJar by tasks.creating(ShadowJar::class) {
+    dependsOn(tasks.copyJar.get())
+
+    val basePkg = "com.anatawa12.fixRtm.libs"
+    relocate("kotlin.", "$basePkg.kotlin.")
+    relocate("kotlinx.", "$basePkg.kotlinx.")
+    relocate("io.sigpipe.jbsdiff.", "$basePkg.jbsdiff.")
+    relocate("org.intellij.lang.annotations.", "$basePkg.ij_annotations.")
+    relocate("org.jetbrains.annotations.", "$basePkg.jb_annotations.")
+    relocate("org.apache.commons.compress.", "$basePkg.commons_compress.")
+
+    from(provider { zipTree(tasks.jar.get().archiveFile) })
+    destinationDirectory.set(buildDir.resolve("shadowing"))
+    archiveVersion.set("")
+    manifest.from(provider {
+        zipTree(tasks.jar.get().archiveFile)
+            .matching { include("META-INF/MANIFEST.MF") }
+            .files.first()
+    })
+}
+
+val copyShadowedJar by tasks.creating {
+    dependsOn(shadowModJar)
+    doLast {
+        shadowModJar.archiveFile.get().asFile.inputStream().use { src ->
+            tasks.jar.get().archiveFile.get().asFile.apply { parentFile.mkdirs() }
+                .outputStream()
+                .use { dst -> src.copyTo(dst) }
+        }
+    }
+}
+
+tasks.assemble.get().dependsOn(copyShadowedJar)
 
 val compileJasm by tasks.getting(com.anatawa12.jasm.plugins.gradle.CompileJasmTask::class)
 val compileJasmOutput = compileJasm.dir

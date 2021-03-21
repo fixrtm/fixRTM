@@ -11,13 +11,8 @@ import java.io.File
 
 
 @IFMLLoadingPlugin.TransformerExclusions(
-    "kotlin.",
-    "kotlinx.",
     "com.anatawa12.fixRtm.asm.",
-    "org.jetbrains.annotations.",
-    "org.intellij.lang.annotations.",
-    "io.sigpipe.",
-    "org.apache.commons.compress."
+    "com.anatawa12.fixRtm.libs.",
 )
 class FixRtmCorePlugin : IFMLLoadingPlugin {
     init {
