@@ -1,2 +1,29 @@
 --- a/jp/ngt/ngtlib/io/ScriptUtil.java
 +++ b/jp/ngt/ngtlib/io/ScriptUtil.java
+@@ -46,15 +46,26 @@
+          System.out.println();
+       }
+ 
+    }
+ 
++   private static void checkScriptConfig() {
++      java.util.Set<String> nashornStarted = new java.util.HashSet<>();
++      for (Object o : System.getProperties().keySet()) {
++         if (o.toString().startsWith("nashorn.option."))
++            nashornStarted.add(o.toString());
++      }
++      if (!nashornStarted.isEmpty())
++         throw new IllegalStateException("some nashorn.option.*** properties found: " + nashornStarted);
++   }
++
+    public static ScriptEngine doScript(String s) {
+       if (SEM == null) {
+          init();
+       }
+ 
++      checkScriptConfig();
+       ScriptEngine scriptengine = SEM.getEngineByName("javascript");
+ 
+       try {
+          scriptengine.eval("load(\"nashorn:mozilla_compat.js\");");
+          scriptengine.eval(s);
