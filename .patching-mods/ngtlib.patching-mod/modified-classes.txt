@@ -1,4 +1,5 @@
 jp.ngt.ngtlib.NGTCore
+jp.ngt.ngtlib.command.CommandPermit
 jp.ngt.ngtlib.io.NGTLog
 jp.ngt.ngtlib.item.craft.RecipeManager
 jp.ngt.ngtlib.item.craft.ShapedRecipes55

@@ -100,6 +100,7 @@ object FixRtm {
         MinecraftForge.EVENT_BUS.register(this)
         modMetadata = e.modMetadata
         NetworkHandler.init()
+        PermissionManager.registerBuiltinPermissions()
     }
 
     @Mod.EventHandler
