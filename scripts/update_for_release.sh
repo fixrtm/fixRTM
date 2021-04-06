@@ -80,7 +80,7 @@ if [ "$prerelease" != "true" ]; then
   changelog_tag_pattern='^[\d.]+$'
   changelog_file_path='CHANGELOG.md'
 else
-  changelog_tag_pattern='^SNAPSHOT-[0-9-]+(-NIGHTLY)?|[\d.]+$'
+  changelog_tag_pattern='^SNAPSHOT-[0-9-]+$|^[\d.]+$'
   changelog_file_path='CHANGELOG-SNAPSHOTS.md'
 fi
 
