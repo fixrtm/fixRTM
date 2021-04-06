@@ -84,23 +84,23 @@ else
   changelog_file_path='CHANGELOG-SNAPSHOTS.md'
 fi
 
-# first commit
-git commit -am "$version_name"
-git tag "$version_name"
+if [ "$nightly" != "true" ]; then
+  # first commit
+  git commit -am "$version_name"
+  git tag "$version_name"
 
-# make release notes commit
-auto-changelog --commit-limit 0 \
+  # make release notes commit
+  auto-changelog --commit-limit 0 \
     --sort-tags=-committerdate \
-    --tag-pattern "$changelog_tag_pattern"\
+    --tag-pattern "$changelog_tag_pattern" \
     -o "$changelog_file_path"
 
-git reset --soft HEAD^
-if [ "$nightly" != "true" ]; then
-# re-commit to add updated changelog
-git tag -d "$version_name"
-git commit -am "$version_name"
-git tag "$version_name"
+  git reset --soft HEAD^
+  # re-commit to add updated changelog
+  git tag -d "$version_name"
+  git commit -am "$version_name"
 fi
+git tag "$version_name"
 
 # release noteの抽出
 
