@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/io/ScriptUtil.java
 +++ b/jp/ngt/ngtlib/io/ScriptUtil.java
-@@ -46,15 +46,26 @@
+@@ -46,16 +46,27 @@
           System.out.println();
        }
  
@@ -21,9 +21,11 @@
           init();
        }
  
+-      ScriptEngine scriptengine = SEM.getEngineByName("javascript");
 +      checkScriptConfig();
-       ScriptEngine scriptengine = SEM.getEngineByName("javascript");
++      ScriptEngine scriptengine = new jdk.nashorn.api.scripting.NashornScriptEngineFactory().getScriptEngine();
  
        try {
           scriptengine.eval("load(\"nashorn:mozilla_compat.js\");");
           scriptengine.eval(s);
+          return scriptengine;
