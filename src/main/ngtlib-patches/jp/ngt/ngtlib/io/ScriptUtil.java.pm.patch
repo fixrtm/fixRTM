@@ -1,2 +1,14 @@
 --- a/jp/ngt/ngtlib/io/ScriptUtil.java
 +++ b/jp/ngt/ngtlib/io/ScriptUtil.java
+@@ -15,11 +15,10 @@
+ public final class ScriptUtil {
+    private static ScriptEngineManager SEM;
+ 
+    private static void init() {
+       LaunchClassLoader launchclassloader = Launch.classLoader;
+-      launchclassloader.addClassLoaderExclusion("javax.");
+       launchclassloader.addClassLoaderExclusion("jdk.nashorn.");
+       SEM = new ScriptEngineManager((ClassLoader)null);
+    }
+ 
+    private static void showScripts(ScriptEngineManager mng) {
