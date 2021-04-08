@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/io/ScriptUtil.java
 +++ b/jp/ngt/ngtlib/io/ScriptUtil.java
-@@ -46,16 +46,27 @@
+@@ -46,16 +46,28 @@
           System.out.println();
        }
  
@@ -9,6 +9,7 @@
 +   private static void checkScriptConfig() {
 +      java.util.Set<String> nashornStarted = new java.util.HashSet<>();
 +      for (Object o : System.getProperties().keySet()) {
++         System.out.println(o + "=" + System.getProperty(o.toString()));
 +         if (o.toString().startsWith("nashorn.option."))
 +            nashornStarted.add(o.toString());
 +      }
