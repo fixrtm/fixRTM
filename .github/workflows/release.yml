@@ -73,7 +73,7 @@ jobs:
 
       - name: Upload To CurseForge
         id: upload-curse
-        if: ${{ !steps.prepare_build.outputs.nightly }}
+        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
         run: >
           ./gradlew curseforge \
               -Pcom.anatawa12.curse.api-key="${{ secrets.CURSE_TOKEN }}" \
