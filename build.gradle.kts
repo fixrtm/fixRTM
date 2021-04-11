@@ -2,7 +2,7 @@ import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.4.20"
+    kotlin("jvm") version "1.4.31"
     id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
     id("com.anatawa12.mod-patching")
