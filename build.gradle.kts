@@ -1,9 +1,7 @@
-import com.anatawa12.javaStabGen.gradle.GenerateJavaStab
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.4.31"
-    id("com.anatawa12.jasm")
     id("net.minecraftforge.gradle.forge")
     id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
@@ -14,17 +12,6 @@ version = property("modVersion")!!
 group = property("modGroup")!!
 base { archivesBaseName = property("modBaseName")!!.toString() }
 
-fun SourceSet.jasm(configure: Action<SourceDirectorySet>): Unit =
-    (this as org.gradle.api.internal.HasConvention).convention.plugins["jasm"]
-        .let { it as com.anatawa12.jasm.plugins.gradle.JasmSourceSetExtension }
-        .jasm(configure)
-
-val SourceSet.jasm
-    get() =
-        (this as org.gradle.api.internal.HasConvention).convention.plugins["jasm"]
-            .let { it as com.anatawa12.jasm.plugins.gradle.JasmSourceSetExtension }
-            .jasm
-
 sourceSets {
     api {
         java {
@@ -32,9 +19,6 @@ sourceSets {
         }
     }
     main {
-        jasm {
-            srcDirs("src/main/rtm", "src/main/ngtlib")
-        }
         resources {
             srcDirs("src/main/rtmResources", "src/main/ngtlibResources")
         }
@@ -69,7 +53,6 @@ dependencies {
     shade("com.anatawa12.sai:sai:0.0.2")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
-//    compileOnly(files(sourceSets.main.get().jasm.outputDir))
 //    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
 //        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
@@ -184,20 +167,8 @@ val copyShadowedJar by tasks.creating {
 
 tasks.assemble.get().dependsOn(copyShadowedJar)
 
-val compileJasm by tasks.getting(com.anatawa12.jasm.plugins.gradle.CompileJasmTask::class)
-val compileJasmOutput = compileJasm.dir
-
-val generateJavaStab by tasks.creating(GenerateJavaStab::class) {
-    generatedDir = file("$buildDir/generated/stab")
-    classpath = files(compileJasmOutput)
-    dependsOn(compileJasm)
-}
-
 tasks.compileKotlin {
     dependsOn(tasks.generateUnmodifieds.get())
-    dependsOn(generateJavaStab)
-    source(generateJavaStab.generatedDir!!)
-    include("**/*.java")
 }
 
 tasks.compileKotlin {
