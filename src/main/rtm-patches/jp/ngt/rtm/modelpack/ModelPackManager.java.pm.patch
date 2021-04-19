@@ -64,19 +64,32 @@
  
        TimeTableManager.INSTANCE.load();
        par1.loadFinished = true;
-@@ -148,10 +150,11 @@
+@@ -144,29 +146,42 @@
+    public ResourceType getType(String name) {
+       return this.typeMap.get(name);
+    }
+ 
     public String registerResourceSet(ResourceType type, File file) throws IOException {
++      List<String> json = null;
        for(String s2 : ENCODING) {
           try {
-             String s3 = NGTText.readText(file, false, s2);
-             ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(s3, type.cfgClass);
-+            resourceconfig.file = file;
-             return this.registerResourceSet(type, resourceconfig, s3);
+-            String s3 = NGTText.readText(file, false, s2);
+-            ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(s3, type.cfgClass);
+-            return this.registerResourceSet(type, resourceconfig, s3);
++            json = NGTText.readText(file, s2);
           } catch (IOException ioexception) {
              ioexception.printStackTrace();
           }
        }
-@@ -161,12 +164,21 @@
++      if (json == null)
++         throw new ModelPackException("Can't load json. please check encoding of json " +
++            "file and file is exists.", file.getAbsolutePath());
+ 
+-      throw new ModelPackException("Can't load model", file.getAbsolutePath());
++      ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(NGTText.append(json, true), type.cfgClass);
++      resourceconfig.file = file;
++      return this.registerResourceSet(type, resourceconfig, NGTText.append(json, false));
+    }
  
     public String registerResourceSet(ResourceType type, ResourceConfig cfg, String origJson) {
        cfg.init();
@@ -98,7 +111,7 @@
           return cfg.getName();
        } else {
           throw new ModelPackException("Failed to create ResourceSet", cfg.getName());
-@@ -183,10 +195,11 @@
+@@ -183,10 +198,11 @@
              NGTLog.debug("[RTM] Send model to client : " + resourceconfig.getName());
              ++j;
           }
@@ -110,7 +123,7 @@
     public void addModelSetName(int count, String typeName, String name) {
        assert NGTUtil.isSMP() && !NGTUtil.isServer();
  
-@@ -228,16 +241,13 @@
+@@ -228,16 +244,13 @@
           resourcetype1 = type.parent;
        }
  
