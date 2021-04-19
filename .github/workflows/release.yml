@@ -81,16 +81,6 @@ jobs:
           RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
           RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
 
-      - name: Upload To CurseForge
-        id: upload-curse
-        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
-        run: >
-          ./gradlew curseforge \
-              -Pcom.anatawa12.curse.api-key="${{ secrets.CURSE_TOKEN }}" \
-              -Pcom.anatawa12.curse.project-id=365235 \
-              -Pcom.anatawa12.curse.changelog-path="${{ steps.prepare_build.outputs.release_note_path }}" \
-              -Pcom.anatawa12.curse.release-type="${{ steps.publish_releases.outputs.curse_release_type }}"
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
