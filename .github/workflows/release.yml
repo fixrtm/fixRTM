@@ -72,6 +72,16 @@ jobs:
           RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
 
       - name: Upload To CurseForge
+        id: upload_curse
+        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
+        run: ./scripts/upload_to_curse.sh
+        env:
+          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
+          CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
+          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
+          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
+
+      - name: Upload To CurseForge
         id: upload-curse
         if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
         run: >
