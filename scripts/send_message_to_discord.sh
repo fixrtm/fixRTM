@@ -1,0 +1,56 @@
+#!/bin/bash
+
+err_exit() {
+  echo "$@" 1>&2
+  exit 255
+}
+
+# external variable check
+[ -z "$WEBHOOK_URL" ]  && err_exit 'WEBHOOK_URL not found'
+[ -z "$TAG_NAME" ]     && err_exit 'TAG_NAME not found'
+[ -z "$CURSE_ID" ]     && err_exit 'CURSE_ID not found'
+[ -z "$PRERELEASE" ]   && err_exit 'PRERELEASE not found'
+
+function make_temp() {
+  local tmp_file_1
+  tmp_file_1=$(mktemp)
+
+  # shellcheck disable=SC2064
+  trap "rm_tmpfile '$tmp_file_1'" EXIT
+  # shellcheck disable=SC2064
+  trap "trap - EXIT; rm_tmpfile '$tmp_file_1'; exit -1" INT PIPE TERM
+
+  echo "$tmp_file_1"
+}
+
+tmp_file=$(make_temp)
+
+if [ "$PRERELEASE" = true ]; then
+    cat <<EOF > "$tmp_file"
+SNAPSHOT of fixRTM, $TAG_NAME is released!
+
+**This is SNAPSHOT, not a stable release. make sure this may have many bugs.**
+
+https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID
+https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME
+EOF
+else
+    cat <<EOF > "$tmp_file"
+fixRTM $TAG_NAME is released!
+Requirements for this version:
+RTM 2.4.21
+NGTLib 2.4.18
+
+https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID
+https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME
+EOF
+fi
+
+curl -v -f -X POST \
+    --data-urlencode content"@$tmp_file" \
+    "$WEBHOOK_URL" \
+    || err_exit "POST to curse forge failed"
+
+FILE_ID="$(jq '.id' < response.json)"
+
+echo "::set-output name=file_id::$FILE_ID"

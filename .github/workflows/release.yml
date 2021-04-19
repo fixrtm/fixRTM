@@ -72,14 +72,14 @@ jobs:
           RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
 
       - name: Upload To CurseForge
-        id: upload-curse
+        id: upload_curse
         if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
-        run: >
-          ./gradlew curseforge \
-              -Pcom.anatawa12.curse.api-key="${{ secrets.CURSE_TOKEN }}" \
-              -Pcom.anatawa12.curse.project-id=365235 \
-              -Pcom.anatawa12.curse.changelog-path="${{ steps.prepare_build.outputs.release_note_path }}" \
-              -Pcom.anatawa12.curse.release-type="${{ steps.publish_releases.outputs.curse_release_type }}"
+        run: ./scripts/upload_to_curse.sh
+        env:
+          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
+          CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
+          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
+          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
 
       - name: Create Release
         id: create_release
@@ -102,3 +102,16 @@ jobs:
           asset_path: ${{ steps.prepare_build.outputs.asset_path }}
           asset_name: ${{ steps.prepare_build.outputs.asset_name }}
           asset_content_type: application/java-archive
+
+      - name: Send message to discord
+        id: message_discord
+        run: ./scripts/send_message_to_discord.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
+          CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
+          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
+
+          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
+          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
+          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
