@@ -112,3 +112,16 @@ jobs:
           asset_path: ${{ steps.prepare_build.outputs.asset_path }}
           asset_name: ${{ steps.prepare_build.outputs.asset_name }}
           asset_content_type: application/java-archive
+
+      - name: Send message to discord
+        id: message_discord
+        run: ./scripts/send_message_to_discord.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
+          CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
+          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
+
+          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
+          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
+          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
