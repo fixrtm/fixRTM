@@ -105,6 +105,7 @@ jobs:
 
       - name: Send message to discord
         id: message_discord
+        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
         run: ./scripts/send_message_to_discord.sh
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
