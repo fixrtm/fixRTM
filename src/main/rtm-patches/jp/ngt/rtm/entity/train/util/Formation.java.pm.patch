@@ -12,7 +12,35 @@
     public final long id;
     public FormationEntry[] entries;
     private EntityTrainBase controlCar;
-@@ -304,12 +305,13 @@
+@@ -147,23 +148,25 @@
+       this.entries = aformationentry;
+    }
+ 
+    public void connectTrain(EntityTrainBase par1, EntityTrainBase par2, int par3, int par4, Formation par5) {
+       FormationEntry formationentry = this.getEntry(par1);
++      FormationEntry formationentry2 = par5.getEntry(par2);
++      if (formationentry2 == null) return;
+       if (formationentry != null) {
+          int i = 0;
+          boolean flag = par3 == formationentry.dir;
+          if (flag) {
+             this.reverse();
+          }
+ 
+-         formationentry = par5.getEntry(par2);
+-         flag = par4 == formationentry.dir;
++         flag = par4 == formationentry2.dir;
+          if (!flag) {
+             par5.reverse();
+          }
+ 
++
+          this.addAll(par5.entries);
+          this.reallocation();
+ 
+          for(FormationEntry formationentry1 : this.entries) {
+             this.setSpeed(0.0F);
+@@ -304,12 +307,13 @@
     private void sendPacket() {
        RTMCore.NETWORK_WRAPPER.sendToAll(new PacketFormation(this));
     }
