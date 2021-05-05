@@ -1,3 +1,4 @@
+import com.anatawa12.jarInJar.gradle.TargetPreset
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("com.anatawa12.jarInJar")
 }
 
 version = property("modVersion")!!
@@ -166,6 +168,18 @@ val copyShadowedJar by tasks.creating {
 }
 
 tasks.assemble.get().dependsOn(copyShadowedJar)
+
+tasks.embedJarInJar {
+    dependsOn(copyShadowedJar)
+    target = TargetPreset.FMLInForge
+    basePackage = "com.anatawa12.fixRtm.jarInJar"
+}
+
+tasks.assemble.get().dependsOn(tasks.embedJarInJar.get())
+
+repositories {
+    mavenLocal()
+}
 
 tasks.compileKotlin {
     dependsOn(tasks.generateUnmodifieds.get())
