@@ -143,6 +143,7 @@ val shadowModJar by tasks.creating(ShadowJar::class) {
     relocate("org.intellij.lang.annotations.", "$basePkg.ij_annotations.")
     relocate("org.jetbrains.annotations.", "$basePkg.jb_annotations.")
     relocate("org.apache.commons.compress.", "$basePkg.commons_compress.")
+    relocate("org.tukaani.xz.", "$basePkg.xz.")
 
     from(provider { zipTree(tasks.jar.get().archiveFile) })
     destinationDirectory.set(buildDir.resolve("shadowing"))
