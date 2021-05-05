@@ -7,7 +7,7 @@ plugins {
     id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("com.anatawa12.jarInJar")
+    id("com.anatawa12.jarInJar") version "1.0.0"
 }
 
 version = property("modVersion")!!

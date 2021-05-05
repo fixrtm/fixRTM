@@ -7,7 +7,6 @@ buildscript {
         maven(url = "https://files.minecraftforge.net/maven") {
             name = "forge"
         }
-        mavenLocal()
     }
     dependencies {
         // required by ForgeGradle. see anatawa12/ForgeGradle-2.3#22
@@ -19,7 +18,6 @@ buildscript {
         classpath("com.anatawa12.mod-patching:mod-patching-gradle-plugin:1.0.0-SNAPSHOT") {
             isChanging = true
         }
-        classpath("com.anatawa12.jarInJar:gradle-plugin:0.0.1-SNAPSHOT")
     }
     configurations.classpath.get().resolutionStrategy.cacheDynamicVersionsFor(10, "minutes")
     configurations.classpath.get().resolutionStrategy.cacheChangingModulesFor(10, "minutes")
