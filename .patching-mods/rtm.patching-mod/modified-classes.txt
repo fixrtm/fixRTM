@@ -17,6 +17,7 @@ jp.ngt.rtm.entity.vehicle.RenderVehicleBase
 jp.ngt.rtm.entity.vehicle.VehicleTrackerEntry
 jp.ngt.rtm.entity.vehicle.WeatherEffectDummy
 jp.ngt.rtm.event.RTMEventHandler
+jp.ngt.rtm.event.RTMKeyHandlerClient
 jp.ngt.rtm.item.ItemPaintTool
 jp.ngt.rtm.modelpack.ModelPackManager
 jp.ngt.rtm.modelpack.cfg.ResourceConfig
