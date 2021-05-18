@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
 +++ b/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
-@@ -131,11 +131,11 @@
+@@ -131,19 +131,20 @@
           }
        }
  
@@ -13,3 +13,12 @@
  
        while(!modelpackconstructthread.setFinish()) {
           sleep(500L);
+       }
+ 
+       this.finish();
++      ModelPackManager.INSTANCE.modelConstructed = true;
+       NGTLog.stopTimer("Model load time");
+    }
+ 
+    public void finish() {
+       this.finished = true;
