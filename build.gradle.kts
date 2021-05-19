@@ -102,8 +102,15 @@ val reprocessResources by tasks.getting(Copy::class) {
     configure()
 }
 
+val coremods = mutableListOf(
+    "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+    "com.anatawa12.fixRtm.asm.patching.PatchingFixRtmCorePlugin",
+    "com.anatawa12.fixRtm.asm.preprocessing.PreprocessingFixRtmCorePlugin",
+    "com.anatawa12.fixRtm.asm.hooking.HookingFixRtmCorePlugin"
+)
+
 val runClient by tasks.getting(JavaExec::class) {
-    environment("fml.coreMods.load", "com.anatawa12.fixRtm.asm.FixRtmCorePlugin")
+    systemProperties["fml.coreMods.load"] = coremods.joinToString(",")
     systemProperties["legacy.debugClassLoading"] = "true"
     /*
     systemProperties["legacy.debugClassLoadingSave"] = "true"
@@ -128,7 +135,7 @@ val jar by tasks.getting(Jar::class) {
 
     manifest {
         attributes(mapOf(
-            "FMLCorePlugin" to "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
+            "FMLCorePlugin" to coremods.joinToString(";"),
             "FMLCorePluginContainsFMLMod" to "*",
             "FMLAT" to "fix-rtm_at.cfg"
         ))
