@@ -57,7 +57,7 @@ internal class UtilsKtTest {
                 "signed-number": -
             0.0e+0,
                 "string": "some
-            string",
+             string",
                 "escaped": "\
             "\r\n",
                 "end": 0
