@@ -10,6 +10,10 @@ RTMのバグを減らし、使いやすくする！
 - [English](README.en.md)
 - [日本語](README.md)
 
+## RTM 1.7.10のユーザーへ
+
+[KaizPatchX]を使用してください。
+
 ## ダウンロード
 
 [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
@@ -22,3 +26,5 @@ RTMのバグを減らし、使いやすくする！
   14.23.5.2847以降がサポートバージョンです。
 
 対応表は[こちら](version-map.md)
+
+[KaizPatchX]: https://github.com/Kai-Z-JP/KaizPatchX

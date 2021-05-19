@@ -5,6 +5,10 @@ fixes some bugs of RTM and make RTM more useful!
 - [English](README.en.md)
 - [日本語](README.md)
 
+## For RTM 1.7.10 Users
+
+Please use [KaizPatchX].
+
 ## Download
 
 [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
@@ -17,3 +21,5 @@ fixes some bugs of RTM and make RTM more useful!
   later is supported.
 
 [here](version-map.md) is a version mapping between fixRTM and RTM
+
+[KaizPatchX]: https://github.com/Kai-Z-JP/KaizPatchX
