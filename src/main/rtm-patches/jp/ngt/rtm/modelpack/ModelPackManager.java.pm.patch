@@ -87,7 +87,7 @@
 +            "file and file is exists.", file.getAbsolutePath());
  
 -      throw new ModelPackException("Can't load model", file.getAbsolutePath());
-+      ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(NGTText.append(json, true), type.cfgClass);
++      ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(com.anatawa12.fixRtm.UtilsKt.joinLinesForJsonReading(json), type.cfgClass);
 +      resourceconfig.file = file;
 +      return this.registerResourceSet(type, resourceconfig, NGTText.append(json, false));
     }

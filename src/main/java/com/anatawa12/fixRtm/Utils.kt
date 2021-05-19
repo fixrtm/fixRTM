@@ -174,3 +174,55 @@ fun <T> T.addEntityCrashInfoAboutModelSet(
 }
 
 fun arrayOfItemStack(size: Int) = Array(size) { ItemStack.EMPTY }
+
+private const val START = 0
+private const val KEY = 1
+private const val STR_BS = 2
+private const val STR_BS_U0 = 3 // \u|0000
+private const val STR_BS_U1 = 4 // \u0|000
+private const val STR_BS_U2 = 5 // \u00|00
+private const val STR_BS_U3 = 6 // \u000|0
+private const val STR = 7
+
+fun joinLinesForJsonReading(lines: List<String>): String = buildString {
+    var stat = START
+    var shouldAddNewLine = false
+    for (line in lines) {
+        for (c in line) {
+            val preStat = stat
+            when (stat) {
+                START -> {
+                    if (c in '0'..'9' || c in 'a'..'z' || c in 'A'..'Z' || c == '+' || c == '-' || c == '.')
+                        stat = KEY
+                    else if (c == '"')
+                        stat = STR
+                }
+                KEY -> {
+                    if (c in '0'..'9' || c in 'a'..'z' || c in 'A'..'Z' || c == '+' || c == '-' || c == '.')
+                        stat = KEY
+                    else
+                        stat = START
+                }
+                STR -> {
+                    when (c) {
+                        '\\' -> stat = STR_BS
+                        '"' -> stat = START
+                    }
+                }
+                STR_BS -> {
+                    when (c) {
+                        'u' -> stat = STR_BS_U0
+                        else -> stat = STR
+                    }
+                }
+                STR_BS_U0, STR_BS_U1, STR_BS_U2, STR_BS_U3 -> {
+                    stat++
+                }
+            }
+            if (shouldAddNewLine && (preStat == START || stat == START)) append('\n')
+            shouldAddNewLine = false
+            append(c)
+        }
+        shouldAddNewLine = true
+    }
+}
