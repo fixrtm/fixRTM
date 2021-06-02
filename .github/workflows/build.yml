@@ -52,7 +52,7 @@ jobs:
           echo "::set-output name=version_name::$(grep 'modVersion=' < gradle.properties | sed 's/modVersion=//')"
 
       - name: run server
-        uses: anatawa12/minecraft-server-start-test@master
+        uses: anatawa12/minecraft-server-start-test@main
         with:
           version: 1.12.2-14.23.5.2847
           mod_jar: ./build/libs/fixRtm-${{ steps.prepare_run_server.outputs.version_name }}.jar
