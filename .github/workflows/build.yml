@@ -44,3 +44,15 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: build
+
+      # get jar name
+      - name: prepare run server
+        id: prepare_run_server
+        run:
+          echo "::set-output name=version_name::$(grep 'modVersion=' < gradle.properties | sed 's/modVersion=//')"
+
+      - name: run server
+        uses: anatawa12/minecraft-server-start-test@master
+        with:
+          version: 1.12.2-14.23.5.2847
+          mod_jar: ./build/libs/fixRtm-${{ steps.prepare_run_server.outputs.version_name }}.jar
