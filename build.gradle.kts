@@ -219,13 +219,13 @@ tasks.test {
 runClient.outputs.upToDateWhen { false }
 
 @Suppress("SpellCheckingInspection")
-val rtm = mods.curse(id = "realtrainmod", version = "2.4.21") {
+val rtm = mods.curse(id = "realtrainmod", version = property("rtmVersion").toString()) {
     name = "rtm"
     targetVersions("1.12.2")
 }
 
 @Suppress("SpellCheckingInspection")
-val ngtlib = mods.curse(id = "ngtlib", version = "2.4.18") {
+val ngtlib = mods.curse(id = "ngtlib", version = property("ngtVersion").toString()) {
     name = "ngtlib"
     targetVersions("1.12.2")
 }

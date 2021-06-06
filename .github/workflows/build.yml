@@ -44,3 +44,24 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: build
+
+      # get jar name
+      - name: prepare run server
+        id: prepare_run_server
+        run: |
+          echo "::set-output name=version_name::$(grep 'modVersion=' < gradle.properties | sed 's/modVersion=//')"
+          rtmVersion="$(grep 'rtmVersion=' < gradle.properties | sed 's/rtmVersion=//')"
+          ngtVersion="$(grep 'ngtVersion=' < gradle.properties | sed 's/ngtVersion=//')"
+          curse() {
+              echo "$HOME/.gradle/caches/minecraft-mods/curse/$1/$2/$1-$2-raw.jar"
+          }
+          mkdir mods
+          cp "$(curse ngtlib "$ngtVersion")" mods
+          cp "$(curse realtrainmod "$rtmVersion")" mods
+
+      - name: run server
+        uses: anatawa12/minecraft-server-start-test@v1
+        with:
+          version: 1.12.2-14.23.5.2855
+          mod_jar: ./build/libs/fixRtm-${{ steps.prepare_run_server.outputs.version_name }}.jar
+          mods_dir: mods
