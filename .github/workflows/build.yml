@@ -57,7 +57,7 @@ jobs:
           }
           mkdir mods
           cp "$(curse ngtlib "$ngtVersion")" mods
-          cp "$(curse realtrainmod "$ngtVersion")" mods
+          cp "$(curse realtrainmod "$rtmVersion")" mods
 
       - name: run server
         uses: anatawa12/minecraft-server-start-test@v1
