@@ -53,7 +53,7 @@ jobs:
           rtmVersion="$(grep 'rtmVersion=' < gradle.properties | sed 's/rtmVersion=//')"
           ngtVersion="$(grep 'ngtVersion=' < gradle.properties | sed 's/ngtVersion=//')"
           curse() {
-              echo ~"/.gradle/caches/minecraft-mods/curse/$1/$2/$1-$2-raw.jar"
+              echo "$HOME/.gradle/caches/minecraft-mods/curse/$1/$2/$1-$2-raw.jar"
           }
           mkdir mods
           cp "$(curse ngtlib "$ngtVersion")" mods
