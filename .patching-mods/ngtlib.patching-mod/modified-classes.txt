@@ -5,6 +5,7 @@ jp.ngt.ngtlib.io.NGTLog
 jp.ngt.ngtlib.io.ScriptUtil
 jp.ngt.ngtlib.item.craft.RecipeManager
 jp.ngt.ngtlib.item.craft.ShapedRecipes55
+jp.ngt.ngtlib.math.BezierCurve
 jp.ngt.ngtlib.renderer.model.ModelLoader
 jp.ngt.ngtlib.renderer.model.ObjModel
 jp.ngt.ngtlib.renderer.model.PolygonModel
