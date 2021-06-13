@@ -21,12 +21,14 @@
     }
  
     public EntityTrainBase(World world, String s) {
-@@ -449,10 +450,19 @@
+@@ -448,11 +449,20 @@
+             }
           }
  
           if (this.isControlCar() && flag && !this.world.isRemote) {
              ModelSetTrain modelsettrain = (ModelSetTrain)this.getResourceState().getResourceSet();
-             float f1 = EnumNotch.getAcceleration(i, f, (TrainConfig)modelsettrain.getConfig());
+-            float f1 = EnumNotch.getAcceleration(i, f, (TrainConfig)modelsettrain.getConfig());
++            float f1 = EnumNotch.getAcceleration(i, Math.abs(f), (TrainConfig)modelsettrain.getConfig());
 +            // f: speed
 +            // f1: acceleration
 +            byte dir = this.getVehicleState(TrainState.TrainStateType.Role);
@@ -41,6 +43,19 @@
                 if (this.rotationPitch == 0.0F) {
                    float f3 = 2.0E-4F;
                    f2 = f > 0.0F ? f3 : (f < 0.0F ? -f3 : 0.0F);
+@@ -462,11 +472,11 @@
+                   f2 = NGTMath.sin(this.rotationPitch) * f4;
+                }
+ 
+                f = f + (f1 - f2);
+             } else {
+-               f = f + (f > 0.0F ? f1 : (f < 0.0F ? -f1 : 0.0F));
++               f = f + f1;
+             }
+ 
+             this.setSpeed(f);
+          }
+ 
 @@ -706,11 +716,12 @@
        }
  
