@@ -1,0 +1,26 @@
+--- a/jp/ngt/rtm/modelpack/RTMResourceManager.java
++++ b/jp/ngt/rtm/modelpack/RTMResourceManager.java
+@@ -50,22 +50,11 @@
+             if (!s1.isEmpty()) {
+                String s3 = NGTFileLoader.getArchivePath(s, s1);
+                String s2 = par1.getPath();
+ 
+                try {
+-                  ZipFile zipfile = NGTFileLoader.getArchive(new File(s3), "");
+-                  Enumeration<? extends ZipEntry> enumeration = zipfile.entries();
+-
+-                  while(enumeration.hasMoreElements()) {
+-                     ZipEntry zipentry = enumeration.nextElement();
+-                     if (!zipentry.isDirectory()) {
+-                        File file2 = new File(s3, zipentry.getName());
+-                        if (s2.contains(file2.getName())) {
+-                           inputstream = zipfile.getInputStream(zipentry);
+-                        }
+-                     }
+-                  }
++                  inputstream = com.anatawa12.fixRtm.rtm.RTMResourceManagerKt.getInputStreamFromZip(s3, par1);
+                } catch (IOException ioexception) {
+                   ioexception.printStackTrace();
+                }
+             } else {
+                File file1 = new File(this.domain, par1.getPath());
