@@ -1,0 +1,16 @@
+--- a/jp/ngt/rtm/CreativeTabRTM.java
++++ b/jp/ngt/rtm/CreativeTabRTM.java
+@@ -7,10 +7,13 @@
+ 
+ public class CreativeTabRTM extends CreativeTabs {
+    public static final CreativeTabs RAILWAY = new CreativeTabRTM("rtm_railway");
+    public static final CreativeTabs INDUSTRY = new CreativeTabRTM("rtm_industry");
+    public static final CreativeTabs TOOLS = new CreativeTabRTM("rtm_tools");
++   // workaround for reobf
++   @SuppressWarnings("unused")
++   public static final CreativeTabs field_78040_i = TOOLS;
+ 
+    public CreativeTabRTM(String label) {
+       super(label);
+    }
+ 
