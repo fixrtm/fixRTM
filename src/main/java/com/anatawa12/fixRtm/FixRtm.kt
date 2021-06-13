@@ -103,8 +103,10 @@ object FixRtm {
         NetworkHandler.init()
         PermissionManager.registerBuiltinPermissions()
 
-        SoundSystemConfig.setNumberNormalChannels(1024)
-        SoundSystemConfig.setNumberStreamingChannels(32)
+        if (e.side == Side.CLIENT) {
+            SoundSystemConfig.setNumberNormalChannels(1024)
+            SoundSystemConfig.setNumberStreamingChannels(32)
+        }
     }
 
     @Mod.EventHandler
