@@ -8,6 +8,7 @@ assignees: anatawa12
 
 **Bug report check list**
 
+- [ ] You have finished loading all model packs before login to world/server.
 - [ ] You're using the latest stable/snapshot version of fixRTM.
 - [ ] You're using correct version of RTM and NGTLib. You can check with release notes.
 - [ ] You couldn't find same bag in the [issues](https://github.com/fixrtm/fixRTM/issues)

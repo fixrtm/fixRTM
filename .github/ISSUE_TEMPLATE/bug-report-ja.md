@@ -8,6 +8,7 @@ assignees: anatawa12
 
 **Bug report check list**
 
+- [ ] サーバーやワールドにはいる前に、全てのモデルパックの読み込みを終えている
 - [ ] 最新の SNAPSHOT またはリリースの fixRTM を使用してる
 - [ ] 正しい RTM 及び NGTLib を使用している。リリースノートから必要なバージョンを調べられます。
 - [ ] 同じバグが [issues](https://github.com/fixrtm/fixRTM/issues) で報告されていない
