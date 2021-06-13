@@ -1,3 +1,4 @@
+jp.ngt.rtm.CreativeTabRTM
 jp.ngt.rtm.RTMItem
 jp.ngt.rtm.RTMRecipe
 jp.ngt.rtm.block.tileentity.TileEntityMachineBase
