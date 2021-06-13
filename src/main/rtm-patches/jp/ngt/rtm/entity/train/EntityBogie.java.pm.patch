@@ -1,5 +1,44 @@
 --- a/jp/ngt/rtm/entity/train/EntityBogie.java
 +++ b/jp/ngt/rtm/entity/train/EntityBogie.java
+@@ -130,11 +130,11 @@
+             return BogieController.MotionState.FLY;
+          } else {
+             RailMap railmap = this.currentRailMap;
+             int i = 0;
+             if (frontBogie != null && this.prevPosIndex != -1) {
+-               int j = (int)((speed + 0.25F) * 32.0F);
++               int j = (int)((Math.abs(speed) + 0.25F) * 32.0F);
+                int k = this.prevPosIndex - j;
+                int l = this.prevPosIndex + j;
+                int i1 = k < 0 ? 0 : k;
+                int j1 = l > this.split ? this.split : l;
+                double[] adouble = frontBogie.getPosBuf();
+@@ -175,11 +175,11 @@
+                this.rotationBuf[0] = f2;
+                this.rotationBuf[1] = f3;
+                this.rotationBuf[2] = f1;
+                this.rotationBuf[3] = f4;
+                if (this.jointDelay > 0.0F) {
+-                  this.jointDelay -= speed;
++                  this.jointDelay -= Math.abs(speed);
+                   if (this.jointDelay <= 0.0F) {
+                      this.playJointSound();
+                   }
+                }
+ 
+@@ -249,11 +249,11 @@
+ 
+    protected void playJointSound() {
+       EntityTrainBase entitytrainbase = this.getTrain();
+       TrainConfig trainconfig = (TrainConfig)((ModelSetTrain)entitytrainbase.getResourceState().getResourceSet()).getConfig();
+       if (!trainconfig.muteJointSound) {
+-         float f = entitytrainbase.getSpeed() / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
++         float f = Math.abs(entitytrainbase.getSpeed()) / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
+          String s = this.reverbSound ? "rtm:sounds/train/joint_reverb.ogg" : "rtm:sounds/train/joint.ogg";
+          RTMCore.proxy.playSound(this, s, 1.0F, f);
+          int i = trainconfig.jointDelay[this.getBogieId()].length;
+          if (this.jointIndex < i - 1) {
+             int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
 @@ -297,11 +297,13 @@
        } else {
           boolean flag = false;

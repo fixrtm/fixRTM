@@ -40,6 +40,19 @@
  
           for(FormationEntry formationentry1 : this.entries) {
              this.setSpeed(0.0F);
+@@ -267,11 +270,11 @@
+    }
+ 
+    public void setTrainStateData(TrainState.TrainStateType type, byte data, EntityTrainBase par2) {
+       for(FormationEntry formationentry : this.entries) {
+          if (type == TrainState.TrainStateType.Role) {
+-            if (data == TrainState.Role_Front.data) {
++            if (data == TrainState.Role_Front.data || data == TrainState.Role_Back.data) {
+                this.controlCar = par2;
+             }
+ 
+             if (par2.equals(formationentry.train)) {
+                formationentry.train.setTrainStateData_NoSync(type, data);
 @@ -304,12 +307,13 @@
     private void sendPacket() {
        RTMCore.NETWORK_WRAPPER.sendToAll(new PacketFormation(this));
