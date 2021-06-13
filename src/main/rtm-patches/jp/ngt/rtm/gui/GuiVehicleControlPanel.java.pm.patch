@@ -1,0 +1,16 @@
+--- a/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
++++ b/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
+@@ -497,11 +497,12 @@
+ 
+             if (button.id == 129) {
+                int i2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Announcement);
+                String[][] astring1 = this.modelset.getConfig().sound_Announcement;
+                if (astring1 != null && i2 < astring1.length) {
+-                  RTMCore.proxy.playSound(this.vehicle, astring1[i2][1], 1.0F, 1.0F);
++                  RTMCore.NETWORK_WRAPPER.sendToServer(
++                     new jp.ngt.rtm.network.PacketRTMKey(player, RTMCore.KEY_Chime, astring1[i2][1]));
+                }
+ 
+                return;
+             }
+ 
