@@ -1,5 +1,6 @@
 jp.ngt.ngtlib.NGTCore
 jp.ngt.ngtlib.command.CommandPermit
+jp.ngt.ngtlib.io.NGTFileLoader
 jp.ngt.ngtlib.io.NGTLog
 jp.ngt.ngtlib.io.ScriptUtil
 jp.ngt.ngtlib.item.craft.RecipeManager
