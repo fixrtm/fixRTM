@@ -5,6 +5,7 @@ jp.ngt.rtm.block.tileentity.TileEntityMechanism
 jp.ngt.rtm.block.tileentity.TileEntityOrnament
 jp.ngt.rtm.command.CommandRTM
 jp.ngt.rtm.electric.TileEntityConnectorBase
+jp.ngt.rtm.electric.TileEntityElectricalWiring
 jp.ngt.rtm.electric.TileEntitySignal
 jp.ngt.rtm.entity.ai.EntityAITravelByTrain
 jp.ngt.rtm.entity.npc.EntityNPC
