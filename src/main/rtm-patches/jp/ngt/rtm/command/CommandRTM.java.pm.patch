@@ -12,7 +12,7 @@
  import net.minecraft.command.ICommandSender;
  import net.minecraft.command.PlayerNotFoundException;
  import net.minecraft.entity.Entity;
-@@ -33,26 +34,30 @@
+@@ -33,26 +34,36 @@
           NGTLog.sendChatMessage(sender, "/rtm delAllTrain : Delete all train", new Object[0]);
           NGTLog.sendChatMessage(sender, "/rtm dismount : Dismount player from vehicle", new Object[0]);
        } else {
@@ -43,7 +43,13 @@
              }
  
 -            NGTLog.sendChatMessage(entityplayer, "Delete " + i + "trains.", new Object[0]);
-+            NGTLog.sendChatMessage(entityplayer, "Deleted " + i + "trains, " + entityCount + " entities in total.", new Object[0]);
++            java.util.Map<?, ?> formationMap = jp.ngt.rtm.entity.train.util.FormationManager.getInstance().getFormations();
++            int countFormation = formationMap.size();
++            formationMap.clear();
++
++            NGTLog.sendChatMessage(entityplayer, "Deleted " + i + "trains.", new Object[0]);
++            NGTLog.sendChatMessage(entityplayer, "Deleted " + entityCount + " entities in total.", new Object[0]);
++            NGTLog.sendChatMessage(entityplayer, "Deleted " + countFormation + " formations.", new Object[0]);
           } else if (!args[0].equals("twitter_tag") && args[0].equals("dismount")) {
              entityplayer.dismountRidingEntity();
           }
