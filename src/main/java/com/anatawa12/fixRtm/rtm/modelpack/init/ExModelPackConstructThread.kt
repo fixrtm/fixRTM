@@ -46,7 +46,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
     }
 
     override fun run() {
-        if (modelPackLoadSpeed == UseOriginal) {
+        if (modelPackLoadSpeed != UseOriginal) {
             runWithCrashReport {
                 runThread()
             }
@@ -137,6 +137,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
 
 
     override fun setFinish(): Boolean {
+        if (modelPackLoadSpeed == UseOriginal) return super.setFinish()
         return if (ModelPackManager.INSTANCE.unconstructSets.size == this.index.get()) {
             ModelPackManager.INSTANCE.unconstructSets.clear()
             ModelPackManager.INSTANCE.clearCache()
