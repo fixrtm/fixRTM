@@ -4,7 +4,7 @@ buildscript {
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
             name = "ossrh-snapshot"
         }
-        maven(url = "https://files.minecraftforge.net/maven") {
+        maven(url = "https://maven.minecraftforge.net/") {
             name = "forge"
         }
     }
