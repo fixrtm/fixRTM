@@ -1,5 +1,5 @@
 ---
-name: 新機能のリクエスト [EN]
+name: 新機能のリクエスト [JA]
 about: 追加機能のリクエスト
 title: ""
 labels: enhancement
