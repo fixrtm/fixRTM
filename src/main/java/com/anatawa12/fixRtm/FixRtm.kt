@@ -36,6 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
+import paulscode.sound.SoundSystemConfig
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -101,6 +102,9 @@ object FixRtm {
         modMetadata = e.modMetadata
         NetworkHandler.init()
         PermissionManager.registerBuiltinPermissions()
+
+        SoundSystemConfig.setNumberNormalChannels(1024)
+        SoundSystemConfig.setNumberStreamingChannels(32)
     }
 
     @Mod.EventHandler
