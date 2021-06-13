@@ -21,7 +21,41 @@
     }
  
     public EntityTrainBase(World world, String s) {
-@@ -890,10 +891,11 @@
+@@ -449,10 +450,19 @@
+          }
+ 
+          if (this.isControlCar() && flag && !this.world.isRemote) {
+             ModelSetTrain modelsettrain = (ModelSetTrain)this.getResourceState().getResourceSet();
+             float f1 = EnumNotch.getAcceleration(i, f, (TrainConfig)modelsettrain.getConfig());
++            // f: speed
++            // f1: acceleration
++            byte dir = this.getVehicleState(TrainState.TrainStateType.Role);
++            if ((dir == TrainState.Role_Back.data && f > 0) || (dir == TrainState.Role_Front.data && f < 0)) {
++               f1 = Math.abs(f1);
++            }
++            if (dir == TrainState.Role_Back.data) {
++               f1 *= -1;
++            }
+             if (i >= 0) {
+                float f2;
+                if (this.rotationPitch == 0.0F) {
+                   float f3 = 2.0E-4F;
+                   f2 = f > 0.0F ? f3 : (f < 0.0F ? -f3 : 0.0F);
+@@ -706,11 +716,12 @@
+       }
+ 
+    }
+ 
+    public boolean isControlCar() {
+-      return this.getVehicleState(TrainState.TrainStateType.Role) == TrainState.Role_Front.data;
++      byte role = this.getVehicleState(TrainState.TrainStateType.Role);
++      return role == TrainState.Role_Front.data || role == TrainState.Role_Back.data;
+    }
+ 
+    public boolean existBogies() {
+       return this.getBogie(0) != null && this.getBogie(1) != null;
+    }
+@@ -890,10 +901,11 @@
           this.releaseTicket();
        }
  
@@ -33,7 +67,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -910,11 +912,10 @@
+@@ -910,11 +922,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -45,7 +79,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -938,20 +939,26 @@
+@@ -938,20 +949,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;

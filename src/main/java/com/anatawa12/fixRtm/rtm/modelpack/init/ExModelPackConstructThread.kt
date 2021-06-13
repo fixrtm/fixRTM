@@ -2,7 +2,8 @@ package com.anatawa12.fixRtm.rtm.modelpack.init
 
 import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
-import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
+import com.anatawa12.fixRtm.asm.config.MainConfig.ModelPackLoadSpeed.*
+import com.anatawa12.fixRtm.asm.config.MainConfig.modelPackLoadSpeed
 import com.anatawa12.fixRtm.rtm.modelpack.ModelState
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
@@ -45,7 +46,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
     }
 
     override fun run() {
-        if (multiThreadModelConstructEnabled) {
+        if (modelPackLoadSpeed != UseOriginal) {
             runWithCrashReport {
                 runThread()
             }
@@ -74,8 +75,15 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         }
         guiUpdateThread.start()
 
-        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-            threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+        val exec = when (modelPackLoadSpeed) {
+            UseOriginal -> error("must be erased")
+            SingleThreaded -> Executors.newSingleThreadExecutor(
+                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+            MultiThreaded -> Executors.newFixedThreadPool(
+                (Runtime.getRuntime().availableProcessors() / 3).coerceAtLeast(1),
+                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+            WorkStealing -> Executors.newWorkStealingPool()
+        }
 
         val futures = mutableListOf<Future<*>>()
 
@@ -129,6 +137,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
 
 
     override fun setFinish(): Boolean {
+        if (modelPackLoadSpeed == UseOriginal) return super.setFinish()
         return if (ModelPackManager.INSTANCE.unconstructSets.size == this.index.get()) {
             ModelPackManager.INSTANCE.unconstructSets.clear()
             ModelPackManager.INSTANCE.clearCache()

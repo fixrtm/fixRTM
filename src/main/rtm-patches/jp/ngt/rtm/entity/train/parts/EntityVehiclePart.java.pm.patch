@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/entity/train/parts/EntityVehiclePart.java
++++ b/jp/ngt/rtm/entity/train/parts/EntityVehiclePart.java
+@@ -167,11 +167,11 @@
+       this.needsUpdatePos = false;
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public void setPositionAndRotationDirect(double par1, double par3, double par5, float par7, float par8, int par9, boolean par10) {
+-      if (this.getVehicle() == null || this.getVehicle().getSpeed() <= 0.0F) {
++      if (this.getVehicle() == null || this.getVehicle().getSpeed() == 0.0F) {
+          this.setPosition(par1, par3, par5);
+          this.setRotation(par7, par8);
+       }
+ 
+    }

@@ -1,0 +1,18 @@
+--- a/jp/ngt/ngtlib/math/BezierCurve.java
++++ b/jp/ngt/ngtlib/math/BezierCurve.java
+@@ -79,10 +79,15 @@
+          if (this.normalizedParameters == null) {
+             this.initNP();
+          }
+ 
+          int i = NGTMath.floor((float)par2 * (float)this.split / (float)n);
++
++         if (this.normalizedParameters.length == 0) {
++            return 0.0f;
++         }
++
+          return this.normalizedParameters[i];
+       }
+    }
+ 
+    private void initNP() {
