@@ -13,6 +13,29 @@ object MainConfig {
     private const val categoryBetterNgtLib = "better_ngtlib"
 
     @JvmField
+    val modelPackLoadSpeed: ModelPackLoadSpeed
+
+    init {
+        val modelPackLoadSpeedInt = config.getInt(
+            "modelPackLoadSpeed", categoryModelLoading,
+            ModelPackLoadSpeed.WorkStealing.configValue,
+            ModelPackLoadSpeed.minValue(),
+            ModelPackLoadSpeed.maxValue(),
+            ModelPackLoadSpeed.computeComment())
+
+        val multiThreadConstructEnabledProp = config.getCategory(categoryModelLoading).remove("multiThreadConstructEnabled")
+        if (multiThreadConstructEnabledProp != null) {
+            @Suppress("SimplifyBooleanWithConstants")
+            if (multiThreadConstructEnabledProp.getBoolean(true) == false) {
+                config.getCategory(categoryModelLoading)
+                    .get("modelPackLoadSpeed")!!
+                    .set(ModelPackLoadSpeed.UseOriginal.configValue)
+            }
+        }
+        modelPackLoadSpeed = ModelPackLoadSpeed.byValue(modelPackLoadSpeedInt)
+    }
+
+    @JvmField
     val multiThreadModelConstructEnabled = config.getBoolean(
         "multiThreadConstructEnabled", categoryModelLoading,
         true,
@@ -116,6 +139,23 @@ object MainConfig {
             val default = UseRtmNormal
 
             const val defaultConfigValue = "use-default"
+        }
+    }
+
+    enum class ModelPackLoadSpeed(val configValue: Int, val description: String) {
+        UseOriginal(0, "Slowest; Use Original"),
+        SingleThreaded(1, "Slow; Single thread"),
+        MultiThreaded(2, "Faster; use one of third of your processor"),
+        WorkStealing(3, "Fastest; use all processors; Default"),
+        ;
+        companion object {
+            private val byValue = values().associateBy { it.configValue }
+            fun byValue(value: Int) = byValue[value] ?: error("invalid or unsupported loading speed")
+            fun minValue() = values().minByOrNull { it.configValue }!!.configValue
+            fun maxValue() = values().maxByOrNull { it.configValue }!!.configValue
+            fun computeComment() = values()
+                .sortedBy { it.configValue }
+                .joinToString("") { "${it.configValue}: ${it.description}\n" }
         }
     }
 }
