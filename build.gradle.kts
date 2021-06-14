@@ -109,6 +109,14 @@ val coremods = mutableListOf(
     "com.anatawa12.fixRtm.asm.hooking.HookingFixRtmCorePlugin"
 )
 
+val runServer by tasks.getting(JavaExec::class) {
+    systemProperties["fml.coreMods.load"] = coremods.joinToString(",")
+    systemProperties["legacy.debugClassLoading"] = "true"
+    /*
+    systemProperties["legacy.debugClassLoadingSave"] = "true"
+    // */
+}
+
 val runClient by tasks.getting(JavaExec::class) {
     systemProperties["fml.coreMods.load"] = coremods.joinToString(",")
     systemProperties["legacy.debugClassLoading"] = "true"
