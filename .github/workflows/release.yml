@@ -14,6 +14,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: deployment
 
     steps:
       - name: prepare git user data
