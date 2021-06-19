@@ -2,7 +2,7 @@
 name: Feature Request [EN]
 about: Create a request to add some feature
 title: ""
-labels: enhancement
+labels: enhancement, not-checked
 assignees: anatawa12
 ---
 

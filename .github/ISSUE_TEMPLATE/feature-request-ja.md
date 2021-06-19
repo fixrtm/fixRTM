@@ -2,7 +2,7 @@
 name: 新機能のリクエスト [JA]
 about: 追加機能のリクエスト
 title: ""
-labels: enhancement
+labels: enhancement, not-checked
 assignees: anatawa12
 ---
 

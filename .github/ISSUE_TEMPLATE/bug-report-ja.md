@@ -2,7 +2,7 @@
 name: Bug report [JA]
 about: 改善に役に立つレポートを作成する
 title: ""
-labels: bug
+labels: bug, not-checked
 assignees: anatawa12
 ---
 
