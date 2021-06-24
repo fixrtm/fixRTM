@@ -2,14 +2,8 @@ blank_issues_enabled: true
 contact_links:
   - name: fixRTM official Discord Server
     url: https://discord.gg/qFKcUXX
-    about: You have questions? Please join us on Discord!
-  - name: fixRTM 公式 Discord サーバー
-    url: https://discord.gg/qFKcUXX
-    about: 質問がありますか? Discord で聞いてみましょう！
+    about: You have questions? Please join us on Discord! 質問がありますか? Discord で聞いてみましょう！
 
-  - name: KaizPatchX, similar mod for 1.7.10
+  - name: KaizPatchX, similar mod for 1.7.10, 1.7.10向けの同様のMOD
     url: https://github.com/Kai-Z-JP/KaizPatchX
-    about: Are you looking for 1.7.10? Please use KaizPatchX instead.
-  - name: KaizPatchX, 1.7.10向けの同様のMOD
-    url: https://github.com/Kai-Z-JP/KaizPatchX
-    about: 1.7.10版を探していますか？ KaizPatchXを使用してください。
+    about: Are you looking for 1.7.10? Please use KaizPatchX instead. 1.7.10版を探していますか？ KaizPatchXを使用してください。
