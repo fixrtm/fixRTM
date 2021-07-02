@@ -1,0 +1,90 @@
+name: Bug Report [EN]
+description: Create a report to help us improve
+labels: [bug, not-checked]
+assignees:
+  - anatawa12
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before submitting a bug, please make sure following checks.
+      options:
+        - label: You have finished loading all model packs before login to world/server.
+          required: true
+        - label: You're using the latest stable, snapshot, or daily-snapshot version of fixRTM.
+          required: true
+        - label: You're using correct version of RTM and NGTLib for your fixRTM.
+          required: true
+        - label: You couldn't find same bag in the issues.
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Descrive the bug
+      description: >
+        A clear and concise description of this bug.
+        It could be very important information when the bug
+        happens and what did you do so
+        please tell me them if possible.
+        Please attach crash report, latest.log, and debug.log if possible.
+        You can attach files via dropping files to textarea.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: >
+        If you can reproduce this issue, please tell me the steps to reproduce.
+        If you can't, please tell me that.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: >
+        Explain what should be happened.
+        If your bug is crashing bug, You don't have to write this form.
+
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: >
+        Explain what is happening instead.
+        If your bug is crashing bug, You don't have to write this form.
+
+  - type: input
+    attributes:
+      label: OS
+      description: Your running Operating System and its version. macOS, Windows or some GNU/Linux distributions.
+      placeholder: "macOS 11.4, Windows 10 Home 21H1, Ubuntu 21.04"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Minecraft Forge Version
+      placeholder: "2854, 14.23.5.2854"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: fixRTM Version
+      placeholder: "2.0.18, SNAPSHOT-2021-06-13-13-32-47, SNAPSHOT-2021-06-19-NIGHTLY"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Other Mods
+      placeholder: "Optifine"
+    validations:
+      required: false
