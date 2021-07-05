@@ -1,16 +1,14 @@
 --- a/jp/ngt/rtm/item/ItemRail.java
 +++ b/jp/ngt/rtm/item/ItemRail.java
-@@ -193,11 +193,12 @@
+@@ -193,10 +193,11 @@
     }
  
     public static ItemStack copyItemFromRail(TileEntityLargeRailCore core) {
        ItemStack itemstack = getRailItem(core.getResourceState());
        RailPosition[] arailposition = core.getRailPositions();
--      setRPToItem(itemstack, arailposition);
-+      if (arailposition != null)
-+          setRPToItem(itemstack, arailposition);
++      if (arailposition == null) return ItemStack.EMPTY;
+       setRPToItem(itemstack, arailposition);
        String s = core.getRailShapeName();
        itemstack.getTagCompound().setString("ShapeName", s);
        return itemstack;
     }
- 
