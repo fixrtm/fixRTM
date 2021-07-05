@@ -112,8 +112,14 @@
           return cfg.getName();
        } else {
           throw new ModelPackException("Failed to create ResourceSet", cfg.getName());
-@@ -183,10 +199,11 @@
-             NGTLog.debug("[RTM] Send model to client : " + resourceconfig.getName());
+@@ -178,15 +194,16 @@
+ 
+       for(Entry<ResourceType, Map<String, ResourceSet>> entry : this.allModelSetMap.entrySet()) {
+          for(ResourceSet resourceset : (entry.getValue()).values()) {
+             ResourceConfig resourceconfig = resourceset.getConfig();
+             RTMCore.NETWORK_WRAPPER.sendTo(new PacketModelSet(j, (entry.getKey()).name, resourceconfig.getName()), player);
+-            NGTLog.debug("[RTM] Send model to client : " + resourceconfig.getName());
++            NGTLog.trace("[RTM] Send model to client : " + resourceconfig.getName());
              ++j;
           }
        }
