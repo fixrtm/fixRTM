@@ -34,7 +34,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
-import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 import paulscode.sound.SoundSystemConfig
 import java.awt.Color
@@ -172,25 +171,6 @@ object FixRtm {
     }
     //assets/rtm/models/item/item_train_127.json
     //                       item_train_fixrtm_test
-
-    var serverHasFixRTM = true
-
-    @NetworkCheckHandler
-    fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
-        if (mods[RTMCore.MODID] != RTMCore.VERSION)
-            return false
-        if (mods[MODID]?.equals(VERSION) == false)
-            return false
-        if (remoteSide == Side.SERVER) {
-            // on client
-            serverHasFixRTM = mods.containsKey(MODID)
-            if (serverHasFixRTM)
-                DummyModelPackManager.gotAllModels = false
-            return true
-        } else {
-            return true
-        }
-    }
 
     @SubscribeEvent
     @Suppress("UNUSED_PARAMETER")

@@ -75,7 +75,6 @@ object DummyModelPackManager {
         if (!dummyModelPackEnabled) return false // if disabled
         if (NGTUtil.isServer()) return true // if server
         if (!NGTUtil.isSMP()) return true // if single player
-        if (!FixRtm.serverHasFixRTM) return true // if server does not use fixrtm
         if (gotAllModels) return true // if got all model name
         return false
     }
