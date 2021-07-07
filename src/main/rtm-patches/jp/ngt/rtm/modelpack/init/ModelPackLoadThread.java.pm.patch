@@ -1,6 +1,29 @@
 --- a/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
 +++ b/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
-@@ -131,19 +131,20 @@
+@@ -97,17 +97,19 @@
+          };
+          thread.start();
+          this.runThread();
+       } catch (Throwable throwable) {
+          this.finish();
++         CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading RTM ModelPack");
++         crashreport.makeCategory("Initialization");
+          if (this.threadSide == Side.CLIENT) {
+-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading RTM ModelPack");
+-            crashreport.makeCategory("Initialization");
+             crashreport = NGTUtilClient.getMinecraft().addGraphicsAndWorldToCrashReport(crashreport);
+             NGTUtilClient.getMinecraft().displayCrashReport(crashreport);
+          } else {
+-            throwable.printStackTrace();
++            // Kotlin intellij plugin issue: reportCrash$fixRtm looks not found
++            // in ide but should be found in gradle build
++            com.anatawa12.fixRtm.FixRtm.INSTANCE.reportCrash$fixRtm(crashreport);
+          }
+       } finally {
+          if (this.displayWindow && !this.debug) {
+             this.mainFrame.dispose();
+          }
+@@ -131,19 +133,20 @@
           }
        }
  

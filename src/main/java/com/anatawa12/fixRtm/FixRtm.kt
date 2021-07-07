@@ -15,9 +15,11 @@ import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IReloadableResourceManager
+import net.minecraft.crash.CrashReport
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.Item
 import net.minecraft.launchwrapper.Launch
+import net.minecraft.util.ReportedException
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.Style
 import net.minecraft.util.text.TextComponentString
@@ -34,11 +36,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.network.NetworkCheckHandler
 import net.minecraftforge.fml.relauncher.Side
 import paulscode.sound.SoundSystemConfig
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.util.concurrent.atomic.AtomicReference
 import javax.imageio.ImageIO
 import kotlin.math.max
 
@@ -107,6 +111,23 @@ object FixRtm {
             SoundSystemConfig.setNumberNormalChannels(1024)
             SoundSystemConfig.setNumberStreamingChannels(32)
         }
+    }
+
+    private val thrownMarker = CrashReport("", Throwable())
+    private val crashReportHolder = AtomicReference<CrashReport?>(null)
+
+    internal fun reportCrash(report: CrashReport) {
+        // fail if after crashing other thread
+        crashReportHolder.compareAndSet(null, report)
+    }
+
+    @SubscribeEvent
+    fun onServerTick(e: TickEvent.ServerTickEvent) {
+        val report = crashReportHolder.get()
+        if (report === null) return
+        if (report === thrownMarker) return
+        crashReportHolder.set(thrownMarker)
+        throw ReportedException(report)
     }
 
     @Mod.EventHandler

@@ -1,5 +1,6 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
+import com.anatawa12.fixRtm.FixRtm
 import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.ModelPackLoadSpeed.*
@@ -34,13 +35,13 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         try {
             block()
         } catch (throwable: Throwable) {
+            var crashReport: CrashReport = CrashReport.makeCrashReport(throwable, "Constructing RTM ModelPack")
+            crashReport.makeCategory("Initialization")
             if (threadSide == Side.CLIENT) {
-                var crashReport: CrashReport = CrashReport.makeCrashReport(throwable, "Constructing RTM ModelPack")
-                crashReport.makeCategory("Initialization")
                 crashReport = NGTUtilClient.getMinecraft().addGraphicsAndWorldToCrashReport(crashReport)
                 NGTUtilClient.getMinecraft().displayCrashReport(crashReport)
             } else {
-                throw throwable
+                FixRtm.reportCrash(crashReport)
             }
         }
     }
