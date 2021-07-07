@@ -194,25 +194,6 @@ object FixRtm {
     //assets/rtm/models/item/item_train_127.json
     //                       item_train_fixrtm_test
 
-    var serverHasFixRTM = true
-
-    @NetworkCheckHandler
-    fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
-        if (mods[RTMCore.MODID] != RTMCore.VERSION)
-            return false
-        if (mods[MODID]?.equals(VERSION) == false)
-            return false
-        if (remoteSide == Side.SERVER) {
-            // on client
-            serverHasFixRTM = mods.containsKey(MODID)
-            if (serverHasFixRTM)
-                DummyModelPackManager.gotAllModels = false
-            return true
-        } else {
-            return true
-        }
-    }
-
     @SubscribeEvent
     @Suppress("UNUSED_PARAMETER")
     fun onPlayerLoggedIn(e: PlayerEvent.PlayerLoggedInEvent) {
