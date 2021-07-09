@@ -44,6 +44,7 @@ jp.ngt.rtm.modelpack.modelset.ModelSetTrain
 jp.ngt.rtm.modelpack.modelset.ModelSetVehicleBase
 jp.ngt.rtm.modelpack.modelset.ResourceSet
 jp.ngt.rtm.modelpack.state.ResourceState
+jp.ngt.rtm.network.PacketModelPack
 jp.ngt.rtm.rail.BlockLargeRailBase
 jp.ngt.rtm.rail.BlockMarker
 jp.ngt.rtm.rail.RenderMarkerBlock
