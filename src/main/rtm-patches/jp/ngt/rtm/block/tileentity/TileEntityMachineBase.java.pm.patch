@@ -1,11 +1,13 @@
 --- a/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.java
 +++ b/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.java
-@@ -112,6 +112,12 @@
+@@ -111,7 +111,13 @@
+ 
     public boolean closeGui(ResourceState par1) {
        return true;
     }
  
-    protected abstract ResourceType getSubType();
+-   protected abstract ResourceType getSubType();
++   public abstract ResourceType getSubType();
 +
 +   @Override
 +   public void addInfoToCrashReport(net.minecraft.crash.CrashReportCategory reportCategory) {
