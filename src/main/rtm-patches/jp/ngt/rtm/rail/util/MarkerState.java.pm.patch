@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/rail/util/MarkerState.java
++++ b/jp/ngt/rtm/rail/util/MarkerState.java
+@@ -3,11 +3,13 @@
+ public enum MarkerState {
+    DISTANCE,
+    GRID,
+    LINE1,
+    LINE2,
+-   ANCHOR21;
++   ANCHOR21,
++   FIT_NEIGHBOR,
++   ;
+ 
+    private int bitMask() {
+       return 1 << this.ordinal();
+    }
+ 

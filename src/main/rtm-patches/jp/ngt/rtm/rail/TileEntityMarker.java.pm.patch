@@ -1,0 +1,38 @@
+--- a/jp/ngt/rtm/rail/TileEntityMarker.java
++++ b/jp/ngt/rtm/rail/TileEntityMarker.java
+@@ -44,10 +44,11 @@
+       this.markerState = MarkerState.DISTANCE.set(this.markerState, true);
+       this.markerState = MarkerState.GRID.set(this.markerState, false);
+       this.markerState = MarkerState.LINE1.set(this.markerState, false);
+       this.markerState = MarkerState.LINE2.set(this.markerState, false);
+       this.markerState = MarkerState.ANCHOR21.set(this.markerState, false);
++      this.markerState = MarkerState.FIT_NEIGHBOR.set(this.markerState, true);
+    }
+ 
+    public void readFromNBT(NBTTagCompound nbt) {
+       super.readFromNBT(nbt);
+       if (nbt.hasKey("RP")) {
+@@ -158,20 +159,20 @@
+                this.railMaps = new RailMap[]{railmap};
+                blockpos = new BlockPos(railposition.blockX, railposition.blockY, railposition.blockZ);
+             }
+          }
+       } else {
+-         List<RailPosition> list = new ArrayList<RailPosition>();
++         List<RailPosition> list3 = new ArrayList<RailPosition>();
+ 
+          for(BlockPos blockpos2 : list) {
+             RailPosition railposition2 = this.getMarkerRP(blockpos2);
+             if (railposition2 != null) {
+-               list.add(railposition2);
++               list3.add(railposition2);
+             }
+          }
+ 
+-         SwitchType switchtype = (new RailMaker(this.getWorld(), list)).getSwitch();
++         SwitchType switchtype = (new RailMaker(this.getWorld(), list3)).getSwitch();
+          if (switchtype != null) {
+             this.railMaps = switchtype.getAllRailMap();
+             if (this.railMaps != null) {
+                RailPosition railposition3 = this.railMaps[0].getStartRP();
+                blockpos = new BlockPos(railposition3.blockX, railposition3.blockY, railposition3.blockZ);
