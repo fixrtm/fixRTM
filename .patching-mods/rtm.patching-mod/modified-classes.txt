@@ -6,6 +6,7 @@ jp.ngt.rtm.block.tileentity.RenderMachine
 jp.ngt.rtm.block.tileentity.TileEntityMachineBase
 jp.ngt.rtm.block.tileentity.TileEntityMechanism
 jp.ngt.rtm.block.tileentity.TileEntityOrnament
+jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
 jp.ngt.rtm.command.CommandRTM
 jp.ngt.rtm.electric.TileEntityConnectorBase
 jp.ngt.rtm.electric.TileEntityElectricalWiring
