@@ -47,7 +47,9 @@ jp.ngt.rtm.modelpack.state.ResourceState
 jp.ngt.rtm.rail.BlockLargeRailBase
 jp.ngt.rtm.rail.BlockMarker
 jp.ngt.rtm.rail.RenderMarkerBlock
+jp.ngt.rtm.rail.RenderTurntable
 jp.ngt.rtm.rail.TileEntityMarker
+jp.ngt.rtm.rail.TileEntityTurnTableCore
 jp.ngt.rtm.rail.util.MarkerState
 jp.ngt.rtm.rail.util.RailMaker
 jp.ngt.rtm.rail.util.SwitchType
