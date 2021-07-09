@@ -4,6 +4,7 @@ import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.crash.RTMAllModelPackInfoCrashCallable
 import com.anatawa12.fixRtm.crash.RTMSmallModelPackInfoCrashCallable
+import com.anatawa12.fixRtm.gui.GuiHandler
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
@@ -37,7 +38,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
-import net.minecraftforge.fml.common.network.NetworkCheckHandler
+import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.relauncher.Side
 import paulscode.sound.SoundSystemConfig
 import java.awt.Color
@@ -106,6 +107,7 @@ object FixRtm {
         modMetadata = e.modMetadata
         NetworkHandler.init()
         PermissionManager.registerBuiltinPermissions()
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
 
         if (e.side == Side.CLIENT) {
             SoundSystemConfig.setNumberNormalChannels(1024)

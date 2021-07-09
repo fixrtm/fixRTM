@@ -1,15 +1,21 @@
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.gui.GuiId
 import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
+import jp.ngt.rtm.RTMItem
+import jp.ngt.rtm.block.tileentity.TileEntityMachineBase
+import jp.ngt.rtm.item.ItemInstalledObject
 import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import net.minecraft.crash.CrashReportCategory
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.RayTraceResult
+import net.minecraft.world.World
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
 import java.io.*
@@ -225,4 +231,14 @@ fun joinLinesForJsonReading(lines: List<String>): String = buildString {
         }
         shouldAddNewLine = true
     }
+}
+
+fun ItemStack.isItemOf(machine: TileEntityMachineBase): Boolean {
+    if (this.item !== RTMItem.installedObject) return false
+    val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage)
+    return type.type == machine.subType
+}
+
+fun EntityPlayer.openGui(fixGuiId: GuiId, world: World, x: Int, y: Int, z: Int) {
+    openGui(FixRtm, fixGuiId.ordinal, world, x, y, z)
 }

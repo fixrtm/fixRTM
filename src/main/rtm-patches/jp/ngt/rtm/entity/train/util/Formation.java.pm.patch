@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/train/util/Formation.java
 +++ b/jp/ngt/rtm/entity/train/util/Formation.java
-@@ -9,10 +9,11 @@
+@@ -9,14 +9,15 @@
  import jp.ngt.rtm.network.PacketFormation;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.nbt.NBTTagList;
@@ -10,9 +10,26 @@
  
  public final class Formation {
     public final long id;
-    public FormationEntry[] entries;
+-   public FormationEntry[] entries;
++   public @Nullable  FormationEntry[] entries;
     private EntityTrainBase controlCar;
-@@ -147,23 +148,25 @@
+    private byte direction;
+    private float speed;
+ 
+    public Formation(long par1, int par2) {
+@@ -121,10 +122,11 @@
+ 
+    private void reverse() {
+       NGTUtil.reverse(this.entries);
+ 
+       for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
+          formationentry.dir = (byte)(formationentry.dir ^ 1);
+       }
+ 
+    }
+ 
+@@ -147,29 +149,32 @@
        this.entries = aformationentry;
     }
  
@@ -39,12 +56,46 @@
           this.reallocation();
  
           for(FormationEntry formationentry1 : this.entries) {
++            if (formationentry1 == null) continue;
              this.setSpeed(0.0F);
-@@ -267,11 +270,11 @@
+-            formationentry1.train.setNotch(-8);
++            formationentry1.train.setEmergencyBrake();
+             formationentry1.train.setVehicleState(TrainState.TrainStateType.Role, TrainState.Role_Center.data);
+          }
+ 
+          FormationManager.getInstance().removeFormation(par5.id);
+       }
+@@ -224,10 +229,11 @@
+    }
+ 
+    private EntityTrainBase getControlCar() {
+       if (this.controlCar == null || !this.controlCar.isControlCar()) {
+          for(FormationEntry formationentry : this.entries) {
++            if (formationentry == null) continue;
+             if (formationentry.train.isControlCar()) {
+                this.controlCar = formationentry.train;
+                break;
+             }
+          }
+@@ -241,10 +247,11 @@
+    }
+ 
+    public void setSpeed(float par1) {
+       if (par1 != this.speed) {
+          for(FormationEntry formationentry : this.entries) {
++            if (formationentry == null) continue;
+             formationentry.train.setSpeed_NoSync(par1);
+          }
+ 
+          this.speed = par1;
+       }
+@@ -266,18 +273,19 @@
+       }
     }
  
     public void setTrainStateData(TrainState.TrainStateType type, byte data, EntityTrainBase par2) {
        for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
           if (type == TrainState.TrainStateType.Role) {
 -            if (data == TrainState.Role_Front.data) {
 +            if (data == TrainState.Role_Front.data || data == TrainState.Role_Back.data) {
@@ -53,7 +104,26 @@
  
              if (par2.equals(formationentry.train)) {
                 formationentry.train.setTrainStateData_NoSync(type, data);
-@@ -304,12 +307,13 @@
+-            } else if (formationentry.train.getVehicleState(TrainState.TrainStateType.Role) == data) {
++            } else if (formationentry.train.getVehicleState(TrainState.TrainStateType.Role) != TrainState.Role_Center.data) {
+                formationentry.train.setTrainStateData_NoSync(type, TrainState.Role_Center.data);
+             }
+          } else if (type == TrainState.TrainStateType.Door) {
+             int i = data & 1;
+             int j = data >> 1;
+@@ -290,10 +298,11 @@
+ 
+    }
+ 
+    public boolean containBogie(EntityBogie bogie) {
+       for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
+          EntityTrainBase entitytrainbase = formationentry.train;
+          if (entitytrainbase.getBogie(0) == bogie || entitytrainbase.getBogie(1) == bogie) {
+             return true;
+          }
+       }
+@@ -304,12 +313,13 @@
     private void sendPacket() {
        RTMCore.NETWORK_WRAPPER.sendToAll(new PacketFormation(this));
     }

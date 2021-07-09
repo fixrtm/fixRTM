@@ -1,6 +1,14 @@
 --- a/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
 +++ b/jp/ngt/rtm/entity/vehicle/RenderVehicleBase.java
-@@ -51,11 +51,11 @@
+@@ -44,18 +44,18 @@
+    }
+ 
+    protected void renderVehicleBase(EntityVehicleBase vehicle, double par2, double par4, double par6, float par8, float par9) {
+       GL11.glPushMatrix();
+       GL11.glEnable(32826);
+-      GL11.glTranslatef((float)par2, (float)par4 + vehicle.getVehicleYOffset(), (float)par6);
++      GL11.glTranslated(par2, par4 + vehicle.getVehicleYOffset(), par6);
+       float f = vehicle.prevRotationYaw + NGTMath.wrapAngle(vehicle.rotationYaw - vehicle.prevRotationYaw) * par9;
        GL11.glRotatef(f, 0.0F, 1.0F, 0.0F);
        float f1 = vehicle.prevRotationPitch + (vehicle.rotationPitch - vehicle.prevRotationPitch) * par9;
        GL11.glRotatef(-f1, 1.0F, 0.0F, 0.0F);

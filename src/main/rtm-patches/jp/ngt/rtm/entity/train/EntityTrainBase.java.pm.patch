@@ -56,7 +56,17 @@
              this.setSpeed(f);
           }
  
-@@ -706,11 +716,12 @@
+@@ -697,20 +707,21 @@
+       this.trainSpeed = par1;
+    }
+ 
+    public void stopTrain(boolean changeSpeed) {
+       if (this.formation != null) {
+-         this.setNotch(-8);
++         this.setEmergencyBrake();
+          if (changeSpeed) {
+             this.setSpeed(0.0F);
+          }
        }
  
     }
@@ -70,7 +80,27 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -890,10 +901,11 @@
+@@ -823,10 +834,19 @@
+       }
+ 
+       return false;
+    }
+ 
++   public void setEmergencyBrake() {
++      int prevNotch = this.getNotch();
++      // TODO: change when decelerations is implemented
++      int EB_NOTCH = -8;
++      if (prevNotch != EB_NOTCH) {
++         this.setVehicleState(jp.ngt.rtm.entity.train.util.TrainState.TrainStateType.Notch, (byte) EB_NOTCH);
++      }
++   }
++
+    public int getSignal() {
+       return this.getVehicleState(TrainState.TrainStateType.Signal);
+    }
+ 
+    public void setSignal(int par1) {
+@@ -890,10 +910,11 @@
           this.releaseTicket();
        }
  
@@ -82,7 +112,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -910,11 +922,10 @@
+@@ -910,11 +931,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -94,7 +124,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -938,20 +949,26 @@
+@@ -938,20 +958,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;

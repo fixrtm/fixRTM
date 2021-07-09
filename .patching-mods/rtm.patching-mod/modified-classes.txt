@@ -1,9 +1,14 @@
 jp.ngt.rtm.CreativeTabRTM
 jp.ngt.rtm.RTMItem
 jp.ngt.rtm.RTMRecipe
+jp.ngt.rtm.block.BlockMachineBase
+jp.ngt.rtm.block.tileentity.RenderMachine
+jp.ngt.rtm.block.tileentity.TileEntityCrossingGate
 jp.ngt.rtm.block.tileentity.TileEntityMachineBase
 jp.ngt.rtm.block.tileentity.TileEntityMechanism
 jp.ngt.rtm.block.tileentity.TileEntityOrnament
+jp.ngt.rtm.block.tileentity.TileEntityPoint
+jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
 jp.ngt.rtm.command.CommandRTM
 jp.ngt.rtm.electric.TileEntityConnectorBase
 jp.ngt.rtm.electric.TileEntityElectricalWiring
@@ -42,6 +47,10 @@ jp.ngt.rtm.modelpack.state.ResourceState
 jp.ngt.rtm.rail.BlockLargeRailBase
 jp.ngt.rtm.rail.BlockMarker
 jp.ngt.rtm.rail.RenderMarkerBlock
+jp.ngt.rtm.rail.RenderTurntable
+jp.ngt.rtm.rail.TileEntityMarker
+jp.ngt.rtm.rail.TileEntityTurnTableCore
+jp.ngt.rtm.rail.util.MarkerState
 jp.ngt.rtm.rail.util.RailMaker
 jp.ngt.rtm.rail.util.SwitchType
 jp.ngt.rtm.render.ModelObject

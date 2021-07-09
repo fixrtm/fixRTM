@@ -1,4 +1,5 @@
 jp.ngt.ngtlib.NGTCore
+jp.ngt.ngtlib.block.TileEntityPlaceable
 jp.ngt.ngtlib.command.CommandPermit
 jp.ngt.ngtlib.io.NGTFileLoader
 jp.ngt.ngtlib.io.NGTLog

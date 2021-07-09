@@ -53,6 +53,7 @@ dependencies {
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
     shade("io.sigpipe:jbsdiff:1.0")
     shade("com.anatawa12.sai:sai:0.0.2")
+    shade("org.jetbrains:annotations:21.0.1")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
 //    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
