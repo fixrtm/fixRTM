@@ -8,7 +8,8 @@ import net.minecraft.crash.CrashReportCategory
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER", "unused")
 fun EntityVehicleBase<*>.onRemovedFromWorld() {
-    NetworkHandler.sendPacketServer(NotifyUntracked(entityId))
+    if (world.isRemote)
+        NetworkHandler.sendPacketServer(NotifyUntracked(entityId))
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER", "unused")
