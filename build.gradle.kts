@@ -2,7 +2,7 @@ import com.anatawa12.jarInJar.gradle.TargetPreset
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.5.20"
     id("net.minecraftforge.gradle.forge")
     id("com.anatawa12.mod-patching")
     id("com.matthewprenger.cursegradle") version "1.4.0"
@@ -50,7 +50,7 @@ repositories {
 
 dependencies {
     shade(kotlin("stdlib-jdk7"))
-    shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+    shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     shade("io.sigpipe:jbsdiff:1.0")
     shade("com.anatawa12.sai:sai:0.0.2")
     shade("org.jetbrains:annotations:21.0.1")
