@@ -1,3 +1,7 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 function need_nightly_build() {
   last_run_date="$(($(date -d "$(date "+%Y-%m-%dT15:00:00Z")" "+%s") - (60*60*24)))"
   last_commit_date="$(git log -1 --format=%ct)"

@@ -1,3 +1,7 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 name: Porting Request from KaizPatchX
 description: Request porting feature/bug fix from KaizPatchX. KaizPatchXから移植のリクエスト
 labels: [ porting, not-checked ]
