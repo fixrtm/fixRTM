@@ -30,7 +30,6 @@ jp.ngt.rtm.event.RTMKeyHandlerClient
 jp.ngt.rtm.event.RTMKeyHandlerServer
 jp.ngt.rtm.gui.GuiIngameCustom
 jp.ngt.rtm.gui.GuiVehicleControlPanel
-jp.ngt.rtm.item.ItemPaintTool
 jp.ngt.rtm.item.ItemRail
 jp.ngt.rtm.modelpack.ModelPackManager
 jp.ngt.rtm.modelpack.RTMResourceManager

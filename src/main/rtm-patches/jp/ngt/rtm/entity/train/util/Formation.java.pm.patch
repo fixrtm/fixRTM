@@ -123,19 +123,3 @@
              return true;
           }
        }
-@@ -304,12 +313,13 @@
-    private void sendPacket() {
-       RTMCore.NETWORK_WRAPPER.sendToAll(new PacketFormation(this));
-    }
- 
-    public boolean isFrontCar(EntityTrainBase train) {
--      EntityTrainBase entitytrainbase = this.direction == 0 ? this.entries[0].train : this.entries[this.entries.length - 1].train;
--      return train.equals(entitytrainbase);
-+      FormationEntry entry = this.direction == 0 ? this.entries[0] : this.entries[this.entries.length - 1];
-+      if (entry == null) return false;
-+      return train.equals(entry.train);
-    }
- 
-    public void updateTrainMovement() {
-       EntityTrainBase entitytrainbase = null;
- 

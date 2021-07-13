@@ -46,6 +46,7 @@ object PermissionManager : IPermissionManager() {
         registerPermission("useGun")
         registerPermission("editRail")
         registerPermission("changeModel")
+        registerPermission("editOrnament")
     }
 
     private fun registerMCTEPermissions() {
