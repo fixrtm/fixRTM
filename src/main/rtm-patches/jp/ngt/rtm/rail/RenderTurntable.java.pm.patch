@@ -1,16 +1,16 @@
 --- a/jp/ngt/rtm/rail/RenderTurntable.java
 +++ b/jp/ngt/rtm/rail/RenderTurntable.java
-@@ -27,11 +27,12 @@
-             RenderLargeRail.BLOCK_RENDERER.renderRailBlocks(tileEntity, par2, par4, par6, par8);
+@@ -28,11 +28,12 @@
+             RenderLargeRail.BLOCK_RENDERER.renderRailBlocks(rail, par2, par4, par6, par8);
              GLHelper.enableLighting();
              NGTUtilClient.getMinecraft().entityRenderer.enableLightmap();
              GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
              GL11.glTranslatef((float)(par2 + 0.5D), (float)par4, (float)(par6 + 0.5D));
--            GL11.glRotatef(tileEntity.getRotation(), 0.0F, 1.0F, 0.0F);
-+            float rot = tileEntity.getPrevRotation() + (net.minecraft.util.math.MathHelper.wrapDegrees(tileEntity.getRotation() - tileEntity.getPrevRotation())) * par8;
+-            GL11.glRotatef(rail.getRotation(), 0.0F, 1.0F, 0.0F);
++            float rot = rail.getPrevRotation() + (net.minecraft.util.math.MathHelper.wrapDegrees(rail.getRotation() - rail.getPrevRotation())) * par8;
 +            GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);
              GL11.glTranslatef(-((float)(par2 + 0.5D)), -((float)par4), -((float)(par6 + 0.5D)));
  
              try {
                 RailPartsRendererBase railpartsrendererbase = (RailPartsRendererBase)modelsetrail.modelObj.renderer;
-                railpartsrendererbase.renderRail(tileEntity, par2, par4, par6, par8);
+                railpartsrendererbase.renderRail(rail, 0, par2, par4, par6, par8);

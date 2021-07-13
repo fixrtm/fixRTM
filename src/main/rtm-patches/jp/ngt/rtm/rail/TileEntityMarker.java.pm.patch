@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/rail/TileEntityMarker.java
 +++ b/jp/ngt/rtm/rail/TileEntityMarker.java
-@@ -44,10 +44,11 @@
+@@ -46,10 +46,11 @@
        this.markerState = MarkerState.DISTANCE.set(this.markerState, true);
        this.markerState = MarkerState.GRID.set(this.markerState, false);
        this.markerState = MarkerState.LINE1.set(this.markerState, false);
@@ -12,9 +12,9 @@
     public void readFromNBT(NBTTagCompound nbt) {
        super.readFromNBT(nbt);
        if (nbt.hasKey("RP")) {
-@@ -158,20 +159,20 @@
-                this.railMaps = new RailMap[]{railmap};
-                blockpos = new BlockPos(railposition.blockX, railposition.blockY, railposition.blockZ);
+@@ -167,20 +168,20 @@
+                this.railMaps = new RailMap[]{railmap1};
+                blockpos = new BlockPos(railposition2.blockX, railposition2.blockY, railposition2.blockZ);
              }
           }
        } else {
@@ -22,10 +22,10 @@
 +         List<RailPosition> list3 = new ArrayList<RailPosition>();
  
           for(BlockPos blockpos2 : list) {
-             RailPosition railposition2 = this.getMarkerRP(blockpos2);
-             if (railposition2 != null) {
--               list.add(railposition2);
-+               list3.add(railposition2);
+             RailPosition railposition1 = this.getMarkerRP(blockpos2);
+             if (railposition1 != null) {
+-               list.add(railposition1);
++               list3.add(railposition1);
              }
           }
  
@@ -34,5 +34,5 @@
           if (switchtype != null) {
              this.railMaps = switchtype.getAllRailMap();
              if (this.railMaps != null) {
-                RailPosition railposition3 = this.railMaps[0].getStartRP();
-                blockpos = new BlockPos(railposition3.blockX, railposition3.blockY, railposition3.blockZ);
+                RailPosition railposition4 = this.railMaps[0].getStartRP();
+                blockpos = new BlockPos(railposition4.blockX, railposition4.blockY, railposition4.blockZ);
