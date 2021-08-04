@@ -34,9 +34,9 @@
  
                 return false;
              } else {
--               return ItemUtil.isItemEqual(target, inInventory);
-             }
-+               return ItemUtil.isItemEqual(target, inInventory);
++            }
+                return ItemUtil.isItemEqual(target, inInventory);
+-            }
           }
        } else {
           return false;

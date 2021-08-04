@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/command/CommandPermit.java
 +++ b/jp/ngt/ngtlib/command/CommandPermit.java
-@@ -4,11 +4,16 @@
+@@ -4,10 +4,15 @@
  import jp.ngt.ngtlib.util.PermissionManager;
  import net.minecraft.command.CommandBase;
  import net.minecraft.command.CommandException;
@@ -9,14 +9,13 @@
 +import net.minecraft.util.math.BlockPos;
 +import org.jetbrains.annotations.NotNull;
 +import org.jetbrains.annotations.Nullable;
- 
-+import java.util.List;
 +
++import java.util.List;
+ 
  public class CommandPermit extends CommandBase {
     public int getRequiredPermissionLevel() {
        return 3;
     }
- 
 @@ -50,6 +55,13 @@
        NGTLog.sendChatMessage(sender, "/permit add <player or -all> <category>");
        NGTLog.sendChatMessage(sender, "/permit remove <player or -all> <category>");
