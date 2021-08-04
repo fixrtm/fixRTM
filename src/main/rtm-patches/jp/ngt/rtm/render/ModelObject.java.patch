@@ -39,6 +39,6 @@
 +         Iterator<Entry<String, Material>> iterator = map1.entrySet().iterator();
  
           for(int i = 0; iterator.hasNext(); ++i) {
-             Entry<String, Material> entry = (Entry)iterator.next();
+             Entry<String, Material> entry = iterator.next();
              String s = map.get(entry.getKey());
              if (s == null) {

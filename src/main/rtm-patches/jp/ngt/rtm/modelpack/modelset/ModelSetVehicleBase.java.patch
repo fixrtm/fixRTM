@@ -8,17 +8,17 @@
  
 -   public ModelSetVehicleBase(VehicleBaseConfig par1) {
 +   public ModelSetVehicleBase(T par1) {
-       super(par1);
+       super((T)par1);
     }
  
     public void constructOnServer() {
        super.constructOnServer();
 @@ -40,20 +40,25 @@
-          PartsRenderer partsrenderer = !PartsRenderer.validPath(((VehicleBaseConfig)this.cfg).getModel().rendererPath) ? new BasicVehiclePartsRenderer(new String[]{String.valueOf(true)}) : null;
-          this.modelObj = new ModelObject(((VehicleBaseConfig)this.cfg).getModel(), this, partsrenderer, new Object[]{"vehicle"});
-          this.buttonTexture = ModelPackManager.INSTANCE.getResource(((VehicleBaseConfig)this.cfg).buttonTexture);
-          this.rollsignTexture = ((VehicleBaseConfig)this.cfg).rollsignTexture == null ? null : ModelPackManager.INSTANCE.getResource(((VehicleBaseConfig)this.cfg).rollsignTexture);
-          if (((VehicleBaseConfig)this.cfg).soundScriptPath != null) {
+          PartsRenderer partsrenderer = !PartsRenderer.validPath(this.cfg.getModel().rendererPath) ? new BasicVehiclePartsRenderer(String.valueOf(true)) : null;
+          this.modelObj = new ModelObject(this.cfg.getModel(), this, partsrenderer, "vehicle");
+          this.buttonTexture = ModelPackManager.INSTANCE.getResource((this.cfg).buttonTexture);
+          this.rollsignTexture = (this.cfg).rollsignTexture == null ? null : ModelPackManager.INSTANCE.getResource((this.cfg).rollsignTexture);
+          if ((this.cfg).soundScriptPath != null) {
 +            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
              this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
 +            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
@@ -30,12 +30,12 @@
     }
  
     public T getConfig() {
-       return (T)(this.cfg);
+       return this.cfg;
     }
  
 +   // TODO: CrashReport when use java
     @SideOnly(Side.CLIENT)
     public void renderModelInGui(Minecraft par1) {
-       VehicleBaseConfig vehiclebaseconfig = (VehicleBaseConfig)this.cfg;
+       VehicleBaseConfig vehiclebaseconfig = this.cfg;
        this.modelObj.render((Object)null, vehiclebaseconfig, 0, 0.0F);
        this.modelObj.render((Object)null, vehiclebaseconfig, 1, 0.0F);

@@ -1,11 +1,11 @@
 --- a/jp/ngt/rtm/gui/GuiIngameCustom.java
 +++ b/jp/ngt/rtm/gui/GuiIngameCustom.java
-@@ -212,11 +212,11 @@
+@@ -210,11 +210,11 @@
        float f1 = f * (float)train.brakeAirCount / 2880.0F;
        this.drawMeter(j, k, 32, 32, 48, f1, 512);
        float f2 = f * (float)this.getBrake(train) / 432.0F;
        this.drawMeter(j, k, 32, 0, 48, f2, 512);
-       float f3 = ((TrainConfig)((ModelSetTrain)train.getResourceState().getResourceSet()).getConfig()).maxSpeed[4];
+       float f3 = (train.getResourceState().getResourceSet().getConfig()).maxSpeed[4];
 -      float f4 = 270.0F * train.getSpeed() / f3;
 +      float f4 = 270.0F * Math.abs(train.getSpeed()) / f3;
        this.drawMeter(i - 136, this.height - 29, 32, 64, 48, f4, 512);

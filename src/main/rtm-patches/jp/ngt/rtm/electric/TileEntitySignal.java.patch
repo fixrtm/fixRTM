@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/electric/TileEntitySignal.java
 +++ b/jp/ngt/rtm/electric/TileEntitySignal.java
-@@ -167,6 +167,12 @@
+@@ -165,6 +165,12 @@
     }
  
     public ResourceStateWithBlock<ModelSetSignal> getResourceState() {

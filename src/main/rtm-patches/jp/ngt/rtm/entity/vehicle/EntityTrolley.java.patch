@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/vehicle/EntityTrolley.java
 +++ b/jp/ngt/rtm/entity/vehicle/EntityTrolley.java
-@@ -161,6 +161,12 @@
+@@ -159,6 +159,12 @@
           }
        }
  

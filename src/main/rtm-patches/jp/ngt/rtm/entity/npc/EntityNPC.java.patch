@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/npc/EntityNPC.java
 +++ b/jp/ngt/rtm/entity/npc/EntityNPC.java
-@@ -402,6 +402,12 @@
+@@ -398,6 +398,12 @@
        return this.state;
     }
  

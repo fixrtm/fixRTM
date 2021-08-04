@@ -3,7 +3,7 @@
 @@ -268,11 +268,10 @@
  
        try {
-          ModelSetBase modelsetbase = (ModelSetBase)this.getResourceState().getResourceSet();
+          ModelSetBase modelsetbase = this.getResourceState().getResourceSet();
           axisalignedbb = modelsetbase.getCollisionObj().getSizeBox();
        } catch (NullPointerException nullpointerexception) {
 -         nullpointerexception.printStackTrace();

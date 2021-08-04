@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/train/EntityBogie.java
 +++ b/jp/ngt/rtm/entity/train/EntityBogie.java
-@@ -131,11 +131,11 @@
+@@ -126,11 +126,11 @@
              return BogieController.MotionState.FLY;
           } else {
              RailMap railmap = this.currentRailMap;
@@ -13,7 +13,7 @@
                 int i1 = k < 0 ? 0 : k;
                 int j1 = l > this.split ? this.split : l;
                 double[] adouble = frontBogie.getPosBuf();
-@@ -176,11 +176,11 @@
+@@ -171,11 +171,11 @@
                 this.rotationBuf[0] = f2;
                 this.rotationBuf[1] = f3;
                 this.rotationBuf[2] = f1;
@@ -26,11 +26,11 @@
                    }
                 }
  
-@@ -250,11 +250,11 @@
+@@ -245,11 +245,11 @@
  
     protected void playJointSound() {
        EntityTrainBase entitytrainbase = this.getTrain();
-       TrainConfig trainconfig = (TrainConfig)((ModelSetTrain)entitytrainbase.getResourceState().getResourceSet()).getConfig();
+       TrainConfig trainconfig = entitytrainbase.getResourceState().getResourceSet().getConfig();
        if (!trainconfig.muteJointSound) {
 -         float f = entitytrainbase.getSpeed() / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
 +         float f = Math.abs(entitytrainbase.getSpeed()) / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
@@ -39,7 +39,7 @@
           int i = trainconfig.jointDelay[this.getBogieId()].length;
           if (this.jointIndex < i - 1) {
              int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
-@@ -295,11 +295,13 @@
+@@ -290,11 +290,13 @@
           this.tracked = VehicleTrackerEntry.trackingVehicle(this);
        }
  
@@ -53,7 +53,7 @@
     }
  
     public void onBogieUpdate() {
-@@ -584,6 +586,18 @@
+@@ -578,6 +580,18 @@
     }
  
     public int getProhibitedAction() {

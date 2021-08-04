@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/block/BlockMachineBase.java
 +++ b/jp/ngt/rtm/block/BlockMachineBase.java
-@@ -22,10 +22,26 @@
+@@ -21,10 +21,26 @@
        this.clickMachine(holder.getWorld(), holder.getBlockPos().getX(), holder.getBlockPos().getY(), holder.getBlockPos().getZ(), holder.getPlayer());
        return true;
     }
@@ -27,7 +27,7 @@
              player.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, player.getEntityWorld(), x, y, z);
           }
  
-@@ -33,12 +49,15 @@
+@@ -32,12 +48,15 @@
        } else {
           return false;
        }
@@ -42,5 +42,5 @@
        if (tileentitymachinebase == null) {
           return 0;
        } else {
-          MachineConfig machineconfig = (MachineConfig)((ModelSetMachine)tileentitymachinebase.getResourceState().getResourceSet()).getConfig();
+          MachineConfig machineconfig = tileentitymachinebase.getResourceState().getResourceSet().getConfig();
           return tileentitymachinebase.isGettingPower ? machineconfig.brightness[1] : machineconfig.brightness[0];

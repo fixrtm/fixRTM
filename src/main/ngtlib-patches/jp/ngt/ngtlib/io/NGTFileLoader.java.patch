@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/io/NGTFileLoader.java
 +++ b/jp/ngt/ngtlib/io/NGTFileLoader.java
-@@ -40,11 +40,11 @@
+@@ -38,11 +38,11 @@
        }
  
     }
@@ -13,24 +13,11 @@
  
     public static ScanResult findFile(FileMatcher... matchers) {
        ScanResult scanresult = new ScanResult();
-@@ -98,11 +98,11 @@
-       try {
-          ZipFile zipfile = getArchive(archive, encoding);
-          zipfile.stream().filter((x) -> {
-             return !x.isDirectory();
-          }).forEach((entry) -> {
--            File file2 = new File(zip.getName(), entry.getName());
-+            File file2 = new File(zipfile.getName(), entry.getName());
- 
-             for(FileMatcher filematcher : matchers) {
-                if (filematcher.match(file2)) {
-                   result.add(archive.getName(), filematcher, file2);
-                }
-@@ -157,24 +157,26 @@
+@@ -153,23 +153,25 @@
        if (MODS_DIR != null) {
           return MODS_DIR;
        } else {
-          MODS_DIR = new ArrayList<File>();
+          MODS_DIR = new ArrayList<>();
  
 +         boolean dev = false;
           try {
@@ -40,8 +27,7 @@
                 NGTLog.debug("[NGTFL] Add mods dir : " + file1.getAbsolutePath());
 +               dev = true;
              }
-          } catch (NullPointerException var2) {
-             ;
+          } catch (NullPointerException nullpointerexception) {
           }
  
           File file2 = NGTCore.proxy.getMinecraftDirectory("mods");
@@ -55,23 +41,3 @@
           MODS_DIR.add(new File(s));
           NGTLog.debug("[NGTFL] Add mods dir : " + s);
           return MODS_DIR;
-@@ -240,16 +242,16 @@
-    public static InputStream getInputStream(ResourceLocation par1) throws IOException {
-       if (!NGTCore.proxy.isServer()) {
-          return NGTUtilClient.getMinecraft().getResourceManager().getResource(par1).getInputStream();
-       } else {
-          int i = par1.getPath().lastIndexOf("/");
--         String s = par1.getPath().substring(i + 1);
--         List<File> list = findFile((filex) -> {
-+         String fileName = par1.getPath().substring(i + 1);
-+         List<File> list = findFile((file) -> {
-             return file.getName().equals(fileName);
-          });
-          if (list.isEmpty()) {
--            throw new FileNotFoundException("On get stream : " + s);
-+            throw new FileNotFoundException("On get stream : " + fileName);
-          } else {
-             File file1 = list.get(0);
-             return getInputStreamFromFile(file1);
-          }
-       }

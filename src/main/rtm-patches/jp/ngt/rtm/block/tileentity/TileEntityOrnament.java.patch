@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/block/tileentity/TileEntityOrnament.java
 +++ b/jp/ngt/rtm/block/tileentity/TileEntityOrnament.java
-@@ -85,6 +85,12 @@
+@@ -83,6 +83,12 @@
     public boolean closeGui(ResourceState par1) {
        return true;
     }

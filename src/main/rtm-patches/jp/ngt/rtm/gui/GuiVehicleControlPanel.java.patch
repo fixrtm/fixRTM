@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
 +++ b/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
-@@ -505,11 +505,12 @@
+@@ -504,11 +504,12 @@
  
              if (button.id == 129) {
                 int i2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Announcement);

@@ -1,34 +1,59 @@
 --- a/jp/ngt/rtm/entity/train/EntityTrainBase.java
 +++ b/jp/ngt/rtm/entity/train/EntityTrainBase.java
-@@ -72,18 +72,19 @@
+@@ -69,13 +69,14 @@
+    public int brakeAirCount = 2880;
+    public boolean complessorActive;
+    private float wave;
     private static final int[] PANTO_POS_ZERO = new int[]{0, 0};
     private Ticket ticket;
-    private final Set<ChunkPos> loadedChunks;
+-   private final Set<ChunkPos> loadedChunks = new HashSet();
++   private final Set<ChunkPos> loadedChunks = new java.util.LinkedHashSet<>();
     private int prevChunkCoordX;
     private int prevChunkCoordZ;
 +   private int prevChunkLoaderRadius;
  
     public EntityTrainBase(World world) {
        super(world);
-       this.bogieController = new BogieController();
-       this.brakeCount = 72;
-       this.onRail = true;
-       this.brakeAirCount = 2880;
--      this.loadedChunks = new HashSet<ChunkPos>();
-+      this.loadedChunks = new java.util.LinkedHashSet<ChunkPos>();
        this.setSize(2.75F, 1.1875F);
        this.noClip = true;
-    }
+@@ -293,25 +294,25 @@
+          float f = this.getSpeed();
+          int i = this.getNotch();
+          Random random = this.world.rand;
  
-    public EntityTrainBase(World world, String s) {
-@@ -448,11 +449,20 @@
+          for(int j = 0; j < (modelsettrain.getConfig()).smoke.length; ++j) {
+-            Vec3 vec3 = PooledVec3.create((modelsettrain.getConfig()).smoke[j][0], (modelsettrain.getConfig()).smoke[j][1], (modelsettrain.getConfig()).smoke[j][2]);
++            Vec3 vec3 = PooledVec3.create((double) (modelsettrain.getConfig()).smoke[j][0], (double) (modelsettrain.getConfig()).smoke[j][1], (double) (modelsettrain.getConfig()).smoke[j][2]);
+             vec3 = vec3.rotateAroundX(this.rotationPitch);
+             vec3 = vec3.rotateAroundY(this.rotationYaw);
+-            double d0 = (modelsettrain.getConfig()).smoke[j][4];
+-            double d1 = (modelsettrain.getConfig()).smoke[j][5];
++            double d0 = (double) (modelsettrain.getConfig()).smoke[j][4];
++            double d1 = (double) (modelsettrain.getConfig()).smoke[j][5];
+             int k = f > 0.05F ? (int)d1 : (i > 0 ? (int)d0 + 3 : (int)d0);
+             EnumParticleTypes enumparticletypes = NGTParticle.getParticle((String)(modelsettrain.getConfig()).smoke[j][3]);
+ 
+             for(int l = 0; l < k; ++l) {
+                double d2 = this.posX + vec3.getX() + (double)random.nextFloat() * 0.5D - 0.25D;
+                double d3 = this.posY + vec3.getY() + (double)this.getVehicleYOffset();
+                double d4 = this.posZ + vec3.getZ() + (double)random.nextFloat() * 0.5D - 0.25D;
+                double d5 = 0.0625D;
+                if ((modelsettrain.getConfig()).smoke.length == 7) {
+-                  d5 = (modelsettrain.getConfig()).smoke[j][6];
++                  d5 = (double) (modelsettrain.getConfig()).smoke[j][6];
+                }
+ 
+                double d6 = (random.nextDouble() * 2.0D - 1.0D) * d5;
+                double d7 = (random.nextDouble() * 2.0D - 1.0D) * d5;
+                this.world.spawnParticle(enumparticletypes, d2, d3, d4, d6, 0.25D, d7, new int[0]);
+@@ -441,11 +442,20 @@
              }
           }
  
           if (this.isControlCar() && flag && !this.world.isRemote) {
-             ModelSetTrain modelsettrain = (ModelSetTrain)this.getResourceState().getResourceSet();
--            float f1 = EnumNotch.getAcceleration(i, f, (TrainConfig)modelsettrain.getConfig());
-+            float f1 = EnumNotch.getAcceleration(i, Math.abs(f), (TrainConfig)modelsettrain.getConfig());
+             ModelSetTrain modelsettrain = this.getResourceState().getResourceSet();
+-            float f1 = EnumNotch.getAcceleration(i, f, modelsettrain.getConfig());
++            float f1 = EnumNotch.getAcceleration(i, Math.abs(f), modelsettrain.getConfig());
 +            // f: speed
 +            // f1: acceleration
 +            byte dir = this.getVehicleState(TrainState.TrainStateType.Role);
@@ -43,7 +68,7 @@
                 if (this.rotationPitch == 0.0F) {
                    float f3 = 2.0E-4F;
                    f2 = f > 0.0F ? f3 : (f < 0.0F ? -f3 : 0.0F);
-@@ -462,11 +472,11 @@
+@@ -455,11 +465,11 @@
                    f2 = NGTMath.sin(this.rotationPitch) * f4;
                 }
  
@@ -56,7 +81,7 @@
              this.setSpeed(f);
           }
  
-@@ -697,20 +707,21 @@
+@@ -690,20 +700,21 @@
        this.trainSpeed = par1;
     }
  
@@ -80,7 +105,7 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -823,10 +834,19 @@
+@@ -816,10 +827,19 @@
        }
  
        return false;
@@ -100,7 +125,7 @@
     }
  
     public void setSignal(int par1) {
-@@ -890,10 +910,11 @@
+@@ -883,10 +903,11 @@
           this.releaseTicket();
        }
  
@@ -112,7 +137,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -910,11 +931,10 @@
+@@ -903,11 +924,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -124,7 +149,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -938,20 +958,26 @@
+@@ -931,20 +951,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;

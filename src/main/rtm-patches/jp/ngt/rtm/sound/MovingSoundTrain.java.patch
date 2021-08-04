@@ -1,13 +1,13 @@
 --- a/jp/ngt/rtm/sound/MovingSoundTrain.java
 +++ b/jp/ngt/rtm/sound/MovingSoundTrain.java
-@@ -18,11 +18,11 @@
+@@ -17,11 +17,11 @@
        super.update();
        if (this.changePitch) {
           EntityTrainBase entitytrainbase = (EntityTrainBase)this.entity;
-          ModelSetTrain modelsettrain = (ModelSetTrain)entitytrainbase.getResourceState().getResourceSet();
-          float f = ((TrainConfig)modelsettrain.getConfig()).maxSpeed[0];
--         float f1 = (entitytrainbase.getSpeed() - f) / (((TrainConfig)modelsettrain.getConfig()).maxSpeed[4] - f) + 1.0F;
-+         float f1 = (Math.abs(entitytrainbase.getSpeed()) - f) / (((TrainConfig)modelsettrain.getConfig()).maxSpeed[4] - f) + 1.0F;
+          ModelSetTrain modelsettrain = entitytrainbase.getResourceState().getResourceSet();
+          float f = (modelsettrain.getConfig()).maxSpeed[0];
+-         float f1 = (entitytrainbase.getSpeed() - f) / ((modelsettrain.getConfig()).maxSpeed[4] - f) + 1.0F;
++         float f1 = (Math.abs(entitytrainbase.getSpeed()) - f) / ((modelsettrain.getConfig()).maxSpeed[4] - f) + 1.0F;
           this.pitch = f1;
        }
  

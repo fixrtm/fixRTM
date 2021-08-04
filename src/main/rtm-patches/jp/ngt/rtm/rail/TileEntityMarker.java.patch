@@ -18,8 +18,8 @@
              }
           }
        } else {
--         List<RailPosition> list = new ArrayList<RailPosition>();
-+         List<RailPosition> list3 = new ArrayList<RailPosition>();
+-         List<RailPosition> list = new ArrayList<>();
++         List<RailPosition> list3 = new ArrayList<>();
  
           for(BlockPos blockpos2 : list) {
              RailPosition railposition1 = this.getMarkerRP(blockpos2);

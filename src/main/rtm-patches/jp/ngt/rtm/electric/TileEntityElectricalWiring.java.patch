@@ -1,18 +1,5 @@
 --- a/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
-@@ -176,11 +176,11 @@
-                double d2 = (double)((float)this.getZ() + random.nextFloat());
-                this.world.spawnParticle(EnumParticleTypes.REDSTONE, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[0]);
-             }
-          }
-       } else {
--         for(Connection connection : new ArrayList(this.connections)) {
-+         for(Connection connection : new ArrayList<>(this.connections)) {
-             if (!connection.isAvailable(this.world) || connection.type == Connection.ConnectionType.NONE) {
-                this.setConnectionTo(connection.x, connection.y, connection.z, Connection.ConnectionType.NONE, (ResourceState)null);
-             }
-          }
- 
 @@ -275,34 +275,39 @@
  
        return false;

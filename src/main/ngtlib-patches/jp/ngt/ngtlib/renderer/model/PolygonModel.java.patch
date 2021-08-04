@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/renderer/model/PolygonModel.java
 +++ b/jp/ngt/ngtlib/renderer/model/PolygonModel.java
-@@ -15,11 +15,11 @@
+@@ -14,11 +14,11 @@
  
  @SideOnly(Side.CLIENT)
  public abstract class PolygonModel implements IModelNGT {
@@ -9,11 +9,11 @@
 -   protected VecAccuracy accuracy;
 +   public VecAccuracy accuracy;
     protected float[] sizeBox = new float[6];
-    public final List<Vertex> vertices = new ArrayList<Vertex>(1024);
-    public final List<GroupObject> groupObjects = new ArrayList<GroupObject>(16);
+    public final List<Vertex> vertices = new ArrayList<>(1024);
+    public final List<GroupObject> groupObjects = new ArrayList<>(16);
     protected GroupObject currentGroupObject;
     int lineCount;
-@@ -93,11 +93,11 @@
+@@ -92,11 +92,11 @@
  
     public final float[] getSize() {
        return this.sizeBox;
@@ -26,7 +26,7 @@
        }
  
        NGTTessellator ngttessellator = NGTTessellator.instance;
-@@ -108,18 +108,18 @@
+@@ -107,18 +107,18 @@
           GL11.glShadeModel(7424);
        }
  
@@ -47,7 +47,7 @@
        }
  
        for(GroupObject groupobject : this.groupObjects) {
-@@ -134,11 +134,11 @@
+@@ -133,11 +133,11 @@
           GL11.glShadeModel(7424);
        }
  
@@ -60,7 +60,7 @@
        }
  
        for(GroupObject groupobject : this.groupObjects) {
-@@ -152,15 +152,15 @@
+@@ -151,15 +151,15 @@
           GL11.glShadeModel(7424);
        }
  

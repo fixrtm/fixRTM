@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/RTMItem.java
 +++ b/jp/ngt/rtm/RTMItem.java
-@@ -135,11 +135,11 @@
+@@ -134,11 +134,11 @@
        registerItemModels(installedObject, "istl_obj_", ItemInstalledObject.IstlObjType.values());
        registerItemModel(itemtrain, 0, "item_train_0");
        registerItemModel(itemtrain, 1, "item_train_1");

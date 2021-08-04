@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemRail.java
 +++ b/jp/ngt/rtm/item/ItemRail.java
-@@ -196,10 +196,11 @@
+@@ -195,10 +195,11 @@
     }
  
     public static ItemStack copyItemFromRail(TileEntityLargeRailCore core) {

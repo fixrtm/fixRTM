@@ -9,6 +9,6 @@
 +   // TODO: CrashReport when use java
     @SideOnly(Side.CLIENT)
     protected void renderPartsInGui(Minecraft par1) {
-       TrainConfig trainconfig = (TrainConfig)this.cfg;
+       TrainConfig trainconfig = this.cfg;
  
        for(int i = 0; i < 2; ++i) {

@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/world/RTMChunkManager.java
 +++ b/jp/ngt/rtm/world/RTMChunkManager.java
-@@ -36,18 +36,11 @@
+@@ -39,18 +39,11 @@
        }
  
     }

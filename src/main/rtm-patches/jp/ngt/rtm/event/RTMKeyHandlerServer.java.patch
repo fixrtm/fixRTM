@@ -1,7 +1,7 @@
 --- a/jp/ngt/rtm/event/RTMKeyHandlerServer.java
 +++ b/jp/ngt/rtm/event/RTMKeyHandlerServer.java
-@@ -10,14 +10,14 @@
-    public static final RTMKeyHandlerServer INSTANCE = new RTMKeyHandlerServer();
+@@ -13,14 +13,14 @@
+    }
  
     public void onKeyDown(EntityPlayer player, byte keyCode, String sound) {
        switch(keyCode) {
@@ -17,7 +17,7 @@
           RTMCore rtmcore = RTMCore.instance;
           player.openGui(RTMCore.instance, RTMCore.guiIdTrainControlPanel, player.world, player.getRidingEntity().getEntityId(), 0, 0);
           break;
-@@ -47,14 +47,21 @@
+@@ -50,14 +50,21 @@
           entityvehicle.setUpDown(updown);
        }
  

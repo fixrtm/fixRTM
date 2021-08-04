@@ -2,7 +2,7 @@
 +++ b/jp/ngt/rtm/sound/SoundUpdaterTrain.java
 @@ -24,11 +24,11 @@
     public void update() {
-       EntityTrainBase entitytrainbase = (EntityTrainBase)this.vehicle;
+       EntityTrainBase entitytrainbase = this.vehicle;
        EntityBogie entitybogie = entitytrainbase.getBogie(entitytrainbase.getTrainDirection());
        if (entitybogie != null) {
           int i = entitytrainbase.getSignal();
@@ -19,8 +19,8 @@
     }
  
     protected String getSound(ModelSetVehicleBase modelset) {
--      float f = ((EntityTrainBase)this.vehicle).getSpeed();
-+      float f = Math.abs(((EntityTrainBase)this.vehicle).getSpeed());
+-      float f = this.vehicle.getSpeed();
++      float f = Math.abs(this.vehicle.getSpeed());
        if (f > 0.0F) {
           float f1 = EnumNotch.getAcceleration(this.getNotch(), f);
           if (f < ((TrainConfig)modelset.getConfig()).maxSpeed[0]) {
@@ -31,10 +31,10 @@
     }
  
     protected boolean changePitch() {
-       ModelSetTrain modelsettrain = (ModelSetTrain)((EntityTrainBase)this.vehicle).getResourceState().getResourceSet();
--      float f = ((EntityTrainBase)this.vehicle).getSpeed();
-+      float f = Math.abs(((EntityTrainBase)this.vehicle).getSpeed());
-       return f > 0.0F ? f >= ((TrainConfig)modelsettrain.getConfig()).maxSpeed[0] : false;
+       ModelSetTrain modelsettrain = this.vehicle.getResourceState().getResourceSet();
+-      float f = this.vehicle.getSpeed();
++      float f = Math.abs(this.vehicle.getSpeed());
+       return f > 0.0F ? !(f < (modelsettrain.getConfig()).maxSpeed[0]) : false;
     }
  
 +   public float getSpeed() {
@@ -42,7 +42,7 @@
 +   }
 +
     public float getMaxSpeed() {
-       return ((TrainConfig)((ModelSetTrain)((EntityTrainBase)this.vehicle).getResourceState().getResourceSet()).getConfig()).maxSpeed[4] * 72.0F;
+       return (this.vehicle.getResourceState().getResourceSet().getConfig()).maxSpeed[4] * 72.0F;
     }
  
     public int getNotch() {

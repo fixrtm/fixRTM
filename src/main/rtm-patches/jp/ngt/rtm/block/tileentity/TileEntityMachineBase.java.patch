@@ -1,20 +1,20 @@
 --- a/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.java
 +++ b/jp/ngt/rtm/block/tileentity/TileEntityMachineBase.java
-@@ -86,11 +86,12 @@
+@@ -85,11 +85,12 @@
        return pass >= 0;
     }
  
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
--      AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1));
-+      AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1))
+-      return new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1));
++      return new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1))
 +         .offset(getOffsetX(), getOffsetY(), getOffsetZ());
-       return axisalignedbb;
     }
  
     public ResourceState<ModelSetMachine> getResourceState() {
        return this.state;
-@@ -111,7 +112,13 @@
+    }
+@@ -109,7 +110,13 @@
  
     public boolean closeGui(ResourceState par1) {
        return true;

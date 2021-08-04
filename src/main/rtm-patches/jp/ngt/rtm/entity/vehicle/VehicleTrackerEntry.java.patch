@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
 +++ b/jp/ngt/rtm/entity/vehicle/VehicleTrackerEntry.java
-@@ -129,11 +129,11 @@
+@@ -128,11 +128,11 @@
                 par1.connection.sendPacket(packet);
                 if (!this.trackedEntity.getDataManager().isEmpty()) {
                    par1.connection.sendPacket(new SPacketEntityMetadata(this.trackedEntity.getEntityId(), this.trackedEntity.getDataManager(), true));
@@ -13,7 +13,7 @@
                 }
  
                 ForgeEventFactory.onStartEntityTracking(this.trackedEntity, par1);
-@@ -161,41 +161,11 @@
+@@ -160,41 +160,11 @@
        }
  
     }

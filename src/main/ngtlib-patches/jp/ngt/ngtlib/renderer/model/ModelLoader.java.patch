@@ -15,3 +15,16 @@
        try {
           InputStream inputstream = NGTFileLoader.getInputStream(resource);
           if (FileType.OBJ.match(resource.getPath())) {
+@@ -66,11 +70,11 @@
+ 
+    public static PolygonModel loadModel(InputStream[] is, String name, VecAccuracy par1, Object... args) {
+       if (FileType.OBJ.match(name)) {
+          return new ObjModel(is, name, par1);
+       } else if (FileType.MQO.match(name)) {
+-         return args.length > 0 ? new MqoModel(is, name, args[0], par1) : new MqoModel(is, name, 4, par1);
++         return args.length > 0 ? new MqoModel(is, name, (int) args[0], par1) : new MqoModel(is, name, 4, par1);
+       } else if (FileType.MQOZ.match(name)) {
+          return new MqozModel(is, name, 4, par1);
+       } else if (FileType.NPM.match(name)) {
+          EncryptedModel encryptedmodel = EncryptedModel.getInstance(is[0], (byte[])args[1]);
+          return encryptedmodel.getModel(name, par1, args);

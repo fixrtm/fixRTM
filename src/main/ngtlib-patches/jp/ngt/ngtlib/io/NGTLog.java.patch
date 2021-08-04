@@ -8,7 +8,7 @@
  public final class NGTLog {
 -   private static final Logger logger = LogManager.getLogger("NGT");
 +   public static final Logger logger = LogManager.getLogger("NGT");
-    private static final List<Long> startTimes = new ArrayList<Long>();
+    private static final List<Long> startTimes = new ArrayList<>();
  
     public static void debug(String par1) {
 -      debug(par1);
@@ -32,8 +32,8 @@
  
 -         logger.log(Level.INFO, s);
 +         logger.log(par3, s);
-       } catch (Exception var3) {
-          ;
+       } catch (Exception exception) {
        }
  
     }
+ 
