@@ -8,7 +8,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm") version "1.5.20"
     id("net.minecraftforge.gradle.forge")
-    id("com.anatawa12.mod-patching")
+    id("com.anatawa12.mod-patching.binary")
+    id("com.anatawa12.mod-patching.source")
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.anatawa12.jarInJar") version "1.0.0"
@@ -78,7 +79,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 }
 
-fun Copy.configure() {
+val processResources by tasks.getting(Copy::class) {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
     inputs.property("mcversion", project.minecraft.version)
@@ -98,13 +99,6 @@ fun Copy.configure() {
     from(sourceSets.main.get().resources.srcDirs) {
         exclude("mcmod.info")
     }
-}
-
-val processResources by tasks.getting(Copy::class) {
-    configure()
-}
-val reprocessResources by tasks.getting(Copy::class) {
-    configure()
 }
 
 val coremods = mutableListOf(
@@ -203,10 +197,6 @@ repositories {
 }
 
 tasks.compileKotlin {
-    dependsOn(tasks.generateUnmodifieds.get())
-}
-
-tasks.compileKotlin {
     kotlinOptions {
         //freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
     }
@@ -243,12 +233,22 @@ val ngtlib = mods.curse(id = "ngtlib", version = property("ngtVersion").toString
     targetVersions("1.12.2")
 }
 
-patching {
+binPatching {
     patch(rtm)
     patch(ngtlib)
     bsdiffPrefix = "com/anatawa12/fixRtm/asm/patches"
     sourceNameSuffix = "(modified by fixrtm)"
 }
+
+sourcePatching {
+    mappingName = project.property("mcpVersion").toString()
+    mcVersion = "1.12"
+    forgeFlowerVersion = "1.5.498.12"
+    patch(rtm)
+    patch(ngtlib)
+}
+
+tasks.copyModifiedClasses.get().dependsOn("reobfJar")
 
 apply(from = "./processMods.gradle")
 
@@ -267,3 +267,4 @@ curseforge {
         gameVersionStrings.add("Java 8")
     })
 }
+// */

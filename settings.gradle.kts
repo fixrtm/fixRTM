@@ -5,6 +5,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        // com.anatawa12.mod-patching:gradle-plugin:2.0.0-SNAPSHOT not published yet,
+        // so you need to build & publish to maven local
+        mavenLocal()
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
             name = "ossrh-snapshot"
         }
@@ -19,7 +22,7 @@ buildscript {
         }
         classpath("org.ow2.asm:asm-util:6.0")
         classpath("com.anatawa12.java-stab-gen:gradle-library:1.0.0")
-        classpath("com.anatawa12.mod-patching:mod-patching-gradle-plugin:1.0.0-SNAPSHOT") {
+        classpath("com.anatawa12.mod-patching:gradle-plugin:2.0.0-SNAPSHOT") {
             isChanging = true
         }
     }
