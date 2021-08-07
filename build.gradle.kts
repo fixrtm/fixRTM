@@ -244,6 +244,7 @@ sourcePatching {
     mappingName = project.property("mcpVersion").toString()
     mcVersion = "1.12"
     forgeFlowerVersion = "1.5.498.12"
+    autoInstallCli = true
     patch(rtm)
     patch(ngtlib)
 }
