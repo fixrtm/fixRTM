@@ -10,6 +10,7 @@ plugins {
     id("net.minecraftforge.gradle.forge")
     id("com.anatawa12.mod-patching.binary")
     id("com.anatawa12.mod-patching.source")
+    id("com.anatawa12.mod-patching.resources-dev")
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.anatawa12.jarInJar") version "1.0.0"
@@ -109,16 +110,20 @@ val coremods = mutableListOf(
 )
 
 val runServer by tasks.getting(JavaExec::class) {
-    systemProperties["fml.coreMods.load"] = coremods.joinToString(",")
+    systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
+            ",${resourcesDev.forgeFmlCoreModClassName}"
     systemProperties["legacy.debugClassLoading"] = "true"
+    args("--noCoreSearch")
     /*
     systemProperties["legacy.debugClassLoadingSave"] = "true"
     // */
 }
 
 val runClient by tasks.getting(JavaExec::class) {
-    systemProperties["fml.coreMods.load"] = coremods.joinToString(",")
+    systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
+            ",${resourcesDev.forgeFmlCoreModClassName}"
     systemProperties["legacy.debugClassLoading"] = "true"
+    args("--noCoreSearch")
     /*
     systemProperties["legacy.debugClassLoadingSave"] = "true"
     // */
@@ -153,6 +158,7 @@ val shadowModJar by tasks.creating(ShadowJar::class) {
     dependsOn(tasks.copyJar.get())
 
     val basePkg = "com.anatawa12.fixRtm.libs"
+    // add also in FixRtmDevEnvironmentOnlyCorePlugin
     relocate("kotlin.", "$basePkg.kotlin.")
     relocate("kotlinx.", "$basePkg.kotlinx.")
     relocate("io.sigpipe.jbsdiff.", "$basePkg.jbsdiff.")
@@ -247,6 +253,11 @@ sourcePatching {
     autoInstallCli = true
     patch(rtm)
     patch(ngtlib)
+}
+
+resourcesDev {
+    ofMod(rtm)
+    ofMod(ngtlib)
 }
 
 tasks.copyModifiedClasses.get().dependsOn("reobfJar")
