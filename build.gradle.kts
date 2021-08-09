@@ -111,7 +111,9 @@ val coremods = mutableListOf(
 
 val runServer by tasks.getting(JavaExec::class) {
     systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
-            ",${resourcesDev.forgeFmlCoreModClassName}"
+            ",${resourcesDev.forgeFmlCoreModClassName}" +
+            ",com.anatawa12.fixRtm.asm.FixRtmDevEnvironmentOnlyCorePlugin" +
+            "" // tailing + keeper
     systemProperties["legacy.debugClassLoading"] = "true"
     args("--noCoreSearch")
     /*
@@ -121,7 +123,9 @@ val runServer by tasks.getting(JavaExec::class) {
 
 val runClient by tasks.getting(JavaExec::class) {
     systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
-            ",${resourcesDev.forgeFmlCoreModClassName}"
+            ",${resourcesDev.forgeFmlCoreModClassName}" +
+            ",com.anatawa12.fixRtm.asm.FixRtmDevEnvironmentOnlyCorePlugin" +
+            "" // tailing + keeper
     systemProperties["legacy.debugClassLoading"] = "true"
     args("--noCoreSearch")
     /*

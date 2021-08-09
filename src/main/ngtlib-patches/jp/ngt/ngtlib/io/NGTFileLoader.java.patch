@@ -13,31 +13,37 @@
  
     public static ScanResult findFile(FileMatcher... matchers) {
        ScanResult scanresult = new ScanResult();
-@@ -153,23 +153,25 @@
+@@ -153,27 +153,18 @@
        if (MODS_DIR != null) {
           return MODS_DIR;
        } else {
           MODS_DIR = new ArrayList<>();
  
-+         boolean dev = false;
-          try {
-             File file1 = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath());
-             if (!file1.getAbsolutePath().contains("mods")) {
-                MODS_DIR.add(file1);
-                NGTLog.debug("[NGTFL] Add mods dir : " + file1.getAbsolutePath());
-+               dev = true;
-             }
-          } catch (NullPointerException nullpointerexception) {
-          }
- 
-          File file2 = NGTCore.proxy.getMinecraftDirectory("mods");
-          String s = file2.getAbsolutePath();
+-         try {
+-            File file1 = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath());
+-            if (!file1.getAbsolutePath().contains("mods")) {
+-               MODS_DIR.add(file1);
+-               NGTLog.debug("[NGTFL] Add mods dir : " + file1.getAbsolutePath());
+-            }
+-         } catch (NullPointerException nullpointerexception) {
+-         }
+-
+-         File file2 = NGTCore.proxy.getMinecraftDirectory("mods");
+-         String s = file2.getAbsolutePath();
 -         if (s.contains(".") && !s.contains(".minecraft")) {
 -            s = s.replace("\\.", "");
-+         if (dev) {
-+            s = s.replaceAll("\\\\.\\\\mods$", "\\\\mods");
++         for (File jarOrDir : com.anatawa12.fixRtm.io.FIXFileLoader.INSTANCE.getModsOrJars()) {
++            if (jarOrDir.isDirectory())
++               MODS_DIR.add(jarOrDir);
++            else
++               MODS_DIR.add(jarOrDir.getParentFile());
           }
  
-          MODS_DIR.add(new File(s));
-          NGTLog.debug("[NGTFL] Add mods dir : " + s);
+-         MODS_DIR.add(new File(s));
+-         NGTLog.debug("[NGTFL] Add mods dir : " + s);
++         NGTLog.debug("[NGTFL] Add mods dir : " + MODS_DIR);
           return MODS_DIR;
+       }
+    }
+ 
+    private static JFileChooser getCustomChooser(String title) {
