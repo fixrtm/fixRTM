@@ -1,0 +1,18 @@
+--- a/jp/ngt/rtm/RTMSound.java
++++ b/jp/ngt/rtm/RTMSound.java
+@@ -53,12 +53,13 @@
+                list.add(file2);
+                set.add(file2.getName());
+             }
+ 
+             String s = file1.getAbsolutePath();
+-            String s1 = s.substring(s.indexOf(file2.getName()) + file2.getName().length() + 1);
+-            s1 = s1.replace("\\", "/");
++            s = s.replace("\\", "/");
++            String find = "/assets/" + file2.getName() + "/";
++            String s1 = s.substring(s.indexOf(find) + find.length());
+             ALL_OGG_FILES.add(file2.getName() + ":" + s1);
+          }
+       }
+ 
+       Map map = getDomainResourceManagers(simplereloadableresourcemanager);
