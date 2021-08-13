@@ -8,9 +8,9 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm") version "1.5.20"
     id("net.minecraftforge.gradle.forge")
-    id("com.anatawa12.mod-patching.binary")
-    id("com.anatawa12.mod-patching.source")
-    id("com.anatawa12.mod-patching.resources-dev")
+    id("com.anatawa12.mod-patching.binary") version "2.0.0"
+    id("com.anatawa12.mod-patching.source") version "2.0.0"
+    id("com.anatawa12.mod-patching.resources-dev") version "2.0.0"
     id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.anatawa12.jarInJar") version "1.0.0"
