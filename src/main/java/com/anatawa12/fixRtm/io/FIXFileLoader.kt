@@ -15,6 +15,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URI
+import java.net.URL
 import java.nio.charset.Charset
 import java.util.zip.ZipFile
 
@@ -45,14 +46,22 @@ object FIXFileLoader {
     }
 
     fun getFiles(): List<File> {
-        if (!FMLLaunchHandler.isDeobfuscatedEnvironment())
-            return (minecraftDir.resolve("mods").listFiles()!!.asList()
-                    + minecraftDir.resolve("mods/1.12.2").listFiles()?.asList().orEmpty())
-        else
-            return (minecraftDir.resolve("mods").listFiles()!!.asList()
-                    + minecraftDir.resolve("mods/1.12.2").listFiles()?.asList().orEmpty()
-                    + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore(
-                '!')))))
+        return getModsOrJars().flatMap { it.walk().filter(File::isFile) }
+    }
+
+    fun getModsOrJars(): List<File> {
+        val files = mutableListOf<File>()
+        files += minecraftDir.resolve("mods")
+        files += minecraftDir.resolve("jar-mods-cache/v1/mods")
+        if (FMLLaunchHandler.isDeobfuscatedEnvironment()) {
+            val loader = FIXFileLoader::class.java.classLoader
+            fun zipUrlToFile(zipURL: URL) = File(URI(zipURL.path.substringBefore('!')))
+            // add fixRTM, rtm and
+            files += zipUrlToFile(FIXFileLoader::class.java.protectionDomain.codeSource.location)
+            files += zipUrlToFile(loader.getResource("assets/rtm/lang/ja_JP.lang")!!)
+            files += zipUrlToFile(loader.getResource("assets/ngtlib/lang/ja_JP.lang")!!)
+        }
+        return files
     }
 
     fun getResource(location: ResourceLocation): FIXResource {

@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT")
+    //compile("com.github.TheRandomLabs:CurseAPI:master-SNAPSHOT")
     compile("org.ow2.asm:asm-commons:6.0")
     compile("org.ow2.asm:asm-util:6.0")
     compile("org.ow2.asm:asm:6.0")

@@ -1,0 +1,61 @@
+--- a/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
++++ b/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
+@@ -275,34 +275,39 @@
+ 
+       return false;
+    }
+ 
+    private TileEntityElectricalWiring searchActiveTEEW() {
+-      int i = this.getX();
+-      int j = this.getY();
+-      int k = this.getZ();
++      int x = this.getX();
++      int y = this.getY();
++      int z = this.getZ();
+       int l = RTMCore.connectorSearchRange;
+-      int i1 = l * 2;
+-
+-      for(int j1 = 0; j1 < i1; ++j1) {
+-         for(int k1 = 0; k1 < i1; ++k1) {
+-            for(int l1 = 0; l1 < i1; ++l1) {
+-               TileEntityElectricalWiring tileentityelectricalwiring = this.getWireTileEntity(i - l + j1, j - l + k1, k - l + l1, Connection.ConnectionType.NONE, false);
+-               if ((j1 != l || k1 != l || l1 != l) && tileentityelectricalwiring != null && tileentityelectricalwiring.isActivated) {
+-                  return tileentityelectricalwiring;
+-               }
+-            }
++      // for sqrt
++      int dis0 = RTMCore.connectorSearchRange * 2;
++      int dis1 = dis0 * dis0;
++      List<TileEntity> tileEntityList = this.world.loadedTileEntityList;
++      if (tileEntityList != null && !tileEntityList.isEmpty()) {
++         TileEntityElectricalWiring teew = tileEntityList.stream()
++            .filter(tile -> tile != this)
++            .filter(TileEntityElectricalWiring.class::isInstance)
++            .map(TileEntityElectricalWiring.class::cast)
++            .filter(tile -> tile.isActivated)
++            .filter(tile -> tile.getDistanceSq(x, y, z) < dis1)
++            .min(java.util.Comparator.comparingDouble(o -> o.getDistanceSq(x, y, z)))
++            .orElse(null);
++         if (teew != null) {
++            return teew;
+          }
+       }
+ 
+-      List<EntityElectricalWiring> list = this.world.getEntitiesWithinAABB(EntityElectricalWiring.class, new AxisAlignedBB((double)(i - l), (double)(j - l), (double)(k - l), (double)(i + l), (double)(j + l), (double)(k + l)));
++      List<EntityElectricalWiring> list = this.world.getEntitiesWithinAABB(EntityElectricalWiring.class, new AxisAlignedBB(getPos()).grow(l, l, l));
+       if (!list.isEmpty()) {
+-         for(EntityElectricalWiring entityelectricalwiring : list) {
+-            if (entityelectricalwiring.tileEW.isActivated) {
+-               return entityelectricalwiring.tileEW;
+-            }
+-         }
++         return list.stream()
++            .map(entity -> entity.tileEW)
++            .filter(tileEW -> tileEW.isActivated)
++            .min(java.util.Comparator.comparingDouble(o -> o.getDistanceSq(x, y, z)))
++            .orElse(null);
+       }
+ 
+       return null;
+    }
+ 

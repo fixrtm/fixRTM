@@ -1,0 +1,33 @@
+--- a/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
++++ b/jp/ngt/rtm/entity/vehicle/EntityVehicleBase.java
+@@ -268,11 +268,10 @@
+ 
+       try {
+          ModelSetBase modelsetbase = this.getResourceState().getResourceSet();
+          axisalignedbb = modelsetbase.getCollisionObj().getSizeBox();
+       } catch (NullPointerException nullpointerexception) {
+-         nullpointerexception.printStackTrace();
+       }
+ 
+       if (axisalignedbb == null) {
+          axisalignedbb = new AxisAlignedBB(-1.5D, 0.0D, -2.0D, 1.5D, 3.0D, 2.0D);
+       }
+@@ -547,6 +546,18 @@
+    }
+ 
+    public VehicleNGTO getNGTO() {
+       return null;
+    }
++
++   @Override
++   public void onRemovedFromWorld() {
++      super.onRemovedFromWorld();
++      com.anatawa12.fixRtm.rtm.entity.vehicle.EntityVehicleBaseKt.onRemovedFromWorld(this);
++   }
++
++   @Override
++    public void addEntityCrashInfo(net.minecraft.crash.CrashReportCategory category) {
++        super.addEntityCrashInfo(category);
++        com.anatawa12.fixRtm.rtm.entity.vehicle.EntityVehicleBaseKt.addEntityCrashInfo(this, category);
++    }
+ }

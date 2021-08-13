@@ -1,0 +1,74 @@
+--- a/jp/ngt/rtm/entity/train/EntityBogie.java
++++ b/jp/ngt/rtm/entity/train/EntityBogie.java
+@@ -126,11 +126,11 @@
+             return BogieController.MotionState.FLY;
+          } else {
+             RailMap railmap = this.currentRailMap;
+             int i = 0;
+             if (frontBogie != null && this.prevPosIndex != -1) {
+-               int j = (int)((speed + 0.25F) * 32.0F);
++               int j = (int)((Math.abs(speed) + 0.25F) * 32.0F);
+                int k = this.prevPosIndex - j;
+                int l = this.prevPosIndex + j;
+                int i1 = k < 0 ? 0 : k;
+                int j1 = l > this.split ? this.split : l;
+                double[] adouble = frontBogie.getPosBuf();
+@@ -171,11 +171,11 @@
+                this.rotationBuf[0] = f2;
+                this.rotationBuf[1] = f3;
+                this.rotationBuf[2] = f1;
+                this.rotationBuf[3] = f4;
+                if (this.jointDelay > 0.0F) {
+-                  this.jointDelay -= speed;
++                  this.jointDelay -= Math.abs(speed);
+                   if (this.jointDelay <= 0.0F) {
+                      this.playJointSound();
+                   }
+                }
+ 
+@@ -245,11 +245,11 @@
+ 
+    protected void playJointSound() {
+       EntityTrainBase entitytrainbase = this.getTrain();
+       TrainConfig trainconfig = entitytrainbase.getResourceState().getResourceSet().getConfig();
+       if (!trainconfig.muteJointSound) {
+-         float f = entitytrainbase.getSpeed() / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
++         float f = Math.abs(entitytrainbase.getSpeed()) / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
+          String s = this.reverbSound ? "rtm:sounds/train/joint_reverb.ogg" : "rtm:sounds/train/joint.ogg";
+          RTMCore.proxy.playSound(this, s, 1.0F, f);
+          int i = trainconfig.jointDelay[this.getBogieId()].length;
+          if (this.jointIndex < i - 1) {
+             int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
+@@ -290,11 +290,13 @@
+          this.tracked = VehicleTrackerEntry.trackingVehicle(this);
+       }
+ 
+       ++this.existCount;
+       if (this.existCount > 100 && this.getTrain() == null) {
++         if (!this.world.isRemote) {
+          this.setDead();
++         }
+       }
+ 
+    }
+ 
+    public void onBogieUpdate() {
+@@ -578,6 +580,18 @@
+    }
+ 
+    public int getProhibitedAction() {
+       return 1;
+    }
++
++   @Override
++    public void onRemovedFromWorld() {
++        super.onRemovedFromWorld();
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.onRemovedFromWorld(this);
++    }
++
++    @Override
++    public void addEntityCrashInfo(net.minecraft.crash.CrashReportCategory category) {
++        super.addEntityCrashInfo(category);
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.addEntityCrashInfo(this, category);
++    }
+ }

@@ -19,9 +19,6 @@ buildscript {
         }
         classpath("org.ow2.asm:asm-util:6.0")
         classpath("com.anatawa12.java-stab-gen:gradle-library:1.0.0")
-        classpath("com.anatawa12.mod-patching:mod-patching-gradle-plugin:1.0.0-SNAPSHOT") {
-            isChanging = true
-        }
     }
     configurations.classpath.get().resolutionStrategy.cacheDynamicVersionsFor(10, "minutes")
     configurations.classpath.get().resolutionStrategy.cacheChangingModulesFor(10, "minutes")

@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntityOrnament.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntityOrnament.java
+@@ -83,6 +83,12 @@
+    public boolean closeGui(ResourceState par1) {
+       return true;
+    }
+ 
+    protected abstract ResourceType getSubType();
++
++   @Override
++   public void addInfoToCrashReport(net.minecraft.crash.CrashReportCategory reportCategory) {
++      super.addInfoToCrashReport(reportCategory);
++      com.anatawa12.fixRtm.rtm.block.tileentity.TileEntityOrnamentKt.addInfoToCrashReport(this, reportCategory);
++   }
+ }

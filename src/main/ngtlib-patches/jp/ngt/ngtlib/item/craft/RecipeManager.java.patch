@@ -1,0 +1,28 @@
+--- a/jp/ngt/ngtlib/item/craft/RecipeManager.java
++++ b/jp/ngt/ngtlib/item/craft/RecipeManager.java
+@@ -75,11 +75,11 @@
+       for(int i1 = 0; i1 < j * k; ++i1) {
+          char c0 = s.charAt(i1);
+          if (map.containsKey(c0)) {
+             aitemstack[i1] = ((ItemStack)map.get(c0)).copy();
+          } else {
+-            aitemstack[i1] = null;
++            aitemstack[i1] = ItemStack.EMPTY;
+          }
+       }
+ 
+       ShapedRecipes55 shapedrecipes55 = new ShapedRecipes55(j, k, aitemstack, output);
+       INSTANCE.addRecipeToManager(shapedrecipes55);
+@@ -105,11 +105,11 @@
+ 
+       return null;
+    }
+ 
+    public ItemStack[] getRecipeItems(IRecipe par1) {
+-      ItemStack[] aitemstack = new ItemStack[25];
++      ItemStack[] aitemstack = com.anatawa12.fixRtm.UtilsKt.arrayOfItemStack(25);
+       if (par1 instanceof ShapedRecipes55) {
+          ShapedRecipes55 shapedrecipes55 = (ShapedRecipes55)par1;
+          return shapedrecipes55.getRecipeItems();
+       } else if (par1 instanceof RepairRecipe) {
+          RepairRecipe repairrecipe = (RepairRecipe)par1;
