@@ -118,6 +118,9 @@ jobs:
           CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
           PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
 
+          REQUIRED_RTM: ${{ steps.prepare_build.outputs.required_rtm }}
+          REQUIRED_NGTLIB: ${{ steps.prepare_build.outputs.required_ngtlib }}
+
           ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
           RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
           RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}

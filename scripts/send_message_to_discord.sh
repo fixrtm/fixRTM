@@ -10,10 +10,12 @@ err_exit() {
 }
 
 # external variable check
-[ -z "$WEBHOOK_URL" ]  && err_exit 'WEBHOOK_URL not found'
-[ -z "$TAG_NAME" ]     && err_exit 'TAG_NAME not found'
-[ -z "$CURSE_ID" ]     && err_exit 'CURSE_ID not found'
-[ -z "$PRERELEASE" ]   && err_exit 'PRERELEASE not found'
+[ -z "$WEBHOOK_URL" ]     && err_exit 'WEBHOOK_URL not found'
+[ -z "$TAG_NAME" ]        && err_exit 'TAG_NAME not found'
+[ -z "$CURSE_ID" ]        && err_exit 'CURSE_ID not found'
+[ -z "$PRERELEASE" ]      && err_exit 'PRERELEASE not found'
+[ -z "$REQUIRED_RTM" ]    && err_exit 'REQUIRED_RTM not found'
+[ -z "$REQUIRED_NGTLIB" ] && err_exit 'REQUIRED_NGTLIB not found'
 
 function make_temp() {
   local tmp_file_1
@@ -34,6 +36,9 @@ if [ "$PRERELEASE" = true ]; then
 SNAPSHOT of fixRTM, $TAG_NAME is released!
 
 **This is SNAPSHOT, not a stable release. make sure this may have many bugs.**
+Requirements for this version:
+RTM $REQUIRED_RTM
+NGTLib $REQUIRED_NGTLIB
 
 https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID
 https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME
@@ -42,8 +47,8 @@ else
     cat <<EOF > "$tmp_file"
 fixRTM $TAG_NAME is released!
 Requirements for this version:
-RTM 2.4.21
-NGTLib 2.4.18
+RTM $REQUIRED_RTM
+NGTLib $REQUIRED_NGTLIB
 
 https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID
 https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME
