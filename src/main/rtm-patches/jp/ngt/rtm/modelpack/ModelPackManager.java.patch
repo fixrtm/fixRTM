@@ -37,7 +37,7 @@
  
        TimeTableManager.INSTANCE.load();
        par1.loadFinished = true;
-@@ -143,29 +146,42 @@
+@@ -143,29 +146,43 @@
     public ResourceType getType(String name) {
        return this.typeMap.get(name);
     }
@@ -50,6 +50,7 @@
 -            ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(s1, type.cfgClass);
 -            return this.registerResourceSet(type, resourceconfig, s1);
 +            json = NGTText.readText(file, s);
++            break;
           } catch (IOException ioexception) {
              ioexception.printStackTrace();
           }
@@ -84,7 +85,7 @@
           return cfg.getName();
        } else {
           throw new ModelPackException("Failed to create ResourceSet", cfg.getName());
-@@ -177,15 +193,16 @@
+@@ -177,15 +194,16 @@
  
        for(Entry<ResourceType, Map<String, ResourceSet>> entry : this.allModelSetMap.entrySet()) {
           for(ResourceSet resourceset : entry.getValue().values()) {
@@ -102,7 +103,7 @@
     public void addModelSetName(int count, String typeName, String name) {
        assert NGTUtil.isSMP() && !NGTUtil.isServer();
  
-@@ -227,16 +244,13 @@
+@@ -227,16 +245,13 @@
           resourcetype = type.parent;
        }
  
