@@ -63,9 +63,9 @@ object MainConfig {
     val scriptingMode: ScriptingMode
 
     init {
-        var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.toLowerCase())
+        var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.lowercase())
         if (scriptingMode == null) {
-            if (scriptingModeStr.toLowerCase() == ScriptingMode.defaultConfigValue) {
+            if (scriptingModeStr.lowercase() == ScriptingMode.defaultConfigValue) {
                 scriptingMode = ScriptingMode.default
             } else {
                 Loggers.getLogger("Config").fatal("your scriptingMode is not valid so we use default.")

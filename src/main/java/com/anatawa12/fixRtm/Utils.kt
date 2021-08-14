@@ -71,7 +71,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
 
     for (c in string) {
         @Suppress("NAME_SHADOWING")
-        val c = c.toInt()
+        val c = c.code
         if (c in 0x0001..0x007F) {
             utflen++
         } else if (c <= 0x07FF) {
@@ -89,7 +89,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     var count = 0
     for (c in string) {
         @Suppress("NAME_SHADOWING")
-        val c = c.toInt()
+        val c = c.code
         if (c >= 0x0001 && c <= 0x007F) {
             bytes[count++] = c.toByte()
         } else if (c > 0x07FF) {
