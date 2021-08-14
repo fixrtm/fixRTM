@@ -18,12 +18,12 @@ object ThreadUtil {
     }
 
     @SubscribeEvent
-    fun onClientTick(e: TickEvent.ClientTickEvent) {
+    fun onClientTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ClientTickEvent) {
         while (true) (client.poll() ?: return)()
     }
 
     @SubscribeEvent
-    fun onServerTick(e: TickEvent.ServerTickEvent) {
+    fun onServerTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ServerTickEvent) {
         while (true) (server.poll() ?: return)()
     }
 

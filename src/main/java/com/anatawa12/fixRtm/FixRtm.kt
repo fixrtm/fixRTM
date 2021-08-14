@@ -128,7 +128,7 @@ object FixRtm {
     }
 
     @SubscribeEvent
-    fun onServerTick(e: TickEvent.ServerTickEvent) {
+    fun onServerTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ServerTickEvent) {
         val report = crashReportHolder.get()
         if (report === null) return
         if (report === thrownMarker) return

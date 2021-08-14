@@ -17,11 +17,11 @@ object RTMAllModelPackInfoCrashCallable : ICrashCallable {
     override fun call(): String = ModelPackManager.INSTANCE.modelSetMapLock.readLock().withLock {
         buildString {
             append("Initialized ")
-                .append(ModelPackManager.INSTANCE.allModelSetMap.values.sumBy { it.size })
+                .append(ModelPackManager.INSTANCE.allModelSetMap.values.sumOf { it.size })
                 .append(" models")
             if (NGTUtil.isSMP()) {
                 append(", Using ")
-                    .append(ModelPackManager.INSTANCE.smpModelSetMap.values.sumBy { it.size })
+                    .append(ModelPackManager.INSTANCE.smpModelSetMap.values.sumOf { it.size })
                     .append(" models")
             }
             append("\n" +

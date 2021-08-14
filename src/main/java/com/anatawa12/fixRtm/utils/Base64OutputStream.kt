@@ -113,7 +113,7 @@ class Base64OutputStream @JvmOverloads constructor(
         if (emittedCount == 64) emittedCount = 0
         if (addNewLinePer64) {
             if (emittedCount == 0) {
-                outBuf[outBufStart + 4] = '\n'.toByte()
+                outBuf[outBufStart + 4] = '\n'.code.toByte()
                 return 5
             } else {
                 return 4
@@ -131,23 +131,23 @@ class Base64OutputStream @JvmOverloads constructor(
             var bufLen = emit(buf, 0, outBuf, 0)
             if (addPadding) {
                 for (i in bufIndex + 1..3) {
-                    outBuf[i] = '='.toByte()
+                    outBuf[i] = '='.code.toByte()
                 }
                 if (addNewLineAtEnd && bufLen != 5) {
-                    outBuf[4] = '\n'.toByte()
+                    outBuf[4] = '\n'.code.toByte()
                     bufLen++
                 }
                 out.write(outBuf, 0, bufLen)
             } else {
                 if (addNewLineAtEnd) {
-                    outBuf[bufIndex + 1] = '\n'.toByte()
+                    outBuf[bufIndex + 1] = '\n'.code.toByte()
                     out.write(outBuf, 0, bufIndex + 2)
                 } else {
                     out.write(outBuf, 0, bufIndex + 1)
                 }
             }
         } else if (addNewLineAtEnd && emittedCount != 0) {
-            out.write('\n'.toInt())
+            out.write('\n'.code)
         }
 
         out.close()
@@ -162,7 +162,7 @@ class Base64OutputStream @JvmOverloads constructor(
                         "QRSTUVWXYZabcdef" +
                         "ghijklmnopqrstuv" +
                         "wxyz0123456789+/")
-            .map { it.toByte() }
+            .map { it.code.toByte() }
             .toByteArray()
     }
 }

@@ -110,7 +110,7 @@ object FIXFileLoader {
                 val parts = entry.name.split("/")
                 if (parts[0] == "assets" && parts.size >= 2 && parts[1].isNotEmpty())
                     domains.add(parts[1])
-                ignoreCaseMap[entry.name.toLowerCase()] = entry.name
+                ignoreCaseMap[entry.name.lowercase()] = entry.name
             }
             this.domains = domains
             this.ignoreCaseMap = ignoreCaseMap
