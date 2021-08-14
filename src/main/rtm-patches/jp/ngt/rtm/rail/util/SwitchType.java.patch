@@ -1,15 +1,39 @@
 --- a/jp/ngt/rtm/rail/util/SwitchType.java
 +++ b/jp/ngt/rtm/rail/util/SwitchType.java
-@@ -310,10 +310,14 @@
+@@ -283,37 +283,14 @@
+       public SwitchSingleCross() {
+          super(1);
+       }
  
-             ++i;
-          }
+       public boolean init(List<RailPosition> switchList, List<RailPosition> normalList) {
+-         RailMapSwitch[] arailmapswitch = new RailMapSwitch[3];
++         RailMapSwitch[] arailmapswitch = com.anatawa12.fixRtm.rtm.rail.util.SwitchTypes.SwitchSingleCross.INSTANCE.makeRailMap(switchList, normalList);
+          RailPosition railposition = switchList.get(0);
+          RailPosition railposition1 = switchList.get(1);
+-         RailDir raildir = RailDir.NONE;
+-         RailDir raildir1 = RailDir.NONE;
+-         int i = 0;
  
-          arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
-+
-+         if (!com.anatawa12.fixRtm.UtilsKt.isAllNotNull(arailmapswitch))
-+            return false;
-+
+-         for(RailPosition railposition2 : switchList) {
+-            for(RailPosition railposition3 : normalList) {
+-               if (railposition2.direction != railposition3.direction) {
+-                  boolean flag = railposition2 == railposition;
+-                  RailPosition railposition4 = flag ? railposition1 : railposition;
+-                  RailDir raildir2 = railposition2.getDir(railposition4, railposition3);
+-                  if (flag) {
+-                     raildir = raildir2;
+-                  } else {
+-                     raildir1 = raildir2;
+-                  }
+-
+-                  arailmapswitch[i] = new RailMapSwitch(railposition2, railposition3, raildir2.invert(), RailDir.NONE);
+-               }
+-            }
+-
+-            ++i;
+-         }
+-
+-         arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
           this.railMaps = arailmapswitch;
           this.points = new Point[4];
           this.points[0] = new Point(railposition, arailmapswitch[0], arailmapswitch[2]);
