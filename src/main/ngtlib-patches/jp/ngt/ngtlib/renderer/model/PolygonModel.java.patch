@@ -13,7 +13,22 @@
     public final List<GroupObject> groupObjects = new ArrayList<>(16);
     protected GroupObject currentGroupObject;
     int lineCount;
-@@ -92,11 +92,11 @@
+@@ -46,11 +46,13 @@
+    protected void init(InputStream[] is) throws ModelFormatException {
+       this.loadModel(is[0]);
+    }
+ 
+    private void loadModel(InputStream inputStream) {
+-      BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputStream));
++      kotlin.Pair<java.nio.charset.Charset, InputStream> pair = com.anatawa12.fixRtm.ngtlib.renderer.model.PolygonModelCharsetDetector.INSTANCE.detectCharset(inputStream);
++      inputStream = pair.component2();
++      BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputStream, pair.component1()));
+       Stream<String> stream = bufferedreader.lines();
+       stream.forEachOrdered((line) -> {
+          line = repS.matcher(line).replaceAll(" ").trim();
+          this.parseLine(line, ++this.lineCount);
+       });
+@@ -92,11 +94,11 @@
  
     public final float[] getSize() {
        return this.sizeBox;
@@ -26,7 +41,7 @@
        }
  
        NGTTessellator ngttessellator = NGTTessellator.instance;
-@@ -107,18 +107,18 @@
+@@ -107,18 +109,18 @@
           GL11.glShadeModel(7424);
        }
  
@@ -47,7 +62,7 @@
        }
  
        for(GroupObject groupobject : this.groupObjects) {
-@@ -133,11 +133,11 @@
+@@ -133,11 +135,11 @@
           GL11.glShadeModel(7424);
        }
  
@@ -60,7 +75,7 @@
        }
  
        for(GroupObject groupobject : this.groupObjects) {
-@@ -151,15 +151,15 @@
+@@ -151,15 +153,15 @@
           GL11.glShadeModel(7424);
        }
  
