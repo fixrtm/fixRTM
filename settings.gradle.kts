@@ -13,13 +13,9 @@ buildscript {
         }
     }
     dependencies {
-        // required by ForgeGradle. see anatawa12/ForgeGradle-2.3#22
-        classpath("com.anatawa12.forge:ForgeGradle:2.3-1.0.+") {
-            isChanging = true
-        }
+        // use latest version by dependabot. dependabot supports dependencies in settings.gralde
+        classpath("net.minecraftforge.gradle:ForgeGradle:4.1.14")
         classpath("org.ow2.asm:asm-util:6.0")
         classpath("com.anatawa12.java-stab-gen:gradle-library:1.0.0")
     }
-    configurations.classpath.get().resolutionStrategy.cacheDynamicVersionsFor(10, "minutes")
-    configurations.classpath.get().resolutionStrategy.cacheChangingModulesFor(10, "minutes")
 }
