@@ -55,11 +55,19 @@ object FIXFileLoader {
         files += minecraftDir.resolve("jar-mods-cache/v1/mods")
         if (FMLLaunchHandler.isDeobfuscatedEnvironment()) {
             val loader = FIXFileLoader::class.java.classLoader
-            fun zipUrlToFile(zipURL: URL) = File(URI(zipURL.path.substringBefore('!')))
+            fun zipUrlToFile(loader: ClassLoader, relative: String): File {
+                val url = loader.getResource(relative)
+                    ?: error("resource $relative not found")
+                return when (url.protocol) {
+                    "zip", "jar" -> File(URI(url.path.substringBefore('!')))
+                    "file" -> File(URI(url.toString().dropLast(relative.length)))
+                    else -> error("unsupported protocol: ${url.protocol}")
+                }
+            }
             // add fixRTM, rtm and
-            files += zipUrlToFile(FIXFileLoader::class.java.protectionDomain.codeSource.location)
-            files += zipUrlToFile(loader.getResource("assets/rtm/lang/ja_JP.lang")!!)
-            files += zipUrlToFile(loader.getResource("assets/ngtlib/lang/ja_JP.lang")!!)
+            files += zipUrlToFile(loader, FIXFileLoader::class.java.name.replace('.', '/') + ".class")
+            files += zipUrlToFile(loader, "assets/rtm/lang/ja_JP.lang")
+            files += zipUrlToFile(loader, "assets/ngtlib/lang/ja_JP.lang")
         }
         return files
     }

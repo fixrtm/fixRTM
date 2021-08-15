@@ -7,11 +7,10 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.5.20"
-    id("net.minecraftforge.gradle.forge")
+    id("net.minecraftforge.gradle")
     id("com.anatawa12.mod-patching.binary") version "2.0.0"
     id("com.anatawa12.mod-patching.source") version "2.0.0"
     id("com.anatawa12.mod-patching.resources-dev") version "2.0.0"
-    id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.anatawa12.jarInJar") version "1.0.0"
 }
@@ -21,11 +20,6 @@ group = property("modGroup")!!
 base { archivesBaseName = property("modBaseName")!!.toString() }
 
 sourceSets {
-    api {
-        java {
-            srcDirs("src/api/rtm", "src/api/ngtlib")
-        }
-    }
     main {
         resources {
             srcDirs("src/main/rtmResources", "src/main/ngtlibResources")
@@ -33,18 +27,13 @@ sourceSets {
     }
 }
 
-minecraft {
-    version = project.property("forgeVersion").toString()
-    runDir = "run"
+val mcpChannel: String by extra
+val mcpVersion: String by extra
 
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = project.property("mcpVersion").toString()
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-}
+minecraft.mappings(mcpChannel, mcpVersion)
+minecraft.accessTransformer(file("src/main/resources/META-INF/fix-rtm_at.cfg"))
+
+sourceSets.main.get().resources.srcDir("src/generated/resources")
 
 val shade by configurations.creating
 configurations.compile.get().extendsFrom(shade)
@@ -55,6 +44,8 @@ repositories {
 }
 
 dependencies {
+    "minecraft"("net.minecraftforge:forge:1.12.2-14.23.5.2855")
+
     shade(kotlin("stdlib-jdk7"))
     shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     shade("io.sigpipe:jbsdiff:1.0")
@@ -64,11 +55,6 @@ dependencies {
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
 //    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
 //        projectDir.resolve("mods/ngtlib.deobf.jar")))
-
-    // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    apiImplementation("org.twitter4j:twitter4j-core:4.0.7")
-    // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
-    apiImplementation("com.github.sarxos:webcam-capture:0.3.12")
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
     compileOnly("org.twitter4j:twitter4j-core:4.0.7")
@@ -83,7 +69,6 @@ dependencies {
 val processResources by tasks.getting(Copy::class) {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
-    inputs.property("mcversion", project.minecraft.version)
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.get().resources.srcDirs) {
@@ -92,7 +77,7 @@ val processResources by tasks.getting(Copy::class) {
         // replace version and mcversion
         expand(mapOf(
             "version" to project.version,
-            "mcversion" to project.minecraft.version
+            "mcversion" to "1.12.2"
         ))
     }
 
@@ -102,6 +87,20 @@ val processResources by tasks.getting(Copy::class) {
     }
 }
 
+tasks.jar.get().finalizedBy("reobfJar")
+
+// workaround for userdev bug
+val copyResourceToClasses by tasks.creating(Copy::class) {
+    tasks.classes.get().dependsOn(this)
+    dependsOn(tasks.processResources)
+    onlyIf { gradle.taskGraph.hasTask(tasks.getByName("prepareRuns")) }
+
+    //into("$buildDir/classes/java/main")
+    // if you write @Mod class in kotlin, please use code below
+    into("$buildDir/classes/kotlin/main")
+    from(tasks.processResources.get().destinationDir)
+}
+
 val coremods = mutableListOf(
     "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
     "com.anatawa12.fixRtm.asm.patching.PatchingFixRtmCorePlugin",
@@ -109,35 +108,36 @@ val coremods = mutableListOf(
     "com.anatawa12.fixRtm.asm.hooking.HookingFixRtmCorePlugin"
 )
 
-val runServer by tasks.getting(JavaExec::class) {
-    systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
-            ",${resourcesDev.forgeFmlCoreModClassName}" +
-            ",com.anatawa12.fixRtm.asm.FixRtmDevEnvironmentOnlyCorePlugin" +
-            "" // tailing + keeper
-    systemProperties["legacy.debugClassLoading"] = "true"
+val debugCoreMods = coremods + listOf(
+    resourcesDev.forgeFmlCoreModClassName,
+    "com.anatawa12.fixRtm.asm.FixRtmDevEnvironmentOnlyCorePlugin"
+)
+
+fun net.minecraftforge.gradle.common.util.RunConfig.commonConfigure() {
+    workingDirectory(project.file("run"))
     args("--noCoreSearch")
-    /*
-    systemProperties["legacy.debugClassLoadingSave"] = "true"
-    // */
+
+    property("forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP")
+    property("forge.logging.console.level", "debug")
+    property("fml.coreMods.load", debugCoreMods.joinToString(","))
+    property("legacy.debugClassLoading", "true")
+    //property("legacy.debugClassLoadingSave", "true")
 }
 
-val runClient by tasks.getting(JavaExec::class) {
-    systemProperties["fml.coreMods.load"] = coremods.joinToString(",") +
-            ",${resourcesDev.forgeFmlCoreModClassName}" +
-            ",com.anatawa12.fixRtm.asm.FixRtmDevEnvironmentOnlyCorePlugin" +
-            "" // tailing + keeper
-    systemProperties["legacy.debugClassLoading"] = "true"
-    args("--noCoreSearch")
-    /*
-    systemProperties["legacy.debugClassLoadingSave"] = "true"
-    // */
+val runClient = minecraft.runs.create("client") {
+    commonConfigure()
+}
+
+val runServer = minecraft.runs.create("server") {
+    commonConfigure()
     //*
-    if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password"))
+    if (!project.hasProperty("noLogin") && project.hasProperty("minecraft.login.username") && project.hasProperty("minecraft.login.password")) {
         @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
-        args = args!! + listOf(
+        args(
             "-username", project.property("minecraft.login.username").toString(),
             "-password", project.property("minecraft.login.password").toString()
         )
+    }
     // */
 }
 
@@ -229,8 +229,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-runClient.outputs.upToDateWhen { false }
-
 @Suppress("SpellCheckingInspection")
 val rtm = mods.curse(id = "realtrainmod", version = property("rtmVersion").toString()) {
     name = "rtm"
@@ -251,8 +249,8 @@ binPatching {
 }
 
 sourcePatching {
-    mappingName = project.property("mcpVersion").toString()
-    mcVersion = "1.12"
+    mappingName = "${mcpChannel}_${mcpVersion.substringBefore('-')}"
+    mcVersion = mcpVersion.substringAfter('-')
     forgeFlowerVersion = "1.5.498.12"
     autoInstallCli = true
     patch(rtm)
@@ -267,20 +265,3 @@ resourcesDev {
 tasks.copyModifiedClasses.get().dependsOn("reobfJar")
 
 apply(from = "./processMods.gradle")
-
-curseforge {
-    apiKey = project.findProperty("com.anatawa12.curse.api-key").toString()
-    project(closureOf<com.matthewprenger.cursegradle.CurseProject> {
-        id = project.findProperty("com.anatawa12.curse.project-id").toString()
-        changelogType = "markdown"
-        changelog = file(project.findProperty("com.anatawa12.curse.changelog-path").toString())
-        releaseType = project.findProperty("com.anatawa12.curse.release-type")?.toString() ?: "release"
-        relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
-            requiredDependency("realtrainmod")
-        })
-        gameVersionStrings.add("1.12.2")
-        gameVersionStrings.add("Forge")
-        gameVersionStrings.add("Java 8")
-    })
-}
-// */
