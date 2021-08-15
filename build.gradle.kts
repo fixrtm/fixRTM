@@ -3,6 +3,7 @@
 /// See LICENSE at https://github.com/fixrtm/fixRTM for more details
 
 import com.anatawa12.jarInJar.gradle.TargetPreset
+import com.anatawa12.modPatching.source.internal.readTextOr
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
@@ -262,6 +263,22 @@ resourcesDev {
     ofMod(ngtlib)
 }
 
-tasks.copyModifiedClasses.get().dependsOn("reobfJar")
+tasks.listModifiedClasses.get().dependsOn("reobfJar")
+// workaround for anatawa12/mod-patching#78
+enum class ModifiedType {
+    SAME,
+    MODIFIED,
+    UNMODIFIED,
+}
+tasks.copyModifiedClasses {
+    from(project.provider { zipTree(tasks.jar.get().archiveFile) }) {
+        include {
+            tasks.listModifiedClasses.get().run {
+                modifiedInfoDir.get().file(it.path).asFile.readTextOr("UNMODIFIED")
+                    .let(ModifiedType::valueOf) == ModifiedType.MODIFIED
+            }
+        }
+    }
+}
 
 apply(from = "./processMods.gradle")
