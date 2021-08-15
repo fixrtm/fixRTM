@@ -11,7 +11,7 @@ plugins {
     id("com.anatawa12.mod-patching.binary") version "2.0.0"
     id("com.anatawa12.mod-patching.source") version "2.0.0"
     id("com.anatawa12.mod-patching.resources-dev") version "2.0.0"
-    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     id("com.anatawa12.jarInJar") version "1.0.1"
 }
 
