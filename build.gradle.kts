@@ -11,7 +11,6 @@ plugins {
     id("com.anatawa12.mod-patching.binary") version "2.0.0"
     id("com.anatawa12.mod-patching.source") version "2.0.0"
     id("com.anatawa12.mod-patching.resources-dev") version "2.0.0"
-    id("com.matthewprenger.cursegradle") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("com.anatawa12.jarInJar") version "1.0.0"
 }
@@ -266,20 +265,3 @@ resourcesDev {
 tasks.copyModifiedClasses.get().dependsOn("reobfJar")
 
 apply(from = "./processMods.gradle")
-
-curseforge {
-    apiKey = project.findProperty("com.anatawa12.curse.api-key").toString()
-    project(closureOf<com.matthewprenger.cursegradle.CurseProject> {
-        id = project.findProperty("com.anatawa12.curse.project-id").toString()
-        changelogType = "markdown"
-        changelog = file(project.findProperty("com.anatawa12.curse.changelog-path").toString())
-        releaseType = project.findProperty("com.anatawa12.curse.release-type")?.toString() ?: "release"
-        relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
-            requiredDependency("realtrainmod")
-        })
-        gameVersionStrings.add("1.12.2")
-        gameVersionStrings.add("Forge")
-        gameVersionStrings.add("Java 8")
-    })
-}
-// */
