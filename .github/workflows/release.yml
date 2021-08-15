@@ -55,11 +55,6 @@ jobs:
       - name: apply patches
         run: ./pm.apply-patches
 
-      - name: setup workspace
-        uses: eskatos/gradle-command-action@v1
-        with:
-          arguments: setupCiWorkspace
-
       - name: Build
         uses: eskatos/gradle-command-action@v1
         with:
