@@ -12,7 +12,7 @@
           return false;
        } else {
           boolean flag = player == null || player.capabilities.isCreativeMode;
-@@ -141,37 +142,27 @@
+@@ -141,37 +142,28 @@
           return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
        }
     }
@@ -44,6 +44,7 @@
 +         .filter(tile -> tile.getPos().distanceSqToCenter(x, tile.getY(), z) < dis3)
 +         .filter(tile -> Math.abs(tile.getY() - y) < k)
 +         .map(TileEntityMarker::getMarkerRP)
++         .filter(java.util.Objects::nonNull)
 +         .sorted(java.util.Comparator.<RailPosition>comparingInt(v -> v.switchType)
 +               .thenComparingInt(v -> v.blockY)
 +               .thenComparingInt(Object::hashCode))
@@ -61,7 +62,7 @@
  
     public static boolean createRail(World world, int x, int y, int z, List<RailPosition> rps, ResourceStateRail state, boolean makeRail, boolean isCreative) {
        if (rps.size() == 1) {
-@@ -292,18 +283,18 @@
+@@ -292,18 +284,18 @@
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {
