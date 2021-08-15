@@ -88,8 +88,6 @@ val processResources by tasks.getting(Copy::class) {
     }
 }
 
-tasks.jar.get().finalizedBy("reobfJar")
-
 // workaround for userdev bug
 val copyResourceToClasses by tasks.creating(Copy::class) {
     tasks.classes.get().dependsOn(this)
@@ -159,8 +157,10 @@ val jar by tasks.getting(Jar::class) {
     }
 }
 
+tasks.jar.get().finalizedBy("reobfJar")
+
 val shadowModJar by tasks.creating(ShadowJar::class) {
-    dependsOn(tasks.copyJar.get())
+    dependsOn("reobfJar")
 
     val basePkg = "com.anatawa12.fixRtm.libs"
     // add also in FixRtmDevEnvironmentOnlyCorePlugin
@@ -193,10 +193,12 @@ val copyShadowedJar by tasks.creating {
     }
 }
 
+tasks.listModifiedClasses.get().dependsOn(copyShadowedJar)
+
 tasks.assemble.get().dependsOn(copyShadowedJar)
 
 tasks.embedJarInJar {
-    dependsOn(copyShadowedJar)
+    dependsOn(tasks.copyJar.get())
     target = TargetPreset.FMLInForge
     basePackage = "com.anatawa12.fixRtm.jarInJar"
 }
@@ -263,7 +265,6 @@ resourcesDev {
     ofMod(ngtlib)
 }
 
-tasks.listModifiedClasses.get().dependsOn("reobfJar")
 // workaround for anatawa12/mod-patching#78
 enum class ModifiedType {
     SAME,
