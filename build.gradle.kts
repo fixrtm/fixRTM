@@ -264,5 +264,21 @@ resourcesDev {
 }
 
 tasks.listModifiedClasses.get().dependsOn("reobfJar")
+// workaround for anatawa12/mod-patching#78
+enum class ModifiedType {
+    SAME,
+    MODIFIED,
+    UNMODIFIED,
+}
+tasks.copyModifiedClasses {
+    from(project.provider { zipTree(tasks.jar.get().archiveFile) }) {
+        include {
+            tasks.listModifiedClasses.get().run {
+                modifiedInfoDir.get().file(it.path).asFile.readTextOr("UNMODIFIED")
+                    .let(ModifiedType::valueOf) == ModifiedType.MODIFIED
+            }
+        }
+    }
+}
 
 apply(from = "./processMods.gradle")
