@@ -1,0 +1,26 @@
+--- a/jp/ngt/rtm/electric/BlockSignal.java
++++ b/jp/ngt/rtm/electric/BlockSignal.java
+@@ -24,14 +24,21 @@
+    public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
+       if (holder.getWorld().isRemote) {
+          int i = holder.getBlockPos().getX();
+          int j = holder.getBlockPos().getY();
+          int k = holder.getBlockPos().getZ();
+-         holder.getPlayer().openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, holder.getWorld(), i, j, k);
++         if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ItemInstalledObject.IstlObjType.SIGNAL)) {
++            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), i, j, k);
++            return true;
++         }
++         if (holder.getPlayer().isSneaking()) {
++            holder.getPlayer().openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, holder.getWorld(), i, j, k);
++            return true;
++         }
+       }
+ 
+-      return true;
++      return false;
+    }
+ 
+    public boolean removedByPlayer(BlockArgHolder holder, boolean willHarvest) {
+       World world = holder.getWorld();
+       BlockPos blockpos = holder.getBlockPos();

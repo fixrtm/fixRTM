@@ -42,6 +42,8 @@ mods:
       - jp.ngt.rtm.block.tileentity.TileEntityPoint
       - jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
       - jp.ngt.rtm.command.CommandRTM
+      - jp.ngt.rtm.electric.BlockSignal
+      - jp.ngt.rtm.electric.RenderSignal
       - jp.ngt.rtm.electric.TileEntityConnectorBase
       - jp.ngt.rtm.electric.TileEntityElectricalWiring
       - jp.ngt.rtm.electric.TileEntitySignal

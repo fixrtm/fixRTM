@@ -243,6 +243,12 @@ fun ItemStack.isItemOf(machine: TileEntityMachineBase): Boolean {
     return type.type == machine.subType
 }
 
+fun ItemStack.isItemOf(istlType: ItemInstalledObject.IstlObjType): Boolean {
+    if (this.item !== RTMItem.installedObject) return false
+    val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage)
+    return type == istlType
+}
+
 fun EntityPlayer.openGui(fixGuiId: GuiId, world: World, x: Int, y: Int, z: Int) {
     openGui(FixRtm, fixGuiId.ordinal, world, x, y, z)
 }
