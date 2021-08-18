@@ -80,6 +80,7 @@ mods:
       - jp.ngt.rtm.rail.BlockMarker
       - jp.ngt.rtm.rail.RenderMarkerBlock
       - jp.ngt.rtm.rail.RenderTurntable
+      - jp.ngt.rtm.rail.TileEntityLargeRailBase
       - jp.ngt.rtm.rail.TileEntityLargeRailCore
       - jp.ngt.rtm.rail.TileEntityMarker
       - jp.ngt.rtm.rail.TileEntityTurnTableCore
