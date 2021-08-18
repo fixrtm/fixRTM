@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/tileentity/RenderRailroadSign.java
++++ b/jp/ngt/rtm/block/tileentity/RenderRailroadSign.java
+@@ -12,10 +12,11 @@
+ public class RenderRailroadSign extends TileEntitySpecialRenderer<TileEntityRailroadSign> {
+    public void renderRailroadSignAt(TileEntityRailroadSign tileEntity, double par2, double par4, double par6, float par8) {
+       GL11.glPushMatrix();
+       GL11.glEnable(32826);
+       GL11.glTranslatef((float)par2 + 0.5F, (float)par4, (float)par6 + 0.5F);
++      GL11.glTranslatef(tileEntity.getOffsetX(), tileEntity.getOffsetY(), tileEntity.getOffsetZ());
+       GL11.glPushMatrix();
+       float f = 1.25F;
+       float f1 = 0.25F;
+       float f2 = 0.0675F;
+       boolean flag = !tileEntity.getWorld().isAirBlock(tileEntity.getPos().up());

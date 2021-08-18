@@ -34,12 +34,15 @@ mods:
       - jp.ngt.rtm.RTMRecipe
       - jp.ngt.rtm.RTMSound
       - jp.ngt.rtm.block.BlockMachineBase
+      - jp.ngt.rtm.block.BlockRailroadSign
       - jp.ngt.rtm.block.tileentity.RenderMachine
+      - jp.ngt.rtm.block.tileentity.RenderRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityCrossingGate
       - jp.ngt.rtm.block.tileentity.TileEntityMachineBase
       - jp.ngt.rtm.block.tileentity.TileEntityMechanism
       - jp.ngt.rtm.block.tileentity.TileEntityOrnament
       - jp.ngt.rtm.block.tileentity.TileEntityPoint
+      - jp.ngt.rtm.block.tileentity.TileEntityRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
       - jp.ngt.rtm.command.CommandRTM
       - jp.ngt.rtm.electric.BlockSignal
