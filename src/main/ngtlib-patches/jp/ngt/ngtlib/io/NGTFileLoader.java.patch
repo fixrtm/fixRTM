@@ -47,3 +47,30 @@
     }
  
     private static JFileChooser getCustomChooser(String title) {
+@@ -231,23 +222,13 @@
+          return null;
+       }
+    }
+ 
+    public static InputStream getInputStream(ResourceLocation par1) throws IOException {
+-      if (!NGTCore.proxy.isServer()) {
+-         return NGTUtilClient.getMinecraft().getResourceManager().getResource(par1).getInputStream();
+-      } else {
+-         int i = par1.getPath().lastIndexOf("/");
+-         String s = par1.getPath().substring(i + 1);
+-         List<File> list = findFile((FileMatcher)((filex) -> filex.getName().equals(s)));
+-         if (list.isEmpty()) {
+-            throw new FileNotFoundException("On get stream : " + s);
+-         } else {
+-            File file1 = list.get(0);
+-            return getInputStreamFromFile(file1);
+-         }
+-      }
++      return NGTCore.proxy.isServer()
++         ? com.anatawa12.fixRtm.io.FIXFileLoader.INSTANCE.getInputStream(par1)
++         : NGTUtilClient.getMinecraft().getResourceManager().getResource(par1).getInputStream();
+    }
+ 
+    public static InputStream getInputStreamFromFile(File file) throws IOException {
+       String s = getArchiveSuffix(file.getAbsolutePath());
+       return (InputStream)(!s.isEmpty() ? getStreamFromArchive(file, s) : new FileInputStream(file));

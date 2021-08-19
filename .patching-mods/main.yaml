@@ -34,14 +34,19 @@ mods:
       - jp.ngt.rtm.RTMRecipe
       - jp.ngt.rtm.RTMSound
       - jp.ngt.rtm.block.BlockMachineBase
+      - jp.ngt.rtm.block.BlockRailroadSign
       - jp.ngt.rtm.block.tileentity.RenderMachine
+      - jp.ngt.rtm.block.tileentity.RenderRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityCrossingGate
       - jp.ngt.rtm.block.tileentity.TileEntityMachineBase
       - jp.ngt.rtm.block.tileentity.TileEntityMechanism
       - jp.ngt.rtm.block.tileentity.TileEntityOrnament
       - jp.ngt.rtm.block.tileentity.TileEntityPoint
+      - jp.ngt.rtm.block.tileentity.TileEntityRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
       - jp.ngt.rtm.command.CommandRTM
+      - jp.ngt.rtm.electric.BlockSignal
+      - jp.ngt.rtm.electric.RenderSignal
       - jp.ngt.rtm.electric.TileEntityConnectorBase
       - jp.ngt.rtm.electric.TileEntityElectricalWiring
       - jp.ngt.rtm.electric.TileEntitySignal
@@ -80,6 +85,8 @@ mods:
       - jp.ngt.rtm.rail.BlockMarker
       - jp.ngt.rtm.rail.RenderMarkerBlock
       - jp.ngt.rtm.rail.RenderTurntable
+      - jp.ngt.rtm.rail.TileEntityLargeRailBase
+      - jp.ngt.rtm.rail.TileEntityLargeRailCore
       - jp.ngt.rtm.rail.TileEntityMarker
       - jp.ngt.rtm.rail.TileEntityTurnTableCore
       - jp.ngt.rtm.rail.util.MarkerState

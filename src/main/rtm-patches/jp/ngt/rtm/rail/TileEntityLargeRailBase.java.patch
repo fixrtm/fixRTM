@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/rail/TileEntityLargeRailBase.java
++++ b/jp/ngt/rtm/rail/TileEntityLargeRailBase.java
+@@ -151,10 +151,11 @@
+                int j = x + (i != 1 && i != 2 ? 0 : 1);
+                int k = z + (i != 0 && i != 1 ? 0 : 1);
+                double d0 = Double.MAX_VALUE;
+ 
+                for(RailMap railmap : arailmap) {
++                  if (railmap == null) return null;
+                   int l = railmap.getNearlestPoint(128, (double)j, (double)k);
+                   if (l < 0) {
+                      l = 0;
+                   }
+ 

@@ -1,5 +1,18 @@
 --- a/jp/ngt/rtm/rail/BlockLargeRailBase.java
 +++ b/jp/ngt/rtm/rail/BlockLargeRailBase.java
+@@ -142,11 +142,11 @@
+ 
+    }
+ 
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+       TileEntityLargeRailCore tileentitylargerailcore = getCore(world, pos);
+-      if (!world.isRemote && tileentitylargerailcore != null) {
++      if (!world.isRemote && tileentitylargerailcore != null && !tileentitylargerailcore.breaking) {
+          RailMap[] arailmap = tileentitylargerailcore.getAllRailMaps();
+ 
+          for(RailMap railmap : arailmap) {
+             railmap.breakRail(world, tileentitylargerailcore.getResourceState(), tileentitylargerailcore);
+          }
 @@ -177,11 +177,11 @@
  
           Block block = tileentitylargerailcore.getResourceState().block;
