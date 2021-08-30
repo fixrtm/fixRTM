@@ -108,6 +108,7 @@ object FixRtm {
         DummyModelPackManager.registerDummyClass(DummyModelSetOrnament)
         DummyModelPackManager.registerDummyClass(DummyModelSetMachine)
         MinecraftForge.EVENT_BUS.register(this)
+        MinecraftForge.EVENT_BUS.register(ThreadUtil)
         modMetadata = e.modMetadata
         NetworkHandler.init()
         PermissionManager.registerBuiltinPermissions()
