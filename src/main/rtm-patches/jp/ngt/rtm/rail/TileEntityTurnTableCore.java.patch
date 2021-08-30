@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/rail/TileEntityTurnTableCore.java
 +++ b/jp/ngt/rtm/rail/TileEntityTurnTableCore.java
-@@ -17,10 +17,11 @@
+@@ -17,15 +17,17 @@
  
  public class TileEntityTurnTableCore extends TileEntityLargeRailCore {
     public static final float ROTATION_INC = 0.5F;
@@ -12,7 +12,13 @@
     protected void readRailData(NBTTagCompound nbt) {
        super.readRailData(nbt);
        this.rotation = nbt.getFloat("Rotation");
-@@ -47,10 +48,15 @@
++      this.prevRotation = this.rotation;
+    }
+ 
+    protected void writeRailData(NBTTagCompound nbt) {
+       super.writeRailData(nbt);
+       nbt.setFloat("Rotation", this.rotation);
+@@ -47,10 +49,15 @@
              }
  
              RTMCore.NETWORK_WRAPPER.sendToAll(new PacketNotice((byte)1, "TT:" + this.getRotation(), this));
@@ -28,7 +34,7 @@
  
     }
  
-@@ -84,13 +90,18 @@
+@@ -84,13 +91,18 @@
     public float getRotation() {
        return this.rotation;
     }
