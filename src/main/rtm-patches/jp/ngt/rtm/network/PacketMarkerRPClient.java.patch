@@ -1,0 +1,34 @@
+--- a/jp/ngt/rtm/network/PacketMarkerRPClient.java
++++ b/jp/ngt/rtm/network/PacketMarkerRPClient.java
+@@ -49,22 +49,28 @@
+ 
+    }
+ 
+    public IMessage onMessage(PacketMarkerRPClient message, MessageContext ctx) {
+       World world = ctx.getServerHandler().player.world;
++      net.minecraft.entity.player.EntityPlayerMP player = ctx.getServerHandler().player;
++      com.anatawa12.fixRtm.ThreadUtil.INSTANCE.runOnServerThread(() -> {
++         this.some(message, player, world);
++         return kotlin.Unit.INSTANCE;
++      });
++      return null;
++   }
+ 
++   public void some(PacketMarkerRPClient message, net.minecraft.entity.player.EntityPlayerMP player, World world) {
+       for(RailPosition railposition : message.railPositions) {
+          TileEntity tileentity = BlockUtil.getTileEntity(world, railposition.blockX, railposition.blockY, railposition.blockZ);
+          if (tileentity instanceof TileEntityMarker) {
+             ((TileEntityMarker)tileentity).setMarkerRP(railposition);
+          }
+       }
+ 
+       TileEntity tileentity1 = message.getTileEntity(world);
+       if (tileentity1 instanceof TileEntityMarker) {
+          TileEntityMarker tileentitymarker = (TileEntityMarker)tileentity1;
+-         RTMBlock.marker.onMarkerActivated(world, tileentitymarker.getPos().getX(), tileentitymarker.getPos().getY(), tileentitymarker.getPos().getZ(), ctx.getServerHandler().player, false);
++         RTMBlock.marker.onMarkerActivated(world, tileentitymarker.getPos().getX(), tileentitymarker.getPos().getY(), tileentitymarker.getPos().getZ(), player, false);
+       }
+-
+-      return null;
+    }
+ }
