@@ -26,3 +26,16 @@
        Entity entity = entityplayer.getRidingEntity();
        if (minecraft.gameSettings.keyBindBack.isPressed()) {
           if (entityplayer.isRiding() && entity instanceof EntityTrainBase) {
+@@ -152,11 +152,11 @@
+                   s = astring[i][1];
+                   MacroRecorder.INSTANCE.recChime(player.world, astring[i][1]);
+                }
+             }
+ 
+-            if (!s.isEmpty()) {
++            if (s != null && !s.isEmpty()) {
+                this.sendKeyToServer(key, s);
+             }
+          }
+       }
+ 
