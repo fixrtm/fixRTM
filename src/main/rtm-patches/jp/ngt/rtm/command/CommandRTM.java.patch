@@ -12,7 +12,20 @@
  import net.minecraft.command.ICommandSender;
  import net.minecraft.command.PlayerNotFoundException;
  import net.minecraft.entity.Entity;
-@@ -33,26 +34,36 @@
+@@ -20,40 +21,45 @@
+       return "commands.rtm.usage";
+    }
+ 
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+       EntityPlayer entityplayer;
+-      try {
+-         entityplayer = getCommandSenderAsPlayer(sender);
+-      } catch (PlayerNotFoundException playernotfoundexception) {
+-         playernotfoundexception.printStackTrace();
+-         return;
+-      }
+ 
+       if (args.length <= 0) {
           NGTLog.sendChatMessage(sender, "/rtm delAllTrain : Delete all train", new Object[0]);
           NGTLog.sendChatMessage(sender, "/rtm dismount : Dismount player from vehicle", new Object[0]);
        } else {
@@ -21,7 +34,7 @@
 +            int entityCount = 0;
  
 -            for(Object object : entityplayer.world.loadedEntityList) {
-+            for(Entity object : entityplayer.world.loadedEntityList) {
++            for(Entity object : sender.getEntityWorld().loadedEntityList) {
                 Entity entity = null;
                 if (object instanceof EntityTrainBase) {
 -                  entity = (EntityTrainBase)object;
@@ -47,11 +60,13 @@
 +            int countFormation = formationMap.size();
 +            formationMap.clear();
 +
-+            NGTLog.sendChatMessage(entityplayer, "Deleted " + i + "trains.", new Object[0]);
-+            NGTLog.sendChatMessage(entityplayer, "Deleted " + entityCount + " entities in total.", new Object[0]);
-+            NGTLog.sendChatMessage(entityplayer, "Deleted " + countFormation + " formations.", new Object[0]);
++            NGTLog.sendChatMessage(sender, "Deleted " + i + "trains.", new Object[0]);
++            NGTLog.sendChatMessage(sender, "Deleted " + entityCount + " entities in total.", new Object[0]);
++            NGTLog.sendChatMessage(sender, "Deleted " + countFormation + " formations.", new Object[0]);
           } else if (!args[0].equals("twitter_tag") && args[0].equals("dismount")) {
++            entityplayer = getCommandSenderAsPlayer(sender);
              entityplayer.dismountRidingEntity();
           }
  
        }
+    }
