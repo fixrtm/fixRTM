@@ -9,11 +9,12 @@
 -   private final Map<ResourceType, Map<String, ResourceSet>> allModelSetMap = new HashMap<>(256);
 -   private final Map<ResourceType, Map<String, ResourceSet>> smpModelSetMap = new HashMap<>(256);
 -   private final Map<String, ResourceSet> dummyMap = new HashMap<>(32);
+-   public final List<ResourceSet> unconstructSets = new ArrayList<>(256);
 +   public final Map<ResourceType, Map<String, ResourceSet>> allModelSetMap = new HashMap<>(256);
 +   public final Map<ResourceType, Map<String, ResourceSet>> smpModelSetMap = new HashMap<>(256);
 +   public final Map<String, ResourceSet> dummyMap = new HashMap<>(32);
 +   public final java.util.concurrent.locks.ReadWriteLock modelSetMapLock = new java.util.concurrent.locks.ReentrantReadWriteLock();
-    public final List<ResourceSet> unconstructSets = new ArrayList<>(256);
++   public final com.anatawa12.fixRtm.rtm.modelpack.init.UnconstructSetsQueue unconstructSets = new com.anatawa12.fixRtm.rtm.modelpack.init.UnconstructSetsQueue();
     private final Map<String, IModelNGT> modelCache = new HashMap<>(128);
     private final Map<String, Map<String, ResourceLocation>> resourceCache = new HashMap<>(256);
     private final Map<String, String> scriptCache = new HashMap<>(64);
