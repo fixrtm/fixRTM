@@ -92,16 +92,14 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
 
         val futures = mutableListOf<Future<*>>()
 
-        var index = 0
         while (this.loading) {
-            while (index < unConstructSets.size) {
-                val indexNew = index
+            while (true) {
+                val resourceSet = unConstructSets.poll() ?: break
                 futures += exec.submit {
                     runWithCrashReport {
-                        construct(unConstructSets[indexNew])
+                        construct(resourceSet)
                     }
                 }
-                index++
             }
             Thread.sleep(500L)
         }

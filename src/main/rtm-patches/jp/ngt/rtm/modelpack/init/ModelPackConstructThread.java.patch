@@ -13,7 +13,18 @@
     private boolean loading;
     private int index;
     private boolean barStateChanged;
-@@ -45,10 +45,11 @@
+@@ -37,18 +37,20 @@
+ 
+    }
+ 
+    private void runThread() throws InterruptedException {
+       while(this.loading) {
+-         while(ModelPackManager.INSTANCE.unconstructSets.size() > this.index) {
+-            ResourceSet resourceset = ModelPackManager.INSTANCE.unconstructSets.get(this.index);
++         while(true) {
++            ResourceSet resourceset = ModelPackManager.INSTANCE.unconstructSets.poll();
++            if (resourceset == null) break;
+             if (this.threadSide == Side.SERVER) {
                 resourceset.constructOnServer();
              } else {
                 resourceset.constructOnClient();
