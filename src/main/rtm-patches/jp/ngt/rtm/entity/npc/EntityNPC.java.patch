@@ -1,5 +1,18 @@
 --- a/jp/ngt/rtm/entity/npc/EntityNPC.java
 +++ b/jp/ngt/rtm/entity/npc/EntityNPC.java
+@@ -48,11 +48,11 @@
+    private ResourceState<ModelSetNPC> state = new ResourceState<>(RTMResource.NPC, this);
+    private ScriptExecuterNPC executer = new ScriptExecuterNPC();
+    protected Role myRole = Role.MANNEQUIN;
+    private EntityDummyPlayer playerDummy;
+    protected int useItemCount;
+-   private boolean roleChanged;
++   protected boolean roleChanged;
+    public InventoryNPC inventory = new InventoryNPC(this);
+ 
+    public EntityNPC(World world) {
+       super(world);
+       this.setSize(0.6F, 1.8F);
 @@ -398,6 +398,12 @@
        return this.state;
     }
