@@ -51,6 +51,7 @@ mods:
       - jp.ngt.rtm.electric.TileEntityElectricalWiring
       - jp.ngt.rtm.electric.TileEntitySignal
       - jp.ngt.rtm.entity.ai.EntityAITravelByTrain
+      - jp.ngt.rtm.entity.npc.EntityMotorman
       - jp.ngt.rtm.entity.npc.EntityNPC
       - jp.ngt.rtm.entity.train.EntityBogie
       - jp.ngt.rtm.entity.train.EntityTrainBase
