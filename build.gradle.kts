@@ -48,7 +48,7 @@ dependencies {
     "minecraft"("net.minecraftforge:forge:1.12.2-14.23.5.2855")
 
     shade(kotlin("stdlib-jdk7"))
-    shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    shade("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     shade("io.sigpipe:jbsdiff:1.0")
     shade("com.anatawa12.sai:sai:0.0.2")
     shade("org.jetbrains:annotations:22.0.0")
