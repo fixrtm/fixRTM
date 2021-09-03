@@ -1,0 +1,13 @@
+super: java/lang/Object
+name: blockMetadata
+type: I
+
+name: blockName
+type: Ljava/lang/String;
+
+name: height
+type: F
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/RailConfig;
+

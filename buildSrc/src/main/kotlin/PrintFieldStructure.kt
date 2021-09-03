@@ -78,8 +78,9 @@ open class PrintFieldStructure : DefaultTask() {
                 if (isLoaded) {
                     yieldAll(fields.asSequence()
                         .filter { !it.isStatic }
-                        .filter { it.type[0] == 'L' }
-                        .map { it.type.substring(1, it.type.length - 1) }
+                        .map { it.type.substring(it.type.indexOfFirst { it != '[' }) }
+                        .filter { it[0] == 'L' }
+                        .map { it.substring(1, it.length - 1) }
                         .map { loader.getByInternalName(it) }
                         .toSet())
                 }

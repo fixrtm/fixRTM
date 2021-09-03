@@ -1,0 +1,22 @@
+super: java/lang/Object
+name: key
+type: Ljava/lang/String;
+
+name: minmax
+type: [D
+
+name: pattern
+type: [Ljava/lang/String;
+
+name: suggestions
+type: [Ljava/lang/String;
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/ResourceConfig;
+
+name: type
+type: Ljava/lang/String;
+
+name: value
+type: Ljava/lang/String;
+
