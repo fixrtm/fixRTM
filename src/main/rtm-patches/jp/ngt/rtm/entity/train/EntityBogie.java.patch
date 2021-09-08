@@ -53,7 +53,20 @@
     }
  
     public void onBogieUpdate() {
-@@ -578,6 +580,18 @@
+@@ -491,10 +493,12 @@
+    public void addVelocity(double par1, double par3, double par5) {
+    }
+ 
+    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+       if (this.getTrain() != null) {
++         if (player.world.isRemote)
++            return true;
+          if (PermissionManager.INSTANCE.hasPermission(player, "driveTrain")) {
+             return this.getTrain().interactTrain(this, player);
+          }
+       } else if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == RTMItem.paddle) {
+          return true;
+@@ -578,6 +582,18 @@
     }
  
     public int getProhibitedAction() {
