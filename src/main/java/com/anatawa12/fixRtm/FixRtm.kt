@@ -115,8 +115,6 @@ object FixRtm {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
 
         if (e.side == Side.CLIENT) {
-            SoundSystemConfig.setNumberNormalChannels(1024)
-            SoundSystemConfig.setNumberStreamingChannels(32)
         }
     }
 
