@@ -12,6 +12,7 @@ object MainConfig {
     private val configFile = Loader.instance().configDir.resolve("fix-rtm.cfg")
     private val config = Configuration(configFile)
 
+    private const val categoryFixRTM = "fixrtm"
     private const val categoryModelLoading = "model_loading"
     private const val categoryBetterRtm = "better_rtm"
     private const val categoryBetterNgtLib = "better_ngtlib"
@@ -120,6 +121,12 @@ object MainConfig {
         "addNegativePermission", categoryBetterNgtLib,
         true,
         "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+
+    @JvmField
+    val expandPlayableSoundCount = config.getBoolean(
+        "expandPlayableSoundCount", categoryFixRTM,
+        true,
+        "expands the count of playable sound count at the same time. this may cause compatibility issue with Immersive Vehicles.")
 
     init {
         if (config.hasChanged()) {
