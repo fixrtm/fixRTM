@@ -114,7 +114,7 @@ object FixRtm {
         PermissionManager.registerBuiltinPermissions()
         NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
 
-        if (e.side == Side.CLIENT) {
+        if (e.side == Side.CLIENT && MainConfig.expandPlayableSoundCount) {
             SoundSystemConfig.setNumberNormalChannels(1024)
             SoundSystemConfig.setNumberStreamingChannels(32)
         }
