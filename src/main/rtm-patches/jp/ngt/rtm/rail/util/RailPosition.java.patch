@@ -1,0 +1,37 @@
+--- a/jp/ngt/rtm/rail/util/RailPosition.java
++++ b/jp/ngt/rtm/rail/util/RailPosition.java
+@@ -152,6 +152,34 @@
+       } else {
+          RailPosition railposition = (RailPosition)obj;
+          return railposition.blockX == this.blockX && railposition.blockY == this.blockY && railposition.blockZ == this.blockZ;
+       }
+    }
++
++   @Override
++   public String toString() {
++      return "RailPosition{" +
++         "blockX=" + blockX +
++         ", blockY=" + blockY +
++         ", blockZ=" + blockZ +
++         ", switchType=" + switchType +
++         ", direction=" + direction +
++         ", height=" + height +
++         ", anchorYaw=" + anchorYaw +
++         ", anchorPitch=" + anchorPitch +
++         ", anchorLengthHorizontal=" + anchorLengthHorizontal +
++         ", anchorLengthVertical=" + anchorLengthVertical +
++         ", cantCenter=" + cantCenter +
++         ", cantEdge=" + cantEdge +
++         ", cantRandom=" + cantRandom +
++         ", constLimitHP=" + constLimitHP +
++         ", constLimitHN=" + constLimitHN +
++         ", constLimitWP=" + constLimitWP +
++         ", constLimitWN=" + constLimitWN +
++         ", posX=" + posX +
++         ", posY=" + posY +
++         ", posZ=" + posZ +
++         ", scriptName='" + scriptName + '\'' +
++         ", scriptArgs='" + scriptArgs + '\'' +
++         '}';
++   }
+ }
