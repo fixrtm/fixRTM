@@ -36,3 +36,15 @@
              if (this.railMaps != null) {
                 RailPosition railposition4 = this.railMaps[0].getStartRP();
                 blockpos = new BlockPos(railposition4.blockX, railposition4.blockY, railposition4.blockZ);
+@@ -213,10 +214,11 @@
+       }
+ 
+    }
+ 
+    private void setStartPos(BlockPos pos, RailMap[] maps) {
++      BlockMarker.LOGGER.trace("Marker start pos for {}: {}", getPos(), pos);
+       NGTLog.debug("[Marker] Start pos %s", new Object[]{pos.toString()});
+       this.startPos = pos;
+       this.railMaps = maps;
+       if (!this.isCoreMarker()) {
+          this.markerPosList.clear();

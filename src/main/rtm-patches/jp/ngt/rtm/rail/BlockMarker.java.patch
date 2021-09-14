@@ -1,6 +1,30 @@
 --- a/jp/ngt/rtm/rail/BlockMarker.java
 +++ b/jp/ngt/rtm/rail/BlockMarker.java
-@@ -125,10 +125,11 @@
+@@ -39,10 +39,11 @@
+ import net.minecraft.world.World;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ public class BlockMarker extends BlockContainerCustomWithMeta {
++   public static final org.apache.logging.log4j.Logger LOGGER = org.apache.logging.log4j.LogManager.getLogger("rtm.BlockMarker");
+    public final BlockMarker.MarkerType markerType;
+ 
+    public BlockMarker(BlockMarker.MarkerType type) {
+       super(Material.GLASS);
+       this.markerType = type;
+@@ -84,10 +85,11 @@
+    public static int getFacing(EntityLivingBase placer, boolean isDiagonal) {
+       return isDiagonal ? NGTMath.floor(NGTMath.normalizeAngle((double)placer.rotationYaw + 180.0D) / 90.0D) & 3 : NGTMath.floor(NGTMath.normalizeAngle((double)placer.rotationYaw + 180.0D) / 90.0D + 0.5D) & 3;
+    }
+ 
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
++      BlockMarker.LOGGER.trace("Placed block ({} at {}", markerType, pos);
+       int i = stack.getItemDamage();
+       int j = getFacing(placer, i >= 4);
+       int k = i / 4;
+       BlockUtil.setBlock(world, pos, this, j + k * 4, 2);
+    }
+@@ -125,10 +127,11 @@
     public void makeRailMap(TileEntityMarker marker, int x, int y, int z) {
        this.onMarkerActivated(marker.getWorld(), x, y, z, (EntityPlayer)null, false);
     }
@@ -12,7 +36,7 @@
           return false;
        } else {
           boolean flag = player == null || player.capabilities.isCreativeMode;
-@@ -141,37 +142,28 @@
+@@ -141,41 +144,33 @@
           return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
        }
     }
@@ -61,8 +85,25 @@
     }
  
     public static boolean createRail(World world, int x, int y, int z, List<RailPosition> rps, ResourceStateRail state, boolean makeRail, boolean isCreative) {
++      LOGGER.trace("making rail via {}", rps);
        if (rps.size() == 1) {
-@@ -292,18 +284,18 @@
+          RailPosition railposition = rps.get(0);
+          if (railposition.hasScript()) {
+             createCustomRail(world, railposition, state, makeRail, isCreative);
+          }
+@@ -190,10 +185,11 @@
+             createNormalRail(world, railposition2, railposition3, state, makeRail, isCreative);
+          }
+       } else if (rps.size() > 2) {
+          createSwitchRail(world, x, y, z, rps, state, makeRail, isCreative);
+       }
++      LOGGER.trace("made rail via {}", rps);
+ 
+       return false;
+    }
+ 
+    private static boolean createNormalRail(World world, RailPosition start, RailPosition end, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
+@@ -292,18 +288,18 @@
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {
