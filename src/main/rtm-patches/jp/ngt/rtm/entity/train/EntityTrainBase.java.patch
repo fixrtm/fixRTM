@@ -53,7 +53,7 @@
           if (this.isControlCar() && flag && !this.world.isRemote) {
              ModelSetTrain modelsettrain = this.getResourceState().getResourceSet();
 -            float f1 = EnumNotch.getAcceleration(i, f, modelsettrain.getConfig());
-+            float f1 = EnumNotch.getAcceleration(i, Math.abs(f), modelsettrain.getConfig());
++            float f1 = EnumNotch.getAcceleration(i, Math.abs(f), modelsettrain.getConfig(), this);
 +            // f: speed
 +            // f1: acceleration
 +            byte dir = this.getVehicleState(TrainState.TrainStateType.Role);

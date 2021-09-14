@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
 +++ b/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
-@@ -33,10 +33,13 @@
+@@ -33,10 +33,18 @@
     public float[][] pantoPos;
     public float rollSpeedCoefficient;
     public float rollVariationCoefficient;
@@ -9,12 +9,17 @@
 +   public float[] accelerateions;
 +   public float[] deccelerations;
 +
++   /** if true, fixRTM will ask server script to get acceleration */
++   public boolean useVariableAcceleration;
++   /** if true, fixRTM will ask server script to get deceleration */
++   public boolean useVariableDeceleration;
++
     public void init() {
        super.init();
        if (this.trainModel2 == null) {
           this.trainModel2 = new ModelConfig.ModelSource();
           this.trainModel2.modelFile = this.trainModel;
-@@ -71,18 +74,39 @@
+@@ -71,16 +79,41 @@
  
        if (this.maxSpeed == null || this.maxSpeed.length < 5) {
           this.maxSpeed = new float[]{0.36F, 0.72F, 1.08F, 1.44F, 1.8F};
@@ -36,8 +41,12 @@
           this.jointDelay = new float[][]{{0.0F, f}, {0.0F, f}};
        }
  
-    }
- 
++      if (this.serverScriptPath == null) {
++         this.useVariableAcceleration = false;
++         this.useVariableDeceleration = false;
++      }
++   }
++
 +   /**
 +    * @param notch The notch to test
 +    * @return Returns true if the notch is valid for this train config.
@@ -47,10 +56,8 @@
 +         return -notch <= deccelerations.length - 1;
 +      else
 +         return notch <= maxSpeed.length;
-+   }
-+
+    }
+ 
     public String getName() {
        return this.trainName;
     }
- 
-    public ModelConfig.ModelSource getModel() {
