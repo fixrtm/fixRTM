@@ -1,0 +1,56 @@
+--- a/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
++++ b/jp/ngt/rtm/modelpack/cfg/TrainConfig.java
+@@ -33,10 +33,13 @@
+    public float[][] pantoPos;
+    public float rollSpeedCoefficient;
+    public float rollVariationCoefficient;
+    public float rollWidthCoefficient;
+ 
++   public float[] accelerateions;
++   public float[] deccelerations;
++
+    public void init() {
+       super.init();
+       if (this.trainModel2 == null) {
+          this.trainModel2 = new ModelConfig.ModelSource();
+          this.trainModel2.modelFile = this.trainModel;
+@@ -71,18 +74,39 @@
+ 
+       if (this.maxSpeed == null || this.maxSpeed.length < 5) {
+          this.maxSpeed = new float[]{0.36F, 0.72F, 1.08F, 1.44F, 1.8F};
+       }
+ 
++      if (this.accelerateions == null || (!this.notDisplayCab && this.accelerateions.length != this.maxSpeed.length)) {
++         this.accelerateions = new float[this.maxSpeed.length];
++         java.util.Arrays.fill(this.accelerateions, this.accelerateion);
++      }
++
++      if (this.deccelerations == null || (!this.notDisplayCab && this.deccelerations.length != 9)) {
++         this.deccelerations = new float[]{-0.0002F, -0.0005F, -0.001F, -0.0015F, -0.002F, -0.0025F, -0.003F, -0.0035F, -0.01F};
++      }
++
++
+       this.rolling *= 5.0F;
+       if (this.jointDelay == null) {
+          float f = 1.9F;
+          this.jointDelay = new float[][]{{0.0F, f}, {0.0F, f}};
+       }
+ 
+    }
+ 
++   /**
++    * @param notch The notch to test
++    * @return Returns true if the notch is valid for this train config.
++    */
++   public boolean isNotchInRange(int notch) {
++      if (notch < 0)
++         return -notch <= deccelerations.length - 1;
++      else
++         return notch <= maxSpeed.length;
++   }
++
+    public String getName() {
+       return this.trainName;
+    }
+ 
+    public ModelConfig.ModelSource getModel() {

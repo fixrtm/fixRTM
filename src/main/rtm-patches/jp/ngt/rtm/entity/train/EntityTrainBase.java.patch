@@ -46,7 +46,7 @@
                 double d6 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 double d7 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 this.world.spawnParticle(enumparticletypes, d2, d3, d4, d6, 0.25D, d7, new int[0]);
-@@ -441,11 +442,20 @@
+@@ -441,25 +442,34 @@
              }
           }
  
@@ -66,9 +66,12 @@
              if (i >= 0) {
                 float f2;
                 if (this.rotationPitch == 0.0F) {
-                   float f3 = 2.0E-4F;
+-                  float f3 = 2.0E-4F;
++                  float f3 = -modelsettrain.getConfig().deccelerations[0];
                    f2 = f > 0.0F ? f3 : (f < 0.0F ? -f3 : 0.0F);
-@@ -455,11 +465,11 @@
+                } else {
+                   float f5 = 0.0125F;
+                   float f4 = this.getTrainDirection() == 0 ? f5 : -f5;
                    f2 = NGTMath.sin(this.rotationPitch) * f4;
                 }
  
@@ -105,7 +108,20 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -816,10 +827,19 @@
+@@ -805,21 +816,30 @@
+ 
+       return false;
+    }
+ 
+    public boolean setNotch(int par1) {
+-      if (this.isControlCar() && par1 <= 5 && par1 >= -8) {
++
++      if (this.isControlCar() && this.getResourceState().getResourceSet().getConfig().isNotchInRange(par1)) {
+          int i = this.getNotch();
+          if (i != par1) {
+             super.setVehicleState(TrainState.TrainStateType.Notch, (byte)par1);
+             return true;
+          }
        }
  
        return false;
@@ -113,8 +129,7 @@
  
 +   public void setEmergencyBrake() {
 +      int prevNotch = this.getNotch();
-+      // TODO: change when decelerations is implemented
-+      int EB_NOTCH = -8;
++      int EB_NOTCH = -(this.getResourceState().getResourceSet().getConfig().deccelerations.length - 1);
 +      if (prevNotch != EB_NOTCH) {
 +         this.setVehicleState(jp.ngt.rtm.entity.train.util.TrainState.TrainStateType.Notch, (byte) EB_NOTCH);
 +      }

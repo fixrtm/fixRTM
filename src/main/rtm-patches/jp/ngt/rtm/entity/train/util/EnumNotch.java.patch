@@ -1,0 +1,18 @@
+--- a/jp/ngt/rtm/entity/train/util/EnumNotch.java
++++ b/jp/ngt/rtm/entity/train/util/EnumNotch.java
+@@ -91,13 +91,13 @@
+    public static float getAcceleration(int notch, float prevSpeed, TrainConfig cfg) {
+       if (notch == 0) {
+          return 0.0F;
+       } else if (notch > 0) {
+          --notch;
+-         return prevSpeed >= cfg.maxSpeed[notch] ? 0.0F : cfg.accelerateion;
++         return prevSpeed >= cfg.maxSpeed[notch] ? 0.0F : cfg.accelerateions[Math.min(cfg.accelerateions.length - 1, notch)];
+       } else {
+-         float f = getNotch(notch).acceleration;
++         float f = cfg.deccelerations[Math.min(cfg.deccelerations.length - 1, -notch)];
+          float f1 = Math.abs(prevSpeed);
+          return f1 + f < 0.0F ? -f1 : f;
+       }
+    }
+ }
