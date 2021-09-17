@@ -28,7 +28,7 @@
        } else {
 -         float f = getNotch(notch).acceleration;
 +         float deceleration;
-+         if (cfg.useVariableAcceleration) {
++         if (cfg.useVariableDeceleration) {
 +            Object obj = jp.ngt.ngtlib.io.ScriptUtil.doScriptIgnoreError(
 +               train.getResourceState().getResourceSet().serverSE,
 +               "getDeceleration",
@@ -36,7 +36,7 @@
 +               prevSpeed);
 +            deceleration = obj != null ? Float.parseFloat(obj.toString()) : 0.0f;
 +         } else {
-+            deceleration = cfg.deccelerations[Math.min(cfg.deccelerations.length - 1, notch + 1)];
++            deceleration = cfg.deccelerations[Math.min(cfg.deccelerations.length - 1, -notch)];
 +         }
           float f1 = Math.abs(prevSpeed);
 -         return f1 + f < 0.0F ? -f1 : f;
