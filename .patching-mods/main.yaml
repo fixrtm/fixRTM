@@ -95,6 +95,7 @@ mods:
       - jp.ngt.rtm.rail.TileEntityTurnTableCore
       - jp.ngt.rtm.rail.util.MarkerState
       - jp.ngt.rtm.rail.util.RailMaker
+      - jp.ngt.rtm.rail.util.RailMapBasic
       - jp.ngt.rtm.rail.util.SwitchType
       - jp.ngt.rtm.render.ModelObject
       - jp.ngt.rtm.render.PartsRenderer
