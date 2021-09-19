@@ -1,0 +1,18 @@
+--- a/jp/ngt/rtm/rail/util/RailMapBasic.java
++++ b/jp/ngt/rtm/rail/util/RailMapBasic.java
+@@ -14,10 +14,15 @@
+    protected ILine lineVertical;
+ 
+    public RailMapBasic(RailPosition par1, RailPosition par2) {
+       this.startRP = par1;
+       this.endRP = par2;
++      if (this.startRP.cantEdge * this.startRP.cantCenter < 0) {
++         this.startRP.cantCenter = -this.startRP.cantCenter;
++      } else if (this.startRP.cantEdge * this.startRP.cantCenter == 0 && this.endRP.cantEdge * this.startRP.cantCenter > 0) {
++         this.startRP.cantCenter = -this.startRP.cantCenter;
++      }
+       this.endRP.cantCenter = this.startRP.cantCenter;
+       this.createLine();
+    }
+ 
+    protected void createLine() {
