@@ -26,7 +26,23 @@
                 for(int i = 0; i < 5; ++i) {
                    double d1 = (double)pos.getX() + (double)world.rand.nextFloat();
                    double d2 = (double)pos.getY() + (double)world.rand.nextFloat() * 0.25D;
-@@ -210,11 +210,11 @@
+@@ -190,15 +190,10 @@
+                   double d5 = (d3 - entity.posZ) * d0;
+                   world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, d1, d2, d3, d4, 0.125D, d5, new int[0]);
+                }
+             }
+          }
+-      } else if (entity instanceof EntityTrainBase) {
+-         TileEntityLargeRailCore tileentitylargerailcore1 = getCore(world, pos);
+-         if (tileentitylargerailcore1 != null) {
+-            tileentitylargerailcore1.colliding = true;
+-         }
+       }
+ 
+    }
+ 
+    public boolean isCore() {
+@@ -210,11 +205,11 @@
        return tileentity instanceof TileEntityLargeRailBase ? ((TileEntityLargeRailBase)tileentity).getRailCore() : null;
     }
  
