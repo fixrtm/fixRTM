@@ -26,7 +26,31 @@
                    }
                 }
  
-@@ -245,11 +245,11 @@
+@@ -196,18 +196,20 @@
+       TileEntityLargeRailCore tileentitylargerailcore = this.getRail(px, py, pz);
+       if (tileentitylargerailcore == null) {
+          return false;
+       } else {
+          if (this.currentRailObj != tileentitylargerailcore) {
+-            this.currentRailObj = tileentitylargerailcore;
++            RailMap railMap;
+             if (tileentitylargerailcore instanceof TileEntityLargeRailSwitchCore) {
+                TileEntityLargeRailSwitchCore tileentitylargerailswitchcore = (TileEntityLargeRailSwitchCore)tileentitylargerailcore;
+-               this.currentRailMap = tileentitylargerailswitchcore.getSwitch().getNearestPoint(this).getActiveRailMap(this.world);
++               railMap = tileentitylargerailswitchcore.getSwitch().getNearestPoint(this).getActiveRailMap(this.world);
+             } else {
+-               this.currentRailMap = tileentitylargerailcore.getRailMap(this);
++               railMap = tileentitylargerailcore.getRailMap(this);
+             }
+ 
++            this.currentRailObj = tileentitylargerailcore;
++            this.currentRailMap = railMap;
+             this.split = (int)(this.currentRailMap.getLength() * 32.0D);
+             this.prevPosIndex = -1;
+             this.onChangeRail(tileentitylargerailcore);
+          }
+ 
+@@ -245,11 +247,11 @@
  
     protected void playJointSound() {
        EntityTrainBase entitytrainbase = this.getTrain();
@@ -39,9 +63,19 @@
           int i = trainconfig.jointDelay[this.getBogieId()].length;
           if (this.jointIndex < i - 1) {
              int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
-@@ -290,11 +290,13 @@
+@@ -287,14 +289,23 @@
+ 
+    public final void onUpdate() {
+       if (!this.world.isRemote && !this.tracked) {
           this.tracked = VehicleTrackerEntry.trackingVehicle(this);
        }
++      if (!this.world.isRemote) {
++         if (this.currentRailObj != null) {
++            this.currentRailObj.colliding = true;
++         } else {
++            this.resetRailObj(this.posX, this.posY, this.posZ);
++         }
++      }
  
        ++this.existCount;
        if (this.existCount > 100 && this.getTrain() == null) {
@@ -53,7 +87,7 @@
     }
  
     public void onBogieUpdate() {
-@@ -491,10 +493,12 @@
+@@ -491,10 +502,12 @@
     public void addVelocity(double par1, double par3, double par5) {
     }
  
@@ -66,7 +100,7 @@
           }
        } else if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == RTMItem.paddle) {
           return true;
-@@ -578,6 +582,18 @@
+@@ -578,6 +591,18 @@
     }
  
     public int getProhibitedAction() {
