@@ -50,7 +50,29 @@
              this.onChangeRail(tileentitylargerailcore);
           }
  
-@@ -245,11 +247,11 @@
+@@ -227,14 +229,17 @@
+       return null;
+    }
+ 
+    protected void onChangeRail(TileEntityLargeRailCore newRail) {
+       this.reverbSound = newRail.isReberbSound();
+-      TrainConfig trainconfig = this.getTrain().getResourceState().getResourceSet().getConfig();
+-      if (!trainconfig.muteJointSound) {
+-         this.jointIndex = 0;
+-         this.playJointSound();
++      EntityTrainBase train = this.getTrain();
++      if (train != null) {
++         TrainConfig trainconfig = train.getResourceState().getResourceSet().getConfig();
++         if (!trainconfig.muteJointSound) {
++            this.jointIndex = 0;
++            this.playJointSound();
++         }
+       }
+ 
+    }
+ 
+    protected boolean reverseJointArray() {
+@@ -245,11 +250,11 @@
  
     protected void playJointSound() {
        EntityTrainBase entitytrainbase = this.getTrain();
@@ -63,7 +85,7 @@
           int i = trainconfig.jointDelay[this.getBogieId()].length;
           if (this.jointIndex < i - 1) {
              int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
-@@ -287,14 +289,23 @@
+@@ -287,14 +292,23 @@
  
     public final void onUpdate() {
        if (!this.world.isRemote && !this.tracked) {
@@ -87,7 +109,7 @@
     }
  
     public void onBogieUpdate() {
-@@ -491,10 +502,12 @@
+@@ -491,10 +505,12 @@
     public void addVelocity(double par1, double par3, double par5) {
     }
  
@@ -100,7 +122,7 @@
           }
        } else if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == RTMItem.paddle) {
           return true;
-@@ -578,6 +591,18 @@
+@@ -578,6 +594,18 @@
     }
  
     public int getProhibitedAction() {
