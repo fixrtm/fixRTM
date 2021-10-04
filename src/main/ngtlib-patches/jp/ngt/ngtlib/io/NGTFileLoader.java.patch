@@ -47,7 +47,7 @@
     }
  
     private static JFileChooser getCustomChooser(String title) {
-@@ -231,23 +222,13 @@
+@@ -231,23 +222,11 @@
           return null;
        }
     }
@@ -66,9 +66,7 @@
 -            return getInputStreamFromFile(file1);
 -         }
 -      }
-+      return NGTCore.proxy.isServer()
-+         ? com.anatawa12.fixRtm.io.FIXFileLoader.INSTANCE.getInputStream(par1)
-+         : NGTUtilClient.getMinecraft().getResourceManager().getResource(par1).getInputStream();
++      return com.anatawa12.fixRtm.io.FIXFileLoader.INSTANCE.getInputStream(par1);
     }
  
     public static InputStream getInputStreamFromFile(File file) throws IOException {
