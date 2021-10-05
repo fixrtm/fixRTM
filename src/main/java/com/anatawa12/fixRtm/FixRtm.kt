@@ -66,6 +66,7 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
+        ImageIO.scanForPlugins() // load webp-imageio
         if (MainConfig.addModelPackInformationInAllCrashReports)
             FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
         else

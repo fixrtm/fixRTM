@@ -52,6 +52,7 @@ dependencies {
     shade("io.sigpipe:jbsdiff:1.0")
     shade("com.anatawa12.sai:sai:0.0.2")
     shade("org.jetbrains:annotations:22.0.0")
+    shade("org.sejda.imageio:webp-imageio:0.1.6")
 
     compileOnly(files(file("run/fixrtm-cache/script-compiled-class")))
 //    compileOnly(files(projectDir.resolve("mods/rtm.deobf.jar"),
@@ -145,6 +146,9 @@ val jar by tasks.getting(Jar::class) {
         from(project.zipTree(dep)) {
             exclude("META-INF", "META-INF/**")
             exclude("LICENSE.txt")
+        }
+        from(project.zipTree(dep)) {
+            include("META-INF/services/**")
         }
     }
 
