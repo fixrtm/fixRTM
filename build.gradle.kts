@@ -72,6 +72,8 @@ val processResources by tasks.getting(Copy::class) {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
 
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.get().resources.srcDirs) {
         include("mcmod.info")
