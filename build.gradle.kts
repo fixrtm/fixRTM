@@ -37,7 +37,7 @@ minecraft.accessTransformer(file("src/main/resources/META-INF/fix-rtm_at.cfg"))
 sourceSets.main.get().resources.srcDir("src/generated/resources")
 
 val shade by configurations.creating
-configurations.compile.get().extendsFrom(shade)
+configurations.implementation.get().extendsFrom(shade)
 
 repositories {
     jcenter()
