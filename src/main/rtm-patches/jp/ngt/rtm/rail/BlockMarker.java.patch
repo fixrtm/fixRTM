@@ -45,7 +45,7 @@
 +         .filter(tile -> Math.abs(tile.getY() - y) < k)
 +         .map(TileEntityMarker::getMarkerRP)
 +         .filter(java.util.Objects::nonNull)
-+         .sorted(java.util.Comparator.<RailPosition>comparingInt(v -> v.switchType)
++         .sorted(java.util.Comparator.<RailPosition>comparingInt(v -> -v.switchType)
 +               .thenComparingInt(v -> v.blockY)
 +               .thenComparingInt(Object::hashCode))
 +         .collect(java.util.stream.Collectors.toList());
