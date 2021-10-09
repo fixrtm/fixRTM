@@ -40,7 +40,6 @@ val shade by configurations.creating
 configurations.implementation.get().extendsFrom(shade)
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
