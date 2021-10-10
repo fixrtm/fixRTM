@@ -9,11 +9,11 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm") version "1.5.31"
     id("net.minecraftforge.gradle")
-    id("com.anatawa12.mod-patching.binary") version "2.0.0"
-    id("com.anatawa12.mod-patching.source") version "2.0.0"
-    id("com.anatawa12.mod-patching.resources-dev") version "2.0.0"
+    id("com.anatawa12.mod-patching.binary") version "2.0.1"
+    id("com.anatawa12.mod-patching.source") version "2.0.1"
+    id("com.anatawa12.mod-patching.resources-dev") version "2.0.1"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    id("com.anatawa12.jarInJar") version "1.0.1"
+    id("com.anatawa12.jarInJar") version "1.0.3"
 }
 
 version = property("modVersion")!!
@@ -37,10 +37,9 @@ minecraft.accessTransformer(file("src/main/resources/META-INF/fix-rtm_at.cfg"))
 sourceSets.main.get().resources.srcDir("src/generated/resources")
 
 val shade by configurations.creating
-configurations.compile.get().extendsFrom(shade)
+configurations.implementation.get().extendsFrom(shade)
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
@@ -71,6 +70,8 @@ dependencies {
 val processResources by tasks.getting(Copy::class) {
     // this will ensure that this task is redone when the versions change.
     inputs.property("version", project.version)
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.get().resources.srcDirs) {
