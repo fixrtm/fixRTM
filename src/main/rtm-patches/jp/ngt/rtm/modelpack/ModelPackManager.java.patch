@@ -70,11 +70,12 @@
        cfg.init();
        ResourceSet resourceset = this.getNewModelSet(type, new Class[]{type.cfgClass}, cfg);
        if (resourceset != null) {
-+         com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("reduceConstructModelLog");
-          NGTLog.debug("Registr resource : %s (%s)", new Object[]{cfg.getName(), type.name});
-+         com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("reduceConstructModelLog");
-+         NGTLog.trace("Registr resource : %s (%s)", new Object[]{cfg.getName(), type.name});
-+         com.anatawa12.fixRtm.asm.Preprocessor.whatever("reduceConstructModelLog");
+-         NGTLog.debug("Registr resource : %s (%s)", new Object[]{cfg.getName(), type.name});
++         if (!com.anatawa12.fixRtm.asm.config.MainConfig.reduceConstructModelLog) {
++            NGTLog.debug("Registr resource : %s (%s)", new Object[]{cfg.getName(), type.name});
++         } else {
++            NGTLog.trace("Registr resource : %s (%s)", new Object[]{cfg.getName(), type.name});
++         }
 +         modelSetMapLock.writeLock().lock();
 +         try {
           this.allModelSetMap.get(type).put(cfg.getName(), resourceset);

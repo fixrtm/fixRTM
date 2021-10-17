@@ -13,17 +13,14 @@
  
     public void constructOnServer() {
        super.constructOnServer();
-@@ -40,20 +40,25 @@
+@@ -40,20 +40,21 @@
           PartsRenderer partsrenderer = !PartsRenderer.validPath(this.cfg.getModel().rendererPath) ? new BasicVehiclePartsRenderer(String.valueOf(true)) : null;
           this.modelObj = new ModelObject(this.cfg.getModel(), this, partsrenderer, "vehicle");
           this.buttonTexture = ModelPackManager.INSTANCE.getResource((this.cfg).buttonTexture);
           this.rollsignTexture = (this.cfg).rollsignTexture == null ? null : ModelPackManager.INSTANCE.getResource((this.cfg).rollsignTexture);
           if ((this.cfg).soundScriptPath != null) {
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("useOurScripting");
-             this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("useOurScripting");
+-            this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
 +            this.soundSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(this.getConfig().soundScriptPath);
-+            com.anatawa12.fixRtm.asm.Preprocessor.whatever("useOurScripting");
           }
        }
  
