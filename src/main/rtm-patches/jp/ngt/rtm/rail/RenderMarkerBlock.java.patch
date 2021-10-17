@@ -49,12 +49,12 @@
  
           for(int l = -1; l <= 1; ++l) {
              float f3 = f2 * (float)l;
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("markerDistanceMoreRealPosition");
++            if (!com.anatawa12.fixRtm.asm.config.MainConfig.markerDistanceMoreRealPosition) {
              ngttessellator.addVertex(-0.4F + f3, 0.0F, 0.4F + f2);
              ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.4F + f2);
              ngttessellator.addVertex(0.4F + f3, 0.0F, -0.4F + f2);
              ngttessellator.addVertex(0.4F + f3, 0.0F, 0.4F + f2);
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("markerDistanceMoreRealPosition");
++            } else {
 +            ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.4F + f2);
 +            ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.6F + f2);
 +            ngttessellator.addVertex(0.4F + f3, 0.0F, -0.6F + f2);
@@ -63,7 +63,7 @@
 +            ngttessellator.addVertex(-0.1F + f3, 0.0F, -0.9F + f2);
 +            ngttessellator.addVertex(0.1F + f3, 0.0F, -0.9F + f2);
 +            ngttessellator.addVertex(0.1F + f3, 0.0F, -0.1F + f2);
-+            com.anatawa12.fixRtm.asm.Preprocessor.whatever("markerDistanceMoreRealPosition");
++            }
           }
        }
  
@@ -75,11 +75,11 @@
           for(int k1 = -1; k1 <= 1; ++k1) {
              float f4 = f5 * (float)k1;
              GL11.glPushMatrix();
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifDisabled("markerDistanceMoreRealPosition");
++            if (!com.anatawa12.fixRtm.asm.config.MainConfig.markerDistanceMoreRealPosition) {
              GL11.glTranslatef(f4, 0.0F, f5);
-+            com.anatawa12.fixRtm.asm.Preprocessor.ifEnabled("markerDistanceMoreRealPosition");
++            } else {
 +            GL11.glTranslatef(f4, 0.0F, f5 - 0.5F);
-+            com.anatawa12.fixRtm.asm.Preprocessor.whatever("markerDistanceMoreRealPosition");
++            }
              GL11.glRotatef(-NGTUtilClient.getMinecraft().getRenderManager().playerViewY - f, 0.0F, 1.0F, 0.0F);
              GL11.glScalef(-0.25F, -0.25F, 0.25F);
              String s = this.displayStrings[j1];
