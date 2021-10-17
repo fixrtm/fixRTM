@@ -5,7 +5,6 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
 import com.anatawa12.fixRtm.FixRtm
-import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.ModelPackLoadSpeed.*
 import com.anatawa12.fixRtm.asm.config.MainConfig.modelPackLoadSpeed

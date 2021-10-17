@@ -105,7 +105,6 @@ val copyResourceToClasses by tasks.creating(Copy::class) {
 val coremods = mutableListOf(
     "com.anatawa12.fixRtm.asm.FixRtmCorePlugin",
     "com.anatawa12.fixRtm.asm.patching.PatchingFixRtmCorePlugin",
-    "com.anatawa12.fixRtm.asm.preprocessing.PreprocessingFixRtmCorePlugin",
     "com.anatawa12.fixRtm.asm.hooking.HookingFixRtmCorePlugin"
 )
 
