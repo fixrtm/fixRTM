@@ -18,7 +18,7 @@
  
     public void save() {
        String[] astring = new String[this.permissionMap.size()];
-@@ -126,26 +121,41 @@
+@@ -126,26 +121,43 @@
        }
  
     }
@@ -36,8 +36,10 @@
 +            return false;
 +         }
 +      }
-+      if (!category.equals("fixrtm.all_permit") && hasPermissionInternal(player, "fixrtm.all_permit"))
-+         return true;
++      if (com.anatawa12.fixRtm.asm.config.MainConfig.addAllowAllPermissionEnabled) {
++         if (!category.equals("fixrtm.all_permit") && hasPermissionInternal(player, "fixrtm.all_permit"))
++            return true;
++      }
        if (this.isOp(player)) {
           return true;
        } else {
