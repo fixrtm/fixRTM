@@ -5,6 +5,7 @@
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.api.IPermissionManager
+import com.anatawa12.fixRtm.asm.config.MainConfig
 import net.minecraft.command.ICommandSender
 import net.minecraftforge.fml.common.Loader
 import java.util.*
@@ -35,7 +36,8 @@ object PermissionManager : IPermissionManager() {
     }
 
     private fun registerFixRtmPermissions() {
-        registerPermission("fixrtm.all_permit")
+        if (MainConfig.addAllowAllPermissionEnabled)
+            registerPermission("fixrtm.all_permit")
     }
 
     private fun registerRTMPermissions() {
