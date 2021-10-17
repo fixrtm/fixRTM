@@ -28,7 +28,11 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine =
 
 @Suppress("unused")
 fun getScriptAndDoScript(fileName: String): ScriptEngine {
-    return getScriptAndDoScript(scriptRuntime, fileName)
+    return if (MainConfig.useOurScripting) {
+        getScriptAndDoScript(scriptRuntime, fileName)
+    } else {
+        jp.ngt.ngtlib.io.ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(fileName))
+    }
 }
 
 @Suppress("unused")

@@ -5,7 +5,6 @@
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
 import com.anatawa12.fixRtm.FixRtm
-import com.anatawa12.fixRtm.asm.Preprocessor
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.ModelPackLoadSpeed.*
 import com.anatawa12.fixRtm.asm.config.MainConfig.modelPackLoadSpeed
@@ -122,11 +121,11 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             set.state = ModelState.CONSTRUCTED
             val index = index.incrementAndGet()
             lastLoadedModelName = set.config.name
-            Preprocessor.ifDisabled(MainConfig::reduceConstructModelLog.name)
-            NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
-            Preprocessor.ifEnabled(MainConfig::reduceConstructModelLog.name)
-            NGTLog.trace("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
-            Preprocessor.whatever(MainConfig::reduceConstructModelLog.name)
+            if (!MainConfig.reduceConstructModelLog) {
+                NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            } else {
+                NGTLog.trace("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            }
         } catch (throwable: Throwable) {
             if (set.config.file == null) {
                 throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)",
