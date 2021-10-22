@@ -8,12 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       version_name:
-        description: name of version, if snapshot-generated, this will generated
+        description: name of version.
+          `a.b.c`, `a.b.c-betaN`, `a.b.c-rcN`, or `commit-release`
         required: true
-        default: 'snapshot-generated'
-  schedule:
-    # 0:00 in JST
-    - cron: '0 15 * * *'
+  push:
+    branches: [ master ]
 
 jobs:
   release:
@@ -21,30 +20,23 @@ jobs:
     environment: deployment
 
     steps:
-      - name: prepare git user data
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
           token: ${{ secrets.PUSH_KEY }}
+      - uses: anatawa12/something-releaser@v2
+      - run: set-git-user anatawa12-bot
 
       - uses: actions/setup-java@v1
         with:
           java-version: 8
-
-      - name: install auto-changelog
-        id: install-auto-changelog
-        run: sudo npm i -g https://github.com/anatawa12/auto-changelog
 
       - name: update for release and push
         id: prepare_build
         run: ./scripts/update_for_release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
           VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
 
       - name: prepare patching environment
@@ -62,19 +54,53 @@ jobs:
 
       - name: push releases
         id: publish_releases
-        run: ./scripts/publish_releases.sh
+        run: |
+          # push
+          git push
+          git push origin "$VERSION_NAME"
+
+          # curse info
+          if [ "$PRERELEASE" = "true" ]; then
+            release_type="alpha"
+          else
+            release_type="release"
+          fi
+
+          echo "::set-output name=curse_release_type::$release_type"
         env:
           VERSION_NAME: ${{ steps.prepare_build.outputs.version_name }}
-          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
-          GITHUB_TOKEN: ${{ secrets.PUSH_KEY }}
-          CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
           PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
-          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
 
       - name: Upload To CurseForge
         id: upload_curse
         if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
-        run: ./scripts/upload_to_curse.sh
+        run: |
+          # platform version infos
+          # {"id":6756,"gameVersionTypeID":628,"name":"1.12.2","slug":"1-12-2"},
+          # {"id":7498,"gameVersionTypeID":68441,"name":"Forge","slug":"forge"},
+          # {"id":4458,"gameVersionTypeID":2,"name":"Java 8","slug":"java-8"},
+
+          # project id for fixRTM is 365235
+          # see https://www.curseforge.com/minecraft/mc-mods/fixrtm
+          project_id=365235
+
+          publish-to-curse-forge \
+            --file "$ASSET_PATH" \
+            --token "$CURSE_TOKEN" \
+            --project-id "$project_id" \
+            --changelog-file "$RELEASE_NOTE" \
+            --changelog-type "markdown" \
+            --release-type "$RELEASE_TYPE" \
+            --game-versions "6756" \
+            --game-versions "7498" \
+            --game-versions "4458" \
+            > response.json \
+            || { echo "POST to curse forge failed" >&2; exit 255 }
+
+          FILE_ID="$(jq '.id' < response.json)"
+
+          echo "::set-output name=file_id::$FILE_ID"
+
         env:
           ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
