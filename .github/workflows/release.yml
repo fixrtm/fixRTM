@@ -132,9 +132,26 @@ jobs:
       - name: Send message to discord
         id: message_discord
         if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
-        run: ./scripts/send_message_to_discord.sh
+        run: |
+          {
+
+            echo "fixRTM $TAG_NAME is released!"
+            if [ "$PRERELEASE" = true ]; then
+              echo
+              echo "**This is a prerelease, not a stable release. make sure this may have many bugs.**"
+            fi
+            echo "Requirements for this version:"
+            echo "RTM $REQUIRED_RTM"
+            echo "NGTLib $REQUIRED_NGTLIB"
+            echo ""
+            echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
+            echo "https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME"
+          } | send-discord \
+            -i "$WEBHOOK_ID" \
+            -t "$WEBHOOK_TOKEN" \
         env:
-          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
+          WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
           TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
           CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
           PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
@@ -142,6 +159,29 @@ jobs:
           REQUIRED_RTM: ${{ steps.prepare_build.outputs.required_rtm }}
           REQUIRED_NGTLIB: ${{ steps.prepare_build.outputs.required_ngtlib }}
 
-          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
-          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
-          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
+      - name: Send message to twitter
+        id: message_twitter
+        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
+        run: |
+          {
+            echo "$TAG_NAME is released!"
+            if [ "$PRERELEASE" = true ]; then
+              echo "#fixrtm_prerelease"
+            else
+              echo "#fixrtm_release"
+            fi
+            echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
+            echo "https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME"
+          } | send-discord \
+            -k "$TWITTER_C_KEY" \
+            -t "$TWITTER_C_SECRET" \
+            -a "$TWITTER_A_SECRET" \
+            -s "$TWITTER_A_TOKEN" \
+        env:
+          TWITTER_C_KEY: ${{ secrets.TWITTER_C_KEY }}
+          TWITTER_C_SECRET: ${{ secrets.TWITTER_C_SECRET }}
+          TWITTER_A_SECRET: ${{ secrets.TWITTER_A_SECRET }}
+          TWITTER_A_TOKEN: ${{ secrets.TWITTER_A_TOKEN }}
+          TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
+          CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
+          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
