@@ -100,7 +100,7 @@ if [ "$nightly" != "true" ]; then
 
   # commit to add updated changelog
   git tag -d "$version_name"
-  git commit -am "$version_name"
+  git commit -m "$version_name"
 fi
 
 # release noteの抽出
