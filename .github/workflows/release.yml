@@ -217,6 +217,7 @@ jobs:
             --name "fixrtm" \
             --user "fixrtm:$GITHUB_TOKEN" \
             --repository "https://maven.pkg.github.com/fixrtm/fixRTM" \
+            --no-pom \
             $not_release
 
         env:
