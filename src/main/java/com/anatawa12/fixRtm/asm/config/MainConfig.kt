@@ -104,11 +104,19 @@ object MainConfig {
         "change texture for test train to make easy to identify test train and electric train")
 
     @JvmField
-    val addModelPackInformationInAllCrashReports = config.getBoolean(
-        "addModelPackInformationInAllCrashReports", categoryBetterRtm,
-        true,
-        "adds model pack information about all models in compressed format in all crash reports. " +
-                "This may make your crash report very fat.")
+    val addModelPackInformationInAllCrashReports: Boolean
+    init {
+        val comment = "adds model pack information about all models in compressed format in all crash reports. " +
+                "This may make your crash report very fat."
+        val defaultValue = false
+
+        val prop = config.get(categoryBetterRtm, "addModelPackInformationInAllCrashReports", false)
+        prop.languageKey = "addModelPackInformationInAllCrashReports"
+        if (prop.comment == null || !prop.comment.endsWith("[default: $defaultValue]"))
+            prop.set(defaultValue)
+        prop.comment = "$comment [default: $defaultValue]"
+        addModelPackInformationInAllCrashReports = prop.getBoolean(defaultValue)
+    }
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
