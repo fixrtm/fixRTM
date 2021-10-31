@@ -173,6 +173,7 @@ jobs:
         with:
           name: jar
           path: ${{ env.ASSET_PATH }}
+          retention-days: 30
 
       - name: Upload To CurseForge
         id: upload_curse

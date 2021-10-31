@@ -44,6 +44,12 @@ jobs:
         with:
           arguments: build
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: jar
+          path: ${{ env.ASSET_PATH }}
+          retention-days: 30
+
       # get jar name
       - name: prepare run server
         id: prepare_run_server
