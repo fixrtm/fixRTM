@@ -169,6 +169,11 @@ jobs:
           git push
           git push origin "$VERSION_NAME"
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: jar
+          path: ${{ env.ASSET_PATH }}
+
       - name: Upload To CurseForge
         id: upload_curse
         if: ${{ !fromJSON(env.NIGHTLY) }}
