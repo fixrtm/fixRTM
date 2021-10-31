@@ -1,0 +1,6 @@
+{
+  "releaseChanger": [{
+    "changer": "gradle-properties",
+    "info": "modVersion"
+  }]
+}
