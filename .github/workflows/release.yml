@@ -202,6 +202,24 @@ jobs:
         env:
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
 
+      - name: Upload To GitHub Packages
+        id: upload_github_packagees
+        run: |
+          if $PRERELEASE; then
+            not_release=--not-release
+          fi
+
+          publish-to-maven \
+            --file "$ASSET_PATH" \
+            --group-id "com.anatawa12.fixrtm" \
+            --artifact-id "fixrtm" \
+            --version-name "$VERSION_NAME" \
+            --name "fixrtm" \
+            $not_release
+
+        env:
+          CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
+
       - name: Create Release
         id: create_release
         if: ${{ !fromJSON(env.NIGHTLY) }}
