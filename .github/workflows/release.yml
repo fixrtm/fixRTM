@@ -215,10 +215,13 @@ jobs:
             --artifact-id "fixrtm" \
             --version-name "$VERSION_NAME" \
             --name "fixrtm" \
+            --user "fixrtm:$GITHUB_TOKEN" \
+            --repository "https://maven.pkg.github.com/fixrtm/fixRTM" \
             $not_release
 
         env:
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Create Release
         id: create_release
