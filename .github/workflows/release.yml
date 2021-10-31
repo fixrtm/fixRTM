@@ -289,9 +289,10 @@ jobs:
             else
               echo "#fixrtm_release"
             fi
+            echo "#fixrtm_all_release"
             echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
             echo "https://github.com/fixrtm/fixRTM/releases/tag/$VERSION_NAME"
-          } | send-discord \
+          } | send-tweet \
             -k "$TWITTER_C_KEY" \
             -t "$TWITTER_C_SECRET" \
             -a "$TWITTER_A_SECRET" \
