@@ -199,7 +199,7 @@ jobs:
             --game-versions "7498" \
             --game-versions "4458" \
             > response.json \
-            || { echo "POST to curse forge failed" >&2; exit 255 }
+            || { echo "POST to curse forge failed" >&2; exit 255; }
 
           FILE_ID="$(jq '.id' < response.json)"
 
@@ -311,7 +311,7 @@ jobs:
 
           version="$(get-version)"
           version="$(version-next "$version")"
-          set-version "$(version-set-channel "$version" beta)"
+          set-version "$(version-set-channel "$version" beta 0)"
 
           git commit -am "prepare for next version: $version"
           git push
