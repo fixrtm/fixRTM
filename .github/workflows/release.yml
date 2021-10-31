@@ -7,9 +7,9 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      version_name:
-        description: name of version.
-          `a.b.c`, `a.b.c-betaN`, `a.b.c-rcN`, or `commit-release`
+      release_kind:
+        description: The type of release. one of `commit-release`, `prerelease`, `start-rc`, or `stable`
+        default: prerelease
         required: true
   push:
     branches: [ master ]
@@ -31,13 +31,122 @@ jobs:
         with:
           java-version: 8
 
-      - name: update for release and push
-        id: prepare_build
-        run: ./scripts/update_for_release.sh
+      - name: update version name
+        id: ver_up
+        run: |
+          # push releases will be commit-release
+          if [ "$EVENT_NAME" == push ]; then
+            RELEASE_KIND_IN=commit-release
+          fi
+
+          # set version name in properties file
+          case "$RELEASE_KIND_IN" in
+            "commit-release")
+              set-version $(git rev-parse HEAD)
+              ;;
+            "prerelease" )
+              set-version "$(version-next "$(get-version)")"
+              ;;
+            "start-rc" )
+              set-version "$(version-set-channel "$(get-version)" rc)"
+              ;;
+            "stable" )
+              set-version "$(version-set-channel "$(get-version)" stable)"
+              ;;
+            * )
+              echo "invalid release kind: $RELEASE_KIND_IN"
+              exit 255
+              ;;
+          esac
+
+          gh-export-variable VERSION_NAME "$(get-version)"
+          gh-export-variable REQUIRED_RTM "$(file-util properties get gradle.properties rtmVersion)"
+          gh-export-variable REQUIRED_NGTLIB "$(file-util properties get gradle.properties ngtVersion)"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
-          VERSION_NAME_IN: ${{ github.event.inputs.version_name }}
+          RELEASE_KIND_IN: ${{ github.event.inputs.release_kind }}
+
+      - name: compute version kind
+        id: compute_version_kind
+        run: |
+          case "$(version-get-channel $(get-version) 2>/dev/null || echo 'commit')" in
+            "commit" )
+              gh-export-variable PRERELEASE true
+              gh-export-variable NIGHTLY true
+            ;;
+            "beta" | "candidate" )
+              gh-export-variable PRERELEASE true
+              gh-export-variable NIGHTLY false
+            ;;
+            "stable" )
+              gh-export-variable PRERELEASE false
+              gh-export-variable NIGHTLY false
+            ;;
+            * )
+              echo "invalid release kind"
+              exit 255
+            ;;
+          esac
+
+      - name: update version map
+        id: update_version_map
+        if: ${{ !fromJSON(env.PRERELEASE) }}
+        run: |
+          # update version map
+          printf "| %-11s | %-14s | %-14s |\n" \
+            "$REQUIRED_RTM" \
+            "$REQUIRED_NGTLIB" \
+            "$VERSION_NAME" \
+            >> version-map.md
+
+      - name: compute output informations
+        id: compute_output_informations
+        run: |
+          asset_name="fixRtm-$VERSION_NAME.jar"
+          asset_path="./build/libs/$asset_name"
+          gh-export-variable ASSET_PATH "$asset_path"
+          gh-export-variable ASSET_NAME "$asset_name"
+          # curse info
+          if $PRERELEASE; then
+            gh-export-variable CURSE_RELEASE_TYPE "alpha"
+          else
+            gh-export-variable CURSE_RELEASE_TYPE "beta"
+          fi
+
+      - name: commit
+        id: commit
+        if: ${{ !fromJSON(env.NIGHTLY) }}
+        run: |
+          if ! $PRERELEASE; then
+            changelog_tag_pattern='^[\d.]+$'
+            changelog_file_path='CHANGELOG.md'
+          else
+            changelog_tag_pattern='^SNAPSHOT-[0-9-]+$|^[\d.]+(-.*)?$'
+            changelog_file_path='CHANGELOG-SNAPSHOTS.md'
+          fi
+
+          # make release notes commit
+          generate-changelog \
+            -v "$VERSION_NAME" \
+            --tag-pattern "$changelog_tag_pattern" \
+            -o "$changelog_file_path"
+
+          release_note_path=$(mktemp)
+          {
+            if ! $PRERELEASE; then
+              echo "**This is SNAPSHOT, not a stable release. make sure this may have many bugs.**"
+            fi
+            echo "Requirements for this version: "
+            echo "RTM $REQUIRED_RTM"
+            echo "NGTLib $REQUIRED_NGTLIB"
+            echo ""
+            generate-changelog --unreleased-only -v "$VERSION_NAME" --stdout
+          } >> "$release_note_path"
+          gh-export-variable RELEASE_NOTE_PATH "$release_note_path"
+
+          # commit to add updated changelog
+          git commit -am "$VERSION_NAME"
+          git tag "$VERSION_NAME"
 
       - name: prepare patching environment
         uses: eskatos/gradle-command-action@v1
@@ -54,26 +163,15 @@ jobs:
 
       - name: push releases
         id: publish_releases
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           # push
           git push
           git push origin "$VERSION_NAME"
 
-          # curse info
-          if [ "$PRERELEASE" = "true" ]; then
-            release_type="alpha"
-          else
-            release_type="release"
-          fi
-
-          echo "::set-output name=curse_release_type::$release_type"
-        env:
-          VERSION_NAME: ${{ steps.prepare_build.outputs.version_name }}
-          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
-
       - name: Upload To CurseForge
         id: upload_curse
-        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           # platform version infos
           # {"id":6756,"gameVersionTypeID":628,"name":"1.12.2","slug":"1-12-2"},
@@ -88,9 +186,9 @@ jobs:
             --file "$ASSET_PATH" \
             --token "$CURSE_TOKEN" \
             --project-id "$project_id" \
-            --changelog-file "$RELEASE_NOTE" \
+            --changelog-file "$RELEASE_NOTE_PATH" \
             --changelog-type "markdown" \
-            --release-type "$RELEASE_TYPE" \
+            --release-type "$CURSE_RELEASE_TYPE" \
             --game-versions "6756" \
             --game-versions "7498" \
             --game-versions "4458" \
@@ -102,42 +200,40 @@ jobs:
           echo "::set-output name=file_id::$FILE_ID"
 
         env:
-          ASSET_PATH: ${{ steps.prepare_build.outputs.asset_path }}
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
-          RELEASE_NOTE: ${{ steps.prepare_build.outputs.release_note_path }}
-          RELEASE_TYPE: ${{ steps.publish_releases.outputs.curse_release_type }}
 
       - name: Create Release
         id: create_release
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.prepare_build.outputs.version_name }}
-          release_name: ${{ steps.prepare_build.outputs.version_name }}
-          body_path: ${{ steps.prepare_build.outputs.release_note_path }}
-          prerelease: ${{ steps.prepare_build.outputs.prerelease }}
+          tag_name: ${{ env.VERSION_NAME }}
+          release_name: ${{ env.VERSION_NAME }}
+          body_path: ${{ env.RELEASE_NOTE_PATH }}
+          prerelease: ${{ env.PRERELEASE }}
 
       - name: Upload Release Asset
         id: upload-release-asset
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.prepare_build.outputs.asset_path }}
-          asset_name: ${{ steps.prepare_build.outputs.asset_name }}
+          asset_path: ${{ env.ASSET_PATH }}
+          asset_name: ${{ env.ASSET_NAME }}
           asset_content_type: application/java-archive
 
       - name: Send message to discord
         id: message_discord
-        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           {
 
-            echo "fixRTM $TAG_NAME is released!"
-            if [ "$PRERELEASE" = true ]; then
-              echo
+            echo "fixRTM $VERSION_NAME is released!"
+            if $PRERELEASE; then
               echo "**This is a prerelease, not a stable release. make sure this may have many bugs.**"
             fi
             echo "Requirements for this version:"
@@ -145,33 +241,28 @@ jobs:
             echo "NGTLib $REQUIRED_NGTLIB"
             echo ""
             echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
-            echo "https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME"
+            echo "https://github.com/fixrtm/fixRTM/releases/tag/$VERSION_NAME"
           } | send-discord \
             -i "$WEBHOOK_ID" \
             -t "$WEBHOOK_TOKEN" \
         env:
           WEBHOOK_ID: ${{ secrets.WEBHOOK_ID }}
           WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
-          TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
           CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
-          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
-
-          REQUIRED_RTM: ${{ steps.prepare_build.outputs.required_rtm }}
-          REQUIRED_NGTLIB: ${{ steps.prepare_build.outputs.required_ngtlib }}
 
       - name: Send message to twitter
         id: message_twitter
-        if: ${{ !fromJSON(steps.prepare_build.outputs.nightly) }}
+        if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           {
-            echo "$TAG_NAME is released!"
-            if [ "$PRERELEASE" = true ]; then
+            echo "$VERSION_NAME is released!"
+            if $PRERELEASE; then
               echo "#fixrtm_prerelease"
             else
               echo "#fixrtm_release"
             fi
             echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
-            echo "https://github.com/fixrtm/fixRTM/releases/tag/$TAG_NAME"
+            echo "https://github.com/fixrtm/fixRTM/releases/tag/$VERSION_NAME"
           } | send-discord \
             -k "$TWITTER_C_KEY" \
             -t "$TWITTER_C_SECRET" \
@@ -182,6 +273,17 @@ jobs:
           TWITTER_C_SECRET: ${{ secrets.TWITTER_C_SECRET }}
           TWITTER_A_SECRET: ${{ secrets.TWITTER_A_SECRET }}
           TWITTER_A_TOKEN: ${{ secrets.TWITTER_A_TOKEN }}
-          TAG_NAME: ${{ steps.prepare_build.outputs.version_name }}
           CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
-          PRERELEASE: ${{ steps.prepare_build.outputs.prerelease }}
+
+      - name: create next version commit releases
+        id: publish_releases
+        if: ${{ !fromJSON(env.PRERELEASE) }}
+        run: |
+          git reset --hard HEAD
+
+          version="$(get-version)"
+          version="$(version-next "$version")"
+          set-version "$(version-set-channel "$version" beta)"
+
+          git commit -am "prepare for next version: $version"
+          git push
