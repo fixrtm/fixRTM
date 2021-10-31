@@ -12,7 +12,7 @@ on:
         default: prerelease
         required: true
   push:
-    branches: [ master, pre-new-release-cycle ]
+    branches: [ master ]
 
 jobs:
   release:
