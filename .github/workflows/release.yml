@@ -162,7 +162,7 @@ jobs:
           arguments: build
 
       - name: push releases
-        id: publish_releases
+        id: push_releases
         if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           # push
