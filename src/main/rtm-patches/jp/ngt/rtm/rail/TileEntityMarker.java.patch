@@ -1,0 +1,51 @@
+--- a/jp/ngt/rtm/rail/TileEntityMarker.java
++++ b/jp/ngt/rtm/rail/TileEntityMarker.java
+@@ -46,10 +46,11 @@
+       this.markerState = MarkerState.DISTANCE.set(this.markerState, true);
+       this.markerState = MarkerState.GRID.set(this.markerState, false);
+       this.markerState = MarkerState.LINE1.set(this.markerState, false);
+       this.markerState = MarkerState.LINE2.set(this.markerState, false);
+       this.markerState = MarkerState.ANCHOR21.set(this.markerState, false);
++      this.markerState = MarkerState.FIT_NEIGHBOR.set(this.markerState, true);
+    }
+ 
+    public void readFromNBT(NBTTagCompound nbt) {
+       super.readFromNBT(nbt);
+       if (nbt.hasKey("RP")) {
+@@ -167,20 +168,20 @@
+                this.railMaps = new RailMap[]{railmap1};
+                blockpos = new BlockPos(railposition2.blockX, railposition2.blockY, railposition2.blockZ);
+             }
+          }
+       } else {
+-         List<RailPosition> list = new ArrayList<>();
++         List<RailPosition> list3 = new ArrayList<>();
+ 
+          for(BlockPos blockpos2 : list) {
+             RailPosition railposition1 = this.getMarkerRP(blockpos2);
+             if (railposition1 != null) {
+-               list.add(railposition1);
++               list3.add(railposition1);
+             }
+          }
+ 
+-         SwitchType switchtype = (new RailMaker(this.getWorld(), list)).getSwitch();
++         SwitchType switchtype = (new RailMaker(this.getWorld(), list3)).getSwitch();
+          if (switchtype != null) {
+             this.railMaps = switchtype.getAllRailMap();
+             if (this.railMaps != null) {
+                RailPosition railposition4 = this.railMaps[0].getStartRP();
+                blockpos = new BlockPos(railposition4.blockX, railposition4.blockY, railposition4.blockZ);
+@@ -213,11 +214,11 @@
+       }
+ 
+    }
+ 
+    private void setStartPos(BlockPos pos, RailMap[] maps) {
+-      NGTLog.debug("[Marker] Start pos %s", new Object[]{pos.toString()});
++      NGTLog.debug("[Marker] Start pos %s for %s", pos.toString(), this.getPos());
+       this.startPos = pos;
+       this.railMaps = maps;
+       if (!this.isCoreMarker()) {
+          this.markerPosList.clear();
+          this.grid = null;

@@ -1,0 +1,39 @@
+--- a/jp/ngt/ngtlib/io/NGTLog.java
++++ b/jp/ngt/ngtlib/io/NGTLog.java
+@@ -13,25 +13,33 @@
+ import org.apache.logging.log4j.Level;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+ public final class NGTLog {
+-   private static final Logger logger = LogManager.getLogger("NGT");
++   public static final Logger logger = LogManager.getLogger("NGT");
+    private static final List<Long> startTimes = new ArrayList<>();
+ 
+    public static void debug(String par1) {
+-      debug(par1);
++      debug(par1, new Object[0]);
+    }
+ 
+    public static void debug(String par1, Object... par2) {
++      _log_(par1, par2, Level.INFO);
++   }
++
++   public static void trace(String par1, Object... par2) {
++      _log_(par1, par2, Level.TRACE);
++   }
++
++   public static void _log_(String par1, Object[] par2, Level par3) {
+       try {
+          String s = par1;
+          if (par2 != null && par2.length > 0) {
+             s = String.format(par1, par2);
+          }
+ 
+-         logger.log(Level.INFO, s);
++         logger.log(par3, s);
+       } catch (Exception exception) {
+       }
+ 
+    }
+ 

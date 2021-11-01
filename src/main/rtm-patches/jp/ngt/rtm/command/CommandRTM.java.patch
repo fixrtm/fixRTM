@@ -1,0 +1,72 @@
+--- a/jp/ngt/rtm/command/CommandRTM.java
++++ b/jp/ngt/rtm/command/CommandRTM.java
+@@ -1,10 +1,11 @@
+ package jp.ngt.rtm.command;
+ 
+ import jp.ngt.ngtlib.io.NGTLog;
+ import jp.ngt.rtm.entity.train.EntityBogie;
+ import jp.ngt.rtm.entity.train.EntityTrainBase;
++import jp.ngt.rtm.entity.train.parts.EntityVehiclePart;
+ import net.minecraft.command.CommandBase;
+ import net.minecraft.command.CommandException;
+ import net.minecraft.command.ICommandSender;
+ import net.minecraft.command.PlayerNotFoundException;
+ import net.minecraft.entity.Entity;
+@@ -20,40 +21,45 @@
+       return "commands.rtm.usage";
+    }
+ 
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+       EntityPlayer entityplayer;
+-      try {
+-         entityplayer = getCommandSenderAsPlayer(sender);
+-      } catch (PlayerNotFoundException playernotfoundexception) {
+-         playernotfoundexception.printStackTrace();
+-         return;
+-      }
+ 
+       if (args.length <= 0) {
+          NGTLog.sendChatMessage(sender, "/rtm delAllTrain : Delete all train", new Object[0]);
+          NGTLog.sendChatMessage(sender, "/rtm dismount : Dismount player from vehicle", new Object[0]);
+       } else {
+          if (args[0].equals("delAllTrain")) {
+             int i = 0;
++            int entityCount = 0;
+ 
+-            for(Object object : entityplayer.world.loadedEntityList) {
++            for(Entity object : sender.getEntityWorld().loadedEntityList) {
+                Entity entity = null;
+                if (object instanceof EntityTrainBase) {
+-                  entity = (EntityTrainBase)object;
++                  entity = object;
+                   ++i;
+-               } else if (object instanceof EntityBogie) {
+-                  entity = (EntityBogie)object;
++               } else if (object instanceof EntityBogie || object instanceof EntityVehiclePart) {
++                  entity = object;
++               } else {
++                  continue;
+                }
++               ++entityCount;
+ 
+-               if (entity != null && !entity.isDead) {
++               if (!entity.isDead) {
+                   entity.setDead();
+                }
+             }
+ 
+-            NGTLog.sendChatMessage(entityplayer, "Delete " + i + "trains.", new Object[0]);
++            java.util.Map<?, ?> formationMap = jp.ngt.rtm.entity.train.util.FormationManager.getInstance().getFormations();
++            int countFormation = formationMap.size();
++            formationMap.clear();
++
++            NGTLog.sendChatMessage(sender, "Deleted " + i + "trains.", new Object[0]);
++            NGTLog.sendChatMessage(sender, "Deleted " + entityCount + " entities in total.", new Object[0]);
++            NGTLog.sendChatMessage(sender, "Deleted " + countFormation + " formations.", new Object[0]);
+          } else if (!args[0].equals("twitter_tag") && args[0].equals("dismount")) {
++            entityplayer = getCommandSenderAsPlayer(sender);
+             entityplayer.dismountRidingEntity();
+          }
+ 
+       }
+    }

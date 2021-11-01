@@ -1,0 +1,43 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntityTrainWorkBench.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntityTrainWorkBench.java
+@@ -16,10 +16,11 @@
+ public class TileEntityTrainWorkBench extends TileEntityCustom implements ITickable {
+    private ItemStack[] craftSlots = ItemUtil.getEmptyArray(30);
+    public static final int Max_CraftingTime = 64;
+    private int craftingTime = 0;
+    private boolean isCrafting = false;
++   private boolean isCreative = false;
+ 
+    public void readFromNBT(NBTTagCompound nbt) {
+       super.readFromNBT(nbt);
+       NBTTagList nbttaglist = nbt.getTagList("Items", 10);
+       Arrays.fill(this.craftSlots, ItemStack.EMPTY);
+@@ -52,11 +53,15 @@
+    }
+ 
+    public void update() {
+       if (this.isCrafting) {
+          if (this.craftingTime < 64) {
+-            ++this.craftingTime;
++            if (this.isCreative) {
++               this.craftingTime = Max_CraftingTime;
++            } else {
++               ++this.craftingTime;
++            }
+          } else {
+             this.craftingTime = 0;
+             this.isCrafting = false;
+          }
+       }
+@@ -95,10 +100,11 @@
+    }
+ 
+    public void startCrafting(EntityPlayer player, boolean sendPacket) {
+       this.craftingTime = 0;
+       this.isCrafting = true;
++      this.isCreative = jp.ngt.ngtlib.util.NGTUtil.isServer() && player.capabilities.isCreativeMode;
+       ContainerRTMWorkBench containerrtmworkbench = (ContainerRTMWorkBench)player.openContainer;
+       containerrtmworkbench.startCrafting();
+       if (sendPacket) {
+          String s = "StartCrafting";
+          RTMCore.NETWORK_WRAPPER.sendToServer(new PacketNotice((byte)0, s, this));

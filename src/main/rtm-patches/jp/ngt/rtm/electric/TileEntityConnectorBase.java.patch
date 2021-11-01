@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/electric/TileEntityConnectorBase.java
++++ b/jp/ngt/rtm/electric/TileEntityConnectorBase.java
+@@ -107,6 +107,12 @@
+    public ResourceState<ModelSetConnector> getResourceState() {
+       return this.state;
+    }
+ 
+    protected abstract ResourceType getSubType();
++
++   @Override
++   public void addInfoToCrashReport(net.minecraft.crash.CrashReportCategory reportCategory) {
++      super.addInfoToCrashReport(reportCategory);
++      com.anatawa12.fixRtm.rtm.electric.TileEntityConnectorBaseKt.addInfoToCrashReport(this, reportCategory);
++   }
+ }

@@ -1,0 +1,44 @@
+--- a/jp/ngt/rtm/render/ModelObject.java
++++ b/jp/ngt/rtm/render/ModelObject.java
+@@ -92,10 +92,19 @@
+       this.alphaBlend = false;
+       this.useTexture = true;
+       this.renderer = this.getPartsRenderer((String)null, par1);
+    }
+ 
++   public ModelObject(IModelNGT par1, TextureSet[] par2, PartsRenderer<?, ?> par3) {
++      this.model = par1;
++      this.textures = par2;
++      this.light = false;
++      this.alphaBlend = false;
++      this.useTexture = true;
++      this.renderer = par3;
++   }
++
+    public static ModelObject getDummy() {
+       if (DUMMY == null) {
+          DUMMY = new ModelObject(ModelLoader.loadModel(new ResourceLocationCustom("models/ModelContainer_19g.obj"), VecAccuracy.LOW, new Object[0]), new TextureSet[]{new TextureSet(new Material((byte)0, ModelPackManager.INSTANCE.getResource("textures/container/19g_JRF_0.png")), 0, false, false, new String[0])});
+       }
+ 
+@@ -241,17 +250,17 @@
+       }
+ 
+    }
+ 
+    public Material[] getMaterials(Map<String, String> map) {
+-      Map<String, Material> map = this.model.getMaterials();
++      Map<String, Material> map1 = this.model.getMaterials();
+       Material[] amaterial;
+-      if (map.isEmpty()) {
++      if (map1.isEmpty()) {
+          amaterial = new Material[]{new Material((byte)0, ModelPackManager.INSTANCE.getResource(map.get("default")))};
+       } else {
+-         amaterial = new Material[map.size()];
+-         Iterator<Entry<String, Material>> iterator = map.entrySet().iterator();
++         amaterial = new Material[map1.size()];
++         Iterator<Entry<String, Material>> iterator = map1.entrySet().iterator();
+ 
+          for(int i = 0; iterator.hasNext(); ++i) {
+             Entry<String, Material> entry = iterator.next();
+             String s = map.get(entry.getKey());
+             if (s == null) {

@@ -1,0 +1,95 @@
+--- a/jp/ngt/ngtlib/renderer/model/PolygonModel.java
++++ b/jp/ngt/ngtlib/renderer/model/PolygonModel.java
+@@ -14,11 +14,11 @@
+ 
+ @SideOnly(Side.CLIENT)
+ public abstract class PolygonModel implements IModelNGT {
+    protected String fileName;
+    protected int drawMode;
+-   protected VecAccuracy accuracy;
++   public VecAccuracy accuracy;
+    protected float[] sizeBox = new float[6];
+    public final List<Vertex> vertices = new ArrayList<>(1024);
+    public final List<GroupObject> groupObjects = new ArrayList<>(16);
+    protected GroupObject currentGroupObject;
+    int lineCount;
+@@ -46,11 +46,13 @@
+    protected void init(InputStream[] is) throws ModelFormatException {
+       this.loadModel(is[0]);
+    }
+ 
+    private void loadModel(InputStream inputStream) {
+-      BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputStream));
++      kotlin.Pair<java.nio.charset.Charset, InputStream> pair = com.anatawa12.fixRtm.ngtlib.renderer.model.PolygonModelCharsetDetector.INSTANCE.detectCharset(inputStream);
++      inputStream = pair.component2();
++      BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputStream, pair.component1()));
+       Stream<String> stream = bufferedreader.lines();
+       stream.forEachOrdered((line) -> {
+          line = repS.matcher(line).replaceAll(" ").trim();
+          this.parseLine(line, ++this.lineCount);
+       });
+@@ -92,11 +94,11 @@
+ 
+    public final float[] getSize() {
+       return this.sizeBox;
+    }
+ 
+-   public void renderAll(boolean smoothing) {
++   public final void renderAll(boolean smoothing) {
+       if (smoothing) {
+          GL11.glShadeModel(7425);
+       }
+ 
+       NGTTessellator ngttessellator = NGTTessellator.instance;
+@@ -107,18 +109,18 @@
+          GL11.glShadeModel(7424);
+       }
+ 
+    }
+ 
+-   public void tessellateAll(NGTTessellator tessellator, boolean smoothing) {
++   public final void tessellateAll(NGTTessellator tessellator, boolean smoothing) {
+       for(GroupObject groupobject : this.groupObjects) {
+          groupobject.render(tessellator, smoothing);
+       }
+ 
+    }
+ 
+-   public void renderOnly(boolean smoothing, String... groupNames) {
++   public final void renderOnly(boolean smoothing, String... groupNames) {
+       if (smoothing) {
+          GL11.glShadeModel(7425);
+       }
+ 
+       for(GroupObject groupobject : this.groupObjects) {
+@@ -133,11 +135,11 @@
+          GL11.glShadeModel(7424);
+       }
+ 
+    }
+ 
+-   public void renderPart(boolean smoothing, String partName) {
++   public final void renderPart(boolean smoothing, String partName) {
+       if (smoothing) {
+          GL11.glShadeModel(7425);
+       }
+ 
+       for(GroupObject groupobject : this.groupObjects) {
+@@ -151,15 +153,15 @@
+          GL11.glShadeModel(7424);
+       }
+ 
+    }
+ 
+-   public int getDrawMode() {
++   public final int getDrawMode() {
+       return this.drawMode;
+    }
+ 
+-   public List<GroupObject> getGroupObjects() {
++   public final List<GroupObject> getGroupObjects() {
+       return this.groupObjects;
+    }
+ 
+    protected final float getFloat(String s) {
+       try {

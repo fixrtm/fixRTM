@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.java
++++ b/jp/ngt/rtm/modelpack/modelset/ModelSetTrain.java
+@@ -48,10 +48,11 @@
+ 
+    public TrainConfig getDummyConfig() {
+       return TrainConfig.getDummyConfig();
+    }
+ 
++   // TODO: CrashReport when use java
+    @SideOnly(Side.CLIENT)
+    protected void renderPartsInGui(Minecraft par1) {
+       TrainConfig trainconfig = this.cfg;
+ 
+       for(int i = 0; i < 2; ++i) {

@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/electric/RenderSignal.java
++++ b/jp/ngt/rtm/electric/RenderSignal.java
+@@ -24,10 +24,11 @@
+       GL11.glTranslatef((float)par2, (float)par4, (float)par6);
+       int i = MinecraftForgeClient.getRenderPass();
+       float f = tileEntity.getBlockDirection();
+       GL11.glPushMatrix();
+       GL11.glTranslatef(0.5F, 0.0F, 0.5F);
++      GL11.glTranslatef(tileEntity.getOffsetX(), tileEntity.getOffsetY(), tileEntity.getOffsetZ());
+       GL11.glRotatef(f, 0.0F, 1.0F, 0.0F);
+       ModelSetSignal modelsetsignal = tileEntity.getResourceState().getResourceSet();
+       if (modelsetsignal != null && !modelsetsignal.isDummy()) {
+          modelsetsignal.modelObj.render(tileEntity, modelsetsignal.getConfig(), i, partialTicks);
+       }

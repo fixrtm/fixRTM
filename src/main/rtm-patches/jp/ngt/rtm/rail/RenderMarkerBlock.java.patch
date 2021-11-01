@@ -1,0 +1,122 @@
+--- a/jp/ngt/rtm/rail/RenderMarkerBlock.java
++++ b/jp/ngt/rtm/rail/RenderMarkerBlock.java
+@@ -89,15 +89,15 @@
+    private void renderGUI(TileEntityMarker marker) {
+       if (marker.gui == null) {
+          int i = 61440;
+          float f = 2.8F;
+          float f1 = 0.5F;
+-         float f2 = (f1 + 0.1F) * 5.0F + 0.1F;
++         float f2 = (f1 + 0.1F) * 6.0F + 0.1F;
+          float f3 = 0.5F;
+          float f4 = -(f + 0.2F) / 2.0F;
+          marker.gui = (new InternalGUI(f4, f3, f + 0.2F, f2)).setColor(65535);
+-         marker.buttons = new InternalButton[5];
++         marker.buttons = new InternalButton[6];
+          f4 = f4 + 0.1F;
+          f3 = f3 + 0.1F;
+          marker.buttons[0] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.ANCHOR21));
+          f3 = f3 + f1 + 0.1F;
+          marker.buttons[1] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.LINE2));
+@@ -105,10 +105,12 @@
+          marker.buttons[2] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.LINE1));
+          f3 = f3 + f1 + 0.1F;
+          marker.buttons[3] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.GRID));
+          f3 = f3 + f1 + 0.1F;
+          marker.buttons[4] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.DISTANCE));
++         f3 = f3 + f1 + 0.1F;
++         marker.buttons[5] = (new InternalButton(f4, f3, f, f1)).setColor(i).setListner((button) -> marker.flipState(MarkerState.FIT_NEIGHBOR));
+ 
+          for(int j = 0; j < marker.buttons.length; ++j) {
+             marker.gui.addButton(marker.buttons[j]);
+          }
+       }
+@@ -116,10 +118,11 @@
+       marker.buttons[0].setText(marker.getStateString(MarkerState.ANCHOR21), 16777215, 0.05F);
+       marker.buttons[1].setText(marker.getStateString(MarkerState.LINE2), 16777215, 0.05F);
+       marker.buttons[2].setText(marker.getStateString(MarkerState.LINE1), 16777215, 0.05F);
+       marker.buttons[3].setText(marker.getStateString(MarkerState.GRID), 16777215, 0.05F);
+       marker.buttons[4].setText(marker.getStateString(MarkerState.DISTANCE), 16777215, 0.05F);
++      marker.buttons[5].setText(marker.getStateString(MarkerState.FIT_NEIGHBOR), 16777215, 0.05F);
+       GL11.glPushMatrix();
+       float f5 = 0.5F;
+       if (marker.getState(MarkerState.LINE1)) {
+          f5 = 1.0F;
+       }
+@@ -166,14 +169,25 @@
+       for(int k = 1; k < this.displayStrings.length; ++k) {
+          float f2 = (float)k * 10.0F;
+ 
+          for(int l = -1; l <= 1; ++l) {
+             float f3 = f2 * (float)l;
++            if (!com.anatawa12.fixRtm.asm.config.MainConfig.markerDistanceMoreRealPosition) {
+             ngttessellator.addVertex(-0.4F + f3, 0.0F, 0.4F + f2);
+             ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.4F + f2);
+             ngttessellator.addVertex(0.4F + f3, 0.0F, -0.4F + f2);
+             ngttessellator.addVertex(0.4F + f3, 0.0F, 0.4F + f2);
++            } else {
++            ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.4F + f2);
++            ngttessellator.addVertex(-0.4F + f3, 0.0F, -0.6F + f2);
++            ngttessellator.addVertex(0.4F + f3, 0.0F, -0.6F + f2);
++            ngttessellator.addVertex(0.4F + f3, 0.0F, -0.4F + f2);
++            ngttessellator.addVertex(-0.1F + f3, 0.0F, -0.1F + f2);
++            ngttessellator.addVertex(-0.1F + f3, 0.0F, -0.9F + f2);
++            ngttessellator.addVertex(0.1F + f3, 0.0F, -0.9F + f2);
++            ngttessellator.addVertex(0.1F + f3, 0.0F, -0.1F + f2);
++            }
+          }
+       }
+ 
+       ngttessellator.draw();
+       GL11.glEnable(3553);
+@@ -183,11 +197,15 @@
+          float f5 = (float)(j1 + 1) * 10.0F;
+ 
+          for(int k1 = -1; k1 <= 1; ++k1) {
+             float f4 = f5 * (float)k1;
+             GL11.glPushMatrix();
++            if (!com.anatawa12.fixRtm.asm.config.MainConfig.markerDistanceMoreRealPosition) {
+             GL11.glTranslatef(f4, 0.0F, f5);
++            } else {
++            GL11.glTranslatef(f4, 0.0F, f5 - 0.5F);
++            }
+             GL11.glRotatef(-NGTUtilClient.getMinecraft().getRenderManager().playerViewY - f, 0.0F, 1.0F, 0.0F);
+             GL11.glScalef(-0.25F, -0.25F, 0.25F);
+             String s = this.displayStrings[j1];
+             int i1 = fontrenderer.getStringWidth(s) / 2;
+             fontrenderer.drawString(s, -i1 / 2, -10, j);
+@@ -457,11 +475,11 @@
+ 
+             if (rendermarkerblock$markerelement == RenderMarkerBlock.MarkerElement.CANT_EDGE) {
+                float f6 = 80.0F;
+                float f12 = f < -f6 ? -f6 : (f > f6 ? f6 : f);
+                RailPosition railposition2 = this.getNeighborRail(marker);
+-               if (railposition2 != null) {
++               if (railposition2 != null && marker.getState(MarkerState.FIT_NEIGHBOR)) {
+                   f12 = -railposition2.cantEdge;
+                }
+ 
+                railposition.cantEdge = f12;
+                marker.onChangeRailShape();
+@@ -543,19 +561,19 @@
+                RailPosition railposition3 = this.getNeighborRail(marker);
+                float f2 = (float)Math.atan2(d6, d7);
+                float f13 = (float)(d6 / (double)MathHelper.sin(f2));
+                float f3 = NGTMath.toDegrees(f2);
+                if (rendermarkerblock$markerelement == RenderMarkerBlock.MarkerElement.HORIZONTIAL) {
+-                  if (railposition3 != null) {
++                  if (railposition3 != null && marker.getState(MarkerState.FIT_NEIGHBOR)) {
+                      f3 = MathHelper.wrapDegrees(railposition3.anchorYaw + 180.0F);
+                   }
+ 
+                   railposition.anchorYaw = f3;
+                   railposition.anchorLengthHorizontal = f13;
+                } else if (rendermarkerblock$markerelement == RenderMarkerBlock.MarkerElement.VERTICAL) {
+                   float f4 = MathHelper.wrapDegrees(f3 - railposition.anchorYaw);
+-                  if (railposition3 != null) {
++                  if (railposition3 != null && marker.getState(MarkerState.FIT_NEIGHBOR)) {
+                      f4 = -railposition3.anchorPitch;
+                   } else if (flag) {
+                      double d4 = vec3d.y - railposition.posY;
+                      f4 = (float)NGTMath.toDegrees(Math.atan2(d4, NGTMath.firstSqrt(d6 * d6 + d7 * d7)));
+                   }

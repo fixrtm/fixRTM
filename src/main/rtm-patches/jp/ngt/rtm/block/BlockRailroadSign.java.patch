@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/block/BlockRailroadSign.java
++++ b/jp/ngt/rtm/block/BlockRailroadSign.java
+@@ -38,10 +38,14 @@
+          int i = holder.getBlockPos().getX();
+          int j = holder.getBlockPos().getY();
+          int k = holder.getBlockPos().getZ();
+          EntityPlayer entityplayer = holder.getPlayer();
+          RTMCore rtmcore = RTMCore.instance;
++         if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ItemInstalledObject.IstlObjType.RAILLOAD_SIGN)) {
++            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), i, j, k);
++            return true;
++         }
+          entityplayer.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityTexture, holder.getWorld(), i, j, k);
+       }
+ 
+       return true;
+    }

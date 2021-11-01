@@ -1,0 +1,42 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ModelSetBase.java
++++ b/jp/ngt/rtm/modelpack/modelset/ModelSetBase.java
+@@ -32,24 +32,24 @@
+       super(par1);
+    }
+ 
+    public void constructOnServer() {
+       if ((this.cfg).serverScriptPath != null) {
+-         this.serverSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript((this.cfg).serverScriptPath));
++         this.serverSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig) this.cfg).serverScriptPath);
+       }
+ 
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public void constructOnClient() {
+       if (!this.isDummy()) {
+          if ((this.cfg).serverScriptPath != null) {
+-            this.serverSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript((this.cfg).serverScriptPath));
++            this.serverSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig)this.cfg).serverScriptPath);
+          }
+ 
+          if ((this.cfg).guiScriptPath != null) {
+-            this.guiSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript((this.cfg).guiScriptPath));
++            this.guiSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(((ModelConfig)this.cfg).guiScriptPath);
+             this.guiTexture = ModelPackManager.INSTANCE.getResource((this.cfg).guiTexture);
+          }
+       }
+ 
+    }
+@@ -64,10 +64,11 @@
+ 
+    public T getConfig() {
+       return this.cfg;
+    }
+ 
++   // TODO: CrashReport when use java
+    @SideOnly(Side.CLIENT)
+    public void renderModelInGui(Minecraft mc) {
+       this.modelObj.render((Object)null, this.getConfig(), 0, 0.0F);
+    }
+ 

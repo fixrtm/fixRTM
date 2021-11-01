@@ -1,3 +1,7 @@
+/// Copyright (c) 2021 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -14,12 +18,12 @@ object ThreadUtil {
     }
 
     @SubscribeEvent
-    fun onClientTick(e: TickEvent.ClientTickEvent) {
+    fun onClientTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ClientTickEvent) {
         while (true) (client.poll() ?: return)()
     }
 
     @SubscribeEvent
-    fun onServerTick(e: TickEvent.ServerTickEvent) {
+    fun onServerTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ServerTickEvent) {
         while (true) (server.poll() ?: return)()
     }
 

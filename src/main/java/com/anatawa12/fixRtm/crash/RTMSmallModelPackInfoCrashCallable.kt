@@ -1,3 +1,7 @@
+/// Copyright (c) 2021 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.crash
 
 import com.anatawa12.fixRtm.rtm.modelpack.ModelState
@@ -13,11 +17,11 @@ object RTMSmallModelPackInfoCrashCallable : ICrashCallable {
     override fun call(): String = ModelPackManager.INSTANCE.modelSetMapLock.readLock().withLock {
         buildString {
             append("Initialized ")
-                .append(ModelPackManager.INSTANCE.allModelSetMap.values.sumBy { it.size })
+                .append(ModelPackManager.INSTANCE.allModelSetMap.values.sumOf { it.size })
                 .append(" models")
             if (NGTUtil.isSMP()) {
                 append(", Using ")
-                    .append(ModelPackManager.INSTANCE.smpModelSetMap.values.sumBy { it.size })
+                    .append(ModelPackManager.INSTANCE.smpModelSetMap.values.sumOf { it.size })
                     .append(" models")
             }
             append("\n\t")

@@ -1,9 +1,14 @@
+/// Copyright (c) 2019 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig
 import com.anatawa12.fixRtm.asm.config.MainConfig.changeTestTrainTextureEnabled
 import com.anatawa12.fixRtm.crash.RTMAllModelPackInfoCrashCallable
 import com.anatawa12.fixRtm.crash.RTMSmallModelPackInfoCrashCallable
+import com.anatawa12.fixRtm.gui.GuiHandler
 import com.anatawa12.fixRtm.io.FIXFileLoader
 import com.anatawa12.fixRtm.network.NetworkHandler
 import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
@@ -15,9 +20,11 @@ import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.IReloadableResourceManager
+import net.minecraft.crash.CrashReport
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.Item
 import net.minecraft.launchwrapper.Launch
+import net.minecraft.util.ReportedException
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.Style
 import net.minecraft.util.text.TextComponentString
@@ -34,10 +41,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
-import net.minecraftforge.fml.common.network.NetworkCheckHandler
+import net.minecraftforge.fml.common.gameevent.TickEvent
+import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.relauncher.Side
+import paulscode.sound.SoundSystemConfig
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.util.concurrent.atomic.AtomicReference
 import javax.imageio.ImageIO
 import kotlin.math.max
 
@@ -56,6 +66,7 @@ object FixRtm {
     @Mod.EventHandler
     fun construct(e: FMLConstructionEvent) {
         FIXFileLoader.load() // init
+        ImageIO.scanForPlugins() // load webp-imageio
         if (MainConfig.addModelPackInformationInAllCrashReports)
             FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
         else
@@ -98,8 +109,33 @@ object FixRtm {
         DummyModelPackManager.registerDummyClass(DummyModelSetOrnament)
         DummyModelPackManager.registerDummyClass(DummyModelSetMachine)
         MinecraftForge.EVENT_BUS.register(this)
+        MinecraftForge.EVENT_BUS.register(ThreadUtil)
         modMetadata = e.modMetadata
         NetworkHandler.init()
+        PermissionManager.registerBuiltinPermissions()
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, GuiHandler())
+
+        if (e.side == Side.CLIENT && MainConfig.expandPlayableSoundCount) {
+            SoundSystemConfig.setNumberNormalChannels(1024)
+            SoundSystemConfig.setNumberStreamingChannels(32)
+        }
+    }
+
+    private val thrownMarker = CrashReport("", Throwable())
+    private val crashReportHolder = AtomicReference<CrashReport?>(null)
+
+    internal fun reportCrash(report: CrashReport) {
+        // fail if after crashing other thread
+        crashReportHolder.compareAndSet(null, report)
+    }
+
+    @SubscribeEvent
+    fun onServerTick(@Suppress("UNUSED_PARAMETER") e: TickEvent.ServerTickEvent) {
+        val report = crashReportHolder.get()
+        if (report === null) return
+        if (report === thrownMarker) return
+        crashReportHolder.set(thrownMarker)
+        throw ReportedException(report)
     }
 
     @Mod.EventHandler
@@ -165,25 +201,6 @@ object FixRtm {
     }
     //assets/rtm/models/item/item_train_127.json
     //                       item_train_fixrtm_test
-
-    var serverHasFixRTM = true
-
-    @NetworkCheckHandler
-    fun networkCheck(mods: Map<String, String>, remoteSide: Side): Boolean {
-        if (mods[RTMCore.MODID] != RTMCore.VERSION)
-            return false
-        if (mods[MODID]?.equals(VERSION) == false)
-            return false
-        if (remoteSide == Side.SERVER) {
-            // on client
-            serverHasFixRTM = mods.containsKey(MODID)
-            if (serverHasFixRTM)
-                DummyModelPackManager.gotAllModels = false
-            return true
-        } else {
-            return true
-        }
-    }
 
     @SubscribeEvent
     @Suppress("UNUSED_PARAMETER")

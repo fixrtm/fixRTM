@@ -1,0 +1,16 @@
+--- a/jp/ngt/rtm/network/PacketModelPack.java
++++ b/jp/ngt/rtm/network/PacketModelPack.java
+@@ -40,11 +40,12 @@
+       int j = buffer.writerIndex() - buffer.readerIndex();
+       if (i > j) {
+          i = j;
+       }
+ 
+-      this.bytes = buffer.readBytes(i).array();
++      this.bytes = new byte[i];
++      buffer.readBytes(bytes);
+    }
+ 
+    public IMessage onMessage(PacketModelPack message, MessageContext ctx) {
+       MP_WRITER.onPacket(message.name, message.size, message.bytes);
+       return null;

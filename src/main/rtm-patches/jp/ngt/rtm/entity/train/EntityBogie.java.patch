@@ -1,0 +1,143 @@
+--- a/jp/ngt/rtm/entity/train/EntityBogie.java
++++ b/jp/ngt/rtm/entity/train/EntityBogie.java
+@@ -126,11 +126,11 @@
+             return BogieController.MotionState.FLY;
+          } else {
+             RailMap railmap = this.currentRailMap;
+             int i = 0;
+             if (frontBogie != null && this.prevPosIndex != -1) {
+-               int j = (int)((speed + 0.25F) * 32.0F);
++               int j = (int)((Math.abs(speed) + 0.25F) * 32.0F);
+                int k = this.prevPosIndex - j;
+                int l = this.prevPosIndex + j;
+                int i1 = k < 0 ? 0 : k;
+                int j1 = l > this.split ? this.split : l;
+                double[] adouble = frontBogie.getPosBuf();
+@@ -171,11 +171,11 @@
+                this.rotationBuf[0] = f2;
+                this.rotationBuf[1] = f3;
+                this.rotationBuf[2] = f1;
+                this.rotationBuf[3] = f4;
+                if (this.jointDelay > 0.0F) {
+-                  this.jointDelay -= speed;
++                  this.jointDelay -= Math.abs(speed);
+                   if (this.jointDelay <= 0.0F) {
+                      this.playJointSound();
+                   }
+                }
+ 
+@@ -196,18 +196,20 @@
+       TileEntityLargeRailCore tileentitylargerailcore = this.getRail(px, py, pz);
+       if (tileentitylargerailcore == null) {
+          return false;
+       } else {
+          if (this.currentRailObj != tileentitylargerailcore) {
+-            this.currentRailObj = tileentitylargerailcore;
++            RailMap railMap;
+             if (tileentitylargerailcore instanceof TileEntityLargeRailSwitchCore) {
+                TileEntityLargeRailSwitchCore tileentitylargerailswitchcore = (TileEntityLargeRailSwitchCore)tileentitylargerailcore;
+-               this.currentRailMap = tileentitylargerailswitchcore.getSwitch().getNearestPoint(this).getActiveRailMap(this.world);
++               railMap = tileentitylargerailswitchcore.getSwitch().getNearestPoint(this).getActiveRailMap(this.world);
+             } else {
+-               this.currentRailMap = tileentitylargerailcore.getRailMap(this);
++               railMap = tileentitylargerailcore.getRailMap(this);
+             }
+ 
++            this.currentRailObj = tileentitylargerailcore;
++            this.currentRailMap = railMap;
+             this.split = (int)(this.currentRailMap.getLength() * 32.0D);
+             this.prevPosIndex = -1;
+             this.onChangeRail(tileentitylargerailcore);
+          }
+ 
+@@ -227,14 +229,17 @@
+       return null;
+    }
+ 
+    protected void onChangeRail(TileEntityLargeRailCore newRail) {
+       this.reverbSound = newRail.isReberbSound();
+-      TrainConfig trainconfig = this.getTrain().getResourceState().getResourceSet().getConfig();
+-      if (!trainconfig.muteJointSound) {
+-         this.jointIndex = 0;
+-         this.playJointSound();
++      EntityTrainBase train = this.getTrain();
++      if (train != null) {
++         TrainConfig trainconfig = train.getResourceState().getResourceSet().getConfig();
++         if (!trainconfig.muteJointSound) {
++            this.jointIndex = 0;
++            this.playJointSound();
++         }
+       }
+ 
+    }
+ 
+    protected boolean reverseJointArray() {
+@@ -245,11 +250,11 @@
+ 
+    protected void playJointSound() {
+       EntityTrainBase entitytrainbase = this.getTrain();
+       TrainConfig trainconfig = entitytrainbase.getResourceState().getResourceSet().getConfig();
+       if (!trainconfig.muteJointSound) {
+-         float f = entitytrainbase.getSpeed() / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
++         float f = Math.abs(entitytrainbase.getSpeed()) / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
+          String s = this.reverbSound ? "rtm:sounds/train/joint_reverb.ogg" : "rtm:sounds/train/joint.ogg";
+          RTMCore.proxy.playSound(this, s, 1.0F, f);
+          int i = trainconfig.jointDelay[this.getBogieId()].length;
+          if (this.jointIndex < i - 1) {
+             int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
+@@ -287,14 +292,23 @@
+ 
+    public final void onUpdate() {
+       if (!this.world.isRemote && !this.tracked) {
+          this.tracked = VehicleTrackerEntry.trackingVehicle(this);
+       }
++      if (!this.world.isRemote) {
++         if (this.currentRailObj != null) {
++            this.currentRailObj.colliding = true;
++         } else {
++            this.resetRailObj(this.posX, this.posY, this.posZ);
++         }
++      }
+ 
+       ++this.existCount;
+       if (this.existCount > 100 && this.getTrain() == null) {
++         if (!this.world.isRemote) {
+          this.setDead();
++         }
+       }
+ 
+    }
+ 
+    public void onBogieUpdate() {
+@@ -491,10 +505,12 @@
+    public void addVelocity(double par1, double par3, double par5) {
+    }
+ 
+    public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+       if (this.getTrain() != null) {
++         if (player.world.isRemote)
++            return true;
+          if (PermissionManager.INSTANCE.hasPermission(player, "driveTrain")) {
+             return this.getTrain().interactTrain(this, player);
+          }
+       } else if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == RTMItem.paddle) {
+          return true;
+@@ -578,6 +594,18 @@
+    }
+ 
+    public int getProhibitedAction() {
+       return 1;
+    }
++
++   @Override
++    public void onRemovedFromWorld() {
++        super.onRemovedFromWorld();
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.onRemovedFromWorld(this);
++    }
++
++    @Override
++    public void addEntityCrashInfo(net.minecraft.crash.CrashReportCategory category) {
++        super.addEntityCrashInfo(category);
++        com.anatawa12.fixRtm.rtm.entity.train.EntityBogieKt.addEntityCrashInfo(this, category);
++    }
+ }

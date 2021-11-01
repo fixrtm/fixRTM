@@ -1,0 +1,95 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+name: Bug Report [JA]
+description: 改善に役に立つレポートを作成する
+labels: [bug, not-checked]
+assignees:
+  - anatawa12
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告、ありがとうございます。
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before submitting a bug, please make sure following checks.
+      options:
+        - label: サーバーやワールドにはいる前に、全てのモデルパックの読み込みを終えている
+          required: true
+        - label: 最新の SNAPSHOT, nightly-snapshot, またはリリースの fixRTM を使用してる
+          required: true
+        - label: 正しい RTM 及び NGTLib を使用している。
+          required: true
+        - label: 同じバグが issues で見つからない
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Descrive the bug
+      description: >
+        バグが何であるかについての明確で簡潔な説明をしてください。
+        いつ、何をしたときに起きたかは重要な情報なため、可能であればこれらも教えて下さい。
+        可能であればクラッシュレポート, latest.log, debug.log を添付してください。
+        入力欄にファイルをドロップすることでファイルを添付できます。
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: >
+        もしこのバグを再現することがっできるのであれば、その手順を教えて下さい。
+        もし再現することができなければ、再現できないと書いてください。
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: >
+        何が発生するべきかを説明してください。
+        もしクラッシュバグのレポートであれば、これを書く必要はありません。
+
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: >
+        何が(予想に反して)発生したかを説明してください。
+        もしクラッシュバグのレポートであれば、これを書く必要はありません。
+
+  - type: input
+    attributes:
+      label: OS
+      description: あなたの使っている OS とそのバージョンを教えて下さい。 macOS, Windows または GNU/Linux のディストリビューションです。
+      placeholder: "macOS 11.4, Windows 10 Home 21H1, Ubuntu 21.04"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Minecraft Forge Version
+      description: MinecraftForgeのバージョン
+      placeholder: "2854, 14.23.5.2854"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: fixRTM Version
+      description: fixRTMのバージョン
+      placeholder: "2.0.18, SNAPSHOT-2021-06-13-13-32-47, SNAPSHOT-2021-06-19-NIGHTLY"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Other Mods
+      description: 他に導入しているmod
+      placeholder: "Optifine"
+    validations:
+      required: false

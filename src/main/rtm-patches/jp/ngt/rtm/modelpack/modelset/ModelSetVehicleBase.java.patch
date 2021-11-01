@@ -1,0 +1,38 @@
+--- a/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.java
++++ b/jp/ngt/rtm/modelpack/modelset/ModelSetVehicleBase.java
+@@ -19,11 +19,11 @@
+    public ScriptEngine soundSE;
+ 
+    public ModelSetVehicleBase() {
+    }
+ 
+-   public ModelSetVehicleBase(VehicleBaseConfig par1) {
++   public ModelSetVehicleBase(T par1) {
+       super((T)par1);
+    }
+ 
+    public void constructOnServer() {
+       super.constructOnServer();
+@@ -40,20 +40,21 @@
+          PartsRenderer partsrenderer = !PartsRenderer.validPath(this.cfg.getModel().rendererPath) ? new BasicVehiclePartsRenderer(String.valueOf(true)) : null;
+          this.modelObj = new ModelObject(this.cfg.getModel(), this, partsrenderer, "vehicle");
+          this.buttonTexture = ModelPackManager.INSTANCE.getResource((this.cfg).buttonTexture);
+          this.rollsignTexture = (this.cfg).rollsignTexture == null ? null : ModelPackManager.INSTANCE.getResource((this.cfg).rollsignTexture);
+          if ((this.cfg).soundScriptPath != null) {
+-            this.soundSE = ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(this.getConfig().soundScriptPath));
++            this.soundSE = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(this.getConfig().soundScriptPath);
+          }
+       }
+ 
+    }
+ 
+    public T getConfig() {
+       return this.cfg;
+    }
+ 
++   // TODO: CrashReport when use java
+    @SideOnly(Side.CLIENT)
+    public void renderModelInGui(Minecraft par1) {
+       VehicleBaseConfig vehiclebaseconfig = this.cfg;
+       this.modelObj.render((Object)null, vehiclebaseconfig, 0, 0.0F);
+       this.modelObj.render((Object)null, vehiclebaseconfig, 1, 0.0F);

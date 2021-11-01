@@ -1,15 +1,25 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm
 
+import com.anatawa12.fixRtm.gui.GuiId
 import com.anatawa12.fixRtm.utils.ArrayPool
 import com.anatawa12.fixRtm.utils.closeScope
 import com.anatawa12.fixRtm.utils.sortedWalk
 import com.google.common.collect.Iterators
+import jp.ngt.rtm.RTMItem
+import jp.ngt.rtm.block.tileentity.TileEntityMachineBase
+import jp.ngt.rtm.item.ItemInstalledObject
 import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import net.minecraft.crash.CrashReportCategory
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.RayTraceResult
+import net.minecraft.world.World
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
 import java.io.*
@@ -61,7 +71,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
 
     for (c in string) {
         @Suppress("NAME_SHADOWING")
-        val c = c.toInt()
+        val c = c.code
         if (c in 0x0001..0x007F) {
             utflen++
         } else if (c <= 0x07FF) {
@@ -79,7 +89,7 @@ fun DataOutput.writeUTFNullable(string: String?) = closeScope {
     var count = 0
     for (c in string) {
         @Suppress("NAME_SHADOWING")
-        val c = c.toInt()
+        val c = c.code
         if (c >= 0x0001 && c <= 0x007F) {
             bytes[count++] = c.toByte()
         } else if (c > 0x07FF) {
@@ -174,3 +184,71 @@ fun <T> T.addEntityCrashInfoAboutModelSet(
 }
 
 fun arrayOfItemStack(size: Int) = Array(size) { ItemStack.EMPTY }
+
+private const val START = 0
+private const val KEY = 1
+private const val STR_BS = 2
+private const val STR_BS_U0 = 3 // \u|0000
+private const val STR_BS_U1 = 4 // \u0|000
+private const val STR_BS_U2 = 5 // \u00|00
+private const val STR_BS_U3 = 6 // \u000|0
+private const val STR = 7
+
+fun joinLinesForJsonReading(lines: List<String>): String = buildString {
+    var stat = START
+    var shouldAddNewLine = false
+    for (line in lines) {
+        for (c in line) {
+            val preStat = stat
+            when (stat) {
+                START -> {
+                    if (c in '0'..'9' || c in 'a'..'z' || c in 'A'..'Z' || c == '+' || c == '-' || c == '.')
+                        stat = KEY
+                    else if (c == '"')
+                        stat = STR
+                }
+                KEY -> {
+                    if (c in '0'..'9' || c in 'a'..'z' || c in 'A'..'Z' || c == '+' || c == '-' || c == '.')
+                        stat = KEY
+                    else
+                        stat = START
+                }
+                STR -> {
+                    when (c) {
+                        '\\' -> stat = STR_BS
+                        '"' -> stat = START
+                    }
+                }
+                STR_BS -> {
+                    when (c) {
+                        'u' -> stat = STR_BS_U0
+                        else -> stat = STR
+                    }
+                }
+                STR_BS_U0, STR_BS_U1, STR_BS_U2, STR_BS_U3 -> {
+                    stat++
+                }
+            }
+            if (shouldAddNewLine && (preStat == START || stat == START)) append('\n')
+            shouldAddNewLine = false
+            append(c)
+        }
+        shouldAddNewLine = true
+    }
+}
+
+fun ItemStack.isItemOf(machine: TileEntityMachineBase): Boolean {
+    if (this.item !== RTMItem.installedObject) return false
+    val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage)
+    return type.type == machine.subType
+}
+
+fun ItemStack.isItemOf(istlType: ItemInstalledObject.IstlObjType): Boolean {
+    if (this.item !== RTMItem.installedObject) return false
+    val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage)
+    return type == istlType
+}
+
+fun EntityPlayer.openGui(fixGuiId: GuiId, world: World, x: Int, y: Int, z: Int) {
+    openGui(FixRtm, fixGuiId.ordinal, world, x, y, z)
+}

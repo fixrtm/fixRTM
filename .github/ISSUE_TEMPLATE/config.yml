@@ -1,0 +1,13 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+blank_issues_enabled: true
+contact_links:
+  - name: fixRTM official Discord Server
+    url: https://discord.gg/qFKcUXX
+    about: You have questions? Please join us on Discord! 質問がありますか? Discord で聞いてみましょう！
+
+  - name: KaizPatchX, similar mod for 1.7.10, 1.7.10向けの同様のMOD
+    url: https://github.com/Kai-Z-JP/KaizPatchX
+    about: Are you looking for 1.7.10? Please use KaizPatchX instead. 1.7.10版を探していますか？ KaizPatchXを使用してください。

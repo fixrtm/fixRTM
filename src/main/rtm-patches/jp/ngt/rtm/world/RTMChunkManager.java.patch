@@ -1,0 +1,22 @@
+--- a/jp/ngt/rtm/world/RTMChunkManager.java
++++ b/jp/ngt/rtm/world/RTMChunkManager.java
+@@ -39,18 +39,11 @@
+       }
+ 
+    }
+ 
+    public void getChunksAround(Set<ChunkPos> set, int xChunk, int zChunk, int radius) {
+-      set.clear();
+-
+-      for(int i = xChunk - radius; i <= xChunk + radius; ++i) {
+-         for(int j = zChunk - radius; j <= zChunk + radius; ++j) {
+-            set.add(new ChunkPos(i, j));
+-         }
+-      }
+-
++      com.anatawa12.fixRtm.rtm.world.RTMChunkManagerKt.getChunksAround(set, xChunk, zChunk, radius);
+    }
+ 
+    public Ticket getNewTicket(World world, Type type) {
+       return ForgeChunkManager.requestTicket(RTMCore.instance, world, type);
+    }

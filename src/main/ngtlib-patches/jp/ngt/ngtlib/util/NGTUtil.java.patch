@@ -1,0 +1,15 @@
+--- a/jp/ngt/ngtlib/util/NGTUtil.java
++++ b/jp/ngt/ngtlib/util/NGTUtil.java
+@@ -35,11 +35,11 @@
+          return !NGTUtilClient.getMinecraft().isSingleplayer();
+       }
+    }
+ 
+    public static boolean openedLANWorld() {
+-      return !isServer() && !NGTUtilClient.getMinecraft().isSingleplayer() ? NGTUtilClient.getMinecraft().getIntegratedServer().getPublic() : false;
++      return isServer() && NGTUtilClient.getMinecraft().isSingleplayer() ? NGTUtilClient.getMinecraft().getIntegratedServer().getPublic() : false;
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public static World getClientWorld() {
+       return NGTCore.proxy.getWorld();

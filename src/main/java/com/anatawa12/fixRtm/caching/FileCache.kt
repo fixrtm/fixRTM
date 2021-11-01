@@ -1,3 +1,7 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.caching
 
 import com.anatawa12.fixRtm.mkParent
@@ -102,7 +106,7 @@ class FileCache<TValue>(
     }
 
     private fun getFile(sha1In: String): File {
-        val sha1 = sha1In.toLowerCase()
+        val sha1 = sha1In.lowercase()
         if (withTwoCharDir) {
             return baseDir.resolve(sha1.substring(0, 2))
                 .resolve(sha1)

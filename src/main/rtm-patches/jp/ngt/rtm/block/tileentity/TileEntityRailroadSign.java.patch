@@ -1,0 +1,16 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntityRailroadSign.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntityRailroadSign.java
+@@ -29,11 +29,12 @@
+       return nbt;
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+-      return new AxisAlignedBB(this.getPos(), this.getPos().add(1, 2, 1));
++      return new AxisAlignedBB(this.getPos(), this.getPos().add(1, 2, 1))
++         .offset(getOffsetX(), getOffsetY(), getOffsetZ());
+    }
+ 
+    public void updateResourceState() {
+       if (this.world == null || !this.world.isRemote) {
+          this.sendPacket();

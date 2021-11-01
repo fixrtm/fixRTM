@@ -1,0 +1,57 @@
+--- a/jp/ngt/rtm/rail/BlockLargeRailBase.java
++++ b/jp/ngt/rtm/rail/BlockLargeRailBase.java
+@@ -142,11 +142,11 @@
+ 
+    }
+ 
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+       TileEntityLargeRailCore tileentitylargerailcore = getCore(world, pos);
+-      if (!world.isRemote && tileentitylargerailcore != null) {
++      if (!world.isRemote && tileentitylargerailcore != null && !tileentitylargerailcore.breaking) {
+          RailMap[] arailmap = tileentitylargerailcore.getAllRailMaps();
+ 
+          for(RailMap railmap : arailmap) {
+             railmap.breakRail(world, tileentitylargerailcore.getResourceState(), tileentitylargerailcore);
+          }
+@@ -177,11 +177,11 @@
+ 
+          Block block = tileentitylargerailcore.getResourceState().block;
+          boolean flag = block.getMaterial(block.getDefaultState()) == Material.SNOW;
+          if (flag && entity instanceof EntityBogie) {
+             EntityTrainBase entitytrainbase = ((EntityBogie)entity).getTrain();
+-            if (entitytrainbase != null && entitytrainbase.getSpeed() > 0.0F) {
++            if (entitytrainbase != null && Math.abs(entitytrainbase.getSpeed()) > 0.0F) {
+                double d0 = (double)entitytrainbase.getSpeed() * 0.125D;
+ 
+                for(int i = 0; i < 5; ++i) {
+                   double d1 = (double)pos.getX() + (double)world.rand.nextFloat();
+                   double d2 = (double)pos.getY() + (double)world.rand.nextFloat() * 0.25D;
+@@ -190,15 +190,10 @@
+                   double d5 = (d3 - entity.posZ) * d0;
+                   world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, d1, d2, d3, d4, 0.125D, d5, new int[0]);
+                }
+             }
+          }
+-      } else if (entity instanceof EntityTrainBase) {
+-         TileEntityLargeRailCore tileentitylargerailcore1 = getCore(world, pos);
+-         if (tileentitylargerailcore1 != null) {
+-            tileentitylargerailcore1.colliding = true;
+-         }
+       }
+ 
+    }
+ 
+    public boolean isCore() {
+@@ -210,11 +205,11 @@
+       return tileentity instanceof TileEntityLargeRailBase ? ((TileEntityLargeRailBase)tileentity).getRailCore() : null;
+    }
+ 
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+       TileEntityLargeRailCore tileentitylargerailcore = getCore(world, pos);
+-      return tileentitylargerailcore != null ? ItemRail.copyItemFromRail(tileentitylargerailcore) : null;
++      return tileentitylargerailcore != null ? ItemRail.copyItemFromRail(tileentitylargerailcore) : ItemStack.EMPTY;
+    }
+ 
+    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
+       return this.preventMobMovement(world, pos) ? PathNodeType.BLOCKED : PathNodeType.RAIL;
+    }

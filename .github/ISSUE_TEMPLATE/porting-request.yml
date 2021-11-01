@@ -1,0 +1,37 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+name: Porting Request from KaizPatchX
+description: Request porting feature/bug fix from KaizPatchX. KaizPatchXから移植のリクエスト
+labels: [ porting, not-checked ]
+assignees:
+  - anatawa12
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to request a feature.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Feature report check list
+      options:
+        - label: You couldn't find same request in the issues.
+          required: true
+
+  - type: input
+    attributes:
+      label: link to issue/PullRequest/commit/release of KaizPatchX
+      placeholder: "Kai-Z-JP/KaizPatchX#1 Kai-Z-JP/KaizPatchX@sha"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Describe request
+      description: Describe your request.
+    validations:
+      required: false

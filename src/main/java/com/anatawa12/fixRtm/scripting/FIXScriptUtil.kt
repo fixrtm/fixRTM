@@ -1,3 +1,7 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 @file:JvmName("FIXScriptUtil")
 
 package com.anatawa12.fixRtm.scripting
@@ -24,7 +28,11 @@ fun ModelPackManager.getScriptAndDoScript(fileName: String): ScriptEngine =
 
 @Suppress("unused")
 fun getScriptAndDoScript(fileName: String): ScriptEngine {
-    return getScriptAndDoScript(scriptRuntime, fileName)
+    return if (MainConfig.useOurScripting) {
+        getScriptAndDoScript(scriptRuntime, fileName)
+    } else {
+        jp.ngt.ngtlib.io.ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(fileName))
+    }
 }
 
 @Suppress("unused")

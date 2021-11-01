@@ -1,0 +1,55 @@
+--- a/jp/ngt/rtm/rail/TileEntityTurnTableCore.java
++++ b/jp/ngt/rtm/rail/TileEntityTurnTableCore.java
+@@ -17,15 +17,17 @@
+ 
+ public class TileEntityTurnTableCore extends TileEntityLargeRailCore {
+    public static final float ROTATION_INC = 0.5F;
+    public static final float ROTATION_STEP = 15.0F;
+    private boolean isGettingPower;
++   private float prevRotation;
+    private float rotation;
+ 
+    protected void readRailData(NBTTagCompound nbt) {
+       super.readRailData(nbt);
+       this.rotation = nbt.getFloat("Rotation");
++      this.prevRotation = this.rotation;
+    }
+ 
+    protected void writeRailData(NBTTagCompound nbt) {
+       super.writeRailData(nbt);
+       nbt.setFloat("Rotation", this.rotation);
+@@ -47,10 +49,15 @@
+             }
+ 
+             RTMCore.NETWORK_WRAPPER.sendToAll(new PacketNotice((byte)1, "TT:" + this.getRotation(), this));
+             ((RailMapTurntable)this.getRailMap((Entity)null)).setRotation(this.rotation);
+             this.updateTrainYaw();
++         } else {
++            float f0 = this.rotation % ROTATION_STEP;
++            if (!(this.isGettingPower || (f0 != 0.0F))) {
++               this.prevRotation = this.rotation;
++            }
+          }
+       }
+ 
+    }
+ 
+@@ -84,13 +91,18 @@
+    public float getRotation() {
+       return this.rotation;
+    }
+ 
+    public void setRotation(float rotation) {
++      this.prevRotation = rotation;
+       this.rotation = rotation;
+    }
+ 
++   public float getPrevRotation() {
++      return this.prevRotation;
++   }
++
+    @SideOnly(Side.CLIENT)
+    protected AxisAlignedBB getRenderAABB() {
+       if (this.isLoaded()) {
+          int i = this.railPositions[0].blockX;
+          int j = this.railPositions[0].blockZ;

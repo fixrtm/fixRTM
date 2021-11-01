@@ -1,0 +1,47 @@
+--- a/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
++++ b/jp/ngt/rtm/modelpack/init/ModelPackLoadThread.java
+@@ -97,17 +97,19 @@
+          };
+          thread.start();
+          this.runThread();
+       } catch (Throwable throwable) {
+          this.finish();
++         CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading RTM ModelPack");
++         crashreport.makeCategory("Initialization");
+          if (this.threadSide == Side.CLIENT) {
+-            CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Loading RTM ModelPack");
+-            crashreport.makeCategory("Initialization");
+             crashreport = NGTUtilClient.getMinecraft().addGraphicsAndWorldToCrashReport(crashreport);
+             NGTUtilClient.getMinecraft().displayCrashReport(crashreport);
+          } else {
+-            throwable.printStackTrace();
++            // Kotlin intellij plugin issue: reportCrash$fixRtm looks not found
++            // in ide but should be found in gradle build
++            com.anatawa12.fixRtm.FixRtm.INSTANCE.reportCrash$fixRtm(crashreport);
+          }
+       } finally {
+          if (this.displayWindow && !this.debug) {
+             this.mainFrame.dispose();
+          }
+@@ -131,19 +133,20 @@
+          }
+       }
+ 
+       this.setBarMaxValue(0, ProgressStateHolder.ProgressState.values().length, "");
+       NGTLog.startTimer();
+-      ModelPackConstructThread modelpackconstructthread = new ModelPackConstructThread(this.threadSide, this);
++      com.anatawa12.fixRtm.rtm.modelpack.init.ExModelPackConstructThread modelpackconstructthread = new com.anatawa12.fixRtm.rtm.modelpack.init.ExModelPackConstructThread(this.threadSide, this);
+       modelpackconstructthread.start();
+       ModelPackManager.INSTANCE.load(this);
+ 
+       while(!modelpackconstructthread.setFinish()) {
+          sleep(500L);
+       }
+ 
+       this.finish();
++      ModelPackManager.INSTANCE.modelConstructed = true;
+       NGTLog.stopTimer("Model load time");
+    }
+ 
+    public void finish() {
+       this.finished = true;

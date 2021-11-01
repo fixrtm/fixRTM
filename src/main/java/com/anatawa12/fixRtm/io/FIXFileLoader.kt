@@ -1,3 +1,7 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.io
 
 import com.anatawa12.fixRtm.Loggers
@@ -11,6 +15,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URI
+import java.net.URL
 import java.nio.charset.Charset
 import java.util.zip.ZipFile
 
@@ -41,14 +46,30 @@ object FIXFileLoader {
     }
 
     fun getFiles(): List<File> {
-        if (!FMLLaunchHandler.isDeobfuscatedEnvironment())
-            return (minecraftDir.resolve("mods").listFiles()!!.asList()
-                    + minecraftDir.resolve("mods/1.12.2").listFiles()?.asList().orEmpty())
-        else
-            return (minecraftDir.resolve("mods").listFiles()!!.asList()
-                    + minecraftDir.resolve("mods/1.12.2").listFiles()?.asList().orEmpty()
-                    + listOf(File(URI(FIXFileLoader::class.java.protectionDomain.codeSource.location.path.substringBefore(
-                '!')))))
+        return getModsOrJars().flatMap { it.walk().filter(File::isFile) }
+    }
+
+    fun getModsOrJars(): List<File> {
+        val files = mutableListOf<File>()
+        files += minecraftDir.resolve("mods")
+        files += minecraftDir.resolve("jar-mods-cache/v1/mods")
+        if (FMLLaunchHandler.isDeobfuscatedEnvironment()) {
+            val loader = FIXFileLoader::class.java.classLoader
+            fun zipUrlToFile(loader: ClassLoader, relative: String): File {
+                val url = loader.getResource(relative)
+                    ?: error("resource $relative not found")
+                return when (url.protocol) {
+                    "zip", "jar" -> File(URI(url.path.substringBefore('!')))
+                    "file" -> File(URI(url.toString().dropLast(relative.length)))
+                    else -> error("unsupported protocol: ${url.protocol}")
+                }
+            }
+            // add fixRTM, rtm and
+            files += zipUrlToFile(loader, FIXFileLoader::class.java.name.replace('.', '/') + ".class")
+            files += zipUrlToFile(loader, "assets/rtm/lang/ja_JP.lang")
+            files += zipUrlToFile(loader, "assets/ngtlib/lang/ja_JP.lang")
+        }
+        return files
     }
 
     fun getResource(location: ResourceLocation): FIXResource {
@@ -97,7 +118,7 @@ object FIXFileLoader {
                 val parts = entry.name.split("/")
                 if (parts[0] == "assets" && parts.size >= 2 && parts[1].isNotEmpty())
                     domains.add(parts[1])
-                ignoreCaseMap[entry.name.toLowerCase()] = entry.name
+                ignoreCaseMap[entry.name.lowercase()] = entry.name
             }
             this.domains = domains
             this.ignoreCaseMap = ignoreCaseMap

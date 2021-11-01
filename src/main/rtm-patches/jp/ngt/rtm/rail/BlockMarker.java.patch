@@ -1,0 +1,93 @@
+--- a/jp/ngt/rtm/rail/BlockMarker.java
++++ b/jp/ngt/rtm/rail/BlockMarker.java
+@@ -125,10 +125,11 @@
+    public void makeRailMap(TileEntityMarker marker, int x, int y, int z) {
+       this.onMarkerActivated(marker.getWorld(), x, y, z, (EntityPlayer)null, false);
+    }
+ 
+    public boolean onMarkerActivated(World world, int x, int y, int z, EntityPlayer player, boolean makeRail) {
++      com.anatawa12.fixRtm.rtm.HooksKt.BlockMarker_onMarkerActivated(player);
+       ResourceStateRail resourcestaterail = this.hasRail(player, makeRail);
+       if (resourcestaterail == null) {
+          return false;
+       } else {
+          boolean flag = player == null || player.capabilities.isCreativeMode;
+@@ -141,37 +142,34 @@
+          return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
+       }
+    }
+ 
+    private List<RailPosition> searchAllMarker(World world, int x, int y, int z) {
+-      List<RailPosition> list = new ArrayList<>();
+       int i = RTMCore.railGeneratingDistance;
+       int j = i * 2;
+       int k = RTMCore.railGeneratingHeight;
+-      int l = k * 2;
++      int xMin = x - i;
++      int xMax = x - i;
++      int yMin = y - i;
++      int yMax = y - i;
++      int zMin = z - i;
++      int zMax = z - i;
+ 
+-      for(int i1 = 0; i1 < j; ++i1) {
+-         for(int j1 = 0; j1 < l; ++j1) {
+-            for(int k1 = 0; k1 < j; ++k1) {
+-               int l1 = x - i + i1;
+-               int i2 = y - k + j1;
+-               int j2 = z - i + k1;
+-               RailPosition railposition = this.getRailPosition(world, l1, i2, j2);
+-               if (railposition != null) {
+-                  list.add(railposition);
+-               }
+-            }
+-         }
+-      }
++      List<RailPosition> list = world.loadedTileEntityList.stream()
++         .filter(TileEntityMarker.class::isInstance)
++         .map(TileEntityMarker.class::cast)
++         .filter(tile -> xMin <= tile.getPos().getX() && tile.getX() <= xMax
++            && yMin <= tile.getPos().getY() && tile.getY() <= yMax
++            && zMin <= tile.getPos().getZ() && tile.getZ() <= zMax)
++         .filter(tile -> Math.abs(tile.getY() - y) < k)
++         .map(TileEntityMarker::getMarkerRP)
++         .filter(java.util.Objects::nonNull)
++         .sorted(java.util.Comparator.<RailPosition>comparingInt(v -> -v.switchType)
++               .thenComparingInt(v -> v.blockY)
++               .thenComparingInt(Object::hashCode))
++         .collect(java.util.stream.Collectors.toList());
+ 
+-      list.sort((arg0, arg1) -> {
+-         if (arg0.switchType != arg1.switchType) {
+-            return arg1.switchType - arg0.switchType;
+-         } else {
+-            return arg0.blockY != arg1.blockY ? arg0.blockY - arg1.blockY : arg0.hashCode() - arg1.hashCode();
+-         }
+-      });
+       return list;
+    }
+ 
+    public static boolean createRail(World world, int x, int y, int z, List<RailPosition> rps, ResourceStateRail state, boolean makeRail, boolean isCreative) {
+       if (rps.size() == 1) {
+@@ -292,18 +290,18 @@
+                tileentitylargerailswitchcore.sendPacket();
+                return true;
+             } else {
+                TileEntity tileentity = BlockUtil.getTileEntity(world, x, y, z);
+                if (tileentity instanceof TileEntityMarker) {
+-                  List<BlockPos> list = new ArrayList();
++                  List<BlockPos> list1 = new ArrayList();
+ 
+                   for(int i = 0; i < list.size(); ++i) {
+                      RailPosition railposition2 = list.get(i);
+-                     list.add(new BlockPos(railposition2.blockX, railposition2.blockY, railposition2.blockZ));
++                     list1.add(new BlockPos(railposition2.blockX, railposition2.blockY, railposition2.blockZ));
+                   }
+ 
+-                  ((TileEntityMarker)tileentity).setMarkersPos(list);
++                  ((TileEntityMarker)tileentity).setMarkersPos(list1);
+                }
+ 
+                return false;
+             }
+          }

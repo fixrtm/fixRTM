@@ -1,3 +1,7 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.asm.config
 
 import com.anatawa12.fixRtm.Loggers
@@ -8,9 +12,33 @@ object MainConfig {
     private val configFile = Loader.instance().configDir.resolve("fix-rtm.cfg")
     private val config = Configuration(configFile)
 
+    private const val categoryFixRTM = "fixrtm"
     private const val categoryModelLoading = "model_loading"
     private const val categoryBetterRtm = "better_rtm"
     private const val categoryBetterNgtLib = "better_ngtlib"
+
+    @JvmField
+    val modelPackLoadSpeed: ModelPackLoadSpeed
+
+    init {
+        val modelPackLoadSpeedInt = config.getInt(
+            "modelPackLoadSpeed", categoryModelLoading,
+            ModelPackLoadSpeed.WorkStealing.configValue,
+            ModelPackLoadSpeed.minValue(),
+            ModelPackLoadSpeed.maxValue(),
+            ModelPackLoadSpeed.computeComment())
+
+        val multiThreadConstructEnabledProp = config.getCategory(categoryModelLoading).remove("multiThreadConstructEnabled")
+        if (multiThreadConstructEnabledProp != null) {
+            @Suppress("SimplifyBooleanWithConstants")
+            if (multiThreadConstructEnabledProp.getBoolean(true) == false) {
+                config.getCategory(categoryModelLoading)
+                    .get("modelPackLoadSpeed")!!
+                    .set(ModelPackLoadSpeed.UseOriginal.configValue)
+            }
+        }
+        modelPackLoadSpeed = ModelPackLoadSpeed.byValue(modelPackLoadSpeedInt)
+    }
 
     @JvmField
     val multiThreadModelConstructEnabled = config.getBoolean(
@@ -36,9 +64,9 @@ object MainConfig {
     val scriptingMode: ScriptingMode
 
     init {
-        var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.toLowerCase())
+        var scriptingMode = ScriptingMode.getByConfigValue(scriptingModeStr.lowercase())
         if (scriptingMode == null) {
-            if (scriptingModeStr.toLowerCase() == ScriptingMode.defaultConfigValue) {
+            if (scriptingModeStr.lowercase() == ScriptingMode.defaultConfigValue) {
                 scriptingMode = ScriptingMode.default
             } else {
                 Loggers.getLogger("Config").fatal("your scriptingMode is not valid so we use default.")
@@ -76,11 +104,19 @@ object MainConfig {
         "change texture for test train to make easy to identify test train and electric train")
 
     @JvmField
-    val addModelPackInformationInAllCrashReports = config.getBoolean(
-        "addModelPackInformationInAllCrashReports", categoryBetterRtm,
-        true,
-        "adds model pack information about all models in compressed format in all crash reports. " +
-                "This may make your crash report very fat.")
+    val addModelPackInformationInAllCrashReports: Boolean
+    init {
+        val comment = "adds model pack information about all models in compressed format in all crash reports. " +
+                "This may make your crash report very fat."
+        val defaultValue = false
+
+        val prop = config.get(categoryBetterRtm, "addModelPackInformationInAllCrashReports", false)
+        prop.languageKey = "addModelPackInformationInAllCrashReports"
+        if (prop.comment == null || !prop.comment.endsWith("[default: $defaultValue]"))
+            prop.set(defaultValue)
+        prop.comment = "$comment [default: $defaultValue]"
+        addModelPackInformationInAllCrashReports = prop.getBoolean(defaultValue)
+    }
 
     @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
@@ -93,6 +129,12 @@ object MainConfig {
         "addNegativePermission", categoryBetterNgtLib,
         true,
         "adds permissions to disallow some permission. this overrides op and 'fixrtm.all_permit'.")
+
+    @JvmField
+    val expandPlayableSoundCount = config.getBoolean(
+        "expandPlayableSoundCount", categoryFixRTM,
+        true,
+        "expands the count of playable sound count at the same time. this may cause compatibility issue with Immersive Vehicles.")
 
     init {
         if (config.hasChanged()) {
@@ -116,6 +158,23 @@ object MainConfig {
             val default = UseRtmNormal
 
             const val defaultConfigValue = "use-default"
+        }
+    }
+
+    enum class ModelPackLoadSpeed(val configValue: Int, val description: String) {
+        UseOriginal(0, "Slowest; Use Original"),
+        SingleThreaded(1, "Slow; Single thread"),
+        MultiThreaded(2, "Faster; use one of third of your processor"),
+        WorkStealing(3, "Fastest; use all processors; Default"),
+        ;
+        companion object {
+            private val byValue = values().associateBy { it.configValue }
+            fun byValue(value: Int) = byValue[value] ?: error("invalid or unsupported loading speed")
+            fun minValue() = values().minByOrNull { it.configValue }!!.configValue
+            fun maxValue() = values().maxByOrNull { it.configValue }!!.configValue
+            fun computeComment() = values()
+                .sortedBy { it.configValue }
+                .joinToString("") { "${it.configValue}: ${it.description}\n" }
         }
     }
 }

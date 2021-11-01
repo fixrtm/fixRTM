@@ -1,3 +1,7 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 import com.anatawa12.fixrtm.gradle.classHierarchy.ClassHierarchy
 import com.anatawa12.fixrtm.gradle.classHierarchy.HClass
 import com.anatawa12.fixrtm.gradle.walkBottomUp
@@ -74,8 +78,9 @@ open class PrintFieldStructure : DefaultTask() {
                 if (isLoaded) {
                     yieldAll(fields.asSequence()
                         .filter { !it.isStatic }
-                        .filter { it.type[0] == 'L' }
-                        .map { it.type.substring(1, it.type.length - 1) }
+                        .map { it.type.substring(it.type.indexOfFirst { it != '[' }) }
+                        .filter { it[0] == 'L' }
+                        .map { it.substring(1, it.length - 1) }
                         .map { loader.getByInternalName(it) }
                         .toSet())
                 }

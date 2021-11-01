@@ -1,5 +1,13 @@
 All files in this repository are released/published under
-GNU Lesser General Public License version 3 with some exceptions.
+GNU Lesser General Public License version 3 with some exceptions
+unless otherwise stated.
+
+This project is unofficial modification of NGTLib and RTM.
+Original sources may be published under other license.
+Patches included in this project is under GNU LGPLv.3.
+
+To contribute this project, you must allow the repository owner to add
+some exception like `Original RTM Author Exception` to software license.
 
 ==== Exception 1: Original RTM Author Exception ====
 

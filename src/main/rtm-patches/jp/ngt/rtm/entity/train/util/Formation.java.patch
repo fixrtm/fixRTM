@@ -1,0 +1,125 @@
+--- a/jp/ngt/rtm/entity/train/util/Formation.java
++++ b/jp/ngt/rtm/entity/train/util/Formation.java
+@@ -9,14 +9,15 @@
+ import jp.ngt.rtm.network.PacketFormation;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.nbt.NBTTagList;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
++import org.jetbrains.annotations.Nullable;
+ 
+ public final class Formation {
+    public final long id;
+-   public FormationEntry[] entries;
++   public @Nullable  FormationEntry[] entries;
+    private EntityTrainBase controlCar;
+    private byte direction;
+    private float speed;
+ 
+    public Formation(long par1, int par2) {
+@@ -121,10 +122,11 @@
+ 
+    private void reverse() {
+       NGTUtil.reverse(this.entries);
+ 
+       for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
+          formationentry.dir = (byte)(formationentry.dir ^ 1);
+       }
+ 
+    }
+ 
+@@ -147,29 +149,32 @@
+       this.entries = aformationentry;
+    }
+ 
+    public void connectTrain(EntityTrainBase par1, EntityTrainBase par2, int par3, int par4, Formation par5) {
+       FormationEntry formationentry = this.getEntry(par1);
++      FormationEntry formationentry2 = par5.getEntry(par2);
++      if (formationentry2 == null) return;
+       if (formationentry != null) {
+          int i = 0;
+          boolean flag = par3 == formationentry.dir;
+          if (flag) {
+             this.reverse();
+          }
+ 
+-         formationentry = par5.getEntry(par2);
+-         flag = par4 == formationentry.dir;
++         flag = par4 == formationentry2.dir;
+          if (!flag) {
+             par5.reverse();
+          }
+ 
++
+          this.addAll(par5.entries);
+          this.reallocation();
+ 
+          for(FormationEntry formationentry1 : this.entries) {
++            if (formationentry1 == null) continue;
+             this.setSpeed(0.0F);
+-            formationentry1.train.setNotch(-8);
++            formationentry1.train.setEmergencyBrake();
+             formationentry1.train.setVehicleState(TrainState.TrainStateType.Role, TrainState.Role_Center.data);
+          }
+ 
+          FormationManager.getInstance().removeFormation(par5.id);
+       }
+@@ -224,10 +229,11 @@
+    }
+ 
+    private EntityTrainBase getControlCar() {
+       if (this.controlCar == null || !this.controlCar.isControlCar()) {
+          for(FormationEntry formationentry : this.entries) {
++            if (formationentry == null) continue;
+             if (formationentry.train.isControlCar()) {
+                this.controlCar = formationentry.train;
+                break;
+             }
+          }
+@@ -241,10 +247,11 @@
+    }
+ 
+    public void setSpeed(float par1) {
+       if (par1 != this.speed) {
+          for(FormationEntry formationentry : this.entries) {
++            if (formationentry == null) continue;
+             formationentry.train.setSpeed_NoSync(par1);
+          }
+ 
+          this.speed = par1;
+       }
+@@ -266,18 +273,19 @@
+       }
+    }
+ 
+    public void setTrainStateData(TrainState.TrainStateType type, byte data, EntityTrainBase par2) {
+       for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
+          if (type == TrainState.TrainStateType.Role) {
+-            if (data == TrainState.Role_Front.data) {
++            if (data == TrainState.Role_Front.data || data == TrainState.Role_Back.data) {
+                this.controlCar = par2;
+             }
+ 
+             if (par2.equals(formationentry.train)) {
+                formationentry.train.setTrainStateData_NoSync(type, data);
+-            } else if (formationentry.train.getVehicleState(TrainState.TrainStateType.Role) == data) {
++            } else if (formationentry.train.getVehicleState(TrainState.TrainStateType.Role) != TrainState.Role_Center.data) {
+                formationentry.train.setTrainStateData_NoSync(type, TrainState.Role_Center.data);
+             }
+          } else if (type == TrainState.TrainStateType.Door) {
+             int i = data & 1;
+             int j = data >> 1;
+@@ -290,10 +298,11 @@
+ 
+    }
+ 
+    public boolean containBogie(EntityBogie bogie) {
+       for(FormationEntry formationentry : this.entries) {
++         if (formationentry == null) continue;
+          EntityTrainBase entitytrainbase = formationentry.train;
+          if (entitytrainbase.getBogie(0) == bogie || entitytrainbase.getBogie(1) == bogie) {
+             return true;
+          }
+       }

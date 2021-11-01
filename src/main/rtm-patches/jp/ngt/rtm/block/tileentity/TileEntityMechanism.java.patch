@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntityMechanism.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntityMechanism.java
+@@ -533,6 +533,12 @@
+    }
+ 
+    public boolean closeGui(ResourceState par1) {
+       return true;
+    }
++
++   @Override
++   public void addInfoToCrashReport(net.minecraft.crash.CrashReportCategory reportCategory) {
++      super.addInfoToCrashReport(reportCategory);
++      com.anatawa12.fixRtm.rtm.block.tileentity.TileEntityMechanismKt.addInfoToCrashReport(this, reportCategory);
++   }
+ }

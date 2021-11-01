@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/tileentity/RenderMachine.java
++++ b/jp/ngt/rtm/block/tileentity/RenderMachine.java
+@@ -18,10 +18,11 @@
+    private void renderMachine(TileEntityMachineBase par1, double par2, double par4, double par6, float par8) {
+       GL11.glPushMatrix();
+       GL11.glEnable(32826);
+       GL11.glTranslatef((float)par2 + 0.5F, (float)par4, (float)par6 + 0.5F);
+       GL11.glTranslatef(0.0F, 0.5F, 0.0F);
++      GL11.glTranslatef(par1.getOffsetX(), par1.getOffsetY(), par1.getOffsetZ());
+       ModelSetMachine modelsetmachine = par1.getResourceState().getResourceSet();
+       MachineConfig machineconfig = modelsetmachine.getConfig();
+       if (machineconfig.rotateByMetadata) {
+          switch(par1.getBlockMetadata()) {
+          case 0:

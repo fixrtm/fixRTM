@@ -1,0 +1,16 @@
+--- a/jp/ngt/ngtlib/network/PacketNBT.java
++++ b/jp/ngt/ngtlib/network/PacketNBT.java
+@@ -136,9 +136,13 @@
+ 
+    public static void sendToClient(Entity entity) {
+       NGTCore.NETWORK_WRAPPER.sendToAll(new PacketNBT(entity, true));
+    }
+ 
++   public static void sendToClient(Entity entity, EntityPlayerMP player) {
++      NGTCore.NETWORK_WRAPPER.sendTo(new PacketNBT(entity, true), player);
++   }
++
+    public static void sendToClient(TileEntity entity) {
+       NGTCore.NETWORK_WRAPPER.sendToAll(new PacketNBT(entity, true));
+    }
+ }

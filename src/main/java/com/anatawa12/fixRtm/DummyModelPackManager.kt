@@ -1,3 +1,7 @@
+/// Copyright (c) 2019 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm
 
 import com.anatawa12.fixRtm.asm.config.MainConfig.dummyModelPackEnabled
@@ -75,7 +79,6 @@ object DummyModelPackManager {
         if (!dummyModelPackEnabled) return false // if disabled
         if (NGTUtil.isServer()) return true // if server
         if (!NGTUtil.isSMP()) return true // if single player
-        if (!FixRtm.serverHasFixRTM) return true // if server does not use fixrtm
         if (gotAllModels) return true // if got all model name
         return false
     }

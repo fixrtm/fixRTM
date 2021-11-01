@@ -1,0 +1,19 @@
+--- a/jp/ngt/rtm/render/RTMRenderers.java
++++ b/jp/ngt/rtm/render/RTMRenderers.java
+@@ -9,14 +9,13 @@
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ @SideOnly(Side.CLIENT)
+ public final class RTMRenderers {
+    public static <R extends PartsRenderer> R getRendererWithScript(ResourceLocation par1, String... args) {
+-      String s = ModelPackManager.INSTANCE.getScript(par1.getPath());
+-      ScriptEngine scriptengine = ScriptUtil.doScript(s);
++      ScriptEngine scriptengine = com.anatawa12.fixRtm.scripting.FIXScriptUtil.getScriptAndDoScript(par1.toString());
+       String s1 = (String)ScriptUtil.getScriptField(scriptengine, "renderClass");
+-      R r = getRenderer(s1, args);
++      R r = (R)getRenderer(s1, args);
+       r.setScript(scriptengine, par1);
+       scriptengine.put("renderer", r);
+       return r;
+    }
+ 

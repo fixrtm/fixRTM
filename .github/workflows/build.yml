@@ -1,3 +1,7 @@
+# Copyright (c) 2020 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 # This is a basic workflow to help you get started with Actions
 
 name: CI
@@ -35,12 +39,34 @@ jobs:
       - name: apply patches
         run: ./pm.apply-patches
 
-      - name: setup workspace
-        uses: eskatos/gradle-command-action@v1
-        with:
-          arguments: setupCiWorkspace
-
       - name: build
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: build
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: jar
+          path: ./build/libs/*
+          retention-days: 30
+
+      # get jar name
+      - name: prepare run server
+        id: prepare_run_server
+        run: |
+          echo "::set-output name=version_name::$(grep 'modVersion=' < gradle.properties | sed 's/modVersion=//')"
+          rtmVersion="$(grep 'rtmVersion=' < gradle.properties | sed 's/rtmVersion=//')"
+          ngtVersion="$(grep 'ngtVersion=' < gradle.properties | sed 's/ngtVersion=//')"
+          curse() {
+              echo "$HOME/.gradle/caches/minecraft-mods/curse/$1/$2/$1-$2-raw.jar"
+          }
+          mkdir mods
+          cp "$(curse ngtlib "$ngtVersion")" mods
+          cp "$(curse realtrainmod "$rtmVersion")" mods
+
+      - name: run server
+        uses: anatawa12/minecraft-server-start-test@v1
+        with:
+          version: 1.12.2-14.23.5.2855
+          mod_jar: ./build/libs/fixRtm-${{ steps.prepare_run_server.outputs.version_name }}.jar
+          mods_dir: mods

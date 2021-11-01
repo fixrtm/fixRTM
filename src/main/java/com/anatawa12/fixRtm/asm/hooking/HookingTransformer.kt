@@ -1,3 +1,7 @@
+/// Copyright (c) 2021 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.asm.hooking
 
 import net.minecraft.launchwrapper.IClassTransformer
@@ -11,6 +15,7 @@ class HookingTransformer : IClassTransformer {
         cv = MethodVisitingClassVisitor(cv, listOfNotNull(
             ::NewEntityTrackerVisitor.takeUnless { name == "com.anatawa12.fixRtm.rtm.entity.vehicle.VehicleTrackerEntryKt" },
         ))
+        if (name == "net.minecraftforge.fml.common.FMLContainer") cv = FMLContainerClassVisitor(cv)
         ClassReader(basicClass).accept(cv, 0)
         return cw.toByteArray()
     }
@@ -63,6 +68,34 @@ class HookingTransformer : IClassTransformer {
                 mv = factory(mv) ?: mv
             }
             return mv
+        }
+    }
+
+    class FMLContainerClassVisitor(cv: ClassVisitor) : ClassVisitor(Opcodes.ASM5, cv) {
+        override fun visitMethod(
+            access: Int,
+            name: String?,
+            desc: String?,
+            signature: String?,
+            exceptions: Array<out String>?
+        ): MethodVisitor? {
+            var mv = super.visitMethod(access, name, desc, signature, exceptions) ?: return null
+            if (name == "readData" && desc == "(L" +
+                "net/minecraft/world/storage/SaveHandler;L" +
+                "net/minecraft/world/storage/WorldInfo;L" +
+                "java/util/Map;L" +
+                "net/minecraft/nbt/NBTTagCompound;)V") {
+                mv = FMLContainerReadDataMethodVisitor(mv)
+            }
+            return mv
+        }
+    }
+
+    class FMLContainerReadDataMethodVisitor(mv: MethodVisitor) : MethodVisitor(Opcodes.ASM5, mv) {
+        override fun visitCode() {
+            super.visitCode()
+            super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/anatawa12/fixRtm/FixHooks",
+                "onFMLReadData", "()V", false)
         }
     }
 }

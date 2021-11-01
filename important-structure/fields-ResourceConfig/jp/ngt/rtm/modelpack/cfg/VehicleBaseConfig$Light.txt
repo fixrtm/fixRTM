@@ -1,0 +1,19 @@
+super: java/lang/Object
+name: color
+type: I
+
+name: pos
+type: [F
+
+name: r
+type: F
+
+name: reverse
+type: Z
+
+name: this$0
+type: Ljp/ngt/rtm/modelpack/cfg/VehicleBaseConfig;
+
+name: type
+type: B
+

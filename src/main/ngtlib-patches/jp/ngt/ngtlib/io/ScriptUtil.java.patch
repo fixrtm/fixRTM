@@ -1,0 +1,44 @@
+--- a/jp/ngt/ngtlib/io/ScriptUtil.java
++++ b/jp/ngt/ngtlib/io/ScriptUtil.java
+@@ -15,11 +15,10 @@
+ public final class ScriptUtil {
+    private static ScriptEngineManager SEM;
+ 
+    private static void init() {
+       LaunchClassLoader launchclassloader = Launch.classLoader;
+-      launchclassloader.addClassLoaderExclusion("javax.");
+       launchclassloader.addClassLoaderExclusion("jdk.nashorn.");
+       SEM = new ScriptEngineManager((ClassLoader)null);
+    }
+ 
+    private static void showScripts(ScriptEngineManager mng) {
+@@ -46,16 +45,28 @@
+          System.out.println();
+       }
+ 
+    }
+ 
++   private static void checkScriptConfig() {
++      java.util.Set<String> nashornStarted = new java.util.HashSet<>();
++      for (Object o : System.getProperties().keySet()) {
++         System.out.println(o + "=" + System.getProperty(o.toString()));
++         if (o.toString().startsWith("nashorn.option."))
++            nashornStarted.add(o.toString());
++      }
++      if (!nashornStarted.isEmpty())
++         throw new IllegalStateException("some nashorn.option.*** properties found: " + nashornStarted);
++   }
++
+    public static ScriptEngine doScript(String s) {
+       if (SEM == null) {
+          init();
+       }
+ 
+-      ScriptEngine scriptengine = SEM.getEngineByName("javascript");
++      checkScriptConfig();
++      ScriptEngine scriptengine = new jdk.nashorn.api.scripting.NashornScriptEngineFactory().getScriptEngine();
+ 
+       try {
+          scriptengine.eval("load(\"nashorn:mozilla_compat.js\");");
+          scriptengine.eval(s);
+          return scriptengine;

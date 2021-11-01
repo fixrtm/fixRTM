@@ -1,8 +1,13 @@
+/// Copyright (c) 2020 anatawa12 and other contributors
+/// This file is/was part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 package com.anatawa12.fixRtm.rtm.modelpack.init
 
-import com.anatawa12.fixRtm.asm.Preprocessor
+import com.anatawa12.fixRtm.FixRtm
 import com.anatawa12.fixRtm.asm.config.MainConfig
-import com.anatawa12.fixRtm.asm.config.MainConfig.multiThreadModelConstructEnabled
+import com.anatawa12.fixRtm.asm.config.MainConfig.ModelPackLoadSpeed.*
+import com.anatawa12.fixRtm.asm.config.MainConfig.modelPackLoadSpeed
 import com.anatawa12.fixRtm.rtm.modelpack.ModelState
 import com.anatawa12.fixRtm.threadFactoryWithPrefix
 import jp.ngt.ngtlib.io.NGTLog
@@ -33,19 +38,19 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         try {
             block()
         } catch (throwable: Throwable) {
+            var crashReport: CrashReport = CrashReport.makeCrashReport(throwable, "Constructing RTM ModelPack")
+            crashReport.makeCategory("Initialization")
             if (threadSide == Side.CLIENT) {
-                var crashReport: CrashReport = CrashReport.makeCrashReport(throwable, "Constructing RTM ModelPack")
-                crashReport.makeCategory("Initialization")
                 crashReport = NGTUtilClient.getMinecraft().addGraphicsAndWorldToCrashReport(crashReport)
                 NGTUtilClient.getMinecraft().displayCrashReport(crashReport)
             } else {
-                throw throwable
+                FixRtm.reportCrash(crashReport)
             }
         }
     }
 
     override fun run() {
-        if (multiThreadModelConstructEnabled) {
+        if (modelPackLoadSpeed != UseOriginal) {
             runWithCrashReport {
                 runThread()
             }
@@ -74,21 +79,26 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
         }
         guiUpdateThread.start()
 
-        val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-            threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+        val exec = when (modelPackLoadSpeed) {
+            UseOriginal -> error("must be erased")
+            SingleThreaded -> Executors.newSingleThreadExecutor(
+                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+            MultiThreaded -> Executors.newFixedThreadPool(
+                (Runtime.getRuntime().availableProcessors() / 3).coerceAtLeast(1),
+                threadFactoryWithPrefix("fixrtm-ModelPackConstruct-pool"))
+            WorkStealing -> Executors.newWorkStealingPool()
+        }
 
         val futures = mutableListOf<Future<*>>()
 
-        var index = 0
         while (this.loading) {
-            while (index < unConstructSets.size) {
-                val indexNew = index
+            while (true) {
+                val resourceSet = unConstructSets.poll() ?: break
                 futures += exec.submit {
                     runWithCrashReport {
-                        construct(unConstructSets[indexNew])
+                        construct(resourceSet)
                     }
                 }
-                index++
             }
             Thread.sleep(500L)
         }
@@ -111,11 +121,11 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
             set.state = ModelState.CONSTRUCTED
             val index = index.incrementAndGet()
             lastLoadedModelName = set.config.name
-            Preprocessor.ifDisabled(MainConfig::reduceConstructModelLog.name)
-            NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
-            Preprocessor.ifEnabled(MainConfig::reduceConstructModelLog.name)
-            NGTLog.trace("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
-            Preprocessor.whatever(MainConfig::reduceConstructModelLog.name)
+            if (!MainConfig.reduceConstructModelLog) {
+                NGTLog.debug("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            } else {
+                NGTLog.trace("Construct Model : %s (%d / %d)", set.config.name, index, unConstructSets.size)
+            }
         } catch (throwable: Throwable) {
             if (set.config.file == null) {
                 throw ModelConstructingException("constructing resource: ${set.config.name} (unknown source file)",
@@ -129,6 +139,7 @@ class ExModelPackConstructThread(val threadSide: Side, val parent: ModelPackLoad
 
 
     override fun setFinish(): Boolean {
+        if (modelPackLoadSpeed == UseOriginal) return super.setFinish()
         return if (ModelPackManager.INSTANCE.unconstructSets.size == this.index.get()) {
             ModelPackManager.INSTANCE.unconstructSets.clear()
             ModelPackManager.INSTANCE.clearCache()

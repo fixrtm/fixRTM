@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
++++ b/jp/ngt/rtm/rail/TileEntityLargeRailCore.java
+@@ -23,10 +23,11 @@
+ import net.minecraft.util.math.AxisAlignedBB;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ public abstract class TileEntityLargeRailCore extends TileEntityLargeRailBase implements IResourceSelector {
++   public boolean breaking;
+    protected boolean isCollidedTrain = false;
+    public boolean colliding = false;
+    private int signal = 0;
+    private ResourceStateRail state = new ResourceStateRail(RTMResource.RAIL, this);
+    public final List<ResourceStateRail> subRails = new ArrayList<>();

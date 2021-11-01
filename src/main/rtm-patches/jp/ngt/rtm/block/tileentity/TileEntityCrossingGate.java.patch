@@ -1,0 +1,18 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntityCrossingGate.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntityCrossingGate.java
+@@ -65,12 +65,13 @@
+ 
+    @SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox() {
+       float[] afloat = (this.getResourceState().getResourceSet().getConfig()).renderAABB;
+       BlockPos blockpos = this.getPos();
+-      return new AxisAlignedBB((double)((float)blockpos.getX() + afloat[0]), (double)((float)blockpos.getY() + afloat[1]), (double)((float)blockpos.getZ() + afloat[2]), (double)((float)blockpos.getX() + afloat[3]), (double)((float)blockpos.getY() + afloat[4]), (double)((float)blockpos.getZ() + afloat[5]));
++      return new AxisAlignedBB((double)((float)blockpos.getX() + afloat[0]), (double)((float)blockpos.getY() + afloat[1]), (double)((float)blockpos.getZ() + afloat[2]), (double)((float)blockpos.getX() + afloat[3]), (double)((float)blockpos.getY() + afloat[4]), (double)((float)blockpos.getZ() + afloat[5]))
++         .offset(getOffsetX(), getOffsetY(), getOffsetZ());
+    }
+ 
+-   protected ResourceType getSubType() {
++   public ResourceType getSubType() {
+       return RTMResource.MACHINE_GATE;
+    }
+ }
