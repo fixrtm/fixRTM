@@ -12,7 +12,7 @@
     }
  
     private static void showScripts(ScriptEngineManager mng) {
- @@ -51,11 +50,12 @@
+@@ -51,11 +50,12 @@
     public static ScriptEngine doScript(String s) {
        if (SEM == null) {
           init();
