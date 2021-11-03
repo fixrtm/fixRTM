@@ -24,11 +24,11 @@
        int k = RTMCore.railGeneratingHeight;
 -      int l = k * 2;
 +      int xMin = x - i;
-+      int xMax = x - i;
++      int xMax = x + i;
 +      int yMin = y - i;
-+      int yMax = y - i;
++      int yMax = y + i;
 +      int zMin = z - i;
-+      int zMax = z - i;
++      int zMax = z + i;
  
 -      for(int i1 = 0; i1 < j; ++i1) {
 -         for(int j1 = 0; j1 < l; ++j1) {
@@ -46,9 +46,9 @@
 +      List<RailPosition> list = world.loadedTileEntityList.stream()
 +         .filter(TileEntityMarker.class::isInstance)
 +         .map(TileEntityMarker.class::cast)
-+         .filter(tile -> xMin <= tile.getPos().getX() && tile.getX() <= xMax
-+            && yMin <= tile.getPos().getY() && tile.getY() <= yMax
-+            && zMin <= tile.getPos().getZ() && tile.getZ() <= zMax)
++         .filter(tile -> xMin <= tile.getX() && tile.getX() <= xMax
++            && yMin <= tile.getY() && tile.getY() <= yMax
++            && zMin <= tile.getZ() && tile.getZ() <= zMax)
 +         .filter(tile -> Math.abs(tile.getY() - y) < k)
 +         .map(TileEntityMarker::getMarkerRP)
 +         .filter(java.util.Objects::nonNull)
