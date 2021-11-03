@@ -5,6 +5,7 @@ import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.BiFunction
 import java.util.function.Function
+import kotlin.concurrent.getOrSet
 
 class ThreadLocalProperties : Properties() {
     // this class original implementations
@@ -471,7 +472,10 @@ class ThreadLocalProperties : Properties() {
     private class Entry(override val key: Any) : MutableMap.MutableEntry<Any, Any> {
         @Volatile
         var global: Any? = null
-        private val local = InheritableThreadLocal<Any>()
+        private val localBacked = InheritableThreadLocal<Any>()
+        private var local: Any
+            get() = localBacked.getOrSet { GLOBAL_MARKER }
+            set(value) = localBacked.set(value)
 
         override val value: Any
             get() = get() ?: throw IllegalStateException("getting value for removed value")
@@ -481,14 +485,14 @@ class ThreadLocalProperties : Properties() {
                 throw IllegalStateException("setting value for removed value")
             }!!
 
-        fun get(): Any? = when (val localValue = local.get()) {
+        fun get(): Any? = when (val localValue = local) {
             GLOBAL_MARKER -> global
             UNSET_MARKER -> null
             else -> localValue
         }
 
         fun delete(): Any? {
-            val localValue = local.get()
+            val localValue = local
             return if (localValue === GLOBAL_MARKER) {
                 val old = global
                 global = null
@@ -496,7 +500,7 @@ class ThreadLocalProperties : Properties() {
             } else if (localValue === UNSET_MARKER) {
                 null
             } else {
-                local.set(UNSET_MARKER)
+                local = UNSET_MARKER
                 localValue
             }
         }
@@ -504,7 +508,7 @@ class ThreadLocalProperties : Properties() {
         fun set(value: Any): Any? = set(value) {}
 
         private inline fun set(value: Any, onNotFound: () -> Unit): Any? {
-            val localValue = local.get()!!
+            val localValue = local
             return if (localValue === GLOBAL_MARKER) {
                 val old = global
                 if (old == null) onNotFound()
@@ -512,10 +516,10 @@ class ThreadLocalProperties : Properties() {
                 old
             } else if (localValue === UNSET_MARKER) {
                 onNotFound()
-                local.set(value)
+                local = value
                 null
             } else {
-                local.set(value)
+                local = value
                 localValue
             }
         }
@@ -528,8 +532,8 @@ class ThreadLocalProperties : Properties() {
         override fun hashCode(): Int = key.hashCode() xor get().hashCode()
 
         fun setLocal() {
-            if (local.get() == GLOBAL_MARKER)
-                local.set(global ?: UNSET_MARKER)
+            if (local == GLOBAL_MARKER)
+                local = global ?: UNSET_MARKER
         }
 
         companion object {
