@@ -13,17 +13,20 @@ class ThreadLocalProperties : Properties() {
     fun markThreadLocal(key: Any) = getEntry(key).setLocal()
 
     companion object {
+        @JvmStatic
         fun markLocalSystemProperty(key: String) {
             (System.getProperties() as? ThreadLocalProperties)
                 ?.markThreadLocal(key)
         }
 
+        @JvmStatic
         fun setLocalSystemProperty(key: String, value: String) {
             val props = (System.getProperties() as? ThreadLocalProperties) ?: return
             props.markThreadLocal(key)
             props[key] = value
         }
 
+        @JvmStatic
         fun removeLocalSystemProperty(key: String) {
             val props = (System.getProperties() as? ThreadLocalProperties) ?: return
             props.markThreadLocal(key)

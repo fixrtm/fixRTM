@@ -119,6 +119,13 @@ object MainConfig {
     }
 
     @JvmField
+    val useThreadLocalProperties = config.getBoolean(
+        "useThreadLocalProperties", categoryBetterRtm,
+        true,
+        "fix compatibility problem with CustomNPCs using ThreadLocalProperties. " +
+                "ThreadLocalProperties is not stable enough so this fix is optional.")
+
+    @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
         "addAllowAllPermission", categoryBetterNgtLib,
         true,

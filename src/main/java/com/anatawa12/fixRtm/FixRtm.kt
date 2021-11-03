@@ -15,6 +15,7 @@ import com.anatawa12.fixRtm.rtm.modelpack.modelset.dummies.*
 import com.anatawa12.fixRtm.scripting.loadFIXScriptUtil
 import com.anatawa12.fixRtm.scripting.nashorn.CompiledImportedScriptCache
 import com.anatawa12.fixRtm.scripting.sai.ExecutedScriptCache
+import com.anatawa12.fixRtm.utils.ThreadLocalProperties
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraft.block.Block
@@ -71,6 +72,8 @@ object FixRtm {
             FMLCommonHandler.instance().registerCrashCallable(RTMAllModelPackInfoCrashCallable)
         else
             FMLCommonHandler.instance().registerCrashCallable(RTMSmallModelPackInfoCrashCallable)
+        if (MainConfig.useThreadLocalProperties)
+            System.setProperties(ThreadLocalProperties().apply { putAll(System.getProperties()) })
         Launch.classLoader.addClassLoaderExclusion("jdk.nashorn.")
         when (MainConfig.scriptingMode) {
             MainConfig.ScriptingMode.CacheWithSai -> {
