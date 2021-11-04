@@ -13,7 +13,23 @@
  import org.lwjgl.input.Keyboard;
  
  @SideOnly(Side.CLIENT)
-@@ -65,11 +65,11 @@
+@@ -51,25 +51,25 @@
+    }
+ 
+    public void onTickStart() {
+       Minecraft minecraft = NGTUtilClient.getMinecraft();
+       EntityPlayer entityplayer = minecraft.player;
+-      if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode())) {
++      if (minecraft.gameSettings.keyBindJump.isKeyDown()) {
+          if (entityplayer.isRiding() && entityplayer.getRidingEntity() instanceof EntityVehicle) {
+             this.sendKeyToServer((byte)9, "");
+          }
+-      } else if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode()) && entityplayer.isRiding() && entityplayer.getRidingEntity() instanceof EntityPlane && !entityplayer.getRidingEntity().onGround) {
++      } else if (minecraft.gameSettings.keyBindSneak.isKeyDown() && entityplayer.isRiding() && entityplayer.getRidingEntity() instanceof EntityPlane && !entityplayer.getRidingEntity().onGround) {
+          this.sendKeyToServer((byte)10, "");
+       }
+ 
+    }
  
     public void onTickEnd() {
     }
