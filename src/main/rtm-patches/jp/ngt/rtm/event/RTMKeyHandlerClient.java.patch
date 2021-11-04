@@ -13,7 +13,7 @@
  import org.lwjgl.input.Keyboard;
  
  @SideOnly(Side.CLIENT)
-@@ -51,25 +51,25 @@
+@@ -51,25 +51,34 @@
     }
  
     public void onTickStart() {
@@ -36,13 +36,36 @@
  
     @SubscribeEvent
 -   public void keyDown(KeyInputEvent event) {
++   public void onInputUpdateEvent(net.minecraftforge.client.event.InputUpdateEvent event) {
++      EntityPlayer player = event.getEntityPlayer();
++      Entity ridingEntity = player.getRidingEntity();
++      if (ridingEntity instanceof EntityPlane && ((EntityPlane)ridingEntity).disableUnmount()) {
++         event.getMovementInput().sneak = false;
++      }
++   }
++
++   @SubscribeEvent
 +   public void keyDown(InputEvent event) {
        Minecraft minecraft = NGTUtilClient.getMinecraft();
        EntityPlayer entityplayer = minecraft.player;
        Entity entity = entityplayer.getRidingEntity();
        if (minecraft.gameSettings.keyBindBack.isPressed()) {
           if (entityplayer.isRiding() && entity instanceof EntityTrainBase) {
-@@ -152,11 +152,11 @@
+@@ -79,13 +88,10 @@
+          if (entityplayer.isRiding() && entity instanceof EntityTrainBase) {
+             ((EntityTrainBase)entity).syncNotch(-1);
+          }
+       } else if (!minecraft.gameSettings.keyBindJump.isKeyDown()) {
+          if (minecraft.gameSettings.keyBindSneak.isKeyDown()) {
+-            if (entityplayer.isRiding() && entity instanceof EntityPlane && ((EntityPlane)entity).disableUnmount()) {
+-               this.unpressKey(minecraft.gameSettings.keyBindSneak);
+-            }
+          } else if (KEY_HORN.isPressed()) {
+             if (entityplayer.isRiding()) {
+                if (entity instanceof EntityTrainBase) {
+                   this.playSound(entityplayer, (byte)2);
+                } else if (entity instanceof EntityArtillery) {
+@@ -152,11 +158,11 @@
                    s = astring[i][1];
                    MacroRecorder.INSTANCE.recChime(player.world, astring[i][1]);
                 }
