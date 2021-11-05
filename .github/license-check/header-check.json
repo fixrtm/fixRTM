@@ -32,6 +32,7 @@
       "LICENSE-FOR-ORIGINAL-AUTHOR.txt",
       "important-structure/**/*",
       "src/main/{ngtlib,rtm}-patches/**/*.java.patch",
+      "src/main/distResources/META-INF/services/**/*",
       "src/main/resources/*-LICENSE.txt",
       "src/main/resources/*-NOTICE.txt",
       "src/main/resources/LICENSE.txt",
