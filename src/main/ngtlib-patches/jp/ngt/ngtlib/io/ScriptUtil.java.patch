@@ -12,3 +12,17 @@
     }
  
     private static void showScripts(ScriptEngineManager mng) {
+@@ -51,11 +50,12 @@
+    public static ScriptEngine doScript(String s) {
+       if (SEM == null) {
+          init();
+       }
+ 
+-      ScriptEngine scriptengine = SEM.getEngineByName("javascript");
++      com.anatawa12.fixRtm.ngtlib.io.ScriptUtil.INSTANCE.prepareSystemProperty();
++      ScriptEngine scriptengine = new jdk.nashorn.api.scripting.NashornScriptEngineFactory().getScriptEngine();
+ 
+       try {
+          scriptengine.eval("load(\"nashorn:mozilla_compat.js\");");
+          scriptengine.eval(s);
+          return scriptengine;
