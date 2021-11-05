@@ -11,6 +11,11 @@ import java.util.function.BiFunction
 import java.util.function.Function
 import kotlin.concurrent.getOrSet
 
+/**
+ * The Properties which has ability to have some threads and thier children threads specific properties.
+ * Because this uses [InheritableThreadLocal], if you specify a property as thread local, 
+ * child threads of your current thread will use thread local property.
+ */
 class ThreadLocalProperties : Properties() {
     // this class original implementations
 
