@@ -152,6 +152,8 @@ val jar by tasks.getting(Jar::class) {
         }
     }
 
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
     manifest {
         attributes(mapOf(
             "FMLCorePlugin" to coremods.joinToString(";"),
