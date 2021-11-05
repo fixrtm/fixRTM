@@ -1,0 +1,43 @@
+[
+  {
+    "include": [
+      "{buildSrc,src}/**/*.{kt,java,js}",
+      "**/*.gradle",
+      "**/*.kts"
+    ],
+    "license": "./.github/license-check/header-triple-slash.txt"
+  },
+  {
+    "include": [
+      "**/*.yml",
+      "**/*.cfg",
+      "**/*.properties",
+      "src/main/java/com/anatawa12/fixRtm/ngtlib/renderer/model/CachedPolygonModelFormat.txt"
+    ],
+    "exclude": [
+      "gradle/wrapper/*"
+    ],
+    "license": "./.github/license-check/header-hash.txt"
+  },
+  {
+    "__comment": "ignored files:",
+    "include": [
+      "**/*.md",
+      "**/*.png",
+      "**/*.json",
+      "gradle/wrapper/*",
+      "gradlew",
+      "gradlew.bat",
+      "LICENSE",
+      "LICENSE-FOR-ORIGINAL-AUTHOR.txt",
+      "important-structure/**/*",
+      "src/main/{ngtlib,rtm}-patches/**/*.java.patch",
+      "src/main/resources/kotlin-LICENSE.txt",
+      "src/main/resources/LICENSE.txt",
+      "src/main/resources/mcmod.info",
+      "src/main/resources/pack.mcmeta",
+      "src/main/resources/README.txt",
+      "src/main/resources/sai-LICENSE.txt"
+    ]
+  }
+]
