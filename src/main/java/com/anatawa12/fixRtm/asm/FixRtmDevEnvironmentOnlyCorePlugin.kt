@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin
     "org.jetbrains.annotations.",
     "org.apache.commons.compress.",
     "org.tukaani.xz.",
+    "com.luciad.imageio.webp.",
 )
 class FixRtmDevEnvironmentOnlyCorePlugin : IFMLLoadingPlugin {
     override fun getModContainerClass(): String? = null

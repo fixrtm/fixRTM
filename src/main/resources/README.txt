@@ -18,6 +18,9 @@ This software uses Sai, a JavaScript runtime library made by anatawa12 and other
   a fork of Rhino, the one made by Mozilla foundation and contributors
   published under Mozilla Public License Version 2.0 (see sai-LICENSE.txt).
 
+This software uses webp-imageio, a library made by Luciad and contributors
+  published under Apache License 2.0 (see webp-imageio-LICENSE.txt and webp-imageio-NOTICE.txt).
+
 This software is made with Intellij IDEA, a IDE made by JetBrains s.r.o. and contributors.
 
 This software is made with gradle, a build tool made by gradle team and contributors.
