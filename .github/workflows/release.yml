@@ -295,8 +295,8 @@ jobs:
           } | send-tweet \
             -k "$TWITTER_C_KEY" \
             -t "$TWITTER_C_SECRET" \
-            -a "$TWITTER_A_SECRET" \
-            -s "$TWITTER_A_TOKEN" \
+            -a "$TWITTER_A_TOKEN" \
+            -s "$TWITTER_A_SECRET" \
         env:
           TWITTER_C_KEY: ${{ secrets.TWITTER_C_KEY }}
           TWITTER_C_SECRET: ${{ secrets.TWITTER_C_SECRET }}
