@@ -178,6 +178,9 @@ val shadowModJar by tasks.creating(ShadowJar::class) {
     relocate("com.luciad.imageio.webp.", "$basePkg.webp.")
 
     from(provider { zipTree(tasks.jar.get().archiveFile) })
+    from(fileTree("src/main/distResources")) {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
     destinationDirectory.set(buildDir.resolve("shadowing"))
     archiveVersion.set("")
     manifest.from(provider {
