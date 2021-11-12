@@ -110,7 +110,7 @@ jobs:
           if $PRERELEASE; then
             gh-export-variable CURSE_RELEASE_TYPE "alpha"
           else
-            gh-export-variable CURSE_RELEASE_TYPE "beta"
+            gh-export-variable CURSE_RELEASE_TYPE "release"
           fi
 
       - name: commit
