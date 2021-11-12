@@ -110,7 +110,7 @@ jobs:
           if $PRERELEASE; then
             gh-export-variable CURSE_RELEASE_TYPE "alpha"
           else
-            gh-export-variable CURSE_RELEASE_TYPE "beta"
+            gh-export-variable CURSE_RELEASE_TYPE "release"
           fi
 
       - name: commit
@@ -133,14 +133,14 @@ jobs:
 
           release_note_path=$(mktemp)
           {
-            if ! $PRERELEASE; then
+            if $PRERELEASE; then
               echo "**This is SNAPSHOT, not a stable release. make sure this may have many bugs.**"
             fi
             echo "Requirements for this version: "
             echo "RTM $REQUIRED_RTM"
             echo "NGTLib $REQUIRED_NGTLIB"
             echo ""
-            generate-changelog --unreleased-only -v "$VERSION_NAME" --stdout
+            generate-changelog --unreleased-only -v "$VERSION_NAME" --tag-pattern "$changelog_tag_pattern" --stdout
           } >> "$release_note_path"
           gh-export-variable RELEASE_NOTE_PATH "$release_note_path"
 
