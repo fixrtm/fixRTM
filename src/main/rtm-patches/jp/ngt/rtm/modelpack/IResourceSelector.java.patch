@@ -1,0 +1,13 @@
+--- a/jp/ngt/rtm/modelpack/IResourceSelector.java
++++ b/jp/ngt/rtm/modelpack/IResourceSelector.java
+@@ -12,6 +12,10 @@
+ 
+    int[] getSelectorPos();
+ 
+    @SideOnly(Side.CLIENT)
+    boolean closeGui(ResourceState var1);
++
++   @SideOnly(Side.CLIENT)
++   default void onCloseGui() {
++   }
+ }

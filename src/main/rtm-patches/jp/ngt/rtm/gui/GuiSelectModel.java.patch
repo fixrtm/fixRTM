@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/gui/GuiSelectModel.java
++++ b/jp/ngt/rtm/gui/GuiSelectModel.java
+@@ -300,6 +300,12 @@
+       for(int j = 0; j < this.selectButtons.length; ++j) {
+          this.selectButtons[j].y = i + 32 * (j - this.currentScroll);
+       }
+ 
+    }
++
++   @Override
++   public void onGuiClosed() {
++      super.onGuiClosed();
++      this.selector.onCloseGui();
++   }
+ }
