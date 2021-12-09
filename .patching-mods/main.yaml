@@ -15,6 +15,7 @@ mods:
       - jp.ngt.ngtlib.command.CommandPermit
       - jp.ngt.ngtlib.io.NGTFileLoader
       - jp.ngt.ngtlib.io.NGTLog
+      - jp.ngt.ngtlib.io.NGTText
       - jp.ngt.ngtlib.io.ScriptUtil
       - jp.ngt.ngtlib.item.craft.RecipeManager
       - jp.ngt.ngtlib.item.craft.ShapedRecipes55
