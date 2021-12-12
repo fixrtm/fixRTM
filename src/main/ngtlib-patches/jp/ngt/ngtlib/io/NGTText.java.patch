@@ -1,0 +1,28 @@
+--- a/jp/ngt/ngtlib/io/NGTText.java
++++ b/jp/ngt/ngtlib/io/NGTText.java
+@@ -10,10 +10,11 @@
+ import java.io.InputStream;
+ import java.io.InputStreamReader;
+ import java.io.OutputStreamWriter;
+ import java.io.PrintWriter;
+ import java.io.UnsupportedEncodingException;
++import java.nio.charset.Charset;
+ import java.util.ArrayList;
+ import java.util.Enumeration;
+ import java.util.List;
+ import java.util.stream.Stream;
+ import java.util.zip.ZipEntry;
+@@ -71,11 +72,12 @@
+          } catch (UnsupportedEncodingException unsupportedencodingexception) {
+             unsupportedencodingexception.printStackTrace();
+             inputstreamreader = new InputStreamReader(is);
+          }
+       } else {
+-         inputstreamreader = new InputStreamReader(is);
++         kotlin.Pair<java.nio.charset.Charset, InputStream> pair = com.anatawa12.fixRtm.ngtlib.renderer.model.PolygonModelCharsetDetector.INSTANCE.detectCharset(is, Charset.defaultCharset());
++         inputstreamreader = new InputStreamReader(pair.component2(), pair.component1());
+       }
+ 
+       BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+       Stream<String> stream = bufferedreader.lines();
+       stream.forEachOrdered((line) -> list.add(line));

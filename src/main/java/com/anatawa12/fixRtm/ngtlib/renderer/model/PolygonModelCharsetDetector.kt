@@ -34,7 +34,10 @@ object PolygonModelCharsetDetector {
     }
 
     // TODO: test
-    fun detectCharset(inputStream: InputStream): Pair<Charset, InputStream> {
+    fun detectCharset(inputStream: InputStream): Pair<Charset, InputStream> =
+        detectCharset(inputStream, StandardCharsets.UTF_8)
+
+    fun detectCharset(inputStream: InputStream, default: Charset): Pair<Charset, InputStream> {
         val buf = getBuffer()
         var c = 0
         try {
@@ -59,6 +62,6 @@ object PolygonModelCharsetDetector {
             if (s.indexOf('\ufffd') == -1) return Pair(tryingCharset, returnInputStream)
         }
         // no charsets are valid: use UTF8
-        return Pair(StandardCharsets.UTF_8, returnInputStream)
+        return Pair(default, returnInputStream)
     }
 }
