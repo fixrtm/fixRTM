@@ -74,6 +74,7 @@ mods:
       - jp.ngt.rtm.gui.GuiIngameCustom
       - jp.ngt.rtm.gui.GuiSelectModel
       - jp.ngt.rtm.gui.GuiVehicleControlPanel
+      - jp.ngt.rtm.gui.camera.Camera
       - jp.ngt.rtm.item.ItemRail
       - jp.ngt.rtm.item.ItemWithModel
       - jp.ngt.rtm.modelpack.IResourceSelector

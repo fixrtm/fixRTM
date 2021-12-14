@@ -46,7 +46,7 @@ object FIXFileLoader {
     }
 
     fun getFiles(): List<File> {
-        return getModsOrJars().flatMap { it.walk().filter(File::isFile) }
+        return getModsOrJars().flatMap { it.walk().filter(File::isFile) + it }
     }
 
     fun getModsOrJars(): List<File> {

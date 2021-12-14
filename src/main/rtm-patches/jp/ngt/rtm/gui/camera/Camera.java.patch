@@ -1,0 +1,28 @@
+--- a/jp/ngt/rtm/gui/camera/Camera.java
++++ b/jp/ngt/rtm/gui/camera/Camera.java
+@@ -79,11 +79,11 @@
+          this.initTexture(this.mcScreenTex[j], w, h);
+       }
+ 
+       try {
+          String s1 = NGTText.getText(new ResourceLocation("rtm", "shaders/dof.vsh"), true);
+-         String s = NGTText.getText(new ResourceLocation("rtm", "shaders/dof.fsh"), true);
++         String s = NGTText.getText(new ResourceLocation("fix-rtm", "shaders/dof.fsh"), true);
+          this.dofShader = GLHelper.getShaderProgram(s1, s);
+       } catch (IOException ioexception) {
+          ioexception.printStackTrace();
+       }
+ 
+@@ -132,11 +132,11 @@
+       this.mcTexRendered = true;
+       Minecraft minecraft = Minecraft.getMinecraft();
+       int i = minecraft.getFramebuffer().framebufferTextureWidth;
+       int j = minecraft.getFramebuffer().framebufferTextureHeight;
+       int k = this.mcScreenTex[texId];
+-      GL43.glCopyImageSubData(minecraft.getFramebuffer().framebufferTexture, 3553, 0, 0, 0, 0, k, 3553, 0, 0, 0, 0, i, j, 1);
++      com.anatawa12.fixRtm.rtm.gui.camera.CameraKt.copyTexture(minecraft.getFramebuffer().framebufferTexture, k, i, j);
+       this.frameBufU = (float)minecraft.getFramebuffer().framebufferWidth / (float)minecraft.getFramebuffer().framebufferTextureWidth;
+       this.frameBufV = (float)minecraft.getFramebuffer().framebufferHeight / (float)minecraft.getFramebuffer().framebufferTextureHeight;
+    }
+ 
+    private void copyDepthBuffer() {
