@@ -8,7 +8,7 @@
  
 -   public int getGuiId(ItemStack stack) {
 -      return RTMCore.guiIdSelectItemModel;
-+   public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++   @Override @SideOnly(Side.CLIENT) public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
 +      return newGuiSelectModel(holder);
     }
  

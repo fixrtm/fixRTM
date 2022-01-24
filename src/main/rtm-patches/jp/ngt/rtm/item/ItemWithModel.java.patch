@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemWithModel.java
 +++ b/jp/ngt/rtm/item/ItemWithModel.java
-@@ -16,33 +16,32 @@
+@@ -16,34 +16,35 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ActionResult;
@@ -31,17 +31,20 @@
     }
  
 -   public abstract int getGuiId(ItemStack var1);
++   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
 +   protected final net.minecraft.client.gui.GuiScreen newGuiSelectModel(ItemArgHolder holder) {
 +      return new jp.ngt.rtm.gui.GuiSelectModel(holder.getWorld(), new ResourceSelector(holder));
 +   }
-+
-+   public abstract net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder);
  
++   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
++   public abstract net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder);
++
     protected void addInformation(ItemArgHolder holder, List<String> list, ITooltipFlag flag) {
        if (ModelPackManager.INSTANCE.modelLoaded) {
           ResourceState resourcestate = this.getModelState(holder.getItemStack());
           if (resourcestate != null) {
-@@ -79,27 +78,36 @@
+             list.add(TextFormatting.GRAY + resourcestate.getResourceName());
+@@ -79,27 +80,36 @@
        if (!itemStack.hasTagCompound()) {
           itemStack.setTagCompound(new NBTTagCompound());
        }

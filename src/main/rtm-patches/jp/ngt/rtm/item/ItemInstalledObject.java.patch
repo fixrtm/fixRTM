@@ -8,7 +8,7 @@
  
 -   public int getGuiId(ItemStack stack) {
 -      int i = stack.getItemDamage();
-+   @Override public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++   @Override @SideOnly(Side.CLIENT) public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
 +      int i = holder.getItemStack().getItemDamage();
        ItemInstalledObject.IstlObjType iteminstalledobject$istlobjtype = ItemInstalledObject.IstlObjType.getType(i);
        if (iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.RAILLOAD_SIGN && iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.FLAG) {
@@ -20,7 +20,7 @@
        }
     }
  
-+   private net.minecraft.client.gui.GuiScreen newGuiSignboard(ItemArgHolder holder) {
++   @SideOnly(Side.CLIENT) private net.minecraft.client.gui.GuiScreen newGuiSignboard(ItemArgHolder holder) {
 +      return new jp.ngt.rtm.gui.GuiSignboard(new ResourceSelector(holder));
 +   }
 +
