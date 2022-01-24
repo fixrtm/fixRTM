@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/item/ItemVehicle.java
++++ b/jp/ngt/rtm/item/ItemVehicle.java
+@@ -167,12 +167,12 @@
+       }
+ 
+       return RTMResource.VEHICLE_CAR;
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      return RTMCore.guiIdSelectItemModel;
++   public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      return newGuiSelectModel(holder);
+    }
+ 
+    protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
+       return new ResourceState(type, (Object)null);
+    }

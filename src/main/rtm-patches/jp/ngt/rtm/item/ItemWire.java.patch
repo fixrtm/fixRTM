@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/item/ItemWire.java
++++ b/jp/ngt/rtm/item/ItemWire.java
+@@ -15,12 +15,12 @@
+ 
+    protected ResourceType getModelType(ItemStack itemStack) {
+       return RTMResource.WIRE;
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      return RTMCore.guiIdSelectItemModel;
++   public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      return newGuiSelectModel(holder);
+    }
+ 
+    protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
+       return new ResourceState(type, (Object)null);
+    }

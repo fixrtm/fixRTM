@@ -1,0 +1,85 @@
+--- a/jp/ngt/rtm/item/ItemWithModel.java
++++ b/jp/ngt/rtm/item/ItemWithModel.java
+@@ -16,33 +16,32 @@
+ import net.minecraft.item.ItemStack;
+ import net.minecraft.nbt.NBTTagCompound;
+ import net.minecraft.util.ActionResult;
+ import net.minecraft.util.text.TextFormatting;
+ 
+-public abstract class ItemWithModel<T extends ResourceSet> extends ItemCustom implements IResourceSelector {
+-   private ItemStack selectedItem;
+-   private EntityPlayer selectedPlayer;
+-
++public abstract class ItemWithModel<T extends ResourceSet> extends ItemCustom {
+    public ItemWithModel() {
+       this.setHasSubtypes(true);
+    }
+ 
+    protected ActionResult<ItemStack> onItemRightClick(ItemArgHolder holder) {
+       if (holder.getWorld().isRemote) {
+          if (this.getModelType(holder.getItemStack()) != null) {
+-            this.selectedItem = holder.getItemStack();
+-            this.selectedPlayer = holder.getPlayer();
+-            holder.getPlayer().openGui(RTMCore.instance, this.getGuiId(holder.getItemStack()), holder.getWorld(), 0, -1, 0);
++            net.minecraft.client.Minecraft.getMinecraft().displayGuiScreen(newGuiScreen(holder));
+          } else {
+             NGTLog.debug("No Type");
+          }
+       }
+ 
+       return holder.success();
+    }
+ 
+-   public abstract int getGuiId(ItemStack var1);
++   protected final net.minecraft.client.gui.GuiScreen newGuiSelectModel(ItemArgHolder holder) {
++      return new jp.ngt.rtm.gui.GuiSelectModel(holder.getWorld(), new ResourceSelector(holder));
++   }
++
++   public abstract net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder);
+ 
+    protected void addInformation(ItemArgHolder holder, List<String> list, ITooltipFlag flag) {
+       if (ModelPackManager.INSTANCE.modelLoaded) {
+          ResourceState resourcestate = this.getModelState(holder.getItemStack());
+          if (resourcestate != null) {
+@@ -79,27 +78,36 @@
+       if (!itemStack.hasTagCompound()) {
+          itemStack.setTagCompound(new NBTTagCompound());
+       }
+ 
+       itemStack.getTagCompound().setTag("State", state.writeToNBT());
+-      if (this.selectedPlayer != null) {
+-         PacketNBT.sendToServer(this.selectedPlayer, this.selectedItem);
+-      }
+ 
+    }
+ 
++   //@formatter:off
++   public class ResourceSelector implements IResourceSelector<T> {
++      private final ItemStack selectedItem;
++      private final EntityPlayer selectedPlayer;
++      public ResourceSelector(ItemArgHolder holder) {
++         this.selectedItem = holder.getItemStack();
++         this.selectedPlayer = holder.getPlayer();
++      }
++
+    public ResourceState<T> getResourceState() {
+-      return this.getModelState(this.selectedItem);
++      return getModelState(this.selectedItem);
+    }
+ 
+    public void updateResourceState() {
+    }
+ 
+    public int[] getSelectorPos() {
+       return new int[3];
+    }
+ 
+    public boolean closeGui(ResourceState par1) {
+-      this.setModelState(this.selectedItem, par1);
++      setModelState(this.selectedItem, par1);
++      PacketNBT.sendToServer(this.selectedPlayer, this.selectedItem);
+       return true;
+    }
++   }// end of ResourceSelector
++   //@formatter:on
+ }

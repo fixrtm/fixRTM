@@ -1,0 +1,37 @@
+--- a/jp/ngt/rtm/gui/RTMGuiHandler.java
++++ b/jp/ngt/rtm/gui/RTMGuiHandler.java
+@@ -71,17 +71,17 @@
+          return new GuiSelectModel(world, (IResourceSelector)entity4);
+       } else if (ID == RTMCore.guiIdSelectTileEntityModel) {
+          TileEntity tileentity3 = BlockUtil.getTileEntity(world, x, y, z);
+          return new GuiSelectModel(world, (IResourceSelector)tileentity3);
+       } else if (ID == RTMCore.guiIdSelectItemModel) {
+-         Item item1 = player.inventory.getCurrentItem().getItem();
+-         return new GuiSelectModel(world, (IResourceSelector)item1);
++
++         throw new IllegalArgumentException("guiIdSelectItemModel for item is disabled by fixRTM");
+       } else if (ID == RTMCore.guiIdSelectTileEntityTexture) {
+          return new GuiSelectTexture((IResourceSelector)BlockUtil.getTileEntity(world, x, y, z), (GuiScreen)null);
+       } else if (ID == RTMCore.guiIdSelectItemTexture) {
+-         Item item = player.inventory.getCurrentItem().getItem();
+-         return new GuiSelectTexture((IResourceSelector)item, (GuiScreen)null);
++
++         throw new IllegalArgumentException("guiIdSelectItemTexture for item is disabled by fixRTM");
+       } else {
+          if (ID == RTMCore.guiIdFreightCar) {
+             Entity entity = world.getEntityByID(x);
+             if (entity instanceof EntityFreightCar) {
+                return new GuiFreightCar(player, (EntityFreightCar)entity);
+@@ -160,11 +160,11 @@
+                }
+ 
+                if (ID == RTMCore.guiIdSignboard) {
+                   IResourceSelector iresourceselector;
+                   if (y < 0) {
+-                     iresourceselector = (IResourceSelector)player.inventory.getCurrentItem().getItem();
++                     throw new IllegalArgumentException("guiIdSignboard for item is disabled by fixRTM");
+                   } else {
+                      iresourceselector = (IResourceSelector)BlockUtil.getTileEntity(world, x, y, z);
+                   }
+ 
+                   return new GuiSignboard(iresourceselector);

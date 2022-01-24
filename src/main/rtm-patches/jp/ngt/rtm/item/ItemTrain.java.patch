@@ -1,0 +1,35 @@
+--- a/jp/ngt/rtm/item/ItemTrain.java
++++ b/jp/ngt/rtm/item/ItemTrain.java
+@@ -169,26 +169,27 @@
+       default:
+          return RTMResource.TRAIN_DC;
+       }
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      return RTMCore.guiIdSelectItemModel;
++   public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      return newGuiSelectModel(holder);
+    }
+ 
+    protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
+       return new ResourceState(type, (Object)null);
+    }
+ 
++   @Override
+    protected void addInformation(ItemArgHolder holder, List list, ITooltipFlag flag) {
+-      List<ItemTrain.TrainSet> list = getFormationFromItem(holder.getItemStack());
+-      if (list.isEmpty()) {
++      List<ItemTrain.TrainSet> list1 = getFormationFromItem(holder.getItemStack());
++      if (list1.isEmpty()) {
+          super.addInformation(holder, list, flag);
+       } else {
+          StringBuilder stringbuilder = new StringBuilder("{");
+ 
+-         for(ItemTrain.TrainSet itemtrain$trainset : list) {
++         for(ItemTrain.TrainSet itemtrain$trainset : list1) {
+             stringbuilder.append(itemtrain$trainset.modelName);
+             stringbuilder.append(",");
+          }
+ 
+          stringbuilder.append("}");

@@ -73,7 +73,15 @@ mods:
       - jp.ngt.rtm.event.RTMKeyHandlerServer
       - jp.ngt.rtm.gui.GuiIngameCustom
       - jp.ngt.rtm.gui.GuiVehicleControlPanel
+      - jp.ngt.rtm.gui.RTMGuiHandler
+      - jp.ngt.rtm.item.ItemCargo
+      - jp.ngt.rtm.item.ItemInstalledObject
+      - jp.ngt.rtm.item.ItemNPC
       - jp.ngt.rtm.item.ItemRail
+      - jp.ngt.rtm.item.ItemTrain
+      - jp.ngt.rtm.item.ItemVehicle
+      - jp.ngt.rtm.item.ItemWire
+      - jp.ngt.rtm.item.ItemWithModel
       - jp.ngt.rtm.modelpack.ModelPackManager
       - jp.ngt.rtm.modelpack.RTMResourceManager
       - jp.ngt.rtm.modelpack.cfg.ResourceConfig
