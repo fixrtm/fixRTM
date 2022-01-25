@@ -8,9 +8,15 @@ on:
   workflow_dispatch:
     inputs:
       release_kind:
-        description: The type of release. one of `commit-release`, `prerelease`, `start-rc`, or `stable`
+        type: choice
+        description: The type of release.
         default: prerelease
         required: true
+        options:
+          - commit-release
+          - prerelease
+          - start-rc
+          - stable
   push:
     branches: [ master ]
 
