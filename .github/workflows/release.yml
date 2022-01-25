@@ -65,6 +65,11 @@ jobs:
               ;;
           esac
 
+          if [ "$RELEASE_KIND_IN" != "commit-release" ] && [ "$GITHUB_REF_NAME" != "master" ]; then
+              echo "invalid release kind: $RELEASE_KIND_IN is not allowd for $GITHUB_REF_NAME"
+              exit 255
+          fi
+
           gh-export-variable VERSION_NAME "$(get-version)"
           gh-export-variable REQUIRED_RTM "$(file-util properties get gradle.properties rtmVersion)"
           gh-export-variable REQUIRED_NGTLIB "$(file-util properties get gradle.properties ngtVersion)"
