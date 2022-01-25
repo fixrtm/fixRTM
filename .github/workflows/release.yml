@@ -8,9 +8,15 @@ on:
   workflow_dispatch:
     inputs:
       release_kind:
-        description: The type of release. one of `commit-release`, `prerelease`, `start-rc`, or `stable`
+        type: choice
+        description: The type of release.
         default: prerelease
         required: true
+        options:
+          - commit-release
+          - prerelease
+          - start-rc
+          - stable
   push:
     branches: [ master ]
 
@@ -58,6 +64,11 @@ jobs:
               exit 255
               ;;
           esac
+
+          if [ "$RELEASE_KIND_IN" != "commit-release" ] && [ "$GITHUB_REF_NAME" != "master" ]; then
+              echo "invalid release kind: $RELEASE_KIND_IN is not allowd for $GITHUB_REF_NAME"
+              exit 255
+          fi
 
           gh-export-variable VERSION_NAME "$(get-version)"
           gh-export-variable REQUIRED_RTM "$(file-util properties get gradle.properties rtmVersion)"
