@@ -1,0 +1,12 @@
+--- a/jp/ngt/ngtlib/renderer/media/GIF.java
++++ b/jp/ngt/ngtlib/renderer/media/GIF.java
+@@ -126,8 +126,8 @@
+    public BufferedImage getImage(int index) {
+       return this.images.get(index);
+    }
+ 
+    public int getCurrentFrameIndex() {
+-      return (int)(System.currentTimeMillis() / (long)this.frameRate) % this.frameNum;
++      return (int)(System.currentTimeMillis() / (long)this.frameRate % this.frameNum);
+    }
+ }
