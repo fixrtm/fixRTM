@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/item/ItemNPC.java
++++ b/jp/ngt/rtm/item/ItemNPC.java
+@@ -58,12 +58,12 @@
+          }
+ 
+       }
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      return RTMCore.guiIdSelectItemModel;
++   @Override @SideOnly(Side.CLIENT) public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      return newGuiSelectModel(holder);
+    }
+ 
+    protected ResourceType getModelType(ItemStack itemStack) {
+       return itemStack.getItemDamage() == 1 ? RTMResource.NPC : null;
+    }

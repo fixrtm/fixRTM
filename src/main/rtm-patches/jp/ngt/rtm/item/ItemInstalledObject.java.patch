@@ -1,0 +1,31 @@
+--- a/jp/ngt/rtm/item/ItemInstalledObject.java
++++ b/jp/ngt/rtm/item/ItemInstalledObject.java
+@@ -345,20 +345,24 @@
+ 
+    protected ResourceType getModelType(ItemStack itemStack) {
+       return ItemInstalledObject.IstlObjType.getType(itemStack.getItemDamage()).type;
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      int i = stack.getItemDamage();
++   @Override @SideOnly(Side.CLIENT) public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      int i = holder.getItemStack().getItemDamage();
+       ItemInstalledObject.IstlObjType iteminstalledobject$istlobjtype = ItemInstalledObject.IstlObjType.getType(i);
+       if (iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.RAILLOAD_SIGN && iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.FLAG) {
+-         return iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNBOARD ? RTMCore.guiIdSignboard : RTMCore.guiIdSelectItemModel;
++         return iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNBOARD ? newGuiSignboard(holder) : newGuiSelectModel(holder);
+       } else {
+-         return RTMCore.guiIdSelectItemTexture;
++         return new jp.ngt.rtm.gui.GuiSelectTexture(new ResourceSelector(holder), null);
+       }
+    }
+ 
++   @SideOnly(Side.CLIENT) private net.minecraft.client.gui.GuiScreen newGuiSignboard(ItemArgHolder holder) {
++      return new jp.ngt.rtm.gui.GuiSignboard(new ResourceSelector(holder));
++   }
++
+    protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
+       ItemInstalledObject.IstlObjType iteminstalledobject$istlobjtype = ItemInstalledObject.IstlObjType.getType(itemStack.getItemDamage());
+       return (ResourceState)(iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNBOARD ? new ResourceStateSignboard(type, (Object)null) : new ResourceState(type, (Object)null));
+    }
+ 

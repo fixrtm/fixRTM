@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/item/ItemCargo.java
++++ b/jp/ngt/rtm/item/ItemCargo.java
+@@ -96,12 +96,12 @@
+       default:
+          return RTMResource.CONTAINER;
+       }
+    }
+ 
+-   public int getGuiId(ItemStack stack) {
+-      return RTMCore.guiIdSelectItemModel;
++   @Override @SideOnly(Side.CLIENT) public net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder) {
++      return newGuiSelectModel(holder);
+    }
+ 
+    protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
+       return new ResourceState(type, (Object)null);
+    }
