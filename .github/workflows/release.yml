@@ -160,7 +160,7 @@ jobs:
           git tag "$VERSION_NAME"
 
       - name: prepare patching environment
-        uses: eskatos/gradle-command-action@v1
+        uses: eskatos/gradle-command-action@v2
         with:
           arguments: preparePatchingEnvironment
 
@@ -168,7 +168,7 @@ jobs:
         run: ./pm.apply-patches
 
       - name: Build
-        uses: eskatos/gradle-command-action@v1
+        uses: eskatos/gradle-command-action@v2
         with:
           arguments: build
 
