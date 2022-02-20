@@ -1,6 +1,86 @@
 --- a/jp/ngt/rtm/item/ItemTrain.java
 +++ b/jp/ngt/rtm/item/ItemTrain.java
-@@ -169,26 +169,27 @@
+@@ -68,17 +68,55 @@
+          if (railmap == null) {
+             return holder.success();
+          } else if (!this.checkObstacle(resourcestate.getResourceSet().getConfig(), entityplayer, world, i, j, k, railmap)) {
+             return holder.success();
+          } else {
++            PosRotation pr = computePosRotation(railmap, i, k, -entityplayer.rotationYaw);
++            this.doSpawn(pr, world, itemstack, resourcestate);
++
++            itemstack.shrink(1);
++            return holder.success();
++         }
++      } else {
++         return holder.success();
++      }
++   }
++
++   // this is internal; should not be used
++   public static class PosRotation {
++      public final float yaw, pitch;
++      public final double posX, posY, posZ;
++
++      public PosRotation(float yaw, float pitch, double posX, double posY, double posZ) {
++         this.yaw = yaw;
++         this.pitch = pitch;
++         this.posX = posX;
++         this.posY = posY;
++         this.posZ = posZ;
++      }
++   }
++   // public for CommandRTM
++   public static PosRotation computePosRotation(RailMap railmap, /* x */int i, /* z */int k, float yaw) {
++      {
++         {
+             int l = railmap.getNearlestPoint(128, (double)i + 0.5D, (double)k + 0.5D);
+             float f = NGTMath.wrapAngle(railmap.getRailYaw(128, l));
+-            float f1 = EntityBogie.fixBogieYaw(-entityplayer.rotationYaw, f);
++            float f1 = EntityBogie.fixBogieYaw(yaw, f);
+             float f2 = EntityBogie.fixBogiePitch(railmap.getRailPitch(128, l), f, f1);
+             double d0 = railmap.getRailPos(128, l)[1];
+             double d1 = railmap.getRailHeight(128, l);
+             double d2 = railmap.getRailPos(128, l)[0];
++            return new PosRotation(f1, f2, d0, d1, d2);
++         }
++      }
++   }
++   // separate method for smaller diff
++   private void doSpawn(PosRotation pr, World world, ItemStack itemstack, ResourceState resourcestate) {
++      float f1 = pr.yaw, f2 = pr.pitch;
++      double d0 = pr.posX, d1 = pr.posY, d2 = pr.posZ;
++      {
++         {
+             List<ItemTrain.TrainSet> list = getFormationFromItem(itemstack);
+             if (list.isEmpty()) {
+                EntityTrainBase entitytrainbase = this.getTrain(itemstack, world);
+                entitytrainbase.setPositionAndRotation(d0, d1, d2, f1, f2);
+                entitytrainbase.getResourceState().readFromNBT(resourcestate.writeToNBT());
+@@ -96,20 +134,16 @@
+                   entitytrainbase1.getBogie(0).isActivated = true;
+                   entitytrainbase1.getBogie(1).isActivated = true;
+                   entitytrainbase1.setNotch(1);
+                }
+             }
+-
+-            itemstack.shrink(1);
+-            return holder.success();
+          }
+-      } else {
+-         return holder.success();
+       }
+    }
+ 
+-   private boolean checkObstacle(TrainConfig cfg, EntityPlayer player, World world, int x, int y, int z, RailMap rm0) {
++   // public for CommandRTM
++   public static boolean checkObstacle(TrainConfig cfg, EntityPlayer player, World world, int x, int y, int z, RailMap rm0) {
+       float f = cfg.trainDistance + 4.0F;
+ 
+       for(Entity entity : world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB((double)((float)x - f), (double)(y - 4), (double)((float)z - f), (double)((float)x + f + 1.0F), (double)(y + 8), (double)((float)z + f + 1.0F)))) {
+          if (entity instanceof EntityTrainBase || entity instanceof EntityBogie || entity instanceof EntityVehiclePart) {
+             double d0 = entity.getDistanceSq((double)x, (double)y, (double)z);
+@@ -169,26 +203,27 @@
        default:
           return RTMResource.TRAIN_DC;
        }
