@@ -12,6 +12,7 @@
       "**/*.yml",
       "**/*.cfg",
       "**/*.properties",
+      "**/*.lang",
       "src/main/java/com/anatawa12/fixRtm/ngtlib/renderer/model/CachedPolygonModelFormat.txt"
     ],
     "exclude": [

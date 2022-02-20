@@ -1,3 +1,7 @@
+# Copyright (c) 2022 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 fix-rtm.rtm.commands.rtm.state.usage=/rtm (door|pan|speed) <int>
 fix-rtm.rtm.commands.rtm.summon.usage=/rtm summon <trainType> <modelName> <x> <y> <z> [yaw] [dataTag]
 fix-rtm.rtm.commands.rtm.summon.no-type=Type named %s not found.
