@@ -1,0 +1,18 @@
+--- a/jp/ngt/rtm/electric/BlockElectricalWiring.java
++++ b/jp/ngt/rtm/electric/BlockElectricalWiring.java
+@@ -11,10 +11,15 @@
+    protected BlockElectricalWiring(Material material) {
+       super(material);
+    }
+ 
+    public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
++      if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ((TileEntityConnectorBase)holder.getWorld().getTileEntity(holder.getBlockPos())).getSubType())) {
++         if (holder.getWorld().isRemote)
++            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), holder.getBlockPos());
++         return true;
++      }
+       if (holder.getWorld().isRemote) {
+          return true;
+       } else {
+          TileEntityElectricalWiring tileentityelectricalwiring = (TileEntityElectricalWiring)holder.getWorld().getTileEntity(holder.getBlockPos());
+          tileentityelectricalwiring.onRightClick(holder.getPlayer());

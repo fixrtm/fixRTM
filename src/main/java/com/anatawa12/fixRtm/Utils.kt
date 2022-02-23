@@ -12,6 +12,7 @@ import com.google.common.collect.Iterators
 import jp.ngt.rtm.RTMItem
 import jp.ngt.rtm.block.tileentity.TileEntityMachineBase
 import jp.ngt.rtm.item.ItemInstalledObject
+import jp.ngt.rtm.modelpack.ResourceType
 import jp.ngt.rtm.modelpack.cfg.ResourceConfig
 import net.minecraft.crash.CrashReportCategory
 import net.minecraft.entity.Entity
@@ -19,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.RayTraceResult
+import net.minecraft.util.math.Vec3i
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.network.handshake.NetworkDispatcher
@@ -247,6 +249,16 @@ fun ItemStack.isItemOf(istlType: ItemInstalledObject.IstlObjType): Boolean {
     if (this.item !== RTMItem.installedObject) return false
     val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage)
     return type == istlType
+}
+
+fun ItemStack.isItemOf(resourceType: ResourceType<*, *>): Boolean {
+    if (this.item !== RTMItem.installedObject) return false
+    val type = ItemInstalledObject.IstlObjType.getType(this.itemDamage).type
+    return type == resourceType
+}
+
+fun EntityPlayer.openGui(fixGuiId: GuiId, world: World, pos: Vec3i) {
+    openGui(FixRtm, fixGuiId.ordinal, world, pos.x, pos.y, pos.z)
 }
 
 fun EntityPlayer.openGui(fixGuiId: GuiId, world: World, x: Int, y: Int, z: Int) {
