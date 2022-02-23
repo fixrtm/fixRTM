@@ -1,0 +1,19 @@
+--- a/jp/ngt/rtm/block/BlockFluorescent.java
++++ b/jp/ngt/rtm/block/BlockFluorescent.java
+@@ -52,6 +52,16 @@
+          }
+       }
+ 
+       return 15;
+    }
++
++   @Override
++   protected boolean onBlockActivated(jp.ngt.ngtlib.block.BlockArgHolder holder, float hitX, float hitY, float hitZ) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.onBlockActivated(holder);
++   }
++
++   @Override
++   public ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.FLUORESCENT);
++   }
+ }

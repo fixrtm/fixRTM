@@ -1,0 +1,19 @@
+--- a/jp/ngt/rtm/block/BlockScaffoldStairs.java
++++ b/jp/ngt/rtm/block/BlockScaffoldStairs.java
+@@ -162,6 +162,16 @@
+ 
+    }
+ 
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+    }
++
++   @Override
++   protected boolean onBlockActivated(jp.ngt.ngtlib.block.BlockArgHolder holder, float hitX, float hitY, float hitZ) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.onBlockActivated(holder);
++   }
++
++   @Override
++   public ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.STAIR);
++   }
+ }
