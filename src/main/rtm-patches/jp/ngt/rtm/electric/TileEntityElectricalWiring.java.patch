@@ -1,5 +1,18 @@
 --- a/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
+@@ -19,11 +19,11 @@
+ import net.minecraft.util.EnumParticleTypes;
+ import net.minecraft.util.ITickable;
+ import net.minecraft.util.math.AxisAlignedBB;
+ import net.minecraft.world.World;
+ 
+-public abstract class TileEntityElectricalWiring extends TileEntityCustom implements ITickable {
++public abstract class TileEntityElectricalWiring extends jp.ngt.ngtlib.block.TileEntityPlaceable implements ITickable {
+    protected List<Connection> connections = new ArrayList<>();
+    public boolean isActivated;
+    private int signal;
+    private int prevSignal = -1;
+ 
 @@ -275,34 +275,39 @@
  
        return false;

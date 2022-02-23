@@ -1,6 +1,20 @@
 --- a/jp/ngt/rtm/electric/TileEntityConnectorBase.java
 +++ b/jp/ngt/rtm/electric/TileEntityConnectorBase.java
-@@ -107,6 +107,12 @@
+@@ -72,10 +72,13 @@
+       case 5:
+          vec3 = vec3.rotateAroundX(-90.0F);
+          vec3 = vec3.rotateAroundY(90.0F);
+       }
+ 
++      vec3 = vec3.rotateAroundY(this.getRotation());
++      vec3 = vec3.add(this.getOffsetX(), this.getOffsetY(), this.getOffsetZ());
++
+       this.wirePos = vec3;
+    }
+ 
+    public int[] getSelectorPos() {
+       return new int[]{this.getX(), this.getY(), this.getZ()};
+@@ -107,6 +110,12 @@
     public ResourceState<ModelSetConnector> getResourceState() {
        return this.state;
     }
