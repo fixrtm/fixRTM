@@ -1,15 +1,16 @@
 --- a/jp/ngt/rtm/rail/util/RailMaker.java
 +++ b/jp/ngt/rtm/rail/util/RailMaker.java
-@@ -81,11 +81,11 @@
+@@ -79,13 +79,8 @@
+          if (switchtype.init(list, list1)) {
+             return switchtype;
           }
        }
  
-       if (this.worldObj != null && !this.worldObj.isRemote) {
-          RailPosition railposition1 = this.rpList.get(0);
+-      if (this.worldObj != null && !this.worldObj.isRemote) {
+-         RailPosition railposition1 = this.rpList.get(0);
 -         NGTLog.sendChatMessageToAll("message.rail.switch_type", new Object[]{railposition1.blockX, railposition1.blockY, railposition1.blockZ});
-+         com.anatawa12.fixRtm.rtm.HooksKt.sendSwitchTypeError("message.rail.switch_type", new Object[]{railposition1.blockX, railposition1.blockY, railposition1.blockZ});
-       }
- 
+-      }
+-
        return null;
     }
  }

@@ -31,25 +31,3 @@ fun <K, V> MovingSoundMaker_loadSoundJson_nullCheck(map: Map<K, V>?, domain: Str
         throw ModelFormatException("sound.json for $domain is invalid.")
     return map
 }
-
-
-var BlockMarker_onMarkerActivated_player: EntityPlayer? = null
-
-@Suppress("unused") // Used with Transform
-fun BlockMarker_onMarkerActivated(player: EntityPlayer?) {
-    if (player == null) return
-    if (!player.world.isRemote)
-        BlockMarker_onMarkerActivated_player = player
-}
-
-@Suppress("unused") // Used with Transform
-fun sendSwitchTypeError(message: String, vararg objects: Any?) {
-    val player = BlockMarker_onMarkerActivated_player
-    if (player == null) {
-        Exception("fixRTM Bug!!! BlockMarker_onMarkerActivated_player is not init-ed").printStackTrace()
-        NGTLog.sendChatMessageToAll(message, objects)
-        return
-    }
-    player.sendMessage(TextComponentTranslation(message, *objects))
-    BlockMarker_onMarkerActivated_player = null
-}
