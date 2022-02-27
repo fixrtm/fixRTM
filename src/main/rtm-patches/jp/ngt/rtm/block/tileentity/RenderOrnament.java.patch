@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/block/tileentity/RenderOrnament.java
++++ b/jp/ngt/rtm/block/tileentity/RenderOrnament.java
+@@ -15,10 +15,14 @@
+       GL11.glEnable(32826);
+       GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.5F, (float)par6 + 0.5F);
+       ModelSetOrnament modelsetornament = par1.getResourceState().getResourceSet();
+       OrnamentConfig ornamentconfig = modelsetornament.getConfig();
+       int i = MinecraftForgeClient.getRenderPass();
++
++      GL11.glTranslatef(par1.getOffsetX(), par1.getOffsetY(), par1.getOffsetZ());
++      GL11.glRotatef(par1.getRotation(), 0.0F, 1.0F, 0.0F);
++
+       if (modelsetornament.modelObj.renderer.getScript() == null) {
+          float f = par1.getRandomScale();
+          GL11.glScalef(f, f, f);
+       }
+ 
