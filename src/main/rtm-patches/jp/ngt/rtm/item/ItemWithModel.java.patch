@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemWithModel.java
 +++ b/jp/ngt/rtm/item/ItemWithModel.java
-@@ -16,34 +16,35 @@
+@@ -16,44 +16,56 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ActionResult;
@@ -35,16 +35,37 @@
 +   protected final net.minecraft.client.gui.GuiScreen newGuiSelectModel(ItemArgHolder holder) {
 +      return new jp.ngt.rtm.gui.GuiSelectModel(holder.getWorld(), new ResourceSelector(holder));
 +   }
- 
++
 +   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
 +   public abstract net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder);
-+
+ 
     protected void addInformation(ItemArgHolder holder, List<String> list, ITooltipFlag flag) {
        if (ModelPackManager.INSTANCE.modelLoaded) {
           ResourceState resourcestate = this.getModelState(holder.getItemStack());
           if (resourcestate != null) {
              list.add(TextFormatting.GRAY + resourcestate.getResourceName());
-@@ -79,27 +80,36 @@
+          }
++         addMoreInfo(holder.getItemStack(), list);
+       }
+ 
+    }
+ 
++   protected void addMoreInfo(ItemStack stack, List<String> list) {
++      if (this.getModelState(stack).getDataMap().getEntries().size() > 0) {
++         list.add(TextFormatting.DARK_PURPLE + "(+DataMap)");
++      }
++      // not implemented
++      //if (ItemWithModel.hasOffset(stack)) {
++      //   list.add(EnumChatFormatting.DARK_PURPLE + "(+Offset)");
++      //}
++   }
++
+    protected abstract ResourceType getModelType(ItemStack var1);
+ 
+    public ResourceState<T> getModelState(ItemStack itemStack) {
+       ResourceType resourcetype = this.getModelType(itemStack);
+       if (resourcetype != null) {
+@@ -79,27 +91,36 @@
        if (!itemStack.hasTagCompound()) {
           itemStack.setTagCompound(new NBTTagCompound());
        }
