@@ -108,7 +108,19 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -793,33 +804,42 @@
+@@ -760,10 +771,11 @@
+    public int getTrainDirection() {
+       return this.getVehicleState(TrainState.TrainStateType.Direction);
+    }
+ 
+    public void setTrainDirection(int par1) {
++      par1 = TrainState.TrainStateType.Direction.clap((byte) par1, this);
+       if (this.formation == null) {
+          this.setTrainDirection_NoSync((byte)par1);
+       } else {
+          this.formation.setTrainDirection((byte)par1, this);
+       }
+@@ -793,33 +805,42 @@
     public boolean addNotch(Entity driver, int par2) {
        if (par2 != 0) {
           int i = this.getNotch();
@@ -156,7 +168,7 @@
     }
  
     public void setSignal(int par1) {
-@@ -883,10 +903,11 @@
+@@ -883,10 +904,11 @@
           this.releaseTicket();
        }
  
@@ -168,7 +180,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -903,11 +924,10 @@
+@@ -903,11 +925,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -180,7 +192,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -931,20 +951,26 @@
+@@ -931,20 +952,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;

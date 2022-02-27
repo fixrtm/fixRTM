@@ -74,6 +74,7 @@ mods:
       - jp.ngt.rtm.entity.train.parts.EntityVehiclePart
       - jp.ngt.rtm.entity.train.util.EnumNotch
       - jp.ngt.rtm.entity.train.util.Formation
+      - jp.ngt.rtm.entity.train.util.TrainState
       - jp.ngt.rtm.entity.vehicle.EntityTrolley
       - jp.ngt.rtm.entity.vehicle.EntityVehicleBase
       - jp.ngt.rtm.entity.vehicle.RenderVehicleBase

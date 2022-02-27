@@ -1,0 +1,71 @@
+--- a/jp/ngt/rtm/entity/train/util/TrainState.java
++++ b/jp/ngt/rtm/entity/train/util/TrainState.java
+@@ -47,11 +47,25 @@
+       return TrainState.TrainStateType.Door;
+    }
+ 
+    public static enum TrainStateType {
+       Direction(0, "train_dir", 0, 1),
+-      Notch(1, "notch", -8, 5),
++      Notch(1, "notch", -8, 5) {
++         @Override
++         protected byte getMin0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++            jp.ngt.rtm.modelpack.cfg.TrainConfig config =
++               (jp.ngt.rtm.modelpack.cfg.TrainConfig) train.getResourceState().getResourceSet().getConfig();
++            return (byte) -(config.deccelerations.length - 1);
++         }
++
++         @Override
++         protected byte getMax0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++            jp.ngt.rtm.modelpack.cfg.TrainConfig config =
++               (jp.ngt.rtm.modelpack.cfg.TrainConfig) train.getResourceState().getResourceSet().getConfig();
++            return (byte) config.accelerateions.length;
++         }
++      },
+       Signal(2, "signal", 0, 127),
+       Door(4, "door", 0, 3),
+       Light(5, "light", 0, 2),
+       Pantograph(6, "pantograph", 0, 1),
+       ChunkLoader(7, "chunk_loader", 0, 8),
+@@ -79,7 +93,41 @@
+             }
+          }
+ 
+          return Direction;
+       }
++
++      public byte clap(byte value, jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++         byte min = getMin(train);
++         byte max = getMax(train);
++         return value < min ? min
++            : value > max ? max
++            : value;
++      }
++
++      public byte getMax(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++         try {
++            return getMax0(train);
++         } catch (Throwable t) {
++            t.printStackTrace();
++            return max;
++         }
++      }
++
++      protected byte getMax0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++         return max;
++      }
++
++      public byte getMin(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++         try {
++            return getMin0(train);
++         } catch (Throwable t) {
++            t.printStackTrace();
++            return min;
++         }
++      }
++
++      protected byte getMin0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
++         return min;
++      }
+    }
+ }
