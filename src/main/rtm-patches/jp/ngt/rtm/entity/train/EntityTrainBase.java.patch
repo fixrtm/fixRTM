@@ -108,7 +108,19 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -805,21 +816,30 @@
+@@ -793,33 +804,42 @@
+    public boolean addNotch(Entity driver, int par2) {
+       if (par2 != 0) {
+          int i = this.getNotch();
+          if (this.setNotch(i + par2)) {
+             RTMCore.proxy.playSound(driver, "rtm:sounds/train/lever.ogg", 1.0F, 1.0F);
+-            if (i < 0 && par2 > 0 && !this.world.isRemote) {
+-               this.playBrakeReleaseSound(i == -1);
+-            }
+-
+             return true;
+          }
+       }
  
        return false;
     }
@@ -120,6 +132,10 @@
           int i = this.getNotch();
           if (i != par1) {
              super.setVehicleState(TrainState.TrainStateType.Notch, (byte)par1);
++
++            if (i < 0 && par1 - i > 0 && !this.world.isRemote) {
++               this.playBrakeReleaseSound(par1 >= 0);
++            }
              return true;
           }
        }
