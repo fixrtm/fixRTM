@@ -1,18 +1,6 @@
 --- a/jp/ngt/rtm/rail/BlockMarker.java
 +++ b/jp/ngt/rtm/rail/BlockMarker.java
-@@ -125,10 +125,11 @@
-    public void makeRailMap(TileEntityMarker marker, int x, int y, int z) {
-       this.onMarkerActivated(marker.getWorld(), x, y, z, (EntityPlayer)null, false);
-    }
- 
-    public boolean onMarkerActivated(World world, int x, int y, int z, EntityPlayer player, boolean makeRail) {
-+      com.anatawa12.fixRtm.rtm.HooksKt.BlockMarker_onMarkerActivated(player);
-       ResourceStateRail resourcestaterail = this.hasRail(player, makeRail);
-       if (resourcestaterail == null) {
-          return false;
-       } else {
-          boolean flag = player == null || player.capabilities.isCreativeMode;
-@@ -141,29 +142,34 @@
+@@ -141,29 +141,34 @@
           return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
        }
     }
@@ -62,7 +50,54 @@
           if (arg0.switchType != arg1.switchType) {
              return arg1.switchType - arg0.switchType;
           } else {
-@@ -292,18 +298,18 @@
+@@ -171,11 +176,16 @@
+          }
+       });
+       return list;
+    }
+ 
++   // signature compatibility
+    public static boolean createRail(World world, int x, int y, int z, List<RailPosition> rps, ResourceStateRail state, boolean makeRail, boolean isCreative) {
++      return createRail(world, x, y, z, rps, state, makeRail, isCreative, null);
++   }
++
++   private static boolean createRail(World world, int x, int y, int z, List<RailPosition> rps, ResourceStateRail state, boolean makeRail, boolean isCreative, EntityPlayer player) {
+       if (rps.size() == 1) {
+          RailPosition railposition = rps.get(0);
+          if (railposition.hasScript()) {
+             createCustomRail(world, railposition, state, makeRail, isCreative);
+          }
+@@ -188,11 +198,11 @@
+             RailPosition railposition2 = railposition1.blockY >= railposition4.blockY ? railposition4 : railposition1;
+             RailPosition railposition3 = railposition1.blockY >= railposition4.blockY ? railposition1 : railposition4;
+             createNormalRail(world, railposition2, railposition3, state, makeRail, isCreative);
+          }
+       } else if (rps.size() > 2) {
+-         createSwitchRail(world, x, y, z, rps, state, makeRail, isCreative);
++         createSwitchRail(world, x, y, z, rps, state, makeRail, isCreative, player);
+       }
+ 
+       return false;
+    }
+ 
+@@ -247,14 +257,15 @@
+ 
+          return false;
+       }
+    }
+ 
+-   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
++   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative, EntityPlayer player) {
+       RailMaker railmaker = new RailMaker(world, list);
+       SwitchType switchtype = railmaker.getSwitch();
+       if (switchtype == null) {
++         player.sendMessage(new net.minecraft.util.text.TextComponentTranslation("message.rail.switch_type", list.get(0).blockX, list.get(0).blockY, list.get(0).blockZ));
+          return false;
+       } else {
+          RailMap[] arailmap = switchtype.getAllRailMap();
+          if (arailmap == null) {
+             return false;
+@@ -292,18 +303,18 @@
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {
