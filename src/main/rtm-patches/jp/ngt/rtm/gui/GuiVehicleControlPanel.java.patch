@@ -1,6 +1,20 @@
 --- a/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
 +++ b/jp/ngt/rtm/gui/GuiVehicleControlPanel.java
-@@ -504,11 +504,12 @@
+@@ -148,11 +148,12 @@
+ 
+             for(int j = 0; j < astring.length; ++j) {
+                int k = this.vehicle.getResourceState().getDataMap().getInt("Button" + j);
+                int l = this.guiLeft + 4 + j % 3 * 57;
+                int i1 = this.guiTop + 4 + j / 3 * 24;
+-               GuiButtonCustom guibuttoncustom = new GuiButtonCustom(2000 + j, l, i1, 54, 20, astring[j][k], this);
++               String buttonText = k < astring[j].length ? astring[j][k] : "Out of range";
++               GuiButtonCustom guibuttoncustom = new GuiButtonCustom(2000 + j, l, i1, 54, 20, buttonText, this);
+                guibuttoncustom.addTips(astring1[j]);
+                this.buttonList.add(guibuttoncustom);
+                this.dataValues[j] = k;
+             }
+          } else if (tab == TabTrainControlPanel.TAB_Formation) {
+@@ -504,11 +505,12 @@
  
              if (button.id == 129) {
                 int i2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Announcement);
