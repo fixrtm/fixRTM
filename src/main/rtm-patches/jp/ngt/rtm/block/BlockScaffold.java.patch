@@ -1,0 +1,19 @@
+--- a/jp/ngt/rtm/block/BlockScaffold.java
++++ b/jp/ngt/rtm/block/BlockScaffold.java
+@@ -152,6 +152,16 @@
+          entity.motionY += vec.getY() * d0;
+          entity.motionZ += vec.getZ() * d0;
+       }
+ 
+    }
++
++   @Override
++   protected boolean onBlockActivated(jp.ngt.ngtlib.block.BlockArgHolder holder, float hitX, float hitY, float hitZ) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.onBlockActivated(holder);
++   }
++
++   @Override
++   public ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.SCAFFOLD);
++   }
+ }

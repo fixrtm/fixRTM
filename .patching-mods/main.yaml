@@ -38,11 +38,19 @@ mods:
       - jp.ngt.rtm.RTMItem
       - jp.ngt.rtm.RTMRecipe
       - jp.ngt.rtm.RTMSound
+      - jp.ngt.rtm.block.BlockFluorescent
+      - jp.ngt.rtm.block.BlockLinePole
       - jp.ngt.rtm.block.BlockMachineBase
+      - jp.ngt.rtm.block.BlockPipe
+      - jp.ngt.rtm.block.BlockPlant
       - jp.ngt.rtm.block.BlockRailroadSign
+      - jp.ngt.rtm.block.BlockScaffold
+      - jp.ngt.rtm.block.BlockScaffoldStairs
       - jp.ngt.rtm.block.tileentity.RenderMachine
+      - jp.ngt.rtm.block.tileentity.RenderOrnament
       - jp.ngt.rtm.block.tileentity.RenderRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityCrossingGate
+      - jp.ngt.rtm.block.tileentity.TileEntityFluorescent
       - jp.ngt.rtm.block.tileentity.TileEntityMachineBase
       - jp.ngt.rtm.block.tileentity.TileEntityMechanism
       - jp.ngt.rtm.block.tileentity.TileEntityOrnament

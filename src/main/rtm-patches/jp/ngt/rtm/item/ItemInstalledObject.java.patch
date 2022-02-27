@@ -1,6 +1,30 @@
 --- a/jp/ngt/rtm/item/ItemInstalledObject.java
 +++ b/jp/ngt/rtm/item/ItemInstalledObject.java
-@@ -345,20 +345,24 @@
+@@ -121,10 +121,11 @@
+                   b0 = 7;
+                }
+ 
+                TileEntityFluorescent tileentityfluorescent = (TileEntityFluorescent)BlockUtil.getTileEntity(world, i, j, k);
+                tileentityfluorescent.setDir(b0);
++               tileentityfluorescent.setRotation(entityplayer, entityplayer.isSneaking() ? 1.0F : 15.0F, true);
+                this.updateResource(tileentityfluorescent, itemstack);
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.CROSSING) {
+             if (enumfacing == EnumFacing.UP) {
+                block = RTMBlock.crossingGate;
+@@ -250,10 +251,11 @@
+                this.updateResource(tileentitypipe, itemstack);
+             } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.PLANT) {
+                block = RTMBlock.plant_ornament;
+                BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+                TileEntityPlantOrnament tileentityplantornament = (TileEntityPlantOrnament)BlockUtil.getTileEntity(world, i, j, k);
++               tileentityplantornament.setRotation(entityplayer, entityplayer.isSneaking() ? 1.0F : 15.0F, true);
+                this.updateResource(tileentityplantornament, itemstack);
+             } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SPEAKER) {
+                block = RTMBlock.speaker;
+                BlockUtil.setBlock(world, i, j, k, block, i1, 3);
+                TileEntitySpeaker tileentityspeaker = (TileEntitySpeaker)BlockUtil.getTileEntity(world, i, j, k);
+@@ -345,20 +347,24 @@
  
     protected ResourceType getModelType(ItemStack itemStack) {
        return ItemInstalledObject.IstlObjType.getType(itemStack.getItemDamage()).type;
