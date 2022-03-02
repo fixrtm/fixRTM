@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemWithModel.java
 +++ b/jp/ngt/rtm/item/ItemWithModel.java
-@@ -16,44 +16,56 @@
+@@ -16,44 +16,57 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ActionResult;
@@ -51,7 +51,8 @@
     }
  
 +   protected void addMoreInfo(ItemStack stack, List<String> list) {
-+      if (this.getModelState(stack).getDataMap().getEntries().size() > 0) {
++      ResourceState<T> state = this.getModelState(stack);
++      if (state != null && state.getDataMap().getEntries().size() > 0) {
 +         list.add(TextFormatting.DARK_PURPLE + "(+DataMap)");
 +      }
 +      // not implemented
@@ -65,7 +66,7 @@
     public ResourceState<T> getModelState(ItemStack itemStack) {
        ResourceType resourcetype = this.getModelType(itemStack);
        if (resourcetype != null) {
-@@ -79,27 +91,36 @@
+@@ -79,27 +92,36 @@
        if (!itemStack.hasTagCompound()) {
           itemStack.setTagCompound(new NBTTagCompound());
        }
