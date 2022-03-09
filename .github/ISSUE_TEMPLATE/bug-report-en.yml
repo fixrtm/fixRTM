@@ -14,6 +14,10 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
 
+        If you're using machine translation,
+        please write in both your native language and English machine translated
+        to avoid misreading and un-understandable English due to mistake of machine translator.
+
   - type: checkboxes
     id: terms
     attributes:
