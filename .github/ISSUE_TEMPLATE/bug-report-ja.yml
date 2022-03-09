@@ -19,9 +19,9 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: Before submitting a bug, please make sure following checks.
+      label: バグ報告の前に、以下の点を確認していただきたいです。
       options:
-        - label: サーバーやワールドにはいる前に、全てのモデルパックの読み込みを終えている
+        - label: Server や World にはいる前に、全ての ModelPack の読み込みを終えている
           required: true
         - label: 最新の SNAPSHOT, nightly-snapshot, またはリリースの fixRTM を使用してる
           required: true
