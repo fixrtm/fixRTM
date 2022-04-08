@@ -27,7 +27,7 @@
              player.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, player.getEntityWorld(), x, y, z);
           }
  
-@@ -32,12 +48,15 @@
+@@ -32,15 +48,23 @@
        } else {
           return false;
        }
@@ -44,3 +44,11 @@
        } else {
           MachineConfig machineconfig = tileentitymachinebase.getResourceState().getResourceSet().getConfig();
           return tileentitymachinebase.isGettingPower ? machineconfig.brightness[1] : machineconfig.brightness[0];
+       }
+    }
++
++   @Override
++   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.FLUORESCENT);
++   }
+ }

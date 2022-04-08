@@ -6,14 +6,18 @@ package com.anatawa12.fixRtm.rtm.block
 
 import com.anatawa12.fixRtm.gui.GuiId
 import com.anatawa12.fixRtm.openGui
+import com.anatawa12.fixRtm.rtm.item.ItemWithModelEx
 import jp.ngt.ngtlib.block.BlockArgHolder
+import jp.ngt.ngtlib.block.TileEntityPlaceable
 import jp.ngt.rtm.RTMCore
 import jp.ngt.rtm.RTMItem
-import jp.ngt.rtm.block.tileentity.TileEntityOrnament
 import jp.ngt.rtm.item.ItemInstalledObject
+import jp.ngt.rtm.modelpack.IResourceSelector
+import net.minecraft.client.gui.GuiScreen
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+
 
 object BlockOrnamentMain {
     @JvmStatic
@@ -34,10 +38,14 @@ object BlockOrnamentMain {
     @JvmStatic
     fun getPickBlock(world: World, pos: BlockPos, type: ItemInstalledObject.IstlObjType): ItemStack {
         val tileEntity = world.getTileEntity(pos)
-        if (tileEntity is TileEntityOrnament) {
+        if (tileEntity is TileEntityPlaceable && tileEntity is IResourceSelector<*>) {
             val itemStack = ItemStack(RTMItem.installedObject)
             itemStack.itemDamage = type.id.toInt()
             (RTMItem.installedObject as ItemInstalledObject).setModelState(itemStack, tileEntity.resourceState)
+
+            if (GuiScreen.isCtrlKeyDown()) {
+                ItemWithModelEx.copyOffsetToItemStack(tileEntity, itemStack)
+            }
             return itemStack
         }
         return ItemStack.EMPTY

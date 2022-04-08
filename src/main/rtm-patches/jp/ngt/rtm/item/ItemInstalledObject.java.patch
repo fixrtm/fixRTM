@@ -1,30 +1,120 @@
 --- a/jp/ngt/rtm/item/ItemInstalledObject.java
 +++ b/jp/ngt/rtm/item/ItemInstalledObject.java
-@@ -121,10 +121,11 @@
+@@ -121,26 +121,30 @@
                    b0 = 7;
                 }
  
                 TileEntityFluorescent tileentityfluorescent = (TileEntityFluorescent)BlockUtil.getTileEntity(world, i, j, k);
                 tileentityfluorescent.setDir(b0);
 +               tileentityfluorescent.setRotation(entityplayer, entityplayer.isSneaking() ? 1.0F : 15.0F, true);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityfluorescent);
                 this.updateResource(tileentityfluorescent, itemstack);
              }
           } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.CROSSING) {
              if (enumfacing == EnumFacing.UP) {
                 block = RTMBlock.crossingGate;
-@@ -250,10 +251,11 @@
+                BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+                TileEntityCrossingGate tileentitycrossinggate = (TileEntityCrossingGate)BlockUtil.getTileEntity(world, i, j, k);
+                tileentitycrossinggate.setRotation(entityplayer, 15.0F, true);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentitycrossinggate);
+                this.updateResource(tileentitycrossinggate, itemstack);
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.RAILLOAD_SIGN) {
+             if (enumfacing == EnumFacing.UP || enumfacing == EnumFacing.DOWN) {
+                block = RTMBlock.railroadSign;
+                BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+                TileEntityRailroadSign tileentityrailroadsign = (TileEntityRailroadSign)BlockUtil.getTileEntity(world, i, j, k);
+                tileentityrailroadsign.setRotation(entityplayer, 15.0F, true);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityrailroadsign);
+                this.updateResource(tileentityrailroadsign, itemstack);
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNAL) {
+             if (enumfacing != EnumFacing.UP && enumfacing != EnumFacing.DOWN) {
+                i = blockpos.getX();
+@@ -169,19 +173,21 @@
+             block = RTMBlock.turnstile;
+             int l1 = NGTMath.floor(NGTMath.normalizeAngle((double)entityplayer.rotationYaw + 180.0D) / 90.0D + 0.5D) & 3;
+             BlockUtil.setBlock(world, i, j, k, block, l1, 3);
+             TileEntityTurnstile tileentityturnstile = (TileEntityTurnstile)BlockUtil.getTileEntity(world, i, j, k);
+             tileentityturnstile.setRotation(entityplayer, 90.0F, true);
++            com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityturnstile);
+             this.updateResource(tileentityturnstile, itemstack);
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.BUMPING_POST) {
+             if (enumfacing == EnumFacing.UP && this.setEntityOnRail(world, new EntityBumpingPost(world), i, j - 1, k, entityplayer, itemstack)) {
+                block = Blocks.STONE;
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.LINEPOLE) {
+             block = RTMBlock.linePole;
+             BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+             TileEntityPole tileentitypole = (TileEntityPole)BlockUtil.getTileEntity(world, i, j, k);
++            com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentitypole);
+             this.updateResource(tileentitypole, itemstack);
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.STAIR) {
+             block = RTMBlock.scaffoldStairs;
+             BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+             block.onBlockPlacedBy(world, blockpos1, (IBlockState)null, entityplayer, (ItemStack)null);
+@@ -197,10 +203,11 @@
+             if (enumfacing == EnumFacing.UP) {
+                block = RTMBlock.point;
+                BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+                TileEntityPoint tileentitypoint = (TileEntityPoint)BlockUtil.getTileEntity(world, i, j, k);
+                tileentitypoint.setRotation(entityplayer, 15.0F, false);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentitypoint);
+                this.updateResource(tileentitypoint, itemstack);
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNBOARD) {
+             block = RTMBlock.signboard;
+             BlockUtil.setBlock(world, i, j, k, block, i1, 3);
+@@ -217,10 +224,11 @@
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.LIGHT) {
+             block = RTMBlock.light;
+             BlockUtil.setBlock(world, i, j, k, block, i1, 3);
+             TileEntityLight tileentitylight = (TileEntityLight)BlockUtil.getTileEntity(world, i, j, k);
+             tileentitylight.setRotation(entityplayer, 15.0F, true);
++            com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentitylight);
+             this.updateResource(tileentitylight, itemstack);
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.FLAG) {
+             block = RTMBlock.flag;
+             BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+             TileEntityFlag tileentityflag = (TileEntityFlag)BlockUtil.getTileEntity(world, i, j, k);
+@@ -236,10 +244,11 @@
+             }
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.INSULATOR) {
+             block = RTMBlock.insulator;
+             BlockUtil.setBlock(world, i, j, k, block, i1, 3);
+             TileEntityInsulator tileentityinsulator = (TileEntityInsulator)BlockUtil.getTileEntity(world, i, j, k);
++            com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityinsulator);
+             this.updateResource(tileentityinsulator, itemstack);
+          } else if (iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.CONNECTOR_IN && iteminstalledobject$istlobjtype != ItemInstalledObject.IstlObjType.CONNECTOR_OUT) {
+             if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.PIPE) {
+                block = RTMBlock.pipe;
+                BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+@@ -250,10 +259,12 @@
                 this.updateResource(tileentitypipe, itemstack);
              } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.PLANT) {
                 block = RTMBlock.plant_ornament;
                 BlockUtil.setBlock(world, i, j, k, block, 0, 3);
                 TileEntityPlantOrnament tileentityplantornament = (TileEntityPlantOrnament)BlockUtil.getTileEntity(world, i, j, k);
 +               tileentityplantornament.setRotation(entityplayer, entityplayer.isSneaking() ? 1.0F : 15.0F, true);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityplantornament);
                 this.updateResource(tileentityplantornament, itemstack);
              } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SPEAKER) {
                 block = RTMBlock.speaker;
                 BlockUtil.setBlock(world, i, j, k, block, i1, 3);
                 TileEntitySpeaker tileentityspeaker = (TileEntitySpeaker)BlockUtil.getTileEntity(world, i, j, k);
-@@ -345,20 +347,24 @@
+@@ -274,10 +285,11 @@
+                }
+ 
+                block = RTMBlock.connector;
+                BlockUtil.setBlock(world, i, j, k, block, i1, 3);
+                TileEntityConnector tileentityconnector = (TileEntityConnector)BlockUtil.getTileEntity(world, i, j, k);
++               com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentityconnector);
+                this.updateResource(tileentityconnector, itemstack);
+                tileentityconnector.setConnectionTo(blockpos.getX(), blockpos.getY(), blockpos.getZ(), Connection.ConnectionType.DIRECT, (ResourceState)null);
+             }
+          }
+ 
+@@ -345,20 +357,24 @@
  
     protected ResourceType getModelType(ItemStack itemStack) {
        return ItemInstalledObject.IstlObjType.getType(itemStack.getItemDamage()).type;
