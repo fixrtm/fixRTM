@@ -16,7 +16,24 @@
        super(world);
        this.setSize(2.75F, 1.1875F);
        this.noClip = true;
-@@ -293,25 +294,25 @@
+@@ -126,12 +127,15 @@
+    private void readFormationData(NBTTagCompound nbt) {
+       long i = nbt.getLong("FormationId");
+       byte b0 = nbt.getByte("EntryPos");
+       byte b1 = nbt.getByte("EntryDir");
+       Formation formation = FormationManager.getInstance().getFormation(i);
+-      if (formation == null) {
++      if (formation == null) { // temporally set new formation
+          this.formation = FormationManager.getInstance().createNewFormation(this);
++         if (!jp.ngt.ngtlib.util.NGTUtil.isServer()) {
++            com.anatawa12.fixRtm.network.NetworkHandler.sendPacketServer(new com.anatawa12.fixRtm.network.RequestFormation(i));
++         }
+       } else {
+          this.formation = formation;
+          formation.setTrain(this, b0, b1);
+       }
+ 
+@@ -293,25 +297,25 @@
           float f = this.getSpeed();
           int i = this.getNotch();
           Random random = this.world.rand;
@@ -46,7 +63,7 @@
                 double d6 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 double d7 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 this.world.spawnParticle(enumparticletypes, d2, d3, d4, d6, 0.25D, d7, new int[0]);
-@@ -441,25 +442,34 @@
+@@ -441,25 +445,34 @@
              }
           }
  
@@ -84,7 +101,7 @@
              this.setSpeed(f);
           }
  
-@@ -690,20 +700,21 @@
+@@ -690,20 +703,21 @@
        this.trainSpeed = par1;
     }
  
@@ -108,7 +125,7 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -760,10 +771,11 @@
+@@ -760,10 +774,11 @@
     public int getTrainDirection() {
        return this.getVehicleState(TrainState.TrainStateType.Direction);
     }
@@ -120,7 +137,7 @@
        } else {
           this.formation.setTrainDirection((byte)par1, this);
        }
-@@ -793,33 +805,42 @@
+@@ -793,33 +808,42 @@
     public boolean addNotch(Entity driver, int par2) {
        if (par2 != 0) {
           int i = this.getNotch();
@@ -168,7 +185,7 @@
     }
  
     public void setSignal(int par1) {
-@@ -883,10 +904,11 @@
+@@ -883,10 +907,11 @@
           this.releaseTicket();
        }
  
@@ -180,7 +197,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -903,11 +925,10 @@
+@@ -903,11 +928,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -192,7 +209,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -931,20 +952,26 @@
+@@ -931,20 +955,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;
