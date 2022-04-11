@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemWithModel.java
 +++ b/jp/ngt/rtm/item/ItemWithModel.java
-@@ -16,44 +16,57 @@
+@@ -16,44 +16,56 @@
  import net.minecraft.item.ItemStack;
  import net.minecraft.nbt.NBTTagCompound;
  import net.minecraft.util.ActionResult;
@@ -55,10 +55,9 @@
 +      if (state != null && state.getDataMap().getEntries().size() > 0) {
 +         list.add(TextFormatting.DARK_PURPLE + "(+DataMap)");
 +      }
-+      // not implemented
-+      //if (ItemWithModel.hasOffset(stack)) {
-+      //   list.add(EnumChatFormatting.DARK_PURPLE + "(+Offset)");
-+      //}
++      if (com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.hasOffset(stack)) {
++         list.add(TextFormatting.DARK_PURPLE + "(+Offset)");
++      }
 +   }
 +
     protected abstract ResourceType getModelType(ItemStack var1);
@@ -66,7 +65,7 @@
     public ResourceState<T> getModelState(ItemStack itemStack) {
        ResourceType resourcetype = this.getModelType(itemStack);
        if (resourcetype != null) {
-@@ -79,27 +92,36 @@
+@@ -79,27 +91,36 @@
        if (!itemStack.hasTagCompound()) {
           itemStack.setTagCompound(new NBTTagCompound());
        }

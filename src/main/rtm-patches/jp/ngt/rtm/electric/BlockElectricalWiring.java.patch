@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/electric/BlockElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/BlockElectricalWiring.java
-@@ -11,10 +11,15 @@
+@@ -11,19 +11,29 @@
     protected BlockElectricalWiring(Material material) {
        super(material);
     }
@@ -16,3 +16,17 @@
        } else {
           TileEntityElectricalWiring tileentityelectricalwiring = (TileEntityElectricalWiring)holder.getWorld().getTileEntity(holder.getBlockPos());
           tileentityelectricalwiring.onRightClick(holder.getPlayer());
+          return true;
+       }
+    }
+ 
++   @Override
++   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.INSULATOR);
++   }
++
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+       TileEntityElectricalWiring tileentityelectricalwiring = (TileEntityElectricalWiring)world.getTileEntity(pos);
+       tileentityelectricalwiring.onBlockBreaked();
+       super.breakBlock(world, pos, state);
+    }
