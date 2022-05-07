@@ -1,0 +1,22 @@
+--- a/jp/ngt/rtm/electric/BlockConnector.java
++++ b/jp/ngt/rtm/electric/BlockConnector.java
+@@ -73,13 +73,18 @@
+       }
+ 
+    }
+ 
+    protected ItemStack getItem(int damage) {
+-      damage = damage < 6 ? ItemInstalledObject.IstlObjType.CONNECTOR_IN.id : ItemInstalledObject.IstlObjType.CONNECTOR_OUT.id;
++      damage = istlObjType(damage).id;
+       return new ItemStack(RTMItem.installedObject, 1, damage);
+    }
+ 
+    public boolean canConnect(World world, int x, int y, int z) {
+       return true;
+    }
++
++   @Override
++   protected ItemInstalledObject.IstlObjType istlObjType(int damage) {
++      return damage < 6 ? ItemInstalledObject.IstlObjType.CONNECTOR_IN : ItemInstalledObject.IstlObjType.CONNECTOR_OUT;
++   }
+ }

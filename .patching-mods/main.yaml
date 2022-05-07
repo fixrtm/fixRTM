@@ -58,7 +58,9 @@ mods:
       - jp.ngt.rtm.block.tileentity.TileEntityRailroadSign
       - jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
       - jp.ngt.rtm.command.CommandRTM
+      - jp.ngt.rtm.electric.BlockConnector
       - jp.ngt.rtm.electric.BlockElectricalWiring
+      - jp.ngt.rtm.electric.BlockInsulator
       - jp.ngt.rtm.electric.BlockSignal
       - jp.ngt.rtm.electric.RenderElectricalWiring
       - jp.ngt.rtm.electric.RenderSignal
