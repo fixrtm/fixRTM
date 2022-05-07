@@ -21,9 +21,11 @@
     }
  
 +   @Override
-+   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
-+      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.INSULATOR);
++   public net.minecraft.item.ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, istlObjType(jp.ngt.ngtlib.block.BlockUtil.getMetadata(world, pos)));
 +   }
++
++   protected abstract jp.ngt.rtm.item.ItemInstalledObject.IstlObjType istlObjType(int damage);
 +
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
        TileEntityElectricalWiring tileentityelectricalwiring = (TileEntityElectricalWiring)world.getTileEntity(pos);
