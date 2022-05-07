@@ -53,7 +53,7 @@
              block = RTMBlock.scaffoldStairs;
              BlockUtil.setBlock(world, i, j, k, block, 0, 3);
              block.onBlockPlacedBy(world, blockpos1, (IBlockState)null, entityplayer, (ItemStack)null);
-@@ -197,10 +203,11 @@
+@@ -197,18 +203,20 @@
              if (enumfacing == EnumFacing.UP) {
                 block = RTMBlock.point;
                 BlockUtil.setBlock(world, i, j, k, block, 0, 3);
@@ -65,7 +65,16 @@
           } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.SIGNBOARD) {
              block = RTMBlock.signboard;
              BlockUtil.setBlock(world, i, j, k, block, i1, 3);
-@@ -217,10 +224,11 @@
+             TileEntitySignBoard tileentitysignboard = (TileEntitySignBoard)BlockUtil.getTileEntity(world, i, j, k);
+             int j2 = NGTMath.floor(NGTMath.normalizeAngle((double)entityplayer.rotationYaw + 180.0D) / 90.0D + 0.5D) & 3;
+             tileentitysignboard.setDirection((byte)j2);
++            com.anatawa12.fixRtm.rtm.item.ItemWithModelEx.applyOffsetToTileEntity(itemstack, tileentitysignboard);
+             this.updateResource(tileentitysignboard, itemstack);
+          } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.TICKET_VENDOR) {
+             block = RTMBlock.ticketVendor;
+             BlockUtil.setBlock(world, i, j, k, block, 0, 3);
+             TileEntityTicketVendor tileentityticketvendor = (TileEntityTicketVendor)BlockUtil.getTileEntity(world, i, j, k);
+@@ -217,10 +225,11 @@
           } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.LIGHT) {
              block = RTMBlock.light;
              BlockUtil.setBlock(world, i, j, k, block, i1, 3);
@@ -77,7 +86,7 @@
              block = RTMBlock.flag;
              BlockUtil.setBlock(world, i, j, k, block, 0, 3);
              TileEntityFlag tileentityflag = (TileEntityFlag)BlockUtil.getTileEntity(world, i, j, k);
-@@ -236,10 +244,11 @@
+@@ -236,10 +245,11 @@
              }
           } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.INSULATOR) {
              block = RTMBlock.insulator;
@@ -89,7 +98,7 @@
              if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.PIPE) {
                 block = RTMBlock.pipe;
                 BlockUtil.setBlock(world, i, j, k, block, 0, 3);
-@@ -250,10 +259,12 @@
+@@ -250,10 +260,12 @@
                 this.updateResource(tileentitypipe, itemstack);
              } else if (iteminstalledobject$istlobjtype == ItemInstalledObject.IstlObjType.PLANT) {
                 block = RTMBlock.plant_ornament;
@@ -102,7 +111,7 @@
                 block = RTMBlock.speaker;
                 BlockUtil.setBlock(world, i, j, k, block, i1, 3);
                 TileEntitySpeaker tileentityspeaker = (TileEntitySpeaker)BlockUtil.getTileEntity(world, i, j, k);
-@@ -274,10 +285,11 @@
+@@ -274,10 +286,11 @@
                 }
  
                 block = RTMBlock.connector;
@@ -114,7 +123,7 @@
              }
           }
  
-@@ -345,20 +357,24 @@
+@@ -345,20 +358,24 @@
  
     protected ResourceType getModelType(ItemStack itemStack) {
        return ItemInstalledObject.IstlObjType.getType(itemStack.getItemDamage()).type;

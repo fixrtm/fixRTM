@@ -1,0 +1,16 @@
+--- a/jp/ngt/rtm/block/tileentity/RenderSignBoard.java
++++ b/jp/ngt/rtm/block/tileentity/RenderSignBoard.java
+@@ -54,10 +54,13 @@
+          }
+       } else {
+          GL11.glTranslatef(0.0F, 0.0F, f2 - 0.5F);
+       }
+ 
++      GL11.glTranslatef(tileEntity.getOffsetX(), tileEntity.getOffsetY(), tileEntity.getOffsetZ());
++      GL11.glRotatef(tileEntity.getRotation(), 0.0F, 1.0F, 0.0F);
++
+       GL11.glDisable(2896);
+       NGTTessellator ngttessellator = NGTTessellator.instance;
+       this.bindTexture(texturesetsignboard.texture);
+       float f5 = signboardconfig.backTexture == 1 ? 0.5F : 1.0F;
+       float f6 = signboardconfig.backTexture == 1 ? 0.5F : 0.0F;
