@@ -6,7 +6,7 @@
     }
  
     public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
-+      if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ((TileEntityConnectorBase)holder.getWorld().getTileEntity(holder.getBlockPos())).getSubType())) {
++      if (holder.getPlayer().inventory.getCurrentItem().getItem() == jp.ngt.rtm.RTMItem.crowbar) {
 +         if (holder.getWorld().isRemote)
 +            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), holder.getBlockPos());
 +         return true;

@@ -6,7 +6,7 @@
           int k = holder.getBlockPos().getZ();
           EntityPlayer entityplayer = holder.getPlayer();
           RTMCore rtmcore = RTMCore.instance;
-+         if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ItemInstalledObject.IstlObjType.RAILLOAD_SIGN)) {
++         if (holder.getPlayer().inventory.getCurrentItem().getItem() == RTMItem.crowbar) {
 +            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), i, j, k);
 +            return true;
 +         }
