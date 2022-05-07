@@ -1,12 +1,12 @@
 --- a/jp/ngt/rtm/electric/BlockElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/BlockElectricalWiring.java
-@@ -11,19 +11,31 @@
+@@ -11,19 +11,29 @@
     protected BlockElectricalWiring(Material material) {
        super(material);
     }
  
     public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
-+      if (com.anatawa12.fixRtm.UtilsKt.isItemOf(holder.getPlayer().inventory.getCurrentItem(), ((TileEntityConnectorBase)holder.getWorld().getTileEntity(holder.getBlockPos())).getSubType())) {
++      if (holder.getPlayer().inventory.getCurrentItem().getItem() == jp.ngt.rtm.RTMItem.crowbar) {
 +         if (holder.getWorld().isRemote)
 +            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), holder.getBlockPos());
 +         return true;
@@ -21,11 +21,9 @@
     }
  
 +   @Override
-+   public net.minecraft.item.ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
-+      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, istlObjType(jp.ngt.ngtlib.block.BlockUtil.getMetadata(world, pos)));
++   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.INSULATOR);
 +   }
-+
-+   protected abstract jp.ngt.rtm.item.ItemInstalledObject.IstlObjType istlObjType(int damage);
 +
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
        TileEntityElectricalWiring tileentityelectricalwiring = (TileEntityElectricalWiring)world.getTileEntity(pos);
