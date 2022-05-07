@@ -1,0 +1,34 @@
+--- a/jp/ngt/rtm/block/BlockSignBoard.java
++++ b/jp/ngt/rtm/block/BlockSignBoard.java
+@@ -39,21 +39,31 @@
+       }
+    }
+ 
+    public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
+       if (holder.getWorld().isRemote) {
++
+          int i = holder.getBlockPos().getX();
+          int j = holder.getBlockPos().getY();
+          int k = holder.getBlockPos().getZ();
++         if (holder.getPlayer().inventory.getCurrentItem().getItem() == RTMItem.crowbar) {
++            com.anatawa12.fixRtm.UtilsKt.openGui(holder.getPlayer(), com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, holder.getWorld(), i, j, k);
++            return true;
++         }
+          EntityPlayer entityplayer = holder.getPlayer();
+          RTMCore rtmcore = RTMCore.instance;
+          entityplayer.openGui(RTMCore.instance, RTMCore.guiIdSignboard, holder.getWorld(), i, j, k);
+       }
+ 
+       return true;
+    }
+ 
++   @Override
++   public net.minecraft.item.ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.SIGNBOARD);
++   }
++
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+       TileEntitySignBoard tileentitysignboard = (TileEntitySignBoard)world.getTileEntity(pos);
+       if (tileentitysignboard != null) {
+          int i = (tileentitysignboard.getResourceState().getResourceSet().getConfig()).lightValue;
+          if (i >= 0) {

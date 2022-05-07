@@ -46,9 +46,11 @@ mods:
       - jp.ngt.rtm.block.BlockRailroadSign
       - jp.ngt.rtm.block.BlockScaffold
       - jp.ngt.rtm.block.BlockScaffoldStairs
+      - jp.ngt.rtm.block.BlockSignBoard
       - jp.ngt.rtm.block.tileentity.RenderMachine
       - jp.ngt.rtm.block.tileentity.RenderOrnament
       - jp.ngt.rtm.block.tileentity.RenderRailroadSign
+      - jp.ngt.rtm.block.tileentity.RenderSignBoard
       - jp.ngt.rtm.block.tileentity.TileEntityCrossingGate
       - jp.ngt.rtm.block.tileentity.TileEntityFluorescent
       - jp.ngt.rtm.block.tileentity.TileEntityMachineBase
@@ -56,6 +58,7 @@ mods:
       - jp.ngt.rtm.block.tileentity.TileEntityOrnament
       - jp.ngt.rtm.block.tileentity.TileEntityPoint
       - jp.ngt.rtm.block.tileentity.TileEntityRailroadSign
+      - jp.ngt.rtm.block.tileentity.TileEntitySignBoard
       - jp.ngt.rtm.block.tileentity.TileEntityTrainWorkBench
       - jp.ngt.rtm.command.CommandRTM
       - jp.ngt.rtm.electric.BlockConnector

@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/block/tileentity/TileEntitySignBoard.java
++++ b/jp/ngt/rtm/block/tileentity/TileEntitySignBoard.java
+@@ -12,11 +12,11 @@
+ import net.minecraft.util.ITickable;
+ import net.minecraft.util.math.AxisAlignedBB;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+-public class TileEntitySignBoard extends TileEntityCustom implements IResourceSelector, ITickable {
++public class TileEntitySignBoard extends jp.ngt.ngtlib.block.TileEntityPlaceable implements IResourceSelector, ITickable {
+    private ResourceStateSignboard state = new ResourceStateSignboard(RTMResource.SIGNBOARD, this);
+    public boolean isGettingPower;
+    private byte direction;
+    @SideOnly(Side.CLIENT)
+    public int counter;
