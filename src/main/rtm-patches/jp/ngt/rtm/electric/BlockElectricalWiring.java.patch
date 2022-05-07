@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/electric/BlockElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/BlockElectricalWiring.java
-@@ -11,19 +11,29 @@
+@@ -11,19 +11,31 @@
     protected BlockElectricalWiring(Material material) {
        super(material);
     }
