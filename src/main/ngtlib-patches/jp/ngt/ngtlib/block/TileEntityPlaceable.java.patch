@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/block/TileEntityPlaceable.java
 +++ b/jp/ngt/ngtlib/block/TileEntityPlaceable.java
-@@ -4,10 +4,11 @@
+@@ -4,19 +4,29 @@
  import net.minecraft.entity.player.EntityPlayer;
  import net.minecraft.nbt.NBTTagCompound;
  
@@ -10,9 +10,27 @@
  
     public void readFromNBT(NBTTagCompound nbt) {
        super.readFromNBT(nbt);
++      this.setOffset(
++         nbt.getFloat("offsetX"),
++         nbt.getFloat("offsetY"),
++         nbt.getFloat("offsetZ"),
++         false
++      );
        this.setRotation(nbt.getFloat("Yaw"), false);
     }
-@@ -33,6 +34,28 @@
+ 
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+       super.writeToNBT(nbt);
+       nbt.setFloat("Yaw", this.rotation);
++      nbt.setFloat("offsetX", this.offsetX);
++      nbt.setFloat("offsetY", this.offsetY);
++      nbt.setFloat("offsetZ", this.offsetZ);
+       return nbt;
+    }
+ 
+    public float getRotation() {
+       return this.rotation;
+@@ -33,6 +43,28 @@
  
     public void setRotation(EntityPlayer player, float rotationInterval, boolean synch) {
        int i = NGTMath.floor(NGTMath.normalizeAngle((double)(-player.rotationYaw) + 180.0D + (double)rotationInterval / 2.0D) / (double)rotationInterval);
