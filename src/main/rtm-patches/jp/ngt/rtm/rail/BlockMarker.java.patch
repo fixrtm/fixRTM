@@ -1,7 +1,13 @@
 --- a/jp/ngt/rtm/rail/BlockMarker.java
 +++ b/jp/ngt/rtm/rail/BlockMarker.java
-@@ -141,29 +141,34 @@
-          return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
+@@ -136,34 +136,39 @@
+ 
+          for(RailPosition railposition : list) {
+             railposition.addHeight((double)(resourcestaterail.blockHeight - 0.0625F));
+          }
+ 
+-         return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag);
++         return createRail(world, x, y, z, list, resourcestaterail, makeRail, flag, player);
        }
     }
  
