@@ -80,7 +80,7 @@
        return false;
     }
  
-@@ -247,14 +257,15 @@
+@@ -247,14 +257,16 @@
  
           return false;
        }
@@ -91,13 +91,14 @@
        RailMaker railmaker = new RailMaker(world, list);
        SwitchType switchtype = railmaker.getSwitch();
        if (switchtype == null) {
-+         player.sendMessage(new net.minecraft.util.text.TextComponentTranslation("message.rail.switch_type", list.get(0).blockX, list.get(0).blockY, list.get(0).blockZ));
++         if (world != null && !world.isRemote)
++            player.sendMessage(new net.minecraft.util.text.TextComponentTranslation("message.rail.switch_type", list.get(0).blockX, list.get(0).blockY, list.get(0).blockZ));
           return false;
        } else {
           RailMap[] arailmap = switchtype.getAllRailMap();
           if (arailmap == null) {
              return false;
-@@ -292,18 +303,18 @@
+@@ -292,18 +304,18 @@
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {
