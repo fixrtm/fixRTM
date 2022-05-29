@@ -52,8 +52,10 @@ object ItemWithModelEx {
 
     @JvmStatic
     fun applyOffsetToTileEntity(itemStack: ItemStack, tile: TileEntityPlaceable) {
-        val offset: FloatArray = getOffset(itemStack)
-        tile.setOffset(offset[0], offset[1], offset[2], true)
-        tile.setRotation(getRotation(itemStack), true)
+        if (hasOffset(itemStack)) {
+            val offset: FloatArray = getOffset(itemStack)
+            tile.setOffset(offset[0], offset[1], offset[2], true)
+            tile.setRotation(getRotation(itemStack), true)
+        }
     }
 }
