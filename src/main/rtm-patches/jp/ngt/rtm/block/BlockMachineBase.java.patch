@@ -1,20 +1,15 @@
 --- a/jp/ngt/rtm/block/BlockMachineBase.java
 +++ b/jp/ngt/rtm/block/BlockMachineBase.java
-@@ -21,10 +21,26 @@
+@@ -21,10 +21,21 @@
        this.clickMachine(holder.getWorld(), holder.getBlockPos().getX(), holder.getBlockPos().getY(), holder.getBlockPos().getZ(), holder.getPlayer());
        return true;
     }
  
     protected boolean clickMachine(World world, int x, int y, int z, EntityPlayer player) {
 +      if (world.isRemote) {
-+         if (jp.ngt.ngtlib.util.NGTUtil.isEquippedItem(player, jp.ngt.rtm.RTMItem.installedObject)) {
-+            net.minecraft.item.ItemStack itemStack = player.inventory.getCurrentItem();
-+            TileEntityMachineBase machine = (TileEntityMachineBase) world.getTileEntity(new BlockPos(x, y, z));
-+            assert machine != null;
-+            if (com.anatawa12.fixRtm.UtilsKt.isItemOf(itemStack, machine)) {
-+               com.anatawa12.fixRtm.UtilsKt.openGui(player, com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, player.world, x, y, z);
-+               return true;
-+            }
++         if (jp.ngt.ngtlib.util.NGTUtil.isEquippedItem(player, jp.ngt.rtm.RTMItem.crowbar)) {
++            com.anatawa12.fixRtm.UtilsKt.openGui(player, com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, player.world, x, y, z);
++            return true;
 +         }
 +
 +         if (player.isSneaking()) {
@@ -27,7 +22,7 @@
              player.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, player.getEntityWorld(), x, y, z);
           }
  
-@@ -32,15 +48,23 @@
+@@ -32,15 +43,23 @@
        } else {
           return false;
        }
