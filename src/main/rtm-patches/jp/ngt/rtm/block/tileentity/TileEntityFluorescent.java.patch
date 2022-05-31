@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/block/tileentity/TileEntityFluorescent.java
 +++ b/jp/ngt/rtm/block/tileentity/TileEntityFluorescent.java
-@@ -37,9 +37,18 @@
+@@ -37,9 +37,21 @@
           }
        }
  
@@ -15,7 +15,10 @@
 +   public void setRotation(net.minecraft.entity.player.EntityPlayer player, float rotationInterval, boolean synch) {
 +      int yaw = net.minecraft.util.math.MathHelper.floor(jp.ngt.ngtlib.math.NGTMath.normalizeAngle(-player.rotationYaw + 180.0D + (rotationInterval / 2.0D)) / (double) rotationInterval);
 +      if (this.dirF >= 4) {
-+         yaw -= 90;
++         yaw += 90 / rotationInterval;
++      }
++      if (this.dirF == 1 || this.dirF == 7) {
++         yaw += 180 / rotationInterval;
 +      }
 +      this.setRotation((float) yaw * rotationInterval, synch);
 +   }
