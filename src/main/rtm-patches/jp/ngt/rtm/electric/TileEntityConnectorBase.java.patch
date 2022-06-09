@@ -14,12 +14,18 @@
  
     public int[] getSelectorPos() {
        return new int[]{this.getX(), this.getY(), this.getZ()};
-@@ -107,6 +110,12 @@
+@@ -107,6 +110,18 @@
     public ResourceState<ModelSetConnector> getResourceState() {
        return this.state;
     }
  
     protected abstract ResourceType getSubType();
++
++   @Override
++   public void setOffset(float offsetX, float offsetY, float offsetZ, boolean sync) {
++      super.setOffset(offsetX, offsetY, offsetZ, sync);
++      this.updateWirePos();
++   }
 +
 +   @Override
 +   public void addInfoToCrashReport(net.minecraft.crash.CrashReportCategory reportCategory) {
