@@ -33,7 +33,7 @@ class CommandRTM : CommandBase() {
     inline fun <reified T> List<Entity>.killOllTypeOf() = this
         .asSequence()
         .filterIsInstance<EntityTrainBase>()
-        .filter { it.isDead }
+        .filter { !it.isDead }
         .onEach { it.setDead() }
         .count()
 
