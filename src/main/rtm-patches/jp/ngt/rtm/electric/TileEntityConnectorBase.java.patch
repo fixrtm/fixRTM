@@ -14,7 +14,7 @@
  
     public int[] getSelectorPos() {
        return new int[]{this.getX(), this.getY(), this.getZ()};
-@@ -107,6 +110,18 @@
+@@ -107,6 +110,19 @@
     public ResourceState<ModelSetConnector> getResourceState() {
        return this.state;
     }
@@ -24,7 +24,8 @@
 +   @Override
 +   public void setOffset(float offsetX, float offsetY, float offsetZ, boolean sync) {
 +      super.setOffset(offsetX, offsetY, offsetZ, sync);
-+      this.updateWirePos();
++      if (world != null)
++         this.updateWirePos();
 +   }
 +
 +   @Override
