@@ -21,7 +21,6 @@ mods:
       - jp.ngt.ngtlib.item.craft.ShapedRecipes55
       - jp.ngt.ngtlib.math.BezierCurve
       - jp.ngt.ngtlib.network.PacketNBT
-      - jp.ngt.ngtlib.renderer.media.GIF
       - jp.ngt.ngtlib.renderer.model.ModelLoader
       - jp.ngt.ngtlib.renderer.model.ObjModel
       - jp.ngt.ngtlib.renderer.model.PolygonModel
