@@ -6,9 +6,9 @@ mods:
   ngtlib:
     patch-path: src/main/ngtlib-patches
     source-path: src/main/ngtlib
-    unmodifieds-jar: build/patching-mod/mods/ngtlib/ngtlib-2.4.19-unmodifieds.jar
-    source-jar: curse/ngtlib/2.4.19/ngtlib-2.4.19-stable-39-deobf-1.5.498.12-sources.jar
-    deobf-jar: curse/ngtlib/2.4.19/ngtlib-2.4.19-stable-39-deobf.jar
+    unmodifieds-jar: build/patching-mod/mods/ngtlib/ngtlib-2.4.20-unmodifieds.jar
+    source-jar: curse/ngtlib/2.4.20/ngtlib-2.4.20-stable-39-deobf-1.5.498.12-sources.jar
+    deobf-jar: curse/ngtlib/2.4.20/ngtlib-2.4.20-stable-39-deobf.jar
     changed-classes:
       - jp.ngt.ngtlib.NGTCore
       - jp.ngt.ngtlib.block.TileEntityPlaceable
@@ -30,9 +30,9 @@ mods:
   rtm:
     patch-path: src/main/rtm-patches
     source-path: src/main/rtm
-    unmodifieds-jar: build/patching-mod/mods/rtm/realtrainmod-2.4.22-unmodifieds.jar
-    source-jar: curse/realtrainmod/2.4.22/realtrainmod-2.4.22-stable-39-deobf-1.5.498.12-sources.jar
-    deobf-jar: curse/realtrainmod/2.4.22/realtrainmod-2.4.22-stable-39-deobf.jar
+    unmodifieds-jar: build/patching-mod/mods/rtm/realtrainmod-2.4.23-unmodifieds.jar
+    source-jar: curse/realtrainmod/2.4.23/realtrainmod-2.4.23-stable-39-deobf-1.5.498.12-sources.jar
+    deobf-jar: curse/realtrainmod/2.4.23/realtrainmod-2.4.23-stable-39-deobf.jar
     changed-classes:
       - jp.ngt.rtm.CreativeTabRTM
       - jp.ngt.rtm.RTMItem
