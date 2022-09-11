@@ -9,6 +9,7 @@ RTMのバグを減らし、使いやすくする！
 
 - [English](README.en.md)
 - [日本語](README.md)
+- [简体中文](README.zh.md)
 
 ## RTM 1.7.10のユーザーへ
 
