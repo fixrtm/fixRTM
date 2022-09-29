@@ -129,19 +129,28 @@ jobs:
         if: ${{ !fromJSON(env.NIGHTLY) }}
         run: |
           if ! $PRERELEASE; then
-            changelog_tag_pattern='^[\d.]+$'
-            changelog_file_path='CHANGELOG.md'
+            main_changelog_file_path='CHANGELOG.md'
           else
-            changelog_tag_pattern='^SNAPSHOT-[0-9-]+$|^[\d.]+(-.*)?$'
-            changelog_file_path='CHANGELOG-SNAPSHOTS.md'
+            main_changelog_file_path='CHANGELOG-SNAPSHOTS.md'
           fi
 
-          # make release notes commit
-          generate-changelog \
-            -v "$VERSION_NAME" \
-            --tag-pattern "$changelog_tag_pattern" \
-            -o "$changelog_file_path"
+          # first, get release notes for unreleased
+          unreleased_release_note_path=$(mktemp)
+          ./.github/workflows/sh/get-unreleased-release-note.sh "$main_changelog_file_path" \
+            > "$unreleased_release_note_path"
 
+          # then, make unreleased -> released
+          RELEASE_DATE="$(date +%Y-%m-%d)"
+          if $PRERELEASE; then
+            # for prerelease, update -SNAPSHOTS
+            ./.github/workflows/sh/update-changelog.sh CHANGELOG-SNAPSHOTS.md \
+              "$VERSION_NAME" "$RELEASE_DATE"
+          fi
+          # for both prerelease and release, update normal
+          ./.github/workflows/sh/update-changelog.sh CHANGELOG.md \
+            "$VERSION_NAME" "$RELEASE_DATE"
+
+          # create release note for GitHub/CurseForge release page
           release_note_path=$(mktemp)
           {
             if $PRERELEASE; then
@@ -151,7 +160,7 @@ jobs:
             echo "RTM $REQUIRED_RTM"
             echo "NGTLib $REQUIRED_NGTLIB"
             echo ""
-            generate-changelog --unreleased-only -v "$VERSION_NAME" --tag-pattern "$changelog_tag_pattern" --stdout
+            cat "$unreleased_release_note_path"
           } >> "$release_note_path"
           gh-export-variable RELEASE_NOTE_PATH "$release_note_path"
 
