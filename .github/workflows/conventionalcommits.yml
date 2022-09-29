@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: treeless clone
-        run:
+        run: |
           # git clone --filter tree:0 https://github.com/fixrtm/fixRTM.git $GITHUB_REF
           # without checkout
           git init
