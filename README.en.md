@@ -13,6 +13,10 @@ Please use [KaizPatchX].
 
 [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
+Also, you can download the latest nightly release at [nightly.link].
+
+[nightly.link]: https://nightly.link/fixrtm/fixRTM/workflows/release/master/jar
+
 ## dependencies
 
 - [RTM](https://www.curseforge.com/minecraft/mc-mods/realtrainmod) the newest version when a release of fixRTM

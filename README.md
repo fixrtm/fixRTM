@@ -18,6 +18,10 @@ RTMのバグを減らし、使いやすくする！
 
 [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
+また、最新評価版は[nightly.link]よりダウンロードできます。
+
+[nightly.link]: https://nightly.link/fixrtm/fixRTM/workflows/release/master/jar
+
 ## 前提mod
 
 - [RTM](https://www.curseforge.com/minecraft/mc-mods/realtrainmod) fixRTMのリリース時の最新バージョン
