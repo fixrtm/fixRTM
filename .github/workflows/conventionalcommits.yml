@@ -27,6 +27,18 @@ jobs:
 
       - name: run commitlint
         run: |
+          json=$(mktemp)
+          gh pr view $PR_NUM --json=labels > $json
+
+          check_label() {
+            gh pr view $PR_NUM --json=labels | jq -r '.labels[].name' | grep -Fx "$1" > /dev/null || return 1
+          }
+
+          if check_label 'NO-COMMIT-CHECK'; then
+            echo "::notice ::check is suppressed by NO-COMMIT-CHECK label"
+            exit 1
+          fi
+
           cat <<EOF > commitlint.config.js
           module.exports = {
             extends: ['@commitlint/config-conventional']
