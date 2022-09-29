@@ -26,6 +26,8 @@ jobs:
         run: npm install -g @commitlint/cli @commitlint/config-conventional
 
       - name: run commitlint
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           json=$(mktemp)
           gh pr view $PR_NUM --json=labels > $json
