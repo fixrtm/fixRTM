@@ -28,6 +28,7 @@ jobs:
       - name: run commitlint
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUM: ${{ github.event.number }}
         run: |
           json=$(mktemp)
           gh pr view $PR_NUM --json=labels > $json
