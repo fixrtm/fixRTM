@@ -109,6 +109,19 @@
     }
  
     public void onBogieUpdate() {
+@@ -309,11 +323,11 @@
+ 
+    }
+ 
+    public void setDead() {
+       boolean flag = this.getEntityWorld().isRemote && this.getTrain() != null && this.getTrain().getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
+-      if (this.existCount > 100 && !flag) {
++      if (this.existCount > 100 && !flag || (this.getEntityWorld().isRemote && this.getTrain() == null)) {
+          super.setDead();
+       }
+ 
+    }
+ 
 @@ -491,10 +505,12 @@
     public void addVelocity(double par1, double par3, double par5) {
     }
