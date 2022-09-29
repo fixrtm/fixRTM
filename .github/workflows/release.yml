@@ -13,12 +13,9 @@ on:
         default: prerelease
         required: true
         options:
-          - commit-release
           - prerelease
           - start-rc
           - stable
-  push:
-    branches: [ master ]
 
 jobs:
   release:
@@ -40,16 +37,8 @@ jobs:
       - name: update version name
         id: ver_up
         run: |
-          # push releases will be commit-release
-          if [ "$EVENT_NAME" == push ]; then
-            RELEASE_KIND_IN=commit-release
-          fi
-
           # set version name in properties file
           case "$RELEASE_KIND_IN" in
-            "commit-release")
-              set-version $(git rev-parse HEAD)
-              ;;
             "prerelease" )
               set-version "$(version-next "$(get-version)")"
               ;;
@@ -65,7 +54,7 @@ jobs:
               ;;
           esac
 
-          if [ "$RELEASE_KIND_IN" != "commit-release" ] && [ "$GITHUB_REF_NAME" != "master" ]; then
+          if [ "$GITHUB_REF_NAME" != "master" ]; then
               echo "invalid release kind: $RELEASE_KIND_IN is not allowd for $GITHUB_REF_NAME"
               exit 255
           fi
