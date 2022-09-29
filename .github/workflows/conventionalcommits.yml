@@ -1,0 +1,54 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+name: Conventional Commits Check
+
+on:
+  pull_request: {}
+
+jobs:
+  conventionalcommits-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: treeless clone
+        run: |
+          # git clone --filter tree:0 https://github.com/fixrtm/fixRTM.git $GITHUB_REF
+          # without checkout
+          git init
+          git remote add origin https://github.com/fixrtm/fixRTM.git
+          git config remote.origin.promisor true
+          git config remote.origin.partialclonefilter tree:0
+          git fetch origin $GITHUB_REF
+
+      - name: install commitlint
+        run: npm install -g @commitlint/cli @commitlint/config-conventional
+
+      - name: run commitlint
+        run: |
+          cat <<EOF > commitlint.config.js
+          module.exports = {
+            extends: ['@commitlint/config-conventional']
+            'type-enum': [
+              2,
+              'always',
+              [
+                'build',
+                'chore',
+                'ci',
+                'docs',
+                'feat',
+                'fix',
+                'perf',
+                'refactor',
+                'revert',
+                'style',
+                'test',
+                'deps',
+              ],
+            ],
+          }
+          EOF
+          echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
+          commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
