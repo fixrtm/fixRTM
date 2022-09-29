@@ -41,7 +41,7 @@ jobs:
             LABEL="$1"
             FILE="$2"
 
-            if jq -r '.labels[]' < $json | grep -Fx "$LABEL"; then
+            if ! jq -r '.labels[]' < $json | grep -Fx "$LABEL"; then
               if ! jq -r '.files[].path' < $json | grep -Fx "$FILE"; then
                 echo "::error ::$FILE is not updated!"
                 EXIT_CODE=1
