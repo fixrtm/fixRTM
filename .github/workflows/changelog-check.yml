@@ -35,6 +35,7 @@ jobs:
 
           if check_label 'dependencies'; then
             # if there's dependencies tag, skip all checks
+            echo "::notice ::check is suppressed by dependencies label"
             exit 0
           fi
 
