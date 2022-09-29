@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/train/util/TrainState.java
 +++ b/jp/ngt/rtm/entity/train/util/TrainState.java
-@@ -47,11 +47,25 @@
+@@ -47,11 +47,27 @@
        return TrainState.TrainStateType.Door;
     }
  
@@ -10,16 +10,18 @@
 +      Notch(1, "notch", -8, 5) {
 +         @Override
 +         protected byte getMin0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
-+            jp.ngt.rtm.modelpack.cfg.TrainConfig config =
-+               (jp.ngt.rtm.modelpack.cfg.TrainConfig) train.getResourceState().getResourceSet().getConfig();
-+            return (byte) -(config.deccelerations.length - 1);
++            jp.ngt.rtm.modelpack.cfg.VehicleBaseConfig config = train.getResourceState().getResourceSet().getConfig();
++            if (config instanceof jp.ngt.rtm.modelpack.cfg.TrainConfig)
++               return (byte) -(((jp.ngt.rtm.modelpack.cfg.TrainConfig)config).deccelerations.length - 1);
++            return super.getMin0(train);
 +         }
 +
 +         @Override
 +         protected byte getMax0(jp.ngt.rtm.entity.vehicle.EntityVehicleBase<?> train) {
-+            jp.ngt.rtm.modelpack.cfg.TrainConfig config =
-+               (jp.ngt.rtm.modelpack.cfg.TrainConfig) train.getResourceState().getResourceSet().getConfig();
-+            return (byte) config.accelerateions.length;
++            jp.ngt.rtm.modelpack.cfg.VehicleBaseConfig config = train.getResourceState().getResourceSet().getConfig();
++            if (config instanceof jp.ngt.rtm.modelpack.cfg.TrainConfig)
++               return (byte) ((jp.ngt.rtm.modelpack.cfg.TrainConfig) config).accelerateions.length;
++            return super.getMin0(train);
 +         }
 +      },
        Signal(2, "signal", 0, 127),
@@ -27,7 +29,7 @@
        Light(5, "light", 0, 2),
        Pantograph(6, "pantograph", 0, 1),
        ChunkLoader(7, "chunk_loader", 0, 8),
-@@ -79,7 +93,41 @@
+@@ -79,7 +95,41 @@
              }
           }
  
