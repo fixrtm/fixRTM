@@ -6,4 +6,5 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "deps: "
+      prefix: "deps"
+      include: "scope"
