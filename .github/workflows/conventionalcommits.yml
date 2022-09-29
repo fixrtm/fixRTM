@@ -39,7 +39,7 @@ jobs:
 
           if check_label 'NO-COMMIT-CHECK'; then
             echo "::notice ::check is suppressed by NO-COMMIT-CHECK label"
-            exit 1
+            exit 0
           fi
 
           cat <<EOF > commitlint.config.js
