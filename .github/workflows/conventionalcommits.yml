@@ -45,24 +45,6 @@ jobs:
           cat <<EOF > commitlint.config.js
           module.exports = {
             extends: ['@commitlint/config-conventional']
-            'type-enum': [
-              2,
-              'always',
-              [
-                'build',
-                'chore',
-                'ci',
-                'docs',
-                'feat',
-                'fix',
-                'perf',
-                'refactor',
-                'revert',
-                'style',
-                'test',
-                'deps',
-              ],
-            ],
           }
           EOF
           echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
