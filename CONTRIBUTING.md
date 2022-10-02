@@ -14,6 +14,15 @@ please agree to your contribution will be published under the license.
 For small changes like fixing typo or documentation changes,
 You can create Pull Requests without making issues.
 
+Please follow [Conventional Commits] commit format.
+There's check for this so it's (almost) required to follow this format.
+
+[Conventional Commits]: https://www.conventionalcommits.org/en/v1.0.0/
+
+Please append both `CHANGELOG-SNAPSHOS.md` and `CHANGELOG.md`
+unless your change is fixing problem of feature which is not published.
+If your change is published in snapshots but not in release, please update `CHANGELOG-SNAPSHOS.md`.
+
 This project uses [mod-patching] to edit RTM sources.
 To develop with [mod-patching], it's required to follow steps below:
 

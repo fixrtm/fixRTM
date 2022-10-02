@@ -7,7 +7,7 @@ import com.anatawa12.modPatching.source.internal.readTextOr
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
     id("net.minecraftforge.gradle")
     id("com.anatawa12.mod-patching.binary") version "2.1.2"
     id("com.anatawa12.mod-patching.source") version "2.1.2"
@@ -62,9 +62,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
     compileOnly("com.github.sarxos:webcam-capture:0.3.12")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 }
 
 val processResources by tasks.getting(Copy::class) {
