@@ -6,7 +6,7 @@
 - [日本語](README.md)
 - [简体中文](README.zh.md)
 
-## 对于 RTM 1.7.10 用户
+## 对于 RTM 1.7.10 的用户
 
 请使用 [KaizPatchX].
 
@@ -14,7 +14,11 @@
 
 [Curse Forge](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
-## 依赖
+此外，你可以在[nightly.link]下载最新评估版。
+
+[nightly.link]: https://nightly.link/fixrtm/fixRTM/workflows/release/master/jar
+
+## 前置mod
 
 - [RTM](https://www.curseforge.com/minecraft/mc-mods/realtrainmod) 发布 fixRTM 时的最新版本
 - [NGT Lib](https://www.curseforge.com/minecraft/mc-mods/ngtlib) (RTM 前置mod)
