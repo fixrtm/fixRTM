@@ -123,12 +123,18 @@ jobs:
             main_changelog_file_path='CHANGELOG-SNAPSHOTS.md'
           fi
 
-          # first, get release notes for unreleased
+          # first, remove empty section of changelog
+          if $PRERELEASE; then
+            ./.github/workflows/sh/remove-empty-section.sh CHANGELOG-SNAPSHOTS.md
+          fi
+          ./.github/workflows/sh/remove-empty-section.sh CHANGELOG.md
+
+          # then, get release notes for unreleased
           unreleased_release_note_path=$(mktemp)
           ./.github/workflows/sh/get-unreleased-release-note.sh "$main_changelog_file_path" \
             > "$unreleased_release_note_path"
 
-          # then, make unreleased -> released
+          # after that, make unreleased -> released
           RELEASE_DATE="$(date +%Y-%m-%d)"
           if $PRERELEASE; then
             # for prerelease, update -SNAPSHOTS
