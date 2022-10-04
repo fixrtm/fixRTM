@@ -126,6 +126,12 @@ object MainConfig {
                 "ThreadLocalProperties is not stable enough so this fix is optional.")
 
     @JvmField
+    val allowPlacingVehiclesOnProtectedRail = config.getBoolean(
+        "allowPlacingVehiclesOnProtectedRail", categoryBetterRtm,
+        true,
+        "allow placing vehicles on protected rail")
+
+    @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
         "addAllowAllPermission", categoryBetterNgtLib,
         true,
