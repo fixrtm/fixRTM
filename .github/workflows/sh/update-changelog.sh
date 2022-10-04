@@ -8,6 +8,17 @@ LAST_VERSION="$(grep '\[Unreleased\]: ' -A1 < "$INPUT" | tail -1 | sed -E 's/^\[
 
 gsed -e "/#* \\[Unreleased]/{
 a\\
+### Added\\
+\\
+### Changed\\
+\\
+### Deprecated\\
+\\
+### Removed\\
+\\
+### Fixed\\
+\\
+### Security\\
 \\
 ## [$VERSION] - $DATE
 }
