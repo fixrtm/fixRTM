@@ -1,6 +1,20 @@
 --- a/jp/ngt/rtm/entity/train/parts/EntityContainer.java
 +++ b/jp/ngt/rtm/entity/train/parts/EntityContainer.java
-@@ -262,6 +262,11 @@
+@@ -71,11 +71,12 @@
+             ItemUtil.writeToNBT(nbttagcompound, this.containerSlots[i]);
+             nbttaglist.appendTag(nbttagcompound);
+          }
+       }
+ 
+-      nbt.setTag("Items", nbttaglist);
++      if (nbttaglist.tagCount() != 0)
++         nbt.setTag("Items", nbttaglist);
+    }
+ 
+    private NBTTagCompound getCargoNBT() {
+       if (!this.itemCargo.hasTagCompound()) {
+          this.itemCargo.setTagCompound(new NBTTagCompound());
+@@ -262,6 +263,11 @@
     }
  
     public boolean isEmpty() {
