@@ -122,7 +122,7 @@
  
     }
  
-@@ -491,10 +505,12 @@
+@@ -491,10 +505,14 @@
     public void addVelocity(double par1, double par3, double par5) {
     }
  
@@ -130,12 +130,14 @@
        if (this.getTrain() != null) {
 +         if (player.world.isRemote)
 +            return true;
++         if (player.isSneaking())
++            return this.getTrain().processInitialInteract(player, hand);
           if (PermissionManager.INSTANCE.hasPermission(player, "driveTrain")) {
              return this.getTrain().interactTrain(this, player);
           }
        } else if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == RTMItem.paddle) {
           return true;
-@@ -578,6 +594,18 @@
+@@ -578,6 +596,18 @@
     }
  
     public int getProhibitedAction() {
