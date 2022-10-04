@@ -1,0 +1,15 @@
+--- a/jp/ngt/ngtlib/protection/ProtectionManager.java
++++ b/jp/ngt/ngtlib/protection/ProtectionManager.java
+@@ -56,10 +56,12 @@
+       return this.rightClickObject(player, object);
+    }
+ 
+    public boolean rightClickObject(EntityPlayer player, Object target) {
+       NBTTagCompound nbttagcompound = this.getKeyNBT(player);
++      if (target instanceof jp.ngt.rtm.rail.TileEntityLargeRailBase && player.inventory.getCurrentItem().getItem() == jp.ngt.rtm.RTMItem.itemtrain)
++         return false;
+       return nbttagcompound != null ? this.useKey(player, nbttagcompound, target) : this.getLockState(player, target, "Uneditable");
+    }
+ 
+    private boolean useKey(EntityPlayer player, NBTTagCompound keyNBT, Object target) {
+       if (player.world.isRemote) {
