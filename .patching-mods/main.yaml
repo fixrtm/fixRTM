@@ -74,7 +74,9 @@ mods:
       - jp.ngt.rtm.entity.npc.EntityNPC
       - jp.ngt.rtm.entity.train.EntityBogie
       - jp.ngt.rtm.entity.train.EntityTrainBase
+      - jp.ngt.rtm.entity.train.parts.EntityArtillery
       - jp.ngt.rtm.entity.train.parts.EntityCargoWithModel
+      - jp.ngt.rtm.entity.train.parts.EntityContainer
       - jp.ngt.rtm.entity.train.parts.EntityVehiclePart
       - jp.ngt.rtm.entity.train.util.EnumNotch
       - jp.ngt.rtm.entity.train.util.Formation

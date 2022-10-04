@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/entity/train/parts/EntityArtillery.java
++++ b/jp/ngt/rtm/entity/train/parts/EntityArtillery.java
+@@ -360,6 +360,11 @@
+    public void updateResourceState() {
+       super.updateResourceState();
+       this.setBarrelYaw(0.0F);
+       this.setBarrelPitch(0.0F);
+    }
++
++   @Override
++   protected ItemStack getItem() {
++      return new ItemStack(RTMItem.itemCargo, 1, 1);
++   }
+ }

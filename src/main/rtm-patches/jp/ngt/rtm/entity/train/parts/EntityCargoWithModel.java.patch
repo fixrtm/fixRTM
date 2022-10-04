@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
 +++ b/jp/ngt/rtm/entity/train/parts/EntityCargoWithModel.java
-@@ -79,6 +79,12 @@
+@@ -79,6 +79,29 @@
        this.updateResourceState();
        return true;
     }
@@ -12,4 +12,21 @@
 +        super.addEntityCrashInfo(category);
 +        com.anatawa12.fixRtm.rtm.entity.train.parts.EntityCargoWithModelKt.addEntityCrashInfo(this, category);
 +    }
++
++
++   @Override
++   public ItemStack getPickedResult(net.minecraft.util.math.RayTraceResult target) {
++      if (target.entityHit instanceof EntityCargoWithModel) {
++         EntityCargoWithModel<?> cargo = (EntityCargoWithModel<?>) target.entityHit;
++         ItemStack itemStack = this.getItem();
++
++         //noinspection unchecked,rawtypes
++         ((jp.ngt.rtm.item.ItemWithModel) jp.ngt.rtm.RTMItem.itemCargo).setModelState(itemStack, cargo.getResourceState());
++         return itemStack;
++      } else {
++         return null;
++      }
++   }
++
++   protected abstract ItemStack getItem();
  }

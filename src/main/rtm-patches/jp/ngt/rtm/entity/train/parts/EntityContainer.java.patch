@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/entity/train/parts/EntityContainer.java
++++ b/jp/ngt/rtm/entity/train/parts/EntityContainer.java
+@@ -262,6 +262,11 @@
+    }
+ 
+    public boolean isEmpty() {
+       return false;
+    }
++
++   @Override
++   protected ItemStack getItem() {
++      return new ItemStack(jp.ngt.rtm.RTMItem.itemCargo, 1, 0);
++   }
+ }
