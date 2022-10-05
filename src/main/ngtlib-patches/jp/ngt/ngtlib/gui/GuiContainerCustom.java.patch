@@ -1,0 +1,25 @@
+--- a/jp/ngt/ngtlib/gui/GuiContainerCustom.java
++++ b/jp/ngt/ngtlib/gui/GuiContainerCustom.java
+@@ -32,10 +32,22 @@
+       Keyboard.enableRepeatEvents(false);
+    }
+ 
+    protected GuiTextFieldCustom setTextField(int xPos, int yPos, int w, int h, String text) {
+       GuiTextFieldCustom guitextfieldcustom = new GuiTextFieldCustom(NEXT_FIELD_ID++, this.fontRenderer, xPos, yPos, w, h, this);
++      return configureTextField(guitextfieldcustom, text);
++   }
++
++   protected com.anatawa12.fixRtm.ngtlib.gui.GUINumberFieldCustom setIntegerField(int xPos, int yPos, int w, int h, String text) {
++      return configureTextField(new com.anatawa12.fixRtm.ngtlib.gui.GUINumberFieldCustom(NEXT_FIELD_ID++, this.fontRenderer, xPos, yPos, w, h, this, false), text);
++   }
++
++   protected com.anatawa12.fixRtm.ngtlib.gui.GUINumberFieldCustom setFloatField(int xPos, int yPos, int w, int h, String text) {
++      return configureTextField(new com.anatawa12.fixRtm.ngtlib.gui.GUINumberFieldCustom(NEXT_FIELD_ID++, this.fontRenderer, xPos, yPos, w, h, this, true), text);
++   }
++
++   protected <T extends GuiTextFieldCustom> T configureTextField(T guitextfieldcustom, String text) {
+       guitextfieldcustom.setMaxStringLength(32767);
+       guitextfieldcustom.setFocused(false);
+       guitextfieldcustom.setText(text);
+       this.textFields.add(guitextfieldcustom);
+       return guitextfieldcustom;

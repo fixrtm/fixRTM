@@ -1,0 +1,54 @@
+--- a/jp/ngt/rtm/gui/GuiRailMarker.java
++++ b/jp/ngt/rtm/gui/GuiRailMarker.java
+@@ -48,18 +48,18 @@
+       this.buttonList.add(new GuiButton(0, this.width / 2 - 105, this.height - 28, 100, 20, I18n.format("gui.done", new Object[0])));
+       this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height - 28, 100, 20, I18n.format("gui.cancel", new Object[0])));
+       this.buttonScript = new GuiButton(100, this.width - 140, 140, 110, 20, s);
+       this.buttonList.add(this.buttonScript);
+       this.buttonList.add(new GuiButton(101, this.width - 30, 140, 20, 20, "X"));
+-      this.fieldAncYaw = this.setTextField(this.width - 140, 20, 60, 20, String.valueOf(this.currentRP.anchorYaw));
+-      this.fieldAncPitch = this.setTextField(this.width - 140, 50, 60, 20, String.valueOf(this.currentRP.anchorPitch));
+-      this.fieldAncH = this.setTextField(this.width - 140, 80, 60, 20, String.valueOf(this.currentRP.anchorLengthHorizontal));
+-      this.fieldAncV = this.setTextField(this.width - 140, 110, 60, 20, String.valueOf(this.currentRP.anchorLengthVertical));
+-      this.fieldCantCenter = this.setTextField(this.width - 70, 20, 60, 20, String.valueOf(this.currentRP.cantCenter));
+-      this.fieldCantEdge = this.setTextField(this.width - 70, 50, 60, 20, String.valueOf(this.currentRP.cantEdge));
+-      this.fieldCantRandom = this.setTextField(this.width - 70, 80, 60, 20, String.valueOf(this.currentRP.cantRandom));
+-      this.fieldArgs = this.setTextField(this.width - 140, 170, 130, 20, s1);
++      this.fieldAncYaw = this.setFloatField(this.width - 140, 20, 60, 20, String.valueOf(this.currentRP.anchorYaw));
++      this.fieldAncPitch = this.setFloatField(this.width - 140, 50, 60, 20, String.valueOf(this.currentRP.anchorPitch));
++      this.fieldAncH = this.setFloatField(this.width - 140, 80, 60, 20, String.valueOf(this.currentRP.anchorLengthHorizontal));
++      this.fieldAncV = this.setFloatField(this.width - 140, 110, 60, 20, String.valueOf(this.currentRP.anchorLengthVertical));
++      this.fieldCantCenter = this.setFloatField(this.width - 70, 20, 60, 20, String.valueOf(this.currentRP.cantCenter));
++      this.fieldCantEdge = this.setFloatField(this.width - 70, 50, 60, 20, String.valueOf(this.currentRP.cantEdge));
++      this.fieldCantRandom = this.setFloatField(this.width - 70, 80, 60, 20, String.valueOf(this.currentRP.cantRandom));
++      this.fieldArgs = this.setFloatField(this.width - 140, 170, 130, 20, s1);
+       if (this.marker.getBlockType() == RTMBlock.markerSwitch) {
+          this.fieldAncPitch.setEnabled(false);
+          this.fieldAncV.setEnabled(false);
+          this.fieldCantCenter.setEnabled(false);
+          this.fieldCantEdge.setEnabled(false);
+@@ -105,24 +105,10 @@
+       }
+ 
+       super.actionPerformed(button);
+    }
+ 
+-   protected void keyTyped(char par1, int par2) {
+-      if (par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
+-         this.mc.player.closeScreen();
+-      }
+-
+-      if (this.currentTextField != null && (par2 >= 2 && par2 <= 11 || par2 >= 200 && par2 <= 205 || par2 == 12 || par2 == 14 || par2 == 211 || par2 == 52)) {
+-         this.currentTextField.textboxKeyTyped(par1, par2);
+-      }
+-
+-      if (par2 == 28) {
+-      }
+-
+-   }
+-
+    private void updateValues() {
+       this.currentRP.anchorYaw = this.getFieldValue(this.fieldAncYaw, this.currentRP.anchorYaw);
+       this.currentRP.anchorPitch = this.getFieldValue(this.fieldAncPitch, this.currentRP.anchorPitch);
+       this.currentRP.anchorLengthHorizontal = this.getFieldValue(this.fieldAncH, this.currentRP.anchorLengthHorizontal);
+       this.currentRP.anchorLengthVertical = this.getFieldValue(this.fieldAncV, this.currentRP.anchorLengthVertical);

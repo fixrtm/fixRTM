@@ -13,6 +13,8 @@ mods:
       - jp.ngt.ngtlib.NGTCore
       - jp.ngt.ngtlib.block.TileEntityPlaceable
       - jp.ngt.ngtlib.command.CommandPermit
+      - jp.ngt.ngtlib.gui.GuiContainerCustom
+      - jp.ngt.ngtlib.gui.GuiScreenCustom
       - jp.ngt.ngtlib.io.NGTFileLoader
       - jp.ngt.ngtlib.io.NGTLog
       - jp.ngt.ngtlib.io.NGTText
@@ -91,6 +93,8 @@ mods:
       - jp.ngt.rtm.event.RTMKeyHandlerClient
       - jp.ngt.rtm.event.RTMKeyHandlerServer
       - jp.ngt.rtm.gui.GuiIngameCustom
+      - jp.ngt.rtm.gui.GuiRailMarker
+      - jp.ngt.rtm.gui.GuiSignalConverter
       - jp.ngt.rtm.gui.GuiVehicleControlPanel
       - jp.ngt.rtm.gui.RTMGuiHandler
       - jp.ngt.rtm.item.ItemCargo
