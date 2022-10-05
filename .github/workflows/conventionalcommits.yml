@@ -31,7 +31,7 @@ jobs:
           fi
 
       - name: treeless clone
-        if: steps.check-label.outputs.disabled != "yes"
+        if: steps.check-label.outputs.disabled != 'yes'
         run: |
           # git clone --filter tree:0 https://github.com/fixrtm/fixRTM.git $GITHUB_REF
           # without checkout
@@ -42,11 +42,11 @@ jobs:
           git fetch origin $GITHUB_REF
 
       - name: install commitlint
-        if: steps.check-label.outputs.disabled != "yes"
+        if: steps.check-label.outputs.disabled != 'yes'
         run: npm install -g @commitlint/cli @commitlint/config-conventional
 
       - name: run commitlint
-        if: steps.check-label.outputs.disabled != "yes"
+        if: steps.check-label.outputs.disabled != 'yes'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ github.event.number }}
