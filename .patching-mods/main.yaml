@@ -15,6 +15,7 @@ mods:
       - jp.ngt.ngtlib.command.CommandPermit
       - jp.ngt.ngtlib.gui.GuiContainerCustom
       - jp.ngt.ngtlib.gui.GuiScreenCustom
+      - jp.ngt.ngtlib.gui.GuiTextFieldCustom
       - jp.ngt.ngtlib.io.NGTFileLoader
       - jp.ngt.ngtlib.io.NGTLog
       - jp.ngt.ngtlib.io.NGTText

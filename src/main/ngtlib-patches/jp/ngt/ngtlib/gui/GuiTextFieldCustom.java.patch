@@ -1,0 +1,15 @@
+--- a/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
++++ b/jp/ngt/ngtlib/gui/GuiTextFieldCustom.java
+@@ -468,10 +468,12 @@
+       this.disabledColor = p_146204_1_;
+    }
+ 
+    public void setFocused(boolean par1) {
+       if (!this.isDisplayMode) {
++         this.setCursorPositionZero();
++         this.setSelectionPos(this.getCursorPosition());
+          if (par1 && !this.isFocused) {
+             this.cursorCounter = 0;
+          }
+ 
+          this.isFocused = par1;
