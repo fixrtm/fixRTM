@@ -6,8 +6,21 @@ DATE="$3"
 
 LAST_VERSION="$(grep '\[Unreleased\]: ' -A1 < "$INPUT" | tail -1 | sed -E 's/^\[([0-9.]*)]: .*$/\1/')"
 
-gsed -e "/#* \\[Unreleased]/{
+temp="$(mktemp)"
+cat <"$INPUT" >"$temp"
+sed -e "/#* \\[Unreleased]/{
 a\\
+### Added\\
+\\
+### Changed\\
+\\
+### Deprecated\\
+\\
+### Removed\\
+\\
+### Fixed\\
+\\
+### Security\\
 \\
 ## [$VERSION] - $DATE
 }
@@ -17,4 +30,6 @@ a\\
 [$VERSION]: https://github.com/fixrtm/fixRTM/compare/$LAST_VERSION...$VERSION
 D
 }
-" < "$INPUT"
+" <"$temp" >"$INPUT"
+
+rm "$temp"

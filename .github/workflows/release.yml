@@ -123,21 +123,21 @@ jobs:
             main_changelog_file_path='CHANGELOG-SNAPSHOTS.md'
           fi
 
-          # first, get release notes for unreleased
+          # first, remove empty section of changelog
+          ! $PRERELEASE && ./.github/workflows/sh/prepare-changelog.sh CHANGELOG.md
+          ./.github/workflows/sh/prepare-changelog.sh CHANGELOG-SNAPSHOTS.md
+
+          # then, get release notes for unreleased
           unreleased_release_note_path=$(mktemp)
           ./.github/workflows/sh/get-unreleased-release-note.sh "$main_changelog_file_path" \
             > "$unreleased_release_note_path"
 
-          # then, make unreleased -> released
+          # after that, make unreleased -> released
           RELEASE_DATE="$(date +%Y-%m-%d)"
-          if $PRERELEASE; then
-            # for prerelease, update -SNAPSHOTS
-            ./.github/workflows/sh/update-changelog.sh CHANGELOG-SNAPSHOTS.md \
-              "$VERSION_NAME" "$RELEASE_DATE"
-          fi
-          # for both prerelease and release, update normal
-          ./.github/workflows/sh/update-changelog.sh CHANGELOG.md \
-            "$VERSION_NAME" "$RELEASE_DATE"
+          # for release, update normal
+          ! $PRERELEASE && ./.github/workflows/sh/update-changelog.sh CHANGELOG.md "$VERSION_NAME" "$RELEASE_DATE"
+          # for both prerelease and release, update -SNAPSHOTS
+          ./.github/workflows/sh/update-changelog.sh CHANGELOG-SNAPSHOTS.md "$VERSION_NAME" "$RELEASE_DATE"
 
           # create release note for GitHub/CurseForge release page
           release_note_path=$(mktemp)
