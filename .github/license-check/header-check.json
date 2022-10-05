@@ -2,6 +2,7 @@
   {
     "include": [
       "{buildSrc,src}/**/*.{kt,java,js}",
+      "commitlint.config.js",
       "**/*.gradle",
       "**/*.kts"
     ],
