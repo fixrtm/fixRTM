@@ -15,6 +15,7 @@ jobs:
       - name: check label
         id: check-label
         env:
+          GH_REPO: ${{ github.repositoryUrl }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ github.event.number }}
         run: |
