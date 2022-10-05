@@ -21,6 +21,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Add flag to allow place vehicles on protected rails `#537`
   - Set `allowPlacingVehiclesOnProtectedRail=false` in `fix-rtm.cfg` to disable this feature
 - Sneak clicking bogie to sneak click Train `#541`
+- Press tab key to move cursor to next field `#544`
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
