@@ -1,0 +1,56 @@
+--- a/jp/ngt/rtm/gui/GuiSignalConverter.java
++++ b/jp/ngt/rtm/gui/GuiSignalConverter.java
+@@ -11,10 +11,12 @@
+ import net.minecraft.client.gui.GuiTextField;
+ import net.minecraft.client.resources.I18n;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
++import java.io.IOException;
++
+ @SideOnly(Side.CLIENT)
+ public class GuiSignalConverter extends GuiScreenCustom {
+    private final TileEntitySignalConverter tileEntity;
+    private final SignalConverterType scType;
+    private GuiButton button;
+@@ -41,13 +43,13 @@
+       }
+ 
+       int[] aint = this.tileEntity.getSignalLevel();
+       this.textFields.clear();
+       this.signalValues = new GuiTextField[this.scType == SignalConverterType.RSOut ? 1 : 2];
+-      this.signalValues[0] = this.setTextField(this.width / 2 - 20 + i, 60, 40, 20, String.valueOf(aint[0]));
++      this.signalValues[0] = this.setIntegerField(this.width / 2 - 20 + i, 60, 40, 20, String.valueOf(aint[0]));
+       if (this.scType == SignalConverterType.RSIn || this.scType == SignalConverterType.Wireless) {
+-         this.signalValues[1] = this.setTextField(this.width / 2 - 20 + i, 100, 40, 20, String.valueOf(aint[1]));
++         this.signalValues[1] = this.setIntegerField(this.width / 2 - 20 + i, 100, 40, 20, String.valueOf(aint[1]));
+       }
+ 
+    }
+ 
+    protected void actionPerformed(GuiButton button) {
+@@ -92,21 +94,15 @@
+       }
+ 
+       return aint;
+    }
+ 
+-   protected void keyTyped(char par1, int par2) {
+-      if (par2 == 1 || par2 == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
+-         this.mc.player.closeScreen();
+-      }
+-
+-      if (this.currentTextField != null && (par2 >= 2 && par2 <= 11 || par2 >= 200 && par2 <= 205 || par2 == 12 || par2 == 14 || par2 == 211)) {
+-         this.currentTextField.textboxKeyTyped(par1, par2);
+-      }
+-
++   protected void keyTyped(char par1, int par2) throws IOException {
+       if (par2 == 28) {
+          this.formatSignalLevel();
++      } else {
++         super.keyTyped(par1, par2);
+       }
+ 
+    }
+ 
+    public void drawScreen(int par1, int par2, float par3) {
