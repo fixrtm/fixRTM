@@ -1,9 +1,13 @@
 --- a/jp/ngt/ngtlib/util/PermissionManager.java
 +++ b/jp/ngt/ngtlib/util/PermissionManager.java
-@@ -21,16 +21,11 @@
+@@ -18,27 +18,22 @@
+    public static final PermissionManager INSTANCE = new PermissionManager();
+    private static boolean DEBUG_MODE = false;
+    private static String ALL = "-all";
     private final File saveDir;
     private final File saveFile;
-    private final Map<String, List<String>> permissionMap = new HashMap<>();
+-   private final Map<String, List<String>> permissionMap = new HashMap<>();
++   private final Map<String, java.util.SortedSet<String>> permissionMap = new HashMap<>();
  
     private PermissionManager() {
 -      String s = NGTCore.proxy.getMinecraftDirectory("ngt").getAbsolutePath();
@@ -18,7 +22,88 @@
  
     public void save() {
        String[] astring = new String[this.permissionMap.size()];
-@@ -126,26 +121,43 @@
+       int i = 0;
+ 
+-      for(Entry<String, List<String>> entry : this.permissionMap.entrySet()) {
++      for(Entry<String, java.util.SortedSet<String>> entry : this.permissionMap.entrySet()) {
+          StringBuilder stringbuilder = new StringBuilder();
+          stringbuilder.append(entry.getKey()).append(":");
+ 
+          for(String s : entry.getValue()) {
+             stringbuilder.append(s).append(",");
+@@ -55,16 +50,14 @@
+       this.initFile();
+ 
+       for(String s : NGTText.readText(this.saveFile, "")) {
+          String[] astring = s.split(":");
+          if (astring.length == 2) {
+-            List<String> list = this.getPlayerList(astring[0]);
++            java.util.Set<String> list = this.getPlayerSet(astring[0]);
+             String[] astring1 = astring[1].split(",");
+ 
+-            for(String s1 : astring1) {
+-               list.add(s1);
+-            }
++            Collections.addAll(list, astring1);
+          }
+       }
+ 
+    }
+ 
+@@ -82,19 +75,27 @@
+       }
+ 
+    }
+ 
+    public List<String> getPlayerList(String par1) {
++      return new com.anatawa12.fixRtm.utils.SortedSetListView<>(getPlayerSortedSet(par1));
++   }
++
++   public java.util.Set<String> getPlayerSet(String par1) {
++      return getPlayerSortedSet(par1);
++   }
++
++   private java.util.SortedSet<String> getPlayerSortedSet(String par1) {
+       if (!this.permissionMap.containsKey(par1)) {
+-         this.permissionMap.put(par1, new ArrayList<>());
++         this.permissionMap.put(par1, new java.util.TreeSet<>());
+       }
+ 
+       return this.permissionMap.get(par1);
+    }
+ 
+    public void showPermissionList(ICommandSender player) {
+-      for(Entry<String, List<String>> entry : this.permissionMap.entrySet()) {
++      for(Entry<String, java.util.SortedSet<String>> entry : this.permissionMap.entrySet()) {
+          StringBuilder stringbuilder = new StringBuilder();
+          stringbuilder.append(entry.getKey()).append(":");
+ 
+          for(String s : entry.getValue()) {
+             stringbuilder.append(s).append(",");
+@@ -105,47 +106,64 @@
+ 
+    }
+ 
+    public void addPermission(ICommandSender player, String targetPlayerName, String category) {
+       if (this.isOp(player)) {
+-         this.getPlayerList(category).add(targetPlayerName);
++         this.getPlayerSet(category).add(targetPlayerName);
+          NGTLog.sendChatMessageToAll("Add permission (%s) to %s.", category, targetPlayerName);
+          this.save();
+       } else {
+          NGTLog.sendChatMessage(player, "Only operator can use this command.");
+       }
+ 
+    }
+ 
+    public void removePermission(ICommandSender player, String targetPlayerName, String category) {
+       if (this.isOp(player)) {
+-         this.getPlayerList(category).remove(targetPlayerName);
++         this.getPlayerSet(category).remove(targetPlayerName);
+          NGTLog.sendChatMessageToAll("Remove permission (%s) from %s.", category, targetPlayerName);
+          this.save();
+       } else {
+          NGTLog.sendChatMessage(player, "Only operator can use this command.");
        }
  
     }
@@ -32,7 +117,7 @@
 +
 +   public boolean hasPermissionInternal(ICommandSender player, String category) {
 +      if (com.anatawa12.fixRtm.asm.config.MainConfig.addNegativePermissionEnabled) {
-+         if (this.getPlayerList("negative.".concat(category)).contains(player.getName())) {
++         if (this.getPlayerSet("negative.".concat(category)).contains(player.getName())) {
 +            return false;
 +         }
 +      }
@@ -43,7 +128,8 @@
        if (this.isOp(player)) {
           return true;
        } else {
-          List<String> list = this.getPlayerList(category);
+-         List<String> list = this.getPlayerList(category);
++         java.util.Set<String> list = this.getPlayerSet(category);
           if (!list.contains(player.getName()) && !list.contains(ALL)) {
 -            NGTLog.sendChatMessageToAll("%s need permission (%s).", player.getName(), category);
              return false;
