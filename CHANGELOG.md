@@ -36,6 +36,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - error on place vehicle (except trains) [`#509`](https://github.com/fixrtm/fixRTM/pull/509)
 - Dropped container item cannot be stacked with item from creative tab [`#540`](https://github.com/fixrtm/fixRTM/pull/540)
 - Copy & Paste was not working in numeric fields `#543`
+- Train may be overlapped after connecting then setting direction `#549`
 
 ### Security
 
