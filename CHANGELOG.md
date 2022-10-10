@@ -22,6 +22,7 @@ Thanks to prepare-changelog.sh, we have some macros.
   - Set `allowPlacingVehiclesOnProtectedRail=false` in `fix-rtm.cfg` to disable this feature
 - Sneak clicking bogie to sneak click Train `#541`
 - Press tab key to move cursor to next field `#544`
+- Play brake release sound from all trains in the formation `#551`
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
