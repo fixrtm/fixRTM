@@ -89,7 +89,7 @@
  
           this.speed = par1;
        }
-@@ -266,18 +273,19 @@
+@@ -266,18 +273,20 @@
        }
     }
  
@@ -100,6 +100,7 @@
 -            if (data == TrainState.Role_Front.data) {
 +            if (data == TrainState.Role_Front.data || data == TrainState.Role_Back.data) {
                 this.controlCar = par2;
++               par2.setTrainDirection(par2.getTrainDirection());
              }
  
              if (par2.equals(formationentry.train)) {
@@ -111,7 +112,7 @@
           } else if (type == TrainState.TrainStateType.Door) {
              int i = data & 1;
              int j = data >> 1;
-@@ -290,10 +298,11 @@
+@@ -290,10 +299,11 @@
  
     }
  
