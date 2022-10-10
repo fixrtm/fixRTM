@@ -44,7 +44,7 @@
 -            for(String s1 : astring1) {
 -               list.add(s1);
 -            }
-+            Collections.addAll(list, astring1);
++            java.util.Collections.addAll(list, astring1);
           }
        }
  
