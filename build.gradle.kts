@@ -58,7 +58,7 @@ dependencies {
 //        projectDir.resolve("mods/ngtlib.deobf.jar")))
 
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
-    compileOnly("org.twitter4j:twitter4j-core:4.0.7")
+    compileOnly("org.twitter4j:twitter4j-core:4.1.0")
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
     compileOnly("com.github.sarxos:webcam-capture:0.3.12")
 
