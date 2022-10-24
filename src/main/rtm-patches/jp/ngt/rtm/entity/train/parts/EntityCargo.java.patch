@@ -7,7 +7,7 @@
              if (!this.world.isRemote && (this.isIndependent || this.getVehicle() == null)) {
                 this.setDead();
 -               this.dropCargoItem();
-+               if (!((EntityPlayer) par1.getEntity()).capabilities.isCreativeMode) {
++               if (!((EntityPlayer) par1.getTrueSource()).capabilities.isCreativeMode) {
 +                  this.dropCargoItem();
 +               }
              }
