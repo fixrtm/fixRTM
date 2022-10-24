@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/entity/train/parts/EntityCargo.java
++++ b/jp/ngt/rtm/entity/train/parts/EntityCargo.java
+@@ -97,11 +97,13 @@
+    public boolean attackEntityFrom(DamageSource par1, float par2) {
+       if (!this.isEntityInvulnerable(par1) && !this.isDead) {
+          if (!par1.isExplosion() && par1.getTrueSource() instanceof EntityPlayer) {
+             if (!this.world.isRemote && (this.isIndependent || this.getVehicle() == null)) {
+                this.setDead();
+-               this.dropCargoItem();
++               if (!((EntityPlayer) par1.getTrueSource()).capabilities.isCreativeMode) {
++                  this.dropCargoItem();
++               }
+             }
+ 
+             return true;
+          } else {
+             return false;
