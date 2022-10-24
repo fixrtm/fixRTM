@@ -39,6 +39,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Copy & Paste was not working in numeric fields `#543`
 - Train may be overlapped after connecting then setting direction `#549`
 - `/permit add` adds same person multiple times `#550`
+- Container drops item in creative mode `#558`
 
 ### Security
 
