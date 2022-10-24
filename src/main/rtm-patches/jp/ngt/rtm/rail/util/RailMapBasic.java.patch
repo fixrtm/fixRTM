@@ -1,11 +1,23 @@
 --- a/jp/ngt/rtm/rail/util/RailMapBasic.java
 +++ b/jp/ngt/rtm/rail/util/RailMapBasic.java
-@@ -14,10 +14,15 @@
+@@ -10,14 +10,27 @@
+    protected final RailPosition startRP;
+    protected final RailPosition endRP;
+    protected double length;
+    protected ILine lineHorizontal;
     protected ILine lineVertical;
++   // version 0: RTM original or 2.0.23.older
++   // version 1: fixRTM 2.0.24...
++   protected int fixRTMRailMapVersion;
++   protected static int fixRTMRailMapVersionCurrent = 1;
  
     public RailMapBasic(RailPosition par1, RailPosition par2) {
++      this(par1, par2, fixRTMRailMapVersionCurrent);
++   }
++   public RailMapBasic(RailPosition par1, RailPosition par2, int version) {
        this.startRP = par1;
        this.endRP = par2;
++      this.fixRTMRailMapVersion = version;
 +      if (this.startRP.cantEdge * this.startRP.cantCenter < 0) {
 +         this.startRP.cantCenter = -this.startRP.cantCenter;
 +      } else if (this.startRP.cantEdge * this.startRP.cantCenter == 0 && this.endRP.cantEdge * this.startRP.cantCenter > 0) {
