@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/rail/util/RailMaker.java
 +++ b/jp/ngt/rtm/rail/util/RailMaker.java
-@@ -4,29 +4,40 @@
+@@ -4,26 +4,30 @@
  import java.util.List;
  import jp.ngt.ngtlib.io.NGTLog;
  import net.minecraft.world.World;
@@ -23,31 +23,21 @@
     public RailMaker(World world, RailPosition[] par2) {
 -      this.worldObj = world;
 -      this.rpList = new ArrayList<>();
-+      this(world, par2, RailMapBasic.fixRTMRailMapVersionCurrent);
-+   }
- 
+-
 -      for(RailPosition railposition : par2) {
 -         this.rpList.add(railposition);
 -      }
-+   public RailMaker(World world, RailPosition[] par2, int fixRTMRailMapVersion) {
-+      this(world, new ArrayList<>(java.util.Arrays.asList(par2)), fixRTMRailMapVersion);
++      this(world, par2, RailMapBasic.fixRTMRailMapVersionCurrent);
 +   }
  
-+   private SwitchType getSwitchType() {
-+      SwitchType result = getSwitchType0();
-+      if (result != null)
-+         result.fixRTMRailMapVersion = fixRTMRailMapVersion;
-+      return result;
++   public RailMaker(World world, RailPosition[] par2, int fixRTMRailMapVersion) {
++      this(world, new ArrayList<>(java.util.Arrays.asList(par2)), fixRTMRailMapVersion);
     }
  
--   private SwitchType getSwitchType() {
-+   private SwitchType getSwitchType0() {
+    private SwitchType getSwitchType() {
        if (this.rpList.size() == 3) {
           int i = 0;
- 
-          for(RailPosition railposition : this.rpList) {
-             i += railposition.switchType == 1 ? 1 : 0;
-@@ -79,13 +90,8 @@
+@@ -79,13 +83,8 @@
           if (switchtype.init(list, list1)) {
              return switchtype;
           }

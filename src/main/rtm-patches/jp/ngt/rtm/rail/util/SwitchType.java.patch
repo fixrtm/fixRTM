@@ -1,19 +1,6 @@
 --- a/jp/ngt/rtm/rail/util/SwitchType.java
 +++ b/jp/ngt/rtm/rail/util/SwitchType.java
-@@ -7,10 +7,12 @@
- 
- public abstract class SwitchType {
-    public final byte id;
-    protected RailMapSwitch[] railMaps;
-    protected Point[] points;
-+   // see RailMapBasic.fixRTMRailMapVersion
-+   public int fixRTMRailMapVersion;
- 
-    protected SwitchType(int par1) {
-       this.id = (byte)par1;
-    }
- 
-@@ -310,10 +312,14 @@
+@@ -310,10 +310,14 @@
  
              ++i;
           }
