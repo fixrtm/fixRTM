@@ -116,7 +116,14 @@
           RailMap[] arailmap = switchtype.getAllRailMap();
           if (arailmap == null) {
              return false;
-@@ -292,18 +305,18 @@
+@@ -286,24 +299,25 @@
+                BlockUtil.setBlock(world, x, y, z, RTMRail.largeRailSwitchCore, 0, 3);
+                TileEntityLargeRailSwitchCore tileentitylargerailswitchcore = (TileEntityLargeRailSwitchCore)BlockUtil.getTileEntity(world, x, y, z);
+                tileentitylargerailswitchcore.setRailPositions(list.toArray(new RailPosition[list.size()]));
+                tileentitylargerailswitchcore.getResourceState().readFromNBT(prop.writeToNBT());
+                tileentitylargerailswitchcore.setStartPoint(x, y, z);
++               tileentitylargerailswitchcore.fixRTMRailMapVersion = railmaker.fixRTMRailMapVersion;
+                tileentitylargerailswitchcore.createRailMap();
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {

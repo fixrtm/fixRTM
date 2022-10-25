@@ -12,7 +12,7 @@
     private RailPosition getRP(int x, int y, int z, byte dir, boolean b) {
        RailPosition railposition = new RailPosition(x, y, z, dir, (byte)(b ? 1 : 0));
        railposition.anchorYaw = NGTMath.wrapAngle((float)dir * 45.0F);
-@@ -40,10 +41,11 @@
+@@ -40,20 +41,21 @@
  
        for(int i = 0; i < this.railPositions.length; ++i) {
           nbt.setTag("RP" + i, this.railPositions[i].writeToNBT());
@@ -24,3 +24,14 @@
     public void setRailPositions(RailPosition[] par1) {
        super.setRailPositions(par1);
        this.onBlockChanged();
+    }
+ 
+    public void createRailMap() {
+       if (this.isLoaded() && this.switchObj == null) {
+-         this.switchObj = (new RailMaker(this.getWorld(), this.railPositions)).getSwitch();
++         this.switchObj = (new RailMaker(this.getWorld(), this.railPositions, this.fixRTMRailMapVersion)).getSwitch();
+       }
+ 
+    }
+ 
+    public SwitchType getSwitch() {
