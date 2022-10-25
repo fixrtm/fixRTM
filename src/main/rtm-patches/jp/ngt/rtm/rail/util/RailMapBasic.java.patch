@@ -32,16 +32,18 @@
     }
  
     protected void createLine() {
-@@ -28,11 +45,13 @@
+@@ -28,11 +45,15 @@
        double d4 = this.endRP.posY;
        double d5 = this.endRP.posZ;
        boolean flag = (this.endRP.direction - this.startRP.direction) % 4 == 0;
        boolean flag1 = d2 == d5 || d0 == d3;
        boolean flag2 = Math.abs(d2 - d5) == Math.abs(d0 - d3) && this.startRP.direction % 2 != 0 && this.endRP.direction % 2 != 0;
 -      if (!flag || !flag1 && !flag2) {
-+      // if anker is changed, we should use BezierCurve
-+      boolean fiixRTMV1 = fixRTMRailMapVersion >= 1 && (this.startRP.anchorLengthHorizontal > 0 || this.endRP.anchorLengthHorizontal > 0);
-+      if (!flag || !flag1 && !flag2 || fiixRTMV1) {
++      // if anker angle is changed, we always should use BezierCurve.
++      boolean fixRTMV1 = fixRTMRailMapVersion >= 1 &&
++         (startRP.anchorYaw != NGTMath.wrapAngle(startRP.direction * 45.0F)
++            || endRP.anchorYaw != NGTMath.wrapAngle(endRP.direction * 45.0F));
++      if (!flag || !flag1 && !flag2 || fixRTMV1) {
           double d6 = Math.abs(d5 - d2);
           double d7 = Math.abs(d3 - d0);
           double d9 = d6 >= d7 ? d6 : d7;
