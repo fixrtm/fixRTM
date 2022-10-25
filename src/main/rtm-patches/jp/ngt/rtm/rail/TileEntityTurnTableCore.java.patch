@@ -34,7 +34,18 @@
  
     }
  
-@@ -84,13 +91,18 @@
+@@ -74,23 +81,28 @@
+             i = Math.abs(railposition.blockZ - railposition1.blockZ) / 2;
+          } else if (railposition.blockZ == railposition1.blockZ) {
+             i = Math.abs(railposition.blockX - railposition1.blockX) / 2;
+          }
+ 
+-         this.railmap = new RailMapTurntable(railposition, railposition1, this.getX(), this.getY(), this.getZ(), i);
++         this.railmap = new RailMapTurntable(railposition, railposition1, this.getX(), this.getY(), this.getZ(), i, fixRTMRailMapVersion);
+       }
+ 
+    }
+ 
     public float getRotation() {
        return this.rotation;
     }

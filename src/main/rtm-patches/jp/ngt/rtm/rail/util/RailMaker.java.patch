@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/rail/util/RailMaker.java
 +++ b/jp/ngt/rtm/rail/util/RailMaker.java
-@@ -4,26 +4,30 @@
+@@ -4,26 +4,37 @@
  import java.util.List;
  import jp.ngt.ngtlib.io.NGTLog;
  import net.minecraft.world.World;
@@ -11,25 +11,32 @@
     private World worldObj;
     private List<RailPosition> rpList;
  
++   /** @deprecated use {@link #RailMaker(World, List, int)} */
++   @Deprecated
     public RailMaker(World world, List<RailPosition> par2) {
-+      this(world, par2, RailMapBasic.fixRTMRailMapVersionCurrent);
++      this(world, par2, 0);
++      com.anatawa12.fixRtm.Deprecation.found("RailMaker#RailMaker");
 +   }
++
 +   public RailMaker(World world, List<RailPosition> par2, int fixRTMRailMapVersion) {
        this.worldObj = world;
        this.rpList = par2;
 +      this.fixRTMRailMapVersion = fixRTMRailMapVersion;
     }
  
++   /** @deprecated use {@link #RailMaker(World, RailPosition[], int)} */
++   @Deprecated
     public RailMaker(World world, RailPosition[] par2) {
 -      this.worldObj = world;
 -      this.rpList = new ArrayList<>();
--
++      this(world, par2, 0);
++      com.anatawa12.fixRtm.Deprecation.found("RailMaker#RailMaker");
++   }
+ 
 -      for(RailPosition railposition : par2) {
 -         this.rpList.add(railposition);
 -      }
-+      this(world, par2, RailMapBasic.fixRTMRailMapVersionCurrent);
-+   }
- 
+-
 +   public RailMaker(World world, RailPosition[] par2, int fixRTMRailMapVersion) {
 +      this(world, new ArrayList<>(java.util.Arrays.asList(par2)), fixRTMRailMapVersion);
     }
@@ -37,7 +44,7 @@
     private SwitchType getSwitchType() {
        if (this.rpList.size() == 3) {
           int i = 0;
-@@ -79,13 +83,8 @@
+@@ -79,13 +90,8 @@
           if (switchtype.init(list, list1)) {
              return switchtype;
           }

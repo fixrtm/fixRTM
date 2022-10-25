@@ -1,0 +1,24 @@
+--- a/jp/ngt/rtm/rail/util/RailMapTurntable.java
++++ b/jp/ngt/rtm/rail/util/RailMapTurntable.java
+@@ -10,12 +10,20 @@
+    public final int centerY;
+    public final int centerZ;
+    public final int radius;
+    private float rotation;
+ 
++
++   /** @deprecated use {@link #RailMapTurntable(RailPosition, RailPosition, int, int, int, int, int)} */
++   @Deprecated
+    public RailMapTurntable(RailPosition par1, RailPosition par2, int x, int y, int z, int r) {
+-      super(par1, par2);
++      this(par1, par2, x, y, z, r, 0);
++      com.anatawa12.fixRtm.Deprecation.found("RailMapTurntable#RailMapTurntable");
++   }
++
++   public RailMapTurntable(RailPosition par1, RailPosition par2, int x, int y, int z, int r, int version) {
++      super(par1, par2, version);
+       this.centerX = x;
+       this.centerY = y;
+       this.centerZ = z;
+       this.radius = r;
+    }

@@ -73,7 +73,7 @@
           if (railposition.hasScript()) {
              createCustomRail(world, railposition, state, makeRail, isCreative);
           }
-@@ -188,11 +198,11 @@
+@@ -188,25 +198,26 @@
              RailPosition railposition2 = railposition1.blockY >= railposition4.blockY ? railposition4 : railposition1;
              RailPosition railposition3 = railposition1.blockY >= railposition4.blockY ? railposition1 : railposition4;
              createNormalRail(world, railposition2, railposition3, state, makeRail, isCreative);
@@ -86,7 +86,11 @@
        return false;
     }
  
-@@ -203,10 +213,11 @@
+    private static boolean createNormalRail(World world, RailPosition start, RailPosition end, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
+-      RailMap railmap = new RailMapBasic(start, end);
++      RailMap railmap = new RailMapBasic(start, end, RailMapBasic.fixRTMRailMapVersionCurrent);
+       if (makeRail && railmap.canPlaceRail(world, isCreative, prop)) {
+          railmap.setRail(world, RTMRail.largeRailBase, start.blockX, start.blockY, start.blockZ, prop);
           BlockUtil.setBlock(world, start.blockX, start.blockY, start.blockZ, RTMRail.largeRailCore, 0, 3);
           TileEntityLargeRailCore tileentitylargerailcore = (TileEntityLargeRailCore)BlockUtil.getTileEntity(world, start.blockX, start.blockY, start.blockZ);
           tileentitylargerailcore.setRailPositions(new RailPosition[]{start, end});
@@ -105,8 +109,9 @@
     }
  
 -   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
+-      RailMaker railmaker = new RailMaker(world, list);
 +   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative, EntityPlayer player) {
-       RailMaker railmaker = new RailMaker(world, list);
++      RailMaker railmaker = new RailMaker(world, list, RailMapBasic.fixRTMRailMapVersionCurrent);
        SwitchType switchtype = railmaker.getSwitch();
        if (switchtype == null) {
 +         if (world != null && !world.isRemote)
@@ -145,3 +150,16 @@
                 return false;
              }
           }
+@@ -328,11 +342,11 @@
+       }
+ 
+       if (l == 0) {
+          return false;
+       } else {
+-         RailMapTurntable railmapturntable = new RailMapTurntable(start, end, i, j, k, l);
++         RailMapTurntable railmapturntable = new RailMapTurntable(start, end, i, j, k, l, RailMapTurntable.fixRTMRailMapVersionCurrent);
+          if (makeRail && railmapturntable.canPlaceRail(world, isCreative, prop)) {
+             railmapturntable.setRail(world, RTMRail.largeRailBase, i, j, k, prop);
+             BlockUtil.setBlock(world, i, j, k, RTMRail.TURNTABLE_CORE, 0, 3);
+             TileEntityTurnTableCore tileentityturntablecore = (TileEntityTurnTableCore)BlockUtil.getTileEntity(world, i, j, k);
+             tileentityturntablecore.setRailPositions(new RailPosition[]{start, end});

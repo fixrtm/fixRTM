@@ -1,11 +1,62 @@
 --- a/jp/ngt/rtm/rail/util/SwitchType.java
 +++ b/jp/ngt/rtm/rail/util/SwitchType.java
-@@ -310,10 +310,14 @@
+@@ -63,12 +63,12 @@
+          RailMapSwitch[] arailmapswitch = new RailMapSwitch[2];
+          RailPosition railposition = switchList.get(0);
+          RailPosition railposition1 = normalList.get(0);
+          RailPosition railposition2 = normalList.get(1);
+          RailDir raildir = railposition.getDir(railposition1, railposition2);
+-         arailmapswitch[0] = new RailMapSwitch(railposition, railposition1, raildir, RailDir.NONE);
+-         arailmapswitch[1] = new RailMapSwitch(railposition, railposition2, raildir.invert(), RailDir.NONE);
++         arailmapswitch[0] = new RailMapSwitch(railposition, railposition1, raildir, RailDir.NONE, 0);
++         arailmapswitch[1] = new RailMapSwitch(railposition, railposition2, raildir.invert(), RailDir.NONE, 0);
+          this.railMaps = arailmapswitch;
+          this.points = new Point[3];
+          this.points[0] = new Point(railposition, arailmapswitch[0], arailmapswitch[1]);
+          this.points[1] = new Point(railposition1, arailmapswitch[0]);
+          this.points[2] = new Point(railposition2, arailmapswitch[1]);
+@@ -109,11 +109,11 @@
+          int i = 0;
+ 
+          for(int j = 0; j < 4; ++j) {
+             for(int k = 0; k < 4; ++k) {
+                if (j < k && Math.abs((list.get(j)).direction - (list.get(k)).direction) == 4) {
+-                  arailmapswitch[i] = new RailMapSwitch(list.get(j), list.get(k), RailDir.NONE, RailDir.NONE);
++                  arailmapswitch[i] = new RailMapSwitch(list.get(j), list.get(k), RailDir.NONE, RailDir.NONE, 0);
+                   ++i;
+                   if (i >= 2) {
+                      this.railMaps = arailmapswitch;
+                      this.points = new Point[4];
+                      this.points[0] = new Point(arailmapswitch[0].startRP, arailmapswitch[0]);
+@@ -193,11 +193,11 @@
+                         raildir1 = arailposition[k1][1].getDir(arailposition[k1][0], arailposition[i1][0]);
+                      }
+                   }
+                }
+ 
+-               arailmapswitch[k1] = new RailMapSwitch(arailposition[k1][0], arailposition[k1][1], raildir, raildir1);
++               arailmapswitch[k1] = new RailMapSwitch(arailposition[k1][0], arailposition[k1][1], raildir, raildir1, 0);
+             }
+ 
+             this.railMaps = arailmapswitch;
+             this.points = new Point[4];
+ 
+@@ -302,18 +302,22 @@
+                      raildir = raildir2;
+                   } else {
+                      raildir1 = raildir2;
+                   }
+ 
+-                  arailmapswitch[i] = new RailMapSwitch(railposition2, railposition3, raildir2.invert(), RailDir.NONE);
++                  arailmapswitch[i] = new RailMapSwitch(railposition2, railposition3, raildir2.invert(), RailDir.NONE, 0);
+                }
+             }
  
              ++i;
           }
  
-          arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
+-         arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
++         arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1, 0);
 +
 +         if (!com.anatawa12.fixRtm.UtilsKt.isAllNotNull(arailmapswitch))
 +            return false;
