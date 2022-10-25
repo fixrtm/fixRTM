@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.FMLLaunchHandler
 
 object Deprecation {
     private val LOGGER = getLogger("Deprecation")
+    @JvmStatic
     private val isDebugEnv = FMLLaunchHandler.isDeobfuscatedEnvironment()
 
     @JvmStatic
