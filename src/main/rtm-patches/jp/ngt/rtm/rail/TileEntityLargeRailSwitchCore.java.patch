@@ -1,0 +1,26 @@
+--- a/jp/ngt/rtm/rail/TileEntityLargeRailSwitchCore.java
++++ b/jp/ngt/rtm/rail/TileEntityLargeRailSwitchCore.java
+@@ -25,10 +25,11 @@
+ 
+       for(int i = 0; i < b0; ++i) {
+          this.railPositions[i] = RailPosition.readFromNBT(nbt.getCompoundTag("RP" + i));
+       }
+ 
++      this.fixRTMRailMapVersion = nbt.getInteger("fixRTMRailMapVersion");
+    }
+ 
+    private RailPosition getRP(int x, int y, int z, byte dir, boolean b) {
+       RailPosition railposition = new RailPosition(x, y, z, dir, (byte)(b ? 1 : 0));
+       railposition.anchorYaw = NGTMath.wrapAngle((float)dir * 45.0F);
+@@ -40,10 +41,11 @@
+ 
+       for(int i = 0; i < this.railPositions.length; ++i) {
+          nbt.setTag("RP" + i, this.railPositions[i].writeToNBT());
+       }
+ 
++      nbt.setInteger("fixRTMRailMapVersion", this.fixRTMRailMapVersion);
+    }
+ 
+    public void setRailPositions(RailPosition[] par1) {
+       super.setRailPositions(par1);
+       this.onBlockChanged();
