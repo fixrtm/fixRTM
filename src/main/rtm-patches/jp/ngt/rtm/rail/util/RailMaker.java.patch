@@ -29,14 +29,14 @@
     public RailMaker(World world, RailPosition[] par2) {
 -      this.worldObj = world;
 -      this.rpList = new ArrayList<>();
--
--      for(RailPosition railposition : par2) {
--         this.rpList.add(railposition);
--      }
 +      this(world, par2, 0);
 +      com.anatawa12.fixRtm.Deprecation.found("RailMaker#RailMaker");
 +   }
  
+-      for(RailPosition railposition : par2) {
+-         this.rpList.add(railposition);
+-      }
+-
 +   public RailMaker(World world, RailPosition[] par2, int fixRTMRailMapVersion) {
 +      this(world, new ArrayList<>(java.util.Arrays.asList(par2)), fixRTMRailMapVersion);
     }
@@ -44,19 +44,46 @@
     private SwitchType getSwitchType() {
        if (this.rpList.size() == 3) {
           int i = 0;
-@@ -41,10 +52,12 @@
+@@ -31,33 +42,35 @@
+          for(RailPosition railposition : this.rpList) {
+             i += railposition.switchType == 1 ? 1 : 0;
+          }
+ 
+          if (i == 1) {
+-            return new SwitchType.SwitchBasic();
++            return new SwitchType.SwitchBasic(fixRTMRailMapVersion);
+          }
+       } else if (this.rpList.size() == 4) {
+          int j = 0;
+ 
           for(RailPosition railposition1 : this.rpList) {
              j += railposition1.switchType == 1 ? 1 : 0;
           }
  
           if (j == 2) {
+-            return new SwitchType.SwitchSingleCross();
 +            if (fixRTMRailMapVersion >= 1)
-+               return new com.anatawa12.fixRtm.rtm.rail.util.SwitchTypeSingleCrossFixRTMV1();
-             return new SwitchType.SwitchSingleCross();
++               return new com.anatawa12.fixRtm.rtm.rail.util.SwitchTypeSingleCrossFixRTMV1(fixRTMRailMapVersion);
++            return new SwitchType.SwitchSingleCross(fixRTMRailMapVersion);
           }
  
           if (j == 4) {
              for(int k = 0; k < this.rpList.size(); ++k) {
+                for(int l = k + 1; l < this.rpList.size(); ++l) {
+                   if ((this.rpList.get(k)).direction == (this.rpList.get(l)).direction) {
+-                     return new SwitchType.SwitchScissorsCross();
++                     return new SwitchType.SwitchScissorsCross(fixRTMRailMapVersion);
+                   }
+                }
+             }
+ 
+-            return new SwitchType.SwitchDiamondCross();
++            return new SwitchType.SwitchDiamondCross(fixRTMRailMapVersion);
+          }
+       }
+ 
+       return null;
+    }
 @@ -79,13 +92,8 @@
           if (switchtype.init(list, list1)) {
              return switchtype;
