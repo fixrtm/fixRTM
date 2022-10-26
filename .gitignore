@@ -183,3 +183,5 @@ gradle-app.setting
 /pm.*
 /src/main/ngtlib-1
 /src/main/rtm-1
+
+/logs
