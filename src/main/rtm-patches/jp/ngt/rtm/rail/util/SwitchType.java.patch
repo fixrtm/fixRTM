@@ -1,11 +1,170 @@
 --- a/jp/ngt/rtm/rail/util/SwitchType.java
 +++ b/jp/ngt/rtm/rail/util/SwitchType.java
-@@ -310,10 +310,14 @@
+@@ -7,13 +7,23 @@
+ 
+ public abstract class SwitchType {
+    public final byte id;
+    protected RailMapSwitch[] railMaps;
+    protected Point[] points;
++   // see RailMapBasic#fixRTMRailMapVersion
++   public final int fixRTMRailMapVersion;
+ 
++   /** @deprecated use {@link #SwitchType(int, int)} */
++   @Deprecated
+    protected SwitchType(int par1) {
++      this(par1, 0);
++      com.anatawa12.fixRtm.Deprecation.found("SwitchType#SwitchType");
++   }
++
++   protected SwitchType(int par1, int fixRTMRailMapVersion) {
+       this.id = (byte)par1;
++      this.fixRTMRailMapVersion = fixRTMRailMapVersion;
+    }
+ 
+    public abstract boolean init(List<RailPosition> var1, List<RailPosition> var2);
+ 
+    public abstract String getName();
+@@ -53,22 +63,29 @@
+ 
+       return point;
+    }
+ 
+    public static class SwitchBasic extends SwitchType {
++      /** @deprecated use {@link #SwitchBasic(int)} */
++      @Deprecated
+       public SwitchBasic() {
+-         super(0);
++         this(0);
++         com.anatawa12.fixRtm.Deprecation.found("SwitchBasic#SwitchBasic");
++      }
++
++      public SwitchBasic(int fixRTMRailMapVersion) {
++         super(0, fixRTMRailMapVersion);
+       }
+ 
+       public boolean init(List<RailPosition> switchList, List<RailPosition> normalList) {
+          RailMapSwitch[] arailmapswitch = new RailMapSwitch[2];
+          RailPosition railposition = switchList.get(0);
+          RailPosition railposition1 = normalList.get(0);
+          RailPosition railposition2 = normalList.get(1);
+          RailDir raildir = railposition.getDir(railposition1, railposition2);
+-         arailmapswitch[0] = new RailMapSwitch(railposition, railposition1, raildir, RailDir.NONE);
+-         arailmapswitch[1] = new RailMapSwitch(railposition, railposition2, raildir.invert(), RailDir.NONE);
++         arailmapswitch[0] = new RailMapSwitch(railposition, railposition1, raildir, RailDir.NONE, fixRTMRailMapVersion);
++         arailmapswitch[1] = new RailMapSwitch(railposition, railposition2, raildir.invert(), RailDir.NONE, fixRTMRailMapVersion);
+          this.railMaps = arailmapswitch;
+          this.points = new Point[3];
+          this.points[0] = new Point(railposition, arailmapswitch[0], arailmapswitch[1]);
+          this.points[1] = new Point(railposition1, arailmapswitch[0]);
+          this.points[2] = new Point(railposition2, arailmapswitch[1]);
+@@ -95,12 +112,19 @@
+          return "Simple";
+       }
+    }
+ 
+    public static class SwitchDiamondCross extends SwitchType {
++      /** @deprecated use {@link #SwitchDiamondCross(int)} */
++      @Deprecated
+       public SwitchDiamondCross() {
+-         super(3);
++         this(0);
++         com.anatawa12.fixRtm.Deprecation.found("SwitchDiamondCross#SwitchDiamondCross");
++      }
++
++      public SwitchDiamondCross(int fixRTMRailMapVersion) {
++         super(3, fixRTMRailMapVersion);
+       }
+ 
+       public boolean init(List<RailPosition> switchList, List<RailPosition> normalList) {
+          List<RailPosition> list = new ArrayList<>();
+          list.addAll(switchList);
+@@ -109,11 +133,11 @@
+          int i = 0;
+ 
+          for(int j = 0; j < 4; ++j) {
+             for(int k = 0; k < 4; ++k) {
+                if (j < k && Math.abs((list.get(j)).direction - (list.get(k)).direction) == 4) {
+-                  arailmapswitch[i] = new RailMapSwitch(list.get(j), list.get(k), RailDir.NONE, RailDir.NONE);
++                  arailmapswitch[i] = new RailMapSwitch(list.get(j), list.get(k), RailDir.NONE, RailDir.NONE, fixRTMRailMapVersion);
+                   ++i;
+                   if (i >= 2) {
+                      this.railMaps = arailmapswitch;
+                      this.points = new Point[4];
+                      this.points[0] = new Point(arailmapswitch[0].startRP, arailmapswitch[0]);
+@@ -149,14 +173,22 @@
+          return "Diamond Crossing";
+       }
+    }
+ 
+    public static class SwitchScissorsCross extends SwitchType {
++      /** @deprecated use {@link #SwitchScissorsCross(int)} */
++      @Deprecated
+       public SwitchScissorsCross() {
+-         super(2);
++         this(0);
++         com.anatawa12.fixRtm.Deprecation.found("SwitchScissorsCross#SwitchScissorsCross");
++      }
++
++      public SwitchScissorsCross(int fixRTMRailMapVersion) {
++         super(2, fixRTMRailMapVersion);
+       }
+ 
++
+       public boolean init(List<RailPosition> switchList, List<RailPosition> normalList) {
+          RailMapSwitch[] arailmapswitch = new RailMapSwitch[4];
+          RailPosition[][] arailposition = new RailPosition[4][2];
+          int i = 0;
+ 
+@@ -193,11 +225,11 @@
+                         raildir1 = arailposition[k1][1].getDir(arailposition[k1][0], arailposition[i1][0]);
+                      }
+                   }
+                }
+ 
+-               arailmapswitch[k1] = new RailMapSwitch(arailposition[k1][0], arailposition[k1][1], raildir, raildir1);
++               arailmapswitch[k1] = new RailMapSwitch(arailposition[k1][0], arailposition[k1][1], raildir, raildir1, fixRTMRailMapVersion);
+             }
+ 
+             this.railMaps = arailmapswitch;
+             this.points = new Point[4];
+ 
+@@ -278,12 +310,19 @@
+          return "Scissors Crossing";
+       }
+    }
+ 
+    public static class SwitchSingleCross extends SwitchType {
++      /** @deprecated use {@link #SwitchSingleCross(int)} */
++      @Deprecated
+       public SwitchSingleCross() {
+-         super(1);
++         this(0);
++         com.anatawa12.fixRtm.Deprecation.found("SwitchSingleCross#SwitchSingleCross");
++      }
++
++      public SwitchSingleCross(int fixRTMRailMapVersion) {
++         super(1, fixRTMRailMapVersion);
+       }
+ 
+       public boolean init(List<RailPosition> switchList, List<RailPosition> normalList) {
+          RailMapSwitch[] arailmapswitch = new RailMapSwitch[3];
+          RailPosition railposition = switchList.get(0);
+@@ -302,18 +341,22 @@
+                      raildir = raildir2;
+                   } else {
+                      raildir1 = raildir2;
+                   }
+ 
+-                  arailmapswitch[i] = new RailMapSwitch(railposition2, railposition3, raildir2.invert(), RailDir.NONE);
++                  arailmapswitch[i] = new RailMapSwitch(railposition2, railposition3, raildir2.invert(), RailDir.NONE, fixRTMRailMapVersion);
+                }
+             }
  
              ++i;
           }
  
-          arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
+-         arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1);
++         arailmapswitch[2] = new RailMapSwitch(railposition, railposition1, raildir, raildir1, fixRTMRailMapVersion);
 +
 +         if (!com.anatawa12.fixRtm.UtilsKt.isAllNotNull(arailmapswitch))
 +            return false;

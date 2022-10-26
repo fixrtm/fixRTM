@@ -12,7 +12,27 @@
     public void readFromNBT(NBTTagCompound nbt) {
        super.readFromNBT(nbt);
        if (nbt.hasKey("RP")) {
-@@ -177,20 +178,20 @@
+@@ -139,11 +140,11 @@
+ 
+          for(int i = 0; i < arailmap.length; ++i) {
+             RailPosition railposition = this.railMaps[i].getStartRP();
+             RailPosition railposition1 = this.railMaps[i].getEndRP();
+             railposition1.cantCenter = -railposition.cantCenter;
+-            arailmap[i] = new RailMapBasic(railposition, railposition1);
++            arailmap[i] = new RailMapBasic(railposition, railposition1, RailMapBasic.fixRTMRailMapVersionCurrent);
+          }
+ 
+          this.railMaps = arailmap;
+          this.linePos = (float[][][])null;
+          this.createGrids();
+@@ -171,26 +172,26 @@
+       } else if (list.size() == 2) {
+          if (list.get(0) != null && list.get(1) != null) {
+             RailPosition railposition2 = this.getMarkerRP((BlockPos)list.get(0));
+             RailPosition railposition3 = this.getMarkerRP((BlockPos)list.get(1));
+             if (railposition2 != null && railposition3 != null) {
+-               RailMap railmap1 = new RailMapBasic(railposition2, railposition3);
++               RailMap railmap1 = new RailMapBasic(railposition2, railposition3, RailMapBasic.fixRTMRailMapVersionCurrent);
                 this.railMaps = new RailMap[]{railmap1};
                 blockpos = new BlockPos(railposition2.blockX, railposition2.blockY, railposition2.blockZ);
              }
@@ -30,7 +50,7 @@
           }
  
 -         SwitchType switchtype = (new RailMaker(this.getWorld(), list)).getSwitch();
-+         SwitchType switchtype = (new RailMaker(this.getWorld(), list3)).getSwitch();
++         SwitchType switchtype = (new RailMaker(this.getWorld(), list3, RailMapBasic.fixRTMRailMapVersionCurrent)).getSwitch();
           if (switchtype != null) {
              this.railMaps = switchtype.getAllRailMap();
              if (this.railMaps != null) {

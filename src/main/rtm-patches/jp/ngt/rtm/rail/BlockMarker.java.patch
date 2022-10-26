@@ -73,7 +73,7 @@
           if (railposition.hasScript()) {
              createCustomRail(world, railposition, state, makeRail, isCreative);
           }
-@@ -188,11 +198,11 @@
+@@ -188,25 +198,26 @@
              RailPosition railposition2 = railposition1.blockY >= railposition4.blockY ? railposition4 : railposition1;
              RailPosition railposition3 = railposition1.blockY >= railposition4.blockY ? railposition1 : railposition4;
              createNormalRail(world, railposition2, railposition3, state, makeRail, isCreative);
@@ -86,15 +86,32 @@
        return false;
     }
  
-@@ -247,14 +257,16 @@
+    private static boolean createNormalRail(World world, RailPosition start, RailPosition end, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
+-      RailMap railmap = new RailMapBasic(start, end);
++      RailMap railmap = new RailMapBasic(start, end, RailMapBasic.fixRTMRailMapVersionCurrent);
+       if (makeRail && railmap.canPlaceRail(world, isCreative, prop)) {
+          railmap.setRail(world, RTMRail.largeRailBase, start.blockX, start.blockY, start.blockZ, prop);
+          BlockUtil.setBlock(world, start.blockX, start.blockY, start.blockZ, RTMRail.largeRailCore, 0, 3);
+          TileEntityLargeRailCore tileentitylargerailcore = (TileEntityLargeRailCore)BlockUtil.getTileEntity(world, start.blockX, start.blockY, start.blockZ);
+          tileentitylargerailcore.setRailPositions(new RailPosition[]{start, end});
+          tileentitylargerailcore.getResourceState().readFromNBT(prop.writeToNBT());
+          tileentitylargerailcore.setStartPoint(start.blockX, start.blockY, start.blockZ);
++         tileentitylargerailcore.fixRTMRailMapVersion = ((RailMapBasic)railmap).fixRTMRailMapVersion;
+          tileentitylargerailcore.createRailMap();
+          tileentitylargerailcore.sendPacket();
+          if (BlockUtil.getBlock(world, end.blockX, end.blockY, end.blockZ) instanceof BlockMarker) {
+             BlockUtil.setAir(world, end.blockX, end.blockY, end.blockZ);
+          }
+@@ -247,14 +258,16 @@
  
           return false;
        }
     }
  
 -   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative) {
+-      RailMaker railmaker = new RailMaker(world, list);
 +   private static boolean createSwitchRail(World world, int x, int y, int z, List<RailPosition> list, ResourceStateRail prop, boolean makeRail, boolean isCreative, EntityPlayer player) {
-       RailMaker railmaker = new RailMaker(world, list);
++      RailMaker railmaker = new RailMaker(world, list, RailMapBasic.fixRTMRailMapVersionCurrent);
        SwitchType switchtype = railmaker.getSwitch();
        if (switchtype == null) {
 +         if (world != null && !world.isRemote)
@@ -104,7 +121,17 @@
           RailMap[] arailmap = switchtype.getAllRailMap();
           if (arailmap == null) {
              return false;
-@@ -292,18 +304,18 @@
+@@ -283,27 +296,28 @@
+                   tileentitylargerailswitchbase.setStartPoint(x, y, z);
+                }
+ 
+                BlockUtil.setBlock(world, x, y, z, RTMRail.largeRailSwitchCore, 0, 3);
+                TileEntityLargeRailSwitchCore tileentitylargerailswitchcore = (TileEntityLargeRailSwitchCore)BlockUtil.getTileEntity(world, x, y, z);
++               tileentitylargerailswitchcore.fixRTMRailMapVersion = railmaker.fixRTMRailMapVersion;
+                tileentitylargerailswitchcore.setRailPositions(list.toArray(new RailPosition[list.size()]));
+                tileentitylargerailswitchcore.getResourceState().readFromNBT(prop.writeToNBT());
+                tileentitylargerailswitchcore.setStartPoint(x, y, z);
+                tileentitylargerailswitchcore.createRailMap();
                 tileentitylargerailswitchcore.sendPacket();
                 return true;
              } else {
@@ -126,3 +153,16 @@
                 return false;
              }
           }
+@@ -328,11 +342,11 @@
+       }
+ 
+       if (l == 0) {
+          return false;
+       } else {
+-         RailMapTurntable railmapturntable = new RailMapTurntable(start, end, i, j, k, l);
++         RailMapTurntable railmapturntable = new RailMapTurntable(start, end, i, j, k, l, RailMapTurntable.fixRTMRailMapVersionCurrent);
+          if (makeRail && railmapturntable.canPlaceRail(world, isCreative, prop)) {
+             railmapturntable.setRail(world, RTMRail.largeRailBase, i, j, k, prop);
+             BlockUtil.setBlock(world, i, j, k, RTMRail.TURNTABLE_CORE, 0, 3);
+             TileEntityTurnTableCore tileentityturntablecore = (TileEntityTurnTableCore)BlockUtil.getTileEntity(world, i, j, k);
+             tileentityturntablecore.setRailPositions(new RailPosition[]{start, end});

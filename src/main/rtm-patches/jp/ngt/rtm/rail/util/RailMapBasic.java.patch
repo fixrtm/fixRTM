@@ -1,11 +1,27 @@
 --- a/jp/ngt/rtm/rail/util/RailMapBasic.java
 +++ b/jp/ngt/rtm/rail/util/RailMapBasic.java
-@@ -14,10 +14,15 @@
+@@ -10,14 +10,31 @@
+    protected final RailPosition startRP;
+    protected final RailPosition endRP;
+    protected double length;
+    protected ILine lineHorizontal;
     protected ILine lineVertical;
++   // version 0: RTM original or 2.0.23.older
++   // version 1: fixRTM 2.0.24...
++   public final int fixRTMRailMapVersion;
++   public static int fixRTMRailMapVersionCurrent = 1;
  
++   /** @deprecated use {@link #RailMapBasic(RailPosition, RailPosition, int)} */
++   @Deprecated
     public RailMapBasic(RailPosition par1, RailPosition par2) {
++      this(par1, par2, 0);
++      com.anatawa12.fixRtm.Deprecation.found("RailMapBasic#RailMapBasic");
++   }
++
++   public RailMapBasic(RailPosition par1, RailPosition par2, int version) {
        this.startRP = par1;
        this.endRP = par2;
++      this.fixRTMRailMapVersion = version;
 +      if (this.startRP.cantEdge * this.startRP.cantCenter < 0) {
 +         this.startRP.cantCenter = -this.startRP.cantCenter;
 +      } else if (this.startRP.cantEdge * this.startRP.cantCenter == 0 && this.endRP.cantEdge * this.startRP.cantCenter > 0) {
@@ -16,3 +32,20 @@
     }
  
     protected void createLine() {
+@@ -28,11 +45,15 @@
+       double d4 = this.endRP.posY;
+       double d5 = this.endRP.posZ;
+       boolean flag = (this.endRP.direction - this.startRP.direction) % 4 == 0;
+       boolean flag1 = d2 == d5 || d0 == d3;
+       boolean flag2 = Math.abs(d2 - d5) == Math.abs(d0 - d3) && this.startRP.direction % 2 != 0 && this.endRP.direction % 2 != 0;
+-      if (!flag || !flag1 && !flag2) {
++      // if anker angle is changed, we always should use BezierCurve.
++      boolean fixRTMV1 = fixRTMRailMapVersion >= 1 &&
++         (startRP.anchorYaw != NGTMath.wrapAngle(startRP.direction * 45.0F)
++            || endRP.anchorYaw != NGTMath.wrapAngle(endRP.direction * 45.0F));
++      if (!flag || !flag1 && !flag2 || fixRTMV1) {
+          double d6 = Math.abs(d5 - d2);
+          double d7 = Math.abs(d3 - d0);
+          double d9 = d6 >= d7 ? d6 : d7;
+          double d11 = d6 <= d7 ? d6 : d7;
+          if (this.startRP.anchorLengthHorizontal <= 0.0F) {

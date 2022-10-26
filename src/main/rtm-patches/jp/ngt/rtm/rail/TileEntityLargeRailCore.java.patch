@@ -12,3 +12,53 @@
     private int signal = 0;
     private ResourceStateRail state = new ResourceStateRail(RTMResource.RAIL, this);
     public final List<ResourceStateRail> subRails = new ArrayList<>();
+@@ -45,10 +46,12 @@
+    @SideOnly(Side.CLIENT)
+    private int brightness;
+    @SideOnly(Side.CLIENT)
+    public int rerenderCount;
+    private int count;
++   // see RailMapBasic.fixRTMRailMapVersion
++   protected int fixRTMRailMapVersion;
+ 
+    public void readFromNBT(NBTTagCompound nbt) {
+       super.readFromNBT(nbt);
+       this.readRailStates(nbt);
+       this.readRailData(nbt);
+@@ -75,10 +78,11 @@
+    protected void readRailData(NBTTagCompound nbt) {
+       if (nbt.hasKey("StartRP")) {
+          this.railPositions = new RailPosition[2];
+          this.railPositions[0] = RailPosition.readFromNBT(nbt.getCompoundTag("StartRP"));
+          this.railPositions[1] = RailPosition.readFromNBT(nbt.getCompoundTag("EndRP"));
++         this.fixRTMRailMapVersion = nbt.getInteger("fixRTMRailMapVersion");
+       }
+    }
+ 
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+       super.writeToNBT(nbt);
+@@ -99,10 +103,11 @@
+    }
+ 
+    protected void writeRailData(NBTTagCompound nbt) {
+       nbt.setTag("StartRP", this.railPositions[0].writeToNBT());
+       nbt.setTag("EndRP", this.railPositions[1].writeToNBT());
++      nbt.setInteger("fixRTMRailMapVersion", this.fixRTMRailMapVersion);
+    }
+ 
+    public void setStartPoint(int x, int y, int z) {
+       this.startPoint[0] = x;
+       this.startPoint[1] = y;
+@@ -113,11 +118,11 @@
+       if (this.isLoaded()) {
+          if (this.getRailPositions()[0].hasScript()) {
+             RailPosition railposition = this.getRailPositions()[0];
+             this.railmap = new RailMapCustom(railposition, railposition.scriptName, railposition.scriptArgs);
+          } else {
+-            this.railmap = new RailMapBasic(this.railPositions[0], this.railPositions[1]);
++            this.railmap = new RailMapBasic(this.railPositions[0], this.railPositions[1], fixRTMRailMapVersion);
+          }
+       }
+ 
+    }
+ 

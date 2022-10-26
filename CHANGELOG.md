@@ -23,6 +23,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Sneak clicking bogie to sneak click Train `#541`
 - Press tab key to move cursor to next field `#544`
 - Play brake release sound from all trains in the formation `#551`
+- RailMap Versioning System `#561`
+  - This system allow fixRTM to fix/change bad rail shape behaviors!
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
@@ -40,6 +42,10 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Train may be overlapped after connecting then setting direction `#549`
 - `/permit add` adds same person multiple times `#550`
 - Container drops item in creative mode `#558`
+- Crossover switch with non-opposite markers may be broken `#561`
+  - This changes shape engine of crossover switch.
+    With same marker position, crossover rail may be different shape than older.
+- Shaped rail with straight marker doesn't work `#561`
 
 ### Security
 

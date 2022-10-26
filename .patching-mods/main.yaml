@@ -128,11 +128,14 @@ mods:
       - jp.ngt.rtm.rail.RenderTurntable
       - jp.ngt.rtm.rail.TileEntityLargeRailBase
       - jp.ngt.rtm.rail.TileEntityLargeRailCore
+      - jp.ngt.rtm.rail.TileEntityLargeRailSwitchCore
       - jp.ngt.rtm.rail.TileEntityMarker
       - jp.ngt.rtm.rail.TileEntityTurnTableCore
       - jp.ngt.rtm.rail.util.MarkerState
       - jp.ngt.rtm.rail.util.RailMaker
       - jp.ngt.rtm.rail.util.RailMapBasic
+      - jp.ngt.rtm.rail.util.RailMapSwitch
+      - jp.ngt.rtm.rail.util.RailMapTurntable
       - jp.ngt.rtm.rail.util.SwitchType
       - jp.ngt.rtm.render.ModelObject
       - jp.ngt.rtm.render.PartsRenderer
