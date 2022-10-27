@@ -1,6 +1,22 @@
 --- a/jp/ngt/rtm/entity/train/EntityTrainBase.java
 +++ b/jp/ngt/rtm/entity/train/EntityTrainBase.java
-@@ -69,13 +69,14 @@
+@@ -54,28 +54,29 @@
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ public abstract class EntityTrainBase extends EntityVehicleBase<ModelSetTrain> implements IChunkLoader {
+    private static final DataParameter<Integer> BOGIE_ID0 = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> BOGIE_ID1 = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.VARINT);
++   private static final DataParameter<Float> TRAIN_SPEED = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.FLOAT);
+    public static final short MAX_AIR_COUNT = 2880;
+    public static final short MIN_AIR_COUNT = 2480;
+    public static final float TRAIN_WIDTH = 2.75F;
+    public static final float TRAIN_HEIGHT = 1.1875F;
+    public final BogieController bogieController = new BogieController();
+    private Formation formation;
+-   private float trainSpeed;
+    public int brakeCount = 72;
+    public int atsCount;
+    public boolean onRail = true;
     public int brakeAirCount = 2880;
     public boolean complessorActive;
     private float wave;
@@ -16,7 +32,19 @@
        super(world);
        this.setSize(2.75F, 1.1875F);
        this.noClip = true;
-@@ -126,12 +127,15 @@
+@@ -92,10 +93,11 @@
+ 
+    protected void entityInit() {
+       super.entityInit();
+       this.getDataManager().register(BOGIE_ID0, 0);
+       this.getDataManager().register(BOGIE_ID1, 0);
++      this.getDataManager().register(TRAIN_SPEED, 0.0f);
+    }
+ 
+    protected void writeEntityToNBT(NBTTagCompound nbt) {
+       super.writeEntityToNBT(nbt);
+       NBTTagCompound nbttagcompound = new NBTTagCompound();
+@@ -126,12 +128,15 @@
     private void readFormationData(NBTTagCompound nbt) {
        long i = nbt.getLong("FormationId");
        byte b0 = nbt.getByte("EntryPos");
@@ -33,7 +61,7 @@
           formation.setTrain(this, b0, b1);
        }
  
-@@ -293,25 +297,25 @@
+@@ -293,25 +298,25 @@
           float f = this.getSpeed();
           int i = this.getNotch();
           Random random = this.world.rand;
@@ -63,7 +91,7 @@
                 double d6 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 double d7 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 this.world.spawnParticle(enumparticletypes, d2, d3, d4, d6, 0.25D, d7, new int[0]);
-@@ -441,25 +445,34 @@
+@@ -441,25 +446,34 @@
              }
           }
  
@@ -101,8 +129,28 @@
              this.setSpeed(f);
           }
  
-@@ -690,20 +703,21 @@
-       this.trainSpeed = par1;
+@@ -672,38 +686,38 @@
+       }
+ 
+    }
+ 
+    public float getSpeed() {
+-      return this.trainSpeed;
++      return this.getDataManager().get(TRAIN_SPEED);
+    }
+ 
+    public void setSpeed(float par1) {
+       if (this.world.isRemote) {
+-         this.trainSpeed = par1;
+       } else if (this.isControlCar()) {
+          this.formation.setSpeed(par1);
+       }
+ 
+    }
+ 
+    public void setSpeed_NoSync(float par1) {
+-      this.trainSpeed = par1;
++      this.getDataManager().set(TRAIN_SPEED, par1);
     }
  
     public void stopTrain(boolean changeSpeed) {
