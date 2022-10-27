@@ -146,5 +146,6 @@ mods:
       - jp.ngt.rtm.render.RTMRenderers
       - jp.ngt.rtm.sound.MovingSoundMaker
       - jp.ngt.rtm.sound.MovingSoundTrain
+      - jp.ngt.rtm.sound.SoundPlayer
       - jp.ngt.rtm.sound.SoundUpdaterTrain
       - jp.ngt.rtm.world.RTMChunkManager

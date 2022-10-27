@@ -7,7 +7,7 @@
        switch(keyCode) {
        case 2:
 -         this.playSound(player, sound, 10000.0F);
-+         this.playSound(player, sound, 10000.0F, false);
++         this.playSound(player, sound, 6.0F, false);
           break;
        case 3:
 -         this.playSound(player, sound, 1.0F);

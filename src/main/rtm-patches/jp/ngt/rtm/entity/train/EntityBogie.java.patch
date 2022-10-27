@@ -72,7 +72,7 @@
     }
  
     protected boolean reverseJointArray() {
-@@ -245,11 +250,11 @@
+@@ -245,13 +250,13 @@
  
     protected void playJointSound() {
        EntityTrainBase entitytrainbase = this.getTrain();
@@ -81,10 +81,13 @@
 -         float f = entitytrainbase.getSpeed() / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
 +         float f = Math.abs(entitytrainbase.getSpeed()) / trainconfig.maxSpeed[4] * 0.5F + 1.0F;
           String s = this.reverbSound ? "rtm:sounds/train/joint_reverb.ogg" : "rtm:sounds/train/joint.ogg";
-          RTMCore.proxy.playSound(this, s, 1.0F, f);
+-         RTMCore.proxy.playSound(this, s, 1.0F, f);
++         RTMCore.proxy.playSound(this, s, 4.0F, f);
           int i = trainconfig.jointDelay[this.getBogieId()].length;
           if (this.jointIndex < i - 1) {
              int j = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
+             ++this.jointIndex;
+             int k = this.reverseJointArray() ? i - this.jointIndex - 1 : this.jointIndex;
 @@ -287,14 +292,23 @@
  
     public final void onUpdate() {

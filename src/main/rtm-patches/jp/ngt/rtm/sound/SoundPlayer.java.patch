@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/sound/SoundPlayer.java
++++ b/jp/ngt/rtm/sound/SoundPlayer.java
+@@ -33,11 +33,11 @@
+             this.stopSound();
+          }
+ 
+          this.sound = MovingSoundMaker.create(tile, sound, repeat);
+          if (this.sound != null) {
+-            this.sound.setVolume(10.0F);
++            this.sound.setVolume(4.0F);
+             ClientProxy.playSound(this.sound, 10.0F, 1.0F);
+          }
+ 
+       }
+ 

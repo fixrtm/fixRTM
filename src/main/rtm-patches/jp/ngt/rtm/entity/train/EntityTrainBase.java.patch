@@ -129,6 +129,19 @@
              this.setSpeed(f);
           }
  
+@@ -655,11 +669,11 @@
+       if (!this.world.isRemote && par2.getTrain() != null) {
+          int i = par1.getBogieId();
+          int j = par2.getBogieId();
+          if (i >= 0 && j >= 0 && this.getConnectedTrain(i) == null && par2.getTrain().formation != null) {
+             this.formation.connectTrain(this, par2.getTrain(), i, j, par2.getTrain().formation);
+-            RTMCore.proxy.playSound(par1, "block.anvil.place", 1.0F, 1.0F);
++            RTMCore.proxy.playSound(par1, "block.anvil.place", 2.0F, 1.0F);
+             EntityPlayer entityplayer = null;
+             if (this.getFirstPassenger() instanceof EntityPlayer) {
+                entityplayer = (EntityPlayer)this.getFirstPassenger();
+             } else if (par2.getTrain().getFirstPassenger() instanceof EntityPlayer) {
+                entityplayer = (EntityPlayer)par2.getTrain().getFirstPassenger();
 @@ -672,38 +686,38 @@
        }
  
