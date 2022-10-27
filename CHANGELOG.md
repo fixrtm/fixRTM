@@ -34,6 +34,7 @@ Thanks to prepare-changelog.sh, we have some macros.
   - This reduces server lag & reduces packets
 - Start using DataManager to save train speed `#570`
   - This improves frequency of train speed update
+- Make many sounds louder `#572`
 
 ### Deprecated
 
