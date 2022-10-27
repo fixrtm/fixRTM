@@ -32,6 +32,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Start using [Conventional Commits] `#513`
 - Use minecraft provided system to sync block updates `#567`
   - This reduces server lag & reduces packets
+- Start using DataManager to save train speed `#570`
+  - This improves frequency of train speed update
 
 ### Deprecated
 
