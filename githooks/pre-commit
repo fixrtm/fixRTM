@@ -1,0 +1,12 @@
+#!/bin/sh
+# Copyright (c) 2022 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+set -eu
+
+./pm.create-diff --check
+
+# it takes few seconds; it's not acceptable
+#npm exec --yes github:anatawa12/check-license-header#v1 -- \
+#  check --strict --gitignore --config .github/license-check/header-check.json
