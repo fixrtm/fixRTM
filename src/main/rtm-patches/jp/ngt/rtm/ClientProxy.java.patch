@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/ClientProxy.java
++++ b/jp/ngt/rtm/ClientProxy.java
+@@ -211,10 +211,11 @@
+    }
+ 
+    public static void playSound(MovingSoundCustom sound, float vol, float pitch) {
+       sound.setVolume(vol);
+       sound.setPitch(pitch);
++      sound.update();
+       NGTSound.playSound(sound);
+    }
+ 
+    public FormationManager getFormationManager() {
+       return NGTUtil.isServer() ? super.getFormationManager() : this.fmClient;
