@@ -29,6 +29,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Changed
 - Start using [Keep a Changelog] `#511`
 - Start using [Conventional Commits] `#513`
+- Use minecraft provided system to sync block updates `#567`
+  - This reduces server lag & reduces packets
 
 ### Deprecated
 

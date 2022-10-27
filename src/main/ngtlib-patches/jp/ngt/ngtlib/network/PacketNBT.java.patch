@@ -1,6 +1,6 @@
 --- a/jp/ngt/ngtlib/network/PacketNBT.java
 +++ b/jp/ngt/ngtlib/network/PacketNBT.java
-@@ -136,9 +136,13 @@
+@@ -136,9 +136,16 @@
  
     public static void sendToClient(Entity entity) {
        NGTCore.NETWORK_WRAPPER.sendToAll(new PacketNBT(entity, true));
@@ -10,7 +10,10 @@
 +      NGTCore.NETWORK_WRAPPER.sendTo(new PacketNBT(entity, true), player);
 +   }
 +
++   /** @deprecated because it's slow. */
++   @Deprecated
     public static void sendToClient(TileEntity entity) {
++      com.anatawa12.fixRtm.Deprecation.found("PacketNBT#sendToClient");
        NGTCore.NETWORK_WRAPPER.sendToAll(new PacketNBT(entity, true));
     }
  }
