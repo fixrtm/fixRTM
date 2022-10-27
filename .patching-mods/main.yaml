@@ -11,6 +11,7 @@ mods:
     deobf-jar: curse/ngtlib/2.4.20/ngtlib-2.4.20-stable-39-deobf.jar
     changed-classes:
       - jp.ngt.ngtlib.NGTCore
+      - jp.ngt.ngtlib.block.TileEntityCustom
       - jp.ngt.ngtlib.block.TileEntityPlaceable
       - jp.ngt.ngtlib.command.CommandPermit
       - jp.ngt.ngtlib.gui.GuiContainerCustom
