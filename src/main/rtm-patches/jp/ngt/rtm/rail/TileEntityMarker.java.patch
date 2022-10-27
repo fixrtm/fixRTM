@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/rail/TileEntityMarker.java
 +++ b/jp/ngt/rtm/rail/TileEntityMarker.java
-@@ -47,10 +47,11 @@
+@@ -47,16 +47,17 @@
        this.markerState = MarkerState.DISTANCE.set(this.markerState, true);
        this.markerState = MarkerState.GRID.set(this.markerState, false);
        this.markerState = MarkerState.LINE1.set(this.markerState, false);
@@ -12,6 +12,13 @@
     public void readFromNBT(NBTTagCompound nbt) {
        super.readFromNBT(nbt);
        if (nbt.hasKey("RP")) {
+-         this.rp = RailPosition.readFromNBT(nbt.getCompoundTag("RP"));
++         this.rp = RailPosition.readFromNBT(nbt.getCompoundTag("RP"), this.rp);
+       }
+ 
+    }
+ 
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 @@ -139,11 +140,11 @@
  
           for(int i = 0; i < arailmap.length; ++i) {

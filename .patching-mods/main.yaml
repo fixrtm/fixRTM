@@ -136,6 +136,7 @@ mods:
       - jp.ngt.rtm.rail.util.RailMapBasic
       - jp.ngt.rtm.rail.util.RailMapSwitch
       - jp.ngt.rtm.rail.util.RailMapTurntable
+      - jp.ngt.rtm.rail.util.RailPosition
       - jp.ngt.rtm.rail.util.SwitchType
       - jp.ngt.rtm.render.ModelObject
       - jp.ngt.rtm.render.PartsRenderer
