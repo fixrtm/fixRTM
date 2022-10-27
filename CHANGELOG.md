@@ -46,6 +46,7 @@ Thanks to prepare-changelog.sh, we have some macros.
   - This changes shape engine of crossover switch.
     With same marker position, crossover rail may be different shape than older.
 - Shaped rail with straight marker doesn't work `#561`
+- Preview bezier curve is incorrect `#565`
 
 ### Security
 
