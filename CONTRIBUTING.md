@@ -17,6 +17,8 @@ You can create Pull Requests without making issues.
 Please follow [Conventional Commits] commit format.
 There's check for this so it's (almost) required to follow this format.
 
+I recommend you to use git hooks. you can install git hooks via ``./githooks/install.sh``.
+
 [Conventional Commits]: https://www.conventionalcommits.org/en/v1.0.0/
 
 Please append both `CHANGELOG-SNAPSHOS.md` and `CHANGELOG.md`
