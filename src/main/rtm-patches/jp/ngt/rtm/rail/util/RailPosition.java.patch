@@ -1,0 +1,52 @@
+--- a/jp/ngt/rtm/rail/util/RailPosition.java
++++ b/jp/ngt/rtm/rail/util/RailPosition.java
+@@ -56,15 +56,36 @@
+    public void addHeight(double par1) {
+       int i = (int)(par1 / 0.0625D);
+       this.height = (byte)(this.height + i);
+    }
+ 
++   public static RailPosition readFromNBT(NBTTagCompound nbt, RailPosition base) {
++      // if base is null, fallback to create new
++      if (base == null)
++         return readFromNBT(nbt);
++      // if switchType, which is final, is changed, fallback to create new
++      if (base.switchType != nbt.getByte("SwitchType"))
++         return readFromNBT(nbt);
++
++      // otherwice edit base
++      int[] pos = nbt.getIntArray("BlockPos");
++      base.blockX = pos[0];
++      base.blockY = pos[1];
++      base.blockZ = pos[2];
++      base.direction = nbt.getByte("Direction");
++      base.init();
++      return readDataFromNBT(nbt, base);
++   }
++
+    public static RailPosition readFromNBT(NBTTagCompound nbt) {
+       int[] aint = nbt.getIntArray("BlockPos");
+       byte b0 = nbt.getByte("Direction");
+       byte b1 = nbt.getByte("SwitchType");
+-      RailPosition railposition = new RailPosition(aint[0], aint[1], aint[2], b0, b1);
++      return readDataFromNBT(nbt, new RailPosition(aint[0], aint[1], aint[2], b0, b1));
++   }
++
++   private static RailPosition readDataFromNBT(NBTTagCompound nbt, RailPosition railposition) {
+       railposition.setHeight(nbt.getByte("Height"));
+       railposition.anchorYaw = nbt.getFloat("A_Direction");
+       railposition.anchorPitch = nbt.getFloat("A_Pitch");
+       railposition.anchorLengthHorizontal = nbt.getFloat("A_Length");
+       railposition.anchorLengthVertical = nbt.getFloat("A_LenV");
+@@ -77,11 +98,10 @@
+       railposition.constLimitWN = nbt.getFloat("Const_Limit_WN");
+       if (nbt.hasKey("Script")) {
+          railposition.scriptName = nbt.getString("Script");
+          railposition.scriptArgs = nbt.getString("Args");
+       }
+-
+       return railposition;
+    }
+ 
+    public NBTTagCompound writeToNBT() {
+       NBTTagCompound nbttagcompound = new NBTTagCompound();
