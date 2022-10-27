@@ -4,7 +4,7 @@
 
 name: Porting Request from KaizPatchX
 description: Request porting feature/bug fix from KaizPatchX. KaizPatchXから移植のリクエスト
-labels: [ porting, not-checked ]
+labels: [ porting, needs-triage ]
 assignees:
   - anatawa12
 body:

@@ -4,7 +4,7 @@
 
 name: Feature Request [EN]
 description: Create a request to add some feature
-labels: [enhancement, not-checked]
+labels: [enhancement, needs-triage]
 assignees:
   - anatawa12
 body:

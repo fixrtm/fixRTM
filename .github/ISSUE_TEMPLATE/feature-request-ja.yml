@@ -4,7 +4,7 @@
 
 name: 新機能のリクエスト [JA]
 description: 追加機能のリクエスト
-labels: [enhancement, not-checked]
+labels: [enhancement, needs-triage]
 assignees:
   - anatawa12
 body:
