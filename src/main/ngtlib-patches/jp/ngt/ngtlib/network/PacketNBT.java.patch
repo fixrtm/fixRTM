@@ -1,6 +1,19 @@
 --- a/jp/ngt/ngtlib/network/PacketNBT.java
 +++ b/jp/ngt/ngtlib/network/PacketNBT.java
-@@ -136,9 +136,16 @@
+@@ -86,10 +86,12 @@
+             TileEntity tileentity = this.getTileEntity(world);
+             if (tileentity != null) {
+                tileentity.readFromNBT(this.nbtData);
+                if (!world.isRemote) {
+                   tileentity.markDirty();
++                  // markDirty is not enough to sync data
++                  jp.ngt.ngtlib.block.BlockUtil.markBlockForUpdate(tileentity.getWorld(), tileentity.getPos());
+                }
+ 
+                return true;
+             }
+          } else if (b0 == 2) {
+@@ -136,9 +138,16 @@
  
     public static void sendToClient(Entity entity) {
        NGTCore.NETWORK_WRAPPER.sendToAll(new PacketNBT(entity, true));
