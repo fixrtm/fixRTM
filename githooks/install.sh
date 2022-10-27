@@ -19,7 +19,7 @@ npm install --global \
 echo "Installing pre-commit and commit-msg git hook" >&2
 
 copy_hook() {
-  cp "$GITHOOKS_DIR/$1" "$(git rev-parse --git-dir)/hooks/$1"
+  ln -s "$GITHOOKS_DIR/$1" "$(git rev-parse --git-dir)/hooks/$1"
 }
 
 copy_hook commit-msg
