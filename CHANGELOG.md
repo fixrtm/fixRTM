@@ -25,6 +25,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Play brake release sound from all trains in the formation `#551`
 - RailMap Versioning System `#561`
   - This system allow fixRTM to fix/change bad rail shape behaviors!
+- Offsets for TicketVendor `#568`
 
 ### Changed
 - Start using [Keep a Changelog] `#511`

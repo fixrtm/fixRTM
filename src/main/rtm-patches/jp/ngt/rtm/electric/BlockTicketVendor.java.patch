@@ -1,0 +1,34 @@
+--- a/jp/ngt/rtm/electric/BlockTicketVendor.java
++++ b/jp/ngt/rtm/electric/BlockTicketVendor.java
+@@ -27,21 +27,23 @@
+ 
+    public boolean onBlockActivated(BlockArgHolder holder, float hitX, float hitY, float hitZ) {
+       World world = holder.getWorld();
+       BlockPos blockpos = holder.getBlockPos();
+       EntityPlayer entityplayer = holder.getPlayer();
++      int x = blockpos.getX();
++      int y = blockpos.getY();
++      int z = blockpos.getZ();
+       if (NGTUtil.isEquippedItem(entityplayer, RTMItem.crowbar)) {
++         com.anatawa12.fixRtm.UtilsKt.openGui(entityplayer, com.anatawa12.fixRtm.gui.GuiId.ChangeOffset, world, x, y, z);
++      } else {
++         if (!entityplayer.isSneaking()) {
++            entityplayer.openGui(RTMCore.instance, RTMCore.guiIdTicketVendor, world, x, y, z);
++         } else {
++            entityplayer.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityModel, world, x, y, z);
++         }
+       }
+ 
+-      if (!world.isRemote) {
+-         int i = blockpos.getX();
+-         int j = blockpos.getY();
+-         int k = blockpos.getZ();
+-         RTMCore rtmcore = RTMCore.instance;
+-         entityplayer.openGui(RTMCore.instance, RTMCore.guiIdTicketVendor, world, i, j, k);
+-      }
+-
+       return true;
+    }
+ 
+    public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
+       if (!world.isRemote) {
