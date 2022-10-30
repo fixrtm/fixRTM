@@ -17,6 +17,9 @@ on:
           - start-rc
           - stable
 
+env:
+  SOMETHING_RELEASER_SEMVER: 1
+
 jobs:
   release:
     runs-on: ubuntu-latest
