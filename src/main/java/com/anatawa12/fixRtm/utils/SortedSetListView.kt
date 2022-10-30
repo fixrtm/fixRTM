@@ -10,7 +10,7 @@ import kotlin.NoSuchElementException
 /**
  * A wrapper class of SortedSet.
  */
-class SortedSetListView<T>(val sortedSet: SortedSet<T>) : MutableList<T> {
+class SortedSetListView<T>(val sortedSet: SortedSet<T>) : AbstractMutableList<T>() {
     // MutableCollection methods: simple wrapper
     override val size: Int get() = sortedSet.size
     override fun clear() = sortedSet.clear()
