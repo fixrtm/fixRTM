@@ -13,3 +13,42 @@
        int i = tileEntity.getBlockMetadata() % 6;
        switch(i) {
        case 0:
+@@ -66,11 +68,11 @@
+ 
+       modelsetconnector.modelObj.render(tileEntity, connectorconfig, pass, par8);
+       GL11.glPopMatrix();
+    }
+ 
+-   protected void renderAllWire(TileEntityConnectorBase tileEntity, double par2, double par4, double par6, float par8, int pass) {
++   public void renderAllWire(TileEntityElectricalWiring tileEntity, double par2, double par4, double par6, float par8, int pass) {
+       Vec3 vec3 = tileEntity.getWirePos();
+       if (vec3 != null) {
+          GL11.glPushMatrix();
+          GL11.glTranslatef((float)(par2 + 0.5D + vec3.getX()), (float)(par4 + 0.5D + vec3.getY()), (float)(par6 + 0.5D + vec3.getZ()));
+ 
+@@ -82,11 +84,11 @@
+ 
+          GL11.glPopMatrix();
+       }
+    }
+ 
+-   private void renderWire(TileEntityConnectorBase tileEntity, Connection connection, float par8, int pass) {
++   private void renderWire(TileEntityElectricalWiring tileEntity, Connection connection, float par8, int pass) {
+       ModelSetWire modelsetwire = connection.getResourceState().getResourceSet();
+       if (!modelsetwire.isDummy()) {
+          if ((modelsetwire.getConfig()).doCulling) {
+             GL11.glEnable(2884);
+          } else {
+@@ -124,11 +126,11 @@
+ 
+          GL11.glEnable(2884);
+       }
+    }
+ 
+-   public Vec3 getConnectedTarget(TileEntityConnectorBase tileEntity, Connection connection, float par8) {
++   public Vec3 getConnectedTarget(TileEntityElectricalWiring tileEntity, Connection connection, float par8) {
+       Vec3 vec3 = tileEntity.getWirePos();
+       float f = 0.0F;
+       float f1 = 0.0F;
+       float f2 = 0.0F;
+       float f3 = (float)tileEntity.getPos().getX() + 0.5F + (float)vec3.getX();

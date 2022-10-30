@@ -40,6 +40,7 @@ mods:
     changed-classes:
       - jp.ngt.rtm.ClientProxy
       - jp.ngt.rtm.CreativeTabRTM
+      - jp.ngt.rtm.RTMEntity
       - jp.ngt.rtm.RTMItem
       - jp.ngt.rtm.RTMRecipe
       - jp.ngt.rtm.RTMSound
@@ -74,6 +75,7 @@ mods:
       - jp.ngt.rtm.electric.RenderElectricalWiring
       - jp.ngt.rtm.electric.RenderSignal
       - jp.ngt.rtm.electric.TileEntityConnectorBase
+      - jp.ngt.rtm.electric.TileEntityDummyEW
       - jp.ngt.rtm.electric.TileEntityElectricalWiring
       - jp.ngt.rtm.electric.TileEntitySignal
       - jp.ngt.rtm.entity.ai.EntityAITravelByTrain

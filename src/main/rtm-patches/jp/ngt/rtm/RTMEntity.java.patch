@@ -1,0 +1,41 @@
+--- a/jp/ngt/rtm/RTMEntity.java
++++ b/jp/ngt/rtm/RTMEntity.java
+@@ -4,10 +4,11 @@
+ import jp.ngt.ngtlib.util.NGTRegHandler;
+ import jp.ngt.ngtlib.util.NGTUtilClient;
+ import jp.ngt.rtm.entity.EntityATC;
+ import jp.ngt.rtm.entity.EntityBullet;
+ import jp.ngt.rtm.entity.EntityBumpingPost;
++import jp.ngt.rtm.entity.EntityInstalledObject;
+ import jp.ngt.rtm.entity.EntityMMBoundingBox;
+ import jp.ngt.rtm.entity.EntityTrainDetector;
+ import jp.ngt.rtm.entity.RenderBullet;
+ import jp.ngt.rtm.entity.RenderEntityInstalledObject;
+ import jp.ngt.rtm.entity.RenderMMBB;
+@@ -40,10 +41,11 @@
+ import jp.ngt.rtm.entity.vehicle.EntityVehicle;
+ import jp.ngt.rtm.entity.vehicle.RenderTrolley;
+ import jp.ngt.rtm.entity.vehicle.RenderVehicleBase;
+ import jp.ngt.rtm.entity.vehicle.RenderWeatherEffectDummy;
+ import jp.ngt.rtm.entity.vehicle.WeatherEffectDummy;
++import net.minecraft.client.renderer.entity.Render;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ public final class RTMEntity {
+    public static final byte FREQ_VEHICLE = 3;
+@@ -86,12 +88,12 @@
+       NGTUtilClient.registerEntityRender(EntityVehicle.class, RenderVehicleBase.class);
+       NGTUtilClient.registerEntityRender(EntityTrainBase.class, RenderVehicleBase.class);
+       NGTUtilClient.registerEntityRender(WeatherEffectDummy.class, RenderWeatherEffectDummy.class);
+       NGTUtilClient.registerEntityRender(EntityBogie.class, RenderBogie.class);
+       NGTUtilClient.registerEntityRender(EntityFloor.class, RenderSeat.class);
+-      NGTUtilClient.registerEntityRender(EntityATC.class, RenderEntityInstalledObject.class);
+-      NGTUtilClient.registerEntityRender(EntityTrainDetector.class, RenderEntityInstalledObject.class);
++      NGTUtilClient.registerEntityRender(EntityATC.class, com.anatawa12.fixRtm.rtm.entity.RenderEntityElectricalWiring.class);
++      NGTUtilClient.registerEntityRender(EntityTrainDetector.class, com.anatawa12.fixRtm.rtm.entity.RenderEntityElectricalWiring.class);
+       NGTUtilClient.registerEntityRender(EntityBumpingPost.class, RenderEntityInstalledObject.class);
+       NGTUtilClient.registerEntityRender(EntityContainer.class, RenderContainer.class);
+       NGTUtilClient.registerEntityRender(EntityArtillery.class, RenderArtillery.class);
+       NGTUtilClient.registerEntityRender(EntityBullet.class, RenderBullet.class);
+       NGTUtilClient.registerEntityRender(EntityTie.class, RenderTie.class);

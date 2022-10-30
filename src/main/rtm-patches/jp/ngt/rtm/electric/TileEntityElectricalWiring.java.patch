@@ -1,6 +1,18 @@
 --- a/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
 +++ b/jp/ngt/rtm/electric/TileEntityElectricalWiring.java
-@@ -19,11 +19,11 @@
+@@ -3,10 +3,11 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Random;
+ import jp.ngt.ngtlib.block.BlockUtil;
+ import jp.ngt.ngtlib.block.TileEntityCustom;
++import jp.ngt.ngtlib.math.Vec3;
+ import jp.ngt.rtm.RTMCore;
+ import jp.ngt.rtm.RTMItem;
+ import jp.ngt.rtm.entity.EntityElectricalWiring;
+ import jp.ngt.rtm.item.ItemWithModel;
+ import jp.ngt.rtm.modelpack.state.ResourceState;
+@@ -19,11 +20,11 @@
  import net.minecraft.util.EnumParticleTypes;
  import net.minecraft.util.ITickable;
  import net.minecraft.util.math.AxisAlignedBB;
@@ -13,7 +25,22 @@
     private int signal;
     private int prevSignal = -1;
  
-@@ -275,34 +275,39 @@
+@@ -73,10 +74,14 @@
+ 
+    public List<Connection> getConnnectionList() {
+       return this.connections;
+    }
+ 
++   public Vec3 getWirePos() {
++      return Vec3.ZERO;
++   }
++
+    public boolean setConnectionTo(int x, int y, int z, Connection.ConnectionType type, ResourceState state) {
+       boolean flag = false;
+       if (type == Connection.ConnectionType.NONE) {
+          Connection connection = this.getConnection(x, y, z);
+          if (connection != null) {
+@@ -275,34 +280,39 @@
  
        return false;
     }
