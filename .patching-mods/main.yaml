@@ -75,6 +75,7 @@ mods:
       - jp.ngt.rtm.electric.RenderElectricalWiring
       - jp.ngt.rtm.electric.RenderSignal
       - jp.ngt.rtm.electric.TileEntityConnectorBase
+      - jp.ngt.rtm.electric.TileEntityDummyEW
       - jp.ngt.rtm.electric.TileEntityElectricalWiring
       - jp.ngt.rtm.electric.TileEntitySignal
       - jp.ngt.rtm.entity.ai.EntityAITravelByTrain

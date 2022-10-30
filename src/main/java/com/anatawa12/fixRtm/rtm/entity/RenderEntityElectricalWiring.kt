@@ -12,22 +12,24 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.MinecraftForgeClient
 import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL12
+import kotlin.math.floor
 
 class RenderEntityElectricalWiring(renderManager: RenderManager) : Render<EntityElectricalWiring>(renderManager) {
     override fun doRender(entity: EntityElectricalWiring, par2: Double, par4: Double, par6: Double, par8: Float, par9: Float) {
         val tile = entity.tileEW
         val pass = MinecraftForgeClient.getRenderPass()
-        if (tile.shouldRenderInPass(pass)) {
-            GL11.glPushMatrix()
-            GL11.glEnable(GL12.GL_RESCALE_NORMAL)
-            GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            RenderElectricalWiring.INSTANCE.renderAllWire(tile, par2, par4, par6, par9, pass)
-            GL11.glPopMatrix()
-        }
-
         GL11.glPushMatrix()
         GL11.glEnable(32826)
         GL11.glTranslatef(par2.toFloat(), par4.toFloat(), par6.toFloat())
+
+        if (tile.shouldRenderInPass(pass)) {
+            GL11.glPushMatrix()
+            GL11.glEnable(GL12.GL_RESCALE_NORMAL)
+            GL11.glTranslated(floor(entity.posX) - entity.posX, floor(entity.posY) - entity.posY, floor(entity.posZ) - entity.posZ)
+            RenderElectricalWiring.INSTANCE.renderAllWire(tile, 0.0, 0.0, 0.0, par9, pass)
+            GL11.glPopMatrix()
+        }
+
         GL11.glRotatef(entity.rotationYaw, 0.0f, 1.0f, 0.0f)
         val modelsetmachine = entity.resourceState.resourceSet
         val machineconfig = modelsetmachine.config

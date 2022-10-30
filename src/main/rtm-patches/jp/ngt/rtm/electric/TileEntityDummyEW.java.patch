@@ -1,0 +1,23 @@
+--- a/jp/ngt/rtm/electric/TileEntityDummyEW.java
++++ b/jp/ngt/rtm/electric/TileEntityDummyEW.java
+@@ -1,7 +1,8 @@
+ package jp.ngt.rtm.electric;
+ 
++import jp.ngt.ngtlib.math.Vec3;
+ import jp.ngt.rtm.entity.EntityElectricalWiring;
+ 
+ public class TileEntityDummyEW extends TileEntityElectricalWiring {
+    public final EntityElectricalWiring entityEW;
+    private int prevSignal;
+@@ -31,6 +32,11 @@
+    }
+ 
+    public boolean isBlockTile() {
+       return false;
+    }
++
++   @Override
++   public Vec3 getWirePos() {
++      return new Vec3(0.0, -0.5, 0.0);
++   }
+ }
