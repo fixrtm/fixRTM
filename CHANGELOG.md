@@ -54,6 +54,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Shaped rail with straight marker doesn't work `#561`
 - Preview bezier curve is incorrect `#565`
 - Offsets are not synced to other players immediately
+- Wire connected between entities is not rendered `#577`
 
 ### Security
 
