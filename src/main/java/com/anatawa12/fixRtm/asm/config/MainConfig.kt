@@ -132,6 +132,12 @@ object MainConfig {
         "allow placing vehicles on protected rail")
 
     @JvmField
+    val showRailLength = config.getBoolean(
+        "showRailLength", categoryBetterRtm,
+        true,
+        "Show current length of rail at the center of path")
+
+    @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
         "addAllowAllPermission", categoryBetterNgtLib,
         true,
