@@ -85,7 +85,44 @@
              String s = this.displayStrings[j1];
              int i1 = fontrenderer.getStringWidth(s) / 2;
              fontrenderer.drawString(s, -i1 / 2, -10, j);
-@@ -457,11 +475,11 @@
+@@ -243,10 +261,36 @@
+             GL11.glPopMatrix();
+          }
+       }
+ 
+       GL11.glPopMatrix();
++
++      if (com.anatawa12.fixRtm.asm.config.MainConfig.showRailLength) {
++         GL11.glPushMatrix();
++         GL11.glTranslatef(x, y, z);
++
++         GL11.glEnable(GL11.GL_TEXTURE_2D);
++         FontRenderer fontRenderer = getFontRenderer();
++         for (RailMap rm : marker.getRailMaps()) {
++            GL11.glPushMatrix();
++            int split = (int) (rm.getLength() * 4.0D);
++            double[] pos = rm.getRailPos(split, split / 2);
++            float x0 = (float) (pos[1] - marker.getMarkerRP().posX);
++            float y0 = (float) ((rm.getStartRP().posY + rm.getEndRP().posY) / 2 - marker.getMarkerRP().posY);
++            float z0 = (float) (pos[0] - marker.getMarkerRP().posZ);
++            GL11.glTranslatef(x0, y0, z0);
++            GL11.glScalef(-0.05F, -0.05F, -0.05F);
++            GL11.glRotatef(-NGTUtilClient.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
++            String s = String.valueOf((float) Math.round(rm.getLength() * 10000) / 10000);
++            int stringWidth = fontRenderer.getStringWidth(s);
++            fontRenderer.drawString(s, -stringWidth / 2, -10, 0x00EE00);
++            GL11.glPopMatrix();
++         }
++
++         GL11.glDisable(GL11.GL_TEXTURE_2D);
++         GL11.glPopMatrix();
++      }
+    }
+ 
+    private void renderAnchor(TileEntityMarker marker, float x, float y, float z) {
+       this.changeAnchor(marker);
+       GL11.glPushMatrix();
+@@ -457,11 +501,11 @@
  
              if (rendermarkerblock$markerelement == RenderMarkerBlock.MarkerElement.CANT_EDGE) {
                 float f6 = 80.0F;
@@ -98,7 +135,7 @@
  
                 railposition.cantEdge = f12;
                 marker.onChangeRailShape();
-@@ -543,19 +561,19 @@
+@@ -543,19 +587,19 @@
                 RailPosition railposition3 = this.getNeighborRail(marker);
                 float f2 = (float)Math.atan2(d6, d7);
                 float f13 = (float)(d6 / (double)MathHelper.sin(f2));
