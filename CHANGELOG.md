@@ -26,6 +26,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - RailMap Versioning System `#561`
   - This system allow fixRTM to fix/change bad rail shape behaviors!
 - Offsets for TicketVendor `#568`
+- Show length of rail path `#578`
+  - You can disable via `showRailLength` in config
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
