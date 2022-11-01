@@ -1,6 +1,36 @@
 --- a/jp/ngt/rtm/rail/BlockMarker.java
 +++ b/jp/ngt/rtm/rail/BlockMarker.java
-@@ -136,34 +136,39 @@
+@@ -63,10 +63,14 @@
+       return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+ 
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
++      if (com.anatawa12.fixRtm.asm.config.MainConfig.mergeMarker) {
++         items.add(new ItemStack(this, 1, 8));
++         return;
++      }
+       switch(this.markerType) {
+       case STANDARD:
+          items.add(new ItemStack(this, 1, 0));
+          items.add(new ItemStack(this, 1, 4));
+          break;
+@@ -85,10 +89,14 @@
+       return isDiagonal ? NGTMath.floor(NGTMath.normalizeAngle((double)placer.rotationYaw + 180.0D) / 90.0D) & 3 : NGTMath.floor(NGTMath.normalizeAngle((double)placer.rotationYaw + 180.0D) / 90.0D + 0.5D) & 3;
+    }
+ 
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+       int i = stack.getItemDamage();
++      if (i == com.anatawa12.fixRtm.rtm.rail.BlockMarker.MERGED_DAMAGE) {
++         com.anatawa12.fixRtm.rtm.rail.BlockMarker.onBlockPlacedBy(this, world, pos, state, placer, stack);
++         return;
++      }
+       int j = getFacing(placer, i >= 4);
+       int k = i / 4;
+       BlockUtil.setBlock(world, pos, this, j + k * 4, 2);
+    }
+ 
+@@ -136,34 +144,39 @@
  
           for(RailPosition railposition : list) {
              railposition.addHeight((double)(resourcestaterail.blockHeight - 0.0625F));
@@ -56,7 +86,7 @@
           if (arg0.switchType != arg1.switchType) {
              return arg1.switchType - arg0.switchType;
           } else {
-@@ -171,11 +176,16 @@
+@@ -171,11 +184,16 @@
           }
        });
        return list;
@@ -73,7 +103,7 @@
           if (railposition.hasScript()) {
              createCustomRail(world, railposition, state, makeRail, isCreative);
           }
-@@ -188,25 +198,26 @@
+@@ -188,25 +206,26 @@
              RailPosition railposition2 = railposition1.blockY >= railposition4.blockY ? railposition4 : railposition1;
              RailPosition railposition3 = railposition1.blockY >= railposition4.blockY ? railposition1 : railposition4;
              createNormalRail(world, railposition2, railposition3, state, makeRail, isCreative);
@@ -102,7 +132,7 @@
           if (BlockUtil.getBlock(world, end.blockX, end.blockY, end.blockZ) instanceof BlockMarker) {
              BlockUtil.setAir(world, end.blockX, end.blockY, end.blockZ);
           }
-@@ -247,14 +258,16 @@
+@@ -247,14 +266,16 @@
  
           return false;
        }
@@ -121,7 +151,7 @@
           RailMap[] arailmap = switchtype.getAllRailMap();
           if (arailmap == null) {
              return false;
-@@ -283,27 +296,28 @@
+@@ -283,27 +304,28 @@
                    tileentitylargerailswitchbase.setStartPoint(x, y, z);
                 }
  
@@ -153,7 +183,7 @@
                 return false;
              }
           }
-@@ -328,11 +342,11 @@
+@@ -328,11 +350,11 @@
        }
  
        if (l == 0) {
