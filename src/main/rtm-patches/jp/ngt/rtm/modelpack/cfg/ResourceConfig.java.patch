@@ -12,3 +12,23 @@
     public String defaultData;
  
     public abstract String getName();
+@@ -28,14 +29,18 @@
+       }
+ 
+    }
+ 
+    protected String fixSoundPath(String path) {
++      return fixSoundPath(path, null);
++   }
++
++   protected String fixSoundPath(String path, String defaults) {
+       if (path != null && path.length() != 0) {
+          return !path.contains(":") ? "rtm:" + path : path;
+       } else {
+-         return null;
++         return defaults;
+       }
+    }
+ 
+    public class DMInitValue {
+       public String type;

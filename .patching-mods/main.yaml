@@ -116,6 +116,7 @@ mods:
       - jp.ngt.rtm.modelpack.RTMResourceManager
       - jp.ngt.rtm.modelpack.cfg.ResourceConfig
       - jp.ngt.rtm.modelpack.cfg.TrainConfig
+      - jp.ngt.rtm.modelpack.cfg.VehicleBaseConfig
       - jp.ngt.rtm.modelpack.init.ModelPackConstructThread
       - jp.ngt.rtm.modelpack.init.ModelPackLoadThread
       - jp.ngt.rtm.modelpack.modelset.ModelSetBase
