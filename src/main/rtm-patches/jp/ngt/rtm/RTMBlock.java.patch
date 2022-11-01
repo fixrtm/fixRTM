@@ -1,0 +1,39 @@
+--- a/jp/ngt/rtm/RTMBlock.java
++++ b/jp/ngt/rtm/RTMBlock.java
+@@ -92,13 +92,15 @@
+ import jp.ngt.rtm.rail.TileEntityMarker;
+ import jp.ngt.rtm.rail.TileEntityTurnTableCore;
+ import net.minecraft.block.Block;
+ import net.minecraft.block.material.MapColor;
+ import net.minecraft.block.material.Material;
++import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+ import net.minecraft.client.renderer.color.BlockColors;
+ import net.minecraft.creativetab.CreativeTabs;
+ import net.minecraft.item.Item;
++import net.minecraftforge.client.model.ModelLoader;
+ import net.minecraftforge.fml.client.registry.ClientRegistry;
+ import net.minecraftforge.fml.common.registry.GameRegistry;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+@@ -237,18 +239,20 @@
+       registerBlockModel(marker, 3, "marker3");
+       registerBlockModel(marker, 4, "marker20");
+       registerBlockModel(marker, 5, "marker21");
+       registerBlockModel(marker, 6, "marker22");
+       registerBlockModel(marker, 7, "marker23");
++      registerBlockModel(marker, 8, "marker_fixrtm_merged");
+       registerBlockModel(markerSwitch, 0, "marker0");
+       registerBlockModel(markerSwitch, 1, "marker1");
+       registerBlockModel(markerSwitch, 2, "marker2");
+       registerBlockModel(markerSwitch, 3, "marker3");
+       registerBlockModel(markerSwitch, 4, "marker20");
+       registerBlockModel(markerSwitch, 5, "marker21");
+       registerBlockModel(markerSwitch, 6, "marker22");
+       registerBlockModel(markerSwitch, 7, "marker23");
++      registerBlockModel(markerSwitch, 8, "marker_fixrtm_merged");
+       registerBlockModels(signalConverter, "signal_converter", 0, 1, 2, 3, 4);
+       registerBlockModels(trainWorkBench, "train_workbench", 0, 1);
+       registerBlockModel(slot, 0, "slot");
+       registerBlockModel(movingMachine, 0, "moving_machine");
+       registerBlockModel(movingMachine, 1, "vehicle_generator");
