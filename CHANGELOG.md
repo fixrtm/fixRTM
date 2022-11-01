@@ -29,6 +29,10 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Show length of rail path `#578`
   - You can disable via `showRailLength` in config
 - Configurable ATS Sounds `#579`
+- Merge diagonal and axis aligned marker to one marker `#581`
+  - Old and new marker is always registered, but you can select item added to creative tab.
+  - If you want old markers, please set `mergeMarker` to `false`.
+  - This is client side config.
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
