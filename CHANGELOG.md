@@ -28,6 +28,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Offsets for TicketVendor `#568`
 - Show length of rail path `#578`
   - You can disable via `showRailLength` in config
+- Configurable ATS Sounds `#579`
 
 ### Changed
 - Start using [Keep a Changelog] `#511`
