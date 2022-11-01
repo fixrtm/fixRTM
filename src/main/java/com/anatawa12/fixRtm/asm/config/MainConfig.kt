@@ -138,6 +138,15 @@ object MainConfig {
         "Show current length of rail at the center of path")
 
     @JvmField
+    val mergeMarker = config.getBoolean(
+        "mergeMarker", categoryBetterRtm,
+        true,
+        "Merge diagonal and axis aligned marker to one marker.\n" +
+                "Actually, this just changes registered item in creative tab to merged marker.\n" +
+                "Regardless this flag, both unmerged & merged marker item is exist.\n" +
+                "You can change this flag regardless server setting.")
+
+    @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
         "addAllowAllPermission", categoryBetterNgtLib,
         true,
