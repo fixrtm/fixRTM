@@ -1,0 +1,33 @@
+--- a/jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig.java
++++ b/jp/ngt/rtm/modelpack/cfg/VehicleBaseConfig.java
+@@ -17,10 +17,17 @@
+    public String sound_Deceleration;
+    public String sound_D_S;
+    public String sound_Horn;
+    public String sound_DoorOpen;
+    public String sound_DoorClose;
++
++   /**
++    * ATSのサウンド
++    */
++   public String sound_ATSChime;
++   public String sound_ATSBell;
++
+    public String[][] sound_Announcement;
+    public String soundScriptPath;
+    public Object[][] smoke;
+    public VehicleBaseConfig.Light[] headLights;
+    public VehicleBaseConfig.Light[] tailLights;
+@@ -45,10 +52,12 @@
+       this.sound_Deceleration = this.fixSoundPath(this.sound_Deceleration);
+       this.sound_D_S = this.fixSoundPath(this.sound_D_S);
+       this.sound_Horn = this.fixSoundPath(this.sound_Horn);
+       this.sound_DoorOpen = this.fixSoundPath(this.sound_DoorOpen);
+       this.sound_DoorClose = this.fixSoundPath(this.sound_DoorClose);
++      this.sound_ATSChime = this.fixSoundPath(this.sound_ATSChime, "rtm:sounds/train/ats.ogg");
++      this.sound_ATSBell = this.fixSoundPath(this.sound_ATSBell, "rtm:sounds/train/ats_bell.ogg");
+       if (this.sound_Announcement != null) {
+          for(int i = 0; i < this.sound_Announcement.length; ++i) {
+             this.sound_Announcement[i][1] = this.fixSoundPath(this.sound_Announcement[i][1]);
+          }
+       }
