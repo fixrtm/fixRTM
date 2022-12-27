@@ -26,6 +26,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 
 ### Fixed
 - Formation is broken when we disconnected long formation `#596`
+- Signal Converter Setting is not loaded correctly `#597`
 
 ### Security
 

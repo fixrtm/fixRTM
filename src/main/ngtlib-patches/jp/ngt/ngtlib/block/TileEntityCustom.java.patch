@@ -18,13 +18,15 @@
  
     public NBTTagCompound getUpdateTag() {
        return this.writeToNBT(new NBTTagCompound());
-@@ -50,11 +43,12 @@
+@@ -49,12 +42,13 @@
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
        this.readFromNBT(pkt.getNbtCompound());
     }
  
     protected void sendPacket() {
-       if (this.world == null || !this.world.isRemote) {
+-      if (this.world == null || !this.world.isRemote) {
 -         PacketNBT.sendToClient(this);
++      if (this.world != null && !this.world.isRemote) {
 +         net.minecraft.block.state.IBlockState state = getWorld().getBlockState(getPos());
 +         getWorld().notifyBlockUpdate(getPos(), state, state, 0);
        }
