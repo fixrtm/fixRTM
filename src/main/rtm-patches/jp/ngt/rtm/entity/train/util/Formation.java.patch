@@ -65,6 +65,19 @@
  
           FormationManager.getInstance().removeFormation(par5.id);
        }
+@@ -211,11 +216,11 @@
+          int i = flag ? formationentry.entryId : formationentry.entryId + 1;
+          int j = this.entries.length - i;
+          Formation formation = new Formation(FormationManager.getInstance().getNewFormationId(), j);
+          int k = 0;
+ 
+-         for(int l = i; l < this.entries.length; ++l) {
++         for(int l = i; l < this.entries.length; ++l, k++) {
+             formation.setEntry(this.entries[l], k);
+          }
+ 
+          formation.reallocation();
+          this.trim(0, i - 1);
 @@ -224,10 +229,11 @@
     }
  
