@@ -38,27 +38,22 @@
  
        TimeTableManager.INSTANCE.load();
        par1.loadFinished = true;
-@@ -143,29 +146,43 @@
+@@ -143,29 +146,32 @@
     public ResourceType getType(String name) {
        return this.typeMap.get(name);
     }
  
     public String registerResourceSet(ResourceType type, File file) throws IOException {
-+      List<String> json = null;
-       for(String s : ENCODING) {
-          try {
+-      for(String s : ENCODING) {
+-         try {
 -            String s1 = NGTText.readText(file, false, s);
 -            ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(s1, type.cfgClass);
 -            return this.registerResourceSet(type, resourceconfig, s1);
-+            json = NGTText.readText(file, s);
-+            break;
-          } catch (IOException ioexception) {
-             ioexception.printStackTrace();
-          }
-       }
-+      if (json == null)
-+         throw new ModelPackException("Can't load json. please check encoding of json " +
-+            "file and file is exists.", file.getAbsolutePath());
+-         } catch (IOException ioexception) {
+-            ioexception.printStackTrace();
+-         }
+-      }
++      List<String> json = NGTText.readText(file, null);;
  
 -      throw new ModelPackException("Can't load model", file.getAbsolutePath());
 +      ResourceConfig resourceconfig = (ResourceConfig)NGTJson.getObjectFromJson(com.anatawa12.fixRtm.UtilsKt.joinLinesForJsonReading(json), type.cfgClass);
@@ -87,7 +82,7 @@
           return cfg.getName();
        } else {
           throw new ModelPackException("Failed to create ResourceSet", cfg.getName());
-@@ -177,15 +194,16 @@
+@@ -177,15 +183,16 @@
  
        for(Entry<ResourceType, Map<String, ResourceSet>> entry : this.allModelSetMap.entrySet()) {
           for(ResourceSet resourceset : entry.getValue().values()) {
@@ -105,7 +100,7 @@
     public void addModelSetName(int count, String typeName, String name) {
        assert NGTUtil.isSMP() && !NGTUtil.isServer();
  
-@@ -227,16 +245,13 @@
+@@ -227,16 +234,13 @@
           resourcetype = type.parent;
        }
  
