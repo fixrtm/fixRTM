@@ -38,6 +38,8 @@ body:
         いつ、何をしたときに起きたかは重要な情報なため、可能であればこれらも教えて下さい。
         可能であればクラッシュレポート, latest.log, debug.log を添付してください。
         入力欄にファイルをドロップすることでファイルを添付できます。
+        もしアーカイブファイルを使用する場合は [Archive & Compression Formats](https://github.com/fixrtm/fixRTM/blob/master/CONTRIBUTING.md#archive--compression-formats)
+        を事前に確認してください。
     validations:
       required: true
 
