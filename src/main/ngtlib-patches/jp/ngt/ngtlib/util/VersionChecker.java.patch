@@ -1,0 +1,19 @@
+--- a/jp/ngt/ngtlib/util/VersionChecker.java
++++ b/jp/ngt/ngtlib/util/VersionChecker.java
+@@ -74,14 +74,14 @@
+                   List<String> list1 = NGTText.readTextL(url.openStream(), "");
+                   list.addAll(list1);
+                } catch (MalformedURLException malformedurlexception) {
+                   NGTLog.debug("URL:" + s2);
+                   malformedurlexception.printStackTrace();
+-                  return;
++                  continue;
+                } catch (IOException ioexception) {
+                   ioexception.printStackTrace();
+-                  return;
++                  continue;
+                }
+ 
+                String[] astring1 = list.toArray(new String[list.size()]);
+                list.clear();
+ 
