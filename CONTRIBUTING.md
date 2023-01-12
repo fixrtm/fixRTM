@@ -4,6 +4,35 @@
 
 Both feature requests and bug reports are welcome!
 
+### Archive & Compression Formats
+
+Because author of fixRTM loves command line on macOS, some windows-specific archive formats are very hard to extract.
+Please choose one archive/compression format from the Recommended / Accepted list below.
+
+#### Recommended
+
+Those formats are easy to use, good for compatibility, and good for file size.
+
+- `.zip` (with utf8 is recommended)
+- `.gz` (for single file like log files)
+- `.tar.gz` = `.tgz` (for multiple files. better compression than `.zip` in most case)
+- `.tar.xz` (if you want more compression ratio than `.tar.gz`)
+- `.tar.zstd` (if you want more compression ratio than `.tar.gz`)
+
+#### Accepted
+
+Those formats are not good enough to recommend.
+
+- `.tar` (no compression)
+- `.cpio` (no compression and not familiar to me)
+
+#### Rejected
+
+Those formats are not common for commandline use nor posix environment.
+
+- `.7z`
+- `.cab`
+
 ## Pull Requests
 
 Pull Requests are welcome!
