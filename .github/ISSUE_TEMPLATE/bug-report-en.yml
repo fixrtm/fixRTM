@@ -42,7 +42,7 @@ body:
         please tell me them if possible.
         Please attach crash report, latest.log, and debug.log if possible.
         You can attach files via dropping files to textarea.
-        If you want to use archives, see [Archive & Compression Formats](https://github.com/fixrtm/fixRTM/blob/doc-archive-formats/CONTRIBUTING.md#archive--compression-formats)
+        If you want to use archives, see [Archive & Compression Formats](https://github.com/fixrtm/fixRTM/blob/master/CONTRIBUTING.md#archive--compression-formats)
         before creating archives.
     validations:
       required: true
