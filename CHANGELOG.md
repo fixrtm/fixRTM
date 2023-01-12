@@ -28,6 +28,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Formation is broken when we disconnected long formation `#596`
 - Signal Converter Setting is not loaded correctly `#597`
 - shift-jis based modelpack will cause crash `#600`
+- version check does not work well if one server returns error `#607`
 
 ### Security
 

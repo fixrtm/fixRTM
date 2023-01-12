@@ -31,6 +31,7 @@ mods:
       - jp.ngt.ngtlib.renderer.model.PolygonModel
       - jp.ngt.ngtlib.util.NGTUtil
       - jp.ngt.ngtlib.util.PermissionManager
+      - jp.ngt.ngtlib.util.VersionChecker
   rtm:
     patch-path: src/main/rtm-patches
     source-path: src/main/rtm
