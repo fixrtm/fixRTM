@@ -29,6 +29,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Signal Converter Setting is not loaded correctly `#597`
 - shift-jis based modelpack will cause crash `#600`
 - version check does not work well if one server returns error `#607`
+- /rtm delAllTrain does not remove bogie / vehicle part `#610`
 
 ### Security
 
