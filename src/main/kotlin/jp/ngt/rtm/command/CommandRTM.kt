@@ -30,9 +30,9 @@ class CommandRTM : CommandBase() {
 
     override fun getUsage(commandSender: ICommandSender): String = "commands.rtm.usage"
 
-    inline fun <reified T> List<Entity>.killOllTypeOf() = this
+    inline fun <reified T : Entity> List<Entity>.killOllTypeOf() = this
         .asSequence()
-        .filterIsInstance<EntityTrainBase>()
+        .filterIsInstance<T>()
         .filter { !it.isDead }
         .onEach { it.setDead() }
         .count()
