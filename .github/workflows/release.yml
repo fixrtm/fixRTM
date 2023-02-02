@@ -290,32 +290,6 @@ jobs:
           WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
           CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
 
-      - name: Send message to twitter
-        id: message_twitter
-        if: ${{ !fromJSON(env.NIGHTLY) }}
-        run: |
-          {
-            echo "$VERSION_NAME is released!"
-            if $PRERELEASE; then
-              echo "#fixrtm_prerelease"
-            else
-              echo "#fixrtm_release"
-            fi
-            echo "#fixrtm_all_release"
-            echo "https://www.curseforge.com/minecraft/mc-mods/fixrtm/files/$CURSE_ID"
-            echo "https://github.com/fixrtm/fixRTM/releases/tag/$VERSION_NAME"
-          } | send-tweet \
-            -k "$TWITTER_C_KEY" \
-            -t "$TWITTER_C_SECRET" \
-            -a "$TWITTER_A_TOKEN" \
-            -s "$TWITTER_A_SECRET" \
-        env:
-          TWITTER_C_KEY: ${{ secrets.TWITTER_C_KEY }}
-          TWITTER_C_SECRET: ${{ secrets.TWITTER_C_SECRET }}
-          TWITTER_A_SECRET: ${{ secrets.TWITTER_A_SECRET }}
-          TWITTER_A_TOKEN: ${{ secrets.TWITTER_A_TOKEN }}
-          CURSE_ID: ${{ steps.upload_curse.outputs.file_id }}
-
       - name: create next version commit releases
         id: publish_releases
         if: ${{ !fromJSON(env.PRERELEASE) }}
