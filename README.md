@@ -1,7 +1,7 @@
 # fixRTM
 
-[![Discord](https://img.shields.io/discord/749186892733480970.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/qFKcUXX)
-[![Github Actions](https://img.shields.io/github/workflow/status/fixrtm/fixRTM/CI/master?logo=github)](https://github.com/fixrtm/fixRTM/actions)
+[![Discord](https://img.shields.io/discord/749186892733480970.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/9VkuSAtpRQ)
+[![Github Actions](https://img.shields.io/github/actions/workflow/status/fixrtm/fixRTM/build.yml?branch=master&logo=github)](https://github.com/fixrtm/fixRTM/actions)
 [![Github Release](https://img.shields.io/github/v/release/fixrtm/fixRTM?logo=github)](https://github.com/fixrtm/fixRTM/releases/latest)
 [![Curse Download](https://img.shields.io/badge/CurseForge-download-brightgreen?logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/fixrtm)
 
