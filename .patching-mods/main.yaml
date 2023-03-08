@@ -101,6 +101,7 @@ mods:
       - jp.ngt.rtm.entity.train.parts.EntityCargo
       - jp.ngt.rtm.entity.train.parts.EntityCargoWithModel
       - jp.ngt.rtm.entity.train.parts.EntityContainer
+      - jp.ngt.rtm.entity.train.parts.EntityFloor
       - jp.ngt.rtm.entity.train.parts.EntityVehiclePart
       - jp.ngt.rtm.entity.train.util.EnumNotch
       - jp.ngt.rtm.entity.train.util.Formation
