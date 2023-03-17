@@ -55,6 +55,7 @@ mods:
       - jp.ngt.rtm.block.BlockMachineBase
       - jp.ngt.rtm.block.BlockPipe
       - jp.ngt.rtm.block.BlockPlant
+      - jp.ngt.rtm.block.BlockPoint
       - jp.ngt.rtm.block.BlockRailroadSign
       - jp.ngt.rtm.block.BlockScaffold
       - jp.ngt.rtm.block.BlockScaffoldStairs
