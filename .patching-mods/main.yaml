@@ -49,6 +49,7 @@ mods:
       - jp.ngt.rtm.RTMItem
       - jp.ngt.rtm.RTMRecipe
       - jp.ngt.rtm.RTMSound
+      - jp.ngt.rtm.block.BlockCrossingGate
       - jp.ngt.rtm.block.BlockFluorescent
       - jp.ngt.rtm.block.BlockLinePole
       - jp.ngt.rtm.block.BlockMachineBase
