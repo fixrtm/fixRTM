@@ -51,6 +51,7 @@ mods:
       - jp.ngt.rtm.RTMSound
       - jp.ngt.rtm.block.BlockCrossingGate
       - jp.ngt.rtm.block.BlockDecoration
+      - jp.ngt.rtm.block.BlockFlag
       - jp.ngt.rtm.block.BlockFluorescent
       - jp.ngt.rtm.block.BlockLight
       - jp.ngt.rtm.block.BlockLinePole

@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockFlag.java
++++ b/jp/ngt/rtm/block/BlockFlag.java
+@@ -31,6 +31,11 @@
+          entityplayer.openGui(RTMCore.instance, RTMCore.guiIdSelectTileEntityTexture, holder.getWorld(), i, j, k);
+       }
+ 
+       return true;
+    }
++
++   @Override
++   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.FLAG);
++   }
+ }
