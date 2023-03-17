@@ -60,6 +60,7 @@ mods:
       - jp.ngt.rtm.block.BlockScaffoldStairs
       - jp.ngt.rtm.block.BlockSignBoard
       - jp.ngt.rtm.block.BlockStation
+      - jp.ngt.rtm.block.BlockTurnstile
       - jp.ngt.rtm.block.tileentity.RenderMachine
       - jp.ngt.rtm.block.tileentity.RenderOrnament
       - jp.ngt.rtm.block.tileentity.RenderRailroadSign
