@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockLight.java
++++ b/jp/ngt/rtm/block/BlockLight.java
+@@ -30,6 +30,11 @@
+          return super.removedByPlayer(holder, willHarvest);
+       } else {
+          return PermissionManager.INSTANCE.hasPermission(holder.getPlayer(), "editOrnament") ? super.removedByPlayer(holder, willHarvest) : false;
+       }
+    }
++
++   @Override
++   public ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.LIGHT);
++   }
+ }
