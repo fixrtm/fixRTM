@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/block/BlockRailroadSign.java
 +++ b/jp/ngt/rtm/block/BlockRailroadSign.java
-@@ -38,10 +38,14 @@
+@@ -38,15 +38,20 @@
           int i = holder.getBlockPos().getX();
           int j = holder.getBlockPos().getY();
           int k = holder.getBlockPos().getZ();
@@ -15,3 +15,11 @@
  
        return true;
     }
+ 
+-   protected ItemStack getItem(int damage) {
+-      return new ItemStack(RTMItem.installedObject, 1, ItemInstalledObject.IstlObjType.RAILLOAD_SIGN.id);
++   @Override
++   public ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.RAILLOAD_SIGN);
+    }
+ }
