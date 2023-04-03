@@ -14,6 +14,6 @@ buildscript {
     }
     dependencies {
         // use latest version by dependabot. dependabot supports dependencies in settings.gralde
-        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.64")
+        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.73")
     }
 }
