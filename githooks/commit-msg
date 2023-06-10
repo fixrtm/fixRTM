@@ -5,4 +5,4 @@
 
 set -eu
 
-commitlint --edit "$1"
+conventional-commitlint edit "$1"
