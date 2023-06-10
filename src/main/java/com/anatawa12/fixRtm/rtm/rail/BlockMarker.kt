@@ -36,7 +36,8 @@ object BlockMarker {
     private val FACE_MAPPING = intArrayOf(
         2, 6, 3, 7, 0, 4, 1, 5
     )
-    private fun getFaceMeta(placer: EntityLivingBase): Int {
+    @JvmStatic
+    fun getFaceMeta(placer: EntityLivingBase): Int {
         val angle = floor(placer.rotationYaw / 45.0 + 0.5).toInt() and 7
         return FACE_MAPPING[angle]
     }
