@@ -27,3 +27,16 @@
        itemstack.getTagCompound().setString("ShapeName", s);
        return itemstack;
     }
+@@ -206,11 +207,11 @@
+    private boolean placeRail(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
+       List<RailPosition> list = getRPFromItem(stack);
+       if (list.isEmpty()) {
+          return false;
+       } else {
+-         int i = -BlockMarker.getFacing(player, false) * 2 + 4;
++         int i = BlockMarker.getMarkerDir(jp.ngt.rtm.RTMBlock.marker, com.anatawa12.fixRtm.rtm.rail.BlockMarker.getFaceMeta(player));
+          RailPosition railposition = list.get(0);
+          int j = i - railposition.direction;
+          int k = railposition.blockX;
+          int l = railposition.blockY;
+          int i1 = railposition.blockZ;
