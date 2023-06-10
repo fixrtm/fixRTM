@@ -157,7 +157,7 @@ jobs:
           gh-export-variable RELEASE_NOTE_PATH "$release_note_path"
 
           # commit to add updated changelog
-          git commit -am "$VERSION_NAME"
+          git commit -am "chore: bump version to $VERSION_NAME"
           git tag "$VERSION_NAME"
 
       - name: prepare patching environment
@@ -300,5 +300,5 @@ jobs:
           version="$(version-next "$version")"
           set-version "$(version-set-channel "$version" beta 0)"
 
-          git commit -am "prepare for next version: $version"
+          git commit -am "chore: prepare for next version: $version"
           git push
