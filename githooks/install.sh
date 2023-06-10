@@ -7,16 +7,11 @@ set -eu
 
 GITHOOKS_DIR="$(cd "$(dirname $0)" && pwd)"
 
-if ! command -v node > /dev/null 2>&1 ; then
-  echo "Please install node.js to run git hooks" >&2
+if ! command -v conventional-commitlint > /dev/null 2>&1 ; then
+  echo "Please install conventional-commitlint to run git hooks" >&2
+  echo "https://github.com/anatawa12/conventional-commitlint" >&2
   exit 1
 fi
-
-echo "Installing viperproject/check-license-header" >&2
-
-npm install --global \
-  @commitlint/config-conventional \
-  @commitlint/cli
 
 echo "Installing pre-commit and commit-msg git hook" >&2
 

@@ -1,0 +1,15 @@
+# Copyright (c) 2021 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+on:
+  pull_request:
+    branches: [ master, master-* ]
+    types: [ opened, synchronize, reopened, ready_for_review, labeled, unlabeled ]
+
+jobs:
+  check-conventional-commit:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'NO-COMMIT-CHECK') }}
+    steps:
+      - uses: anatawa12/sh-actions/conventional-commitlint@master
