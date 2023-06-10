@@ -26,15 +26,16 @@ jobs:
     environment: deployment
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.PUSH_KEY }}
       - uses: anatawa12/something-releaser@v2
       - run: set-git-user anatawa12-bot
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: 8
 
       - name: update version name
@@ -105,10 +106,8 @@ jobs:
       - name: compute output informations
         id: compute_output_informations
         run: |
-          asset_name="fixRtm-$VERSION_NAME.jar"
-          asset_path="./build/libs/$asset_name"
+          asset_path="./build/libs/fixRtm-$VERSION_NAME.jar"
           gh-export-variable ASSET_PATH "$asset_path"
-          gh-export-variable ASSET_NAME "$asset_name"
           # curse info
           if $PRERELEASE; then
             gh-export-variable CURSE_RELEASE_TYPE "alpha"
@@ -181,7 +180,7 @@ jobs:
           git push
           git push origin "$VERSION_NAME"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: jar
           path: ${{ env.ASSET_PATH }}
@@ -215,7 +214,7 @@ jobs:
 
           FILE_ID="$(jq '.id' < response.json)"
 
-          echo "::set-output name=file_id::$FILE_ID"
+          echo "file_id=$FILE_ID" >> $GITHUB_STATE
 
         env:
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
@@ -245,26 +244,16 @@ jobs:
       - name: Create Release
         id: create_release
         if: ${{ !fromJSON(env.NIGHTLY) }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |-
+          gh release create \
+            "$VERSION_NAME" \
+            --title "$VERSION_NAME" \
+            --verify-tag \
+            --notes-file "$RELEASE_NOTE_PATH" \
+            ${{ fromJSON(env.PRERELEASE) && '--prerelease' || '' }} \
+            "$ASSET_PATH"
         with:
-          tag_name: ${{ env.VERSION_NAME }}
-          release_name: ${{ env.VERSION_NAME }}
-          body_path: ${{ env.RELEASE_NOTE_PATH }}
-          prerelease: ${{ env.PRERELEASE }}
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        if: ${{ !fromJSON(env.NIGHTLY) }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.ASSET_PATH }}
-          asset_name: ${{ env.ASSET_NAME }}
-          asset_content_type: application/java-archive
+          GH_TOKEN: ${{ github.token }}
 
       - name: Send message to discord
         id: message_discord
