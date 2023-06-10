@@ -24,10 +24,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: 8
 
       - name: prepare patching environment
@@ -44,7 +45,7 @@ jobs:
         with:
           arguments: build
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: jar
           path: ./build/libs/*
@@ -65,7 +66,7 @@ jobs:
           cp "$(curse realtrainmod "$rtmVersion")" mods
 
       - name: run server
-        uses: anatawa12/minecraft-server-start-test@v1
+        uses: anatawa12/minecraft-server-start-test@v2
         with:
           version: 1.12.2-14.23.5.2855
           mod_jar: ./build/libs/fixRtm-${{ steps.prepare_run_server.outputs.version_name }}.jar
