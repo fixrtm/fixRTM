@@ -12,7 +12,7 @@
        if (axisalignedbb == null) {
           axisalignedbb = new AxisAlignedBB(-1.5D, 0.0D, -2.0D, 1.5D, 3.0D, 2.0D);
        }
-@@ -532,21 +531,33 @@
+@@ -532,21 +531,36 @@
     public void setTrainStateData(int id, byte data) {
        this.setVehicleState(TrainState.getStateType(id), data);
     }
@@ -25,6 +25,9 @@
     public void setVehicleState(TrainState.TrainStateType type, byte data) {
 -      this.getResourceState().getDataMap().setInt(type.toString(), data, 3);
 +      this.getResourceState().getDataMap().setInt(type.toString(), type.clap(data, this), 3);
++      if (type == TrainState.TrainStateType.Direction && data != getVehicleState(TrainState.TrainStateType.Direction)) {
++         setSpeed(-getSpeed());
++      }
     }
  
     @SideOnly(Side.CLIENT)
