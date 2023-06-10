@@ -106,10 +106,8 @@ jobs:
       - name: compute output informations
         id: compute_output_informations
         run: |
-          asset_name="fixRtm-$VERSION_NAME.jar"
-          asset_path="./build/libs/$asset_name"
+          asset_path="./build/libs/fixRtm-$VERSION_NAME.jar"
           gh-export-variable ASSET_PATH "$asset_path"
-          gh-export-variable ASSET_NAME "$asset_name"
           # curse info
           if $PRERELEASE; then
             gh-export-variable CURSE_RELEASE_TYPE "alpha"
@@ -246,26 +244,16 @@ jobs:
       - name: Create Release
         id: create_release
         if: ${{ !fromJSON(env.NIGHTLY) }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |-
+          gh release create \
+            "$VERSION_NAME" \
+            --title "$VERSION_NAME" \
+            --verify-tag \
+            --notes-file "$RELEASE_NOTE_PATH" \
+            ${{ fromJSON(env.PRERELEASE) && '--prerelease' || '' }} \
+            "$ASSET_PATH"
         with:
-          tag_name: ${{ env.VERSION_NAME }}
-          release_name: ${{ env.VERSION_NAME }}
-          body_path: ${{ env.RELEASE_NOTE_PATH }}
-          prerelease: ${{ env.PRERELEASE }}
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        if: ${{ !fromJSON(env.NIGHTLY) }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.ASSET_PATH }}
-          asset_name: ${{ env.ASSET_NAME }}
-          asset_content_type: application/java-archive
+          GH_TOKEN: ${{ github.token }}
 
       - name: Send message to discord
         id: message_discord
