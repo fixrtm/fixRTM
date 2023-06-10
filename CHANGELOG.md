@@ -25,6 +25,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
+- Sitting in the driver's seat on the opposite side drives train in reverse `#633`
 
 ### Security
 
