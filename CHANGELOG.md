@@ -17,6 +17,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 
 ## [Unreleased]
 ### Added
+- Support placing rail in diagonal direction with rail item `#635`
 
 ### Changed
 
