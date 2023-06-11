@@ -3,15 +3,14 @@
 /// See LICENSE at https://github.com/fixrtm/fixRTM for more details
 
 import com.anatawa12.jarInJar.gradle.TargetPreset
-import com.anatawa12.modPatching.source.internal.readTextOr
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.8.0"
     id("net.minecraftforge.gradle")
-    id("com.anatawa12.mod-patching.binary") version "2.1.3"
-    id("com.anatawa12.mod-patching.source") version "2.1.3"
-    id("com.anatawa12.mod-patching.resources-dev") version "2.1.3"
+    id("com.anatawa12.mod-patching.binary") version "2.1.5"
+    id("com.anatawa12.mod-patching.source") version "2.1.5"
+    id("com.anatawa12.mod-patching.resources-dev") version "2.1.5"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("com.anatawa12.jarInJar") version "1.0.3"
 }
