@@ -8,3 +8,8 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    ignore:
+      - dependency-name: "net.minecraftforge.gradle:ForgeGradle"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "com.github.johnrengelman.shadow"
+        update-types: ["version-update:semver-major"]
