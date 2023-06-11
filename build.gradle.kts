@@ -142,13 +142,15 @@ val runServer = minecraft.runs.create("server") {
 }
 
 val jar by tasks.getting(Jar::class) {
-    shade.forEach { dep ->
-        from(project.zipTree(dep)) {
-            exclude("META-INF", "META-INF/**")
-            exclude("LICENSE.txt")
-        }
-        from(project.zipTree(dep)) {
-            include("META-INF/services/**")
+    afterEvaluate {
+        shade.forEach { dep ->
+            from(project.zipTree(dep)) {
+                exclude("META-INF", "META-INF/**")
+                exclude("LICENSE.txt")
+            }
+            from(project.zipTree(dep)) {
+                include("META-INF/services/**")
+            }
         }
     }
 
