@@ -27,8 +27,8 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
     override fun injectData(p0: MutableMap<String, Any>?) {
         try {
             // check for class load error
-            Class.forName("jp.ngt.rtm.RTMCore")
-            Class.forName("jp.ngt.ngtlib.NGTCore")
+            Class.forName("jp.ngt.rtm.RTMCore", false, FixRtmCorePlugin::class.java.classLoader)
+            Class.forName("jp.ngt.ngtlib.NGTCore", false, FixRtmCorePlugin::class.java.classLoader)
         } catch (e: ClassNotFoundException) {
             // this should mean NGTLib or RTM version mismatch.
             if (!GraphicsEnvironment.isHeadless()) {
