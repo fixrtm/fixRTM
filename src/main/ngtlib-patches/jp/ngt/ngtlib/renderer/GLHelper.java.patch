@@ -1,0 +1,40 @@
+--- a/jp/ngt/ngtlib/renderer/GLHelper.java
++++ b/jp/ngt/ngtlib/renderer/GLHelper.java
+@@ -36,10 +36,11 @@
+    private List<GLObject> deleteGLLists = new ArrayList<>();
+    static int nextVBOId = 1;
+    private static final IntBuffer VIEWPORT_BUF = GLAllocation.createDirectIntBuffer(16);
+    private static final IntBuffer SELECT_BUF = GLAllocation.createDirectIntBuffer(1024);
+    private static double DEPTH_RANGE;
++   private static double NEAR_CLIP = 0.05F;
+ 
+    private GLHelper() {
+    }
+ 
+    public static void checkGLError(String par1) {
+@@ -272,11 +273,11 @@
+       GL11.glPushName(0);
+       GL11.glMatrixMode(5889);
+       GL11.glPushMatrix();
+       Project.gluPickMatrix(f, (float)VIEWPORT_BUF.get(3) - f1, range, range, VIEWPORT_BUF);
+       GL11.glMatrixMode(5888);
+-      DEPTH_RANGE = (double)NGTUtilClient.getMinecraft().gameSettings.renderDistanceChunks * 16.0D * (double)MathHelper.SQRT_2 - 0.05D;
++      DEPTH_RANGE = NGTUtilClient.getMinecraft().entityRenderer.farPlaneDistance * (double)MathHelper.SQRT_2 - NEAR_CLIP;
+    }
+ 
+    public static int finishMousePicking() {
+       GL11.glMatrixMode(5889);
+       GL11.glPopMatrix();
+@@ -304,6 +305,12 @@
+    public static void postMoveTexUV() {
+       GL11.glMatrixMode(5890);
+       GL11.glPopMatrix();
+       GL11.glMatrixMode(5888);
+    }
++
++   public static double getRealDistance(double distance) {
++      double z_n = 2.0 * distance - 1.0;
++      double zFar = NGTUtilClient.getMinecraft().entityRenderer.farPlaneDistance * (double)MathHelper.SQRT_2;
++      return 2.0 * NEAR_CLIP * zFar / (zFar + NEAR_CLIP - z_n * (zFar - NEAR_CLIP));
++   }
+ }

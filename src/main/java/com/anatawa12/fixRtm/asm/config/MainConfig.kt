@@ -147,6 +147,13 @@ object MainConfig {
                 "You can change this flag regardless server setting.")
 
     @JvmField
+    val actionPartsImprovements = config.getBoolean(
+            "actionPartsImprovements", categoryBetterRtm,
+            true,
+            "Improvements for Action Parts. This includes:\n" +
+                    "  - Deny clicking far action parts.")
+
+    @JvmField
     val addAllowAllPermissionEnabled = config.getBoolean(
         "addAllowAllPermission", categoryBetterNgtLib,
         true,
