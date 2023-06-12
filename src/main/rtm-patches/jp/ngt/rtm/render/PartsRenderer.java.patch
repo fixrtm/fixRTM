@@ -39,7 +39,7 @@
           }
  
 -         return this.targetsList.get(i - 1);
-+         if (!com.anatawa12.fixRtm.asm.config.MainConfig.actionPartsFarClipping
++         if (!com.anatawa12.fixRtm.asm.config.MainConfig.actionPartsImprovements
 +                 || d0 <= NGTUtilClient.getMinecraft().playerController.getBlockReachDistance())
 +            return this.targetsList.get(i - 1);
        }
