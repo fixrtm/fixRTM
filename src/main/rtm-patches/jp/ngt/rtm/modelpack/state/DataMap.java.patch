@@ -21,3 +21,16 @@
  
        }
     }
+@@ -182,11 +182,11 @@
+          ++i;
+          stringbuilder.append(entry.getKey());
+          stringbuilder.append("=(");
+          stringbuilder.append(entry.getValue().getType().key);
+          stringbuilder.append(")");
+-         stringbuilder.append((entry.getValue()).data.toString());
++         stringbuilder.append((entry.getValue()).toString());
+          if (i < this.map.size()) {
+             stringbuilder.append(",");
+          }
+       }
+ 

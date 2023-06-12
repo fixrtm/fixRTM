@@ -15,3 +15,15 @@
        } else if (datatype == DataType.VEC) {
           Vec3 vec3 = DataEntryVec.fromString(data);
           return new DataEntryVec(vec3, flag);
+@@ -43,6 +43,11 @@
+          return new DataEntryHex(i, flag);
+       } else {
+          return null;
+       }
+    }
++
++   @Override
++   public String toString() {
++      return data.toString();
++   }
+ }
