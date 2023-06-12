@@ -21,6 +21,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Improve ActionParts `#651`
   - If the ActionParts is far from you, the ActionParts will not be clicked / dragged.
   - If you opened any GUI, the ActionParts will not be clicked / dragged.
+- Check for version mismatch error before crash `#653`
 
 ### Changed
 
