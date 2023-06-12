@@ -1,0 +1,13 @@
+--- a/jp/ngt/rtm/modelpack/state/DataEntryVec.java
++++ b/jp/ngt/rtm/modelpack/state/DataEntryVec.java
+@@ -24,9 +24,10 @@
+    public String toString() {
+       return "" + this.data.getX() + " " + this.data.getY() + " " + this.data.getZ();
+    }
+ 
+    public static Vec3 fromString(String par1) {
++      if (par1.isEmpty()) return new Vec3(0, 0, 0);
+       String[] astring = par1.split(" ");
+       return new Vec3(Double.valueOf(astring[0]), Double.valueOf(astring[1]), Double.valueOf(astring[2]));
+    }
+ }

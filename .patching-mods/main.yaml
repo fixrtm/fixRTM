@@ -128,6 +128,7 @@ mods:
       - jp.ngt.rtm.modelpack.modelset.ModelSetVehicleBase
       - jp.ngt.rtm.modelpack.modelset.ResourceSet
       - jp.ngt.rtm.modelpack.state.DataEntry
+      - jp.ngt.rtm.modelpack.state.DataEntryVec
       - jp.ngt.rtm.modelpack.state.DataMap
       - jp.ngt.rtm.modelpack.state.ResourceState
       - jp.ngt.rtm.network.PacketMarkerRPClient
