@@ -50,3 +50,25 @@
     private void checkMouseAction(T t) {
        if (Mouse.isButtonDown(1)) {
           ActionParts actionparts = this.hittedParts.get(t);
+@@ -160,10 +163,21 @@
+    public void render(T t, RenderPass pass, float partialTick) {
+       if (t != null && pass == RenderPass.NORMAL && this.currentMatId == 0 && !this.targetsList.isEmpty()) {
+          this.render(t, RenderPass.PICK, partialTick);
+       }
+ 
++      if (pass == RenderPass.PICK
++              && com.anatawa12.fixRtm.asm.config.MainConfig.actionPartsImprovements
++              && NGTUtilClient.getMinecraft().currentScreen != null) {
++         // pick pass with gui open: clear selecting.
++         // Skipping rendering breaks compatibility with the behaviour PICK is called every time
++         // however, I think it's very rare case, so I choose this type.
++         this.hittedParts.put(t, null);
++         this.checkMouseAction(t);
++         return;
++      }
++
+       this.currentPass = pass.id;
+       if (pass == RenderPass.PICK) {
+          GLHelper.startMousePicking(1.0F);
+       }
+ 
