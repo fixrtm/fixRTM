@@ -1,0 +1,23 @@
+--- a/jp/ngt/rtm/modelpack/state/DataMap.java
++++ b/jp/ngt/rtm/modelpack/state/DataMap.java
+@@ -134,17 +134,17 @@
+ 
+    private void set(String key, DataEntry value, int flag) {
+       if (!this.dataFormatter.check(key, value)) {
+          NGTLog.debug("Invalid data : %s=%s", new Object[]{key, value.toString()});
+       } else {
+-         boolean flag = (flag & 1) != 0;
++         boolean flag2 = (flag & 1) != 0;
+          boolean flag1 = NGTUtil.isServer();
+-         if (flag1 || !flag || this.entity == null) {
++         if (flag1 || !flag2 || this.entity == null) {
+             this.map.put(key, value);
+          }
+ 
+-         if (flag) {
++         if (flag2) {
+             this.sendPacket(key, value, flag1);
+          }
+ 
+       }
+    }
