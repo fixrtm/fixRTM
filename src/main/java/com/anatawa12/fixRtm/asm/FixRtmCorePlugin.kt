@@ -7,6 +7,8 @@ package com.anatawa12.fixRtm.asm
 import jp.ngt.ngtlib.NGTCore
 import jp.ngt.rtm.RTMCore
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin
+import java.awt.Graphics
+import java.awt.GraphicsEnvironment
 import javax.swing.JOptionPane
 
 @IFMLLoadingPlugin.TransformerExclusions(
@@ -29,18 +31,20 @@ class FixRtmCorePlugin : IFMLLoadingPlugin {
             Class.forName("jp.ngt.ngtlib.NGTCore")
         } catch (e: ClassNotFoundException) {
             // this should mean NGTLib or RTM version mismatch.
-            JOptionPane.showMessageDialog(null,
-                    arrayOf(
-                            "RTM or NGTLib version mismatch detected!\n" +
-                                    "This version of fixRTM requires RTM ${RTMCore.VERSION} and NGTLib ${NGTCore.VERSION}.\n" +
-                                    "Use exact requested version of RTM and NGTLib.",
-                            "RTMかNGTLibのバージョンの不一致を検出しました！\n" +
-                                    "このバージョンのfixRTMはRTM ${RTMCore.VERSION}とNGTLib ${NGTCore.VERSION}を要求します。\n" +
-                                    "正確に要求されたバージョンのRTMとNGTLibを使用してください。"
-                    ),
-                    "fixRTM",
-                    JOptionPane.ERROR_MESSAGE)
-            throw Exception("RTM or NGTLib Version Mismatch")
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null,
+                        arrayOf(
+                                "RTM or NGTLib version mismatch detected!\n" +
+                                        "This version of fixRTM requires RTM ${RTMCore.VERSION} and NGTLib ${NGTCore.VERSION}.\n" +
+                                        "Use exact requested version of RTM and NGTLib.",
+                                "RTMかNGTLibのバージョンの不一致を検出しました！\n" +
+                                        "このバージョンのfixRTMはRTM ${RTMCore.VERSION}とNGTLib ${NGTCore.VERSION}を要求します。\n" +
+                                        "正確に要求されたバージョンのRTMとNGTLibを使用してください。"
+                        ),
+                        "fixRTM",
+                        JOptionPane.ERROR_MESSAGE)
+            }
+            throw Exception("RTM or NGTLib Version Mismatch", e)
         }
     }
 
