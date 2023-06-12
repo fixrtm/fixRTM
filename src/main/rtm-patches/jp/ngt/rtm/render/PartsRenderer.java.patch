@@ -13,3 +13,40 @@
  
     public Parts registerParts(Parts par1) {
        this.partsList.add(par1);
+@@ -101,27 +101,30 @@
+ 
+    public void postRender(T t, boolean smoothing, boolean culling, float par3) {
+    }
+ 
+    private ActionParts selectHits(T t, int hits) {
+-      if (hits <= 0) {
+-         return Mouse.isButtonDown(1) ? this.hittedParts.get(t) : null;
+-      } else {
++      //noinspection ConstantValue
++      if (true) {
+          int i = 1;
+          double d0 = Double.MAX_VALUE;
+ 
+          for(int j = 0; j < hits; ++j) {
+-            double d1 = GLHelper.getPickedObjDepth(j);
+-            if (d1 < d0) {
++            double d1 = GLHelper.getRealDistance(GLHelper.getPickedObjDepth(j));
++            if (0 < d1 && d1 < d0) {
+                int k = GLHelper.getPickedObjId(j);
+                i = k;
+                d0 = d1;
+             }
+          }
+ 
+-         return this.targetsList.get(i - 1);
++         if (!com.anatawa12.fixRtm.asm.config.MainConfig.actionPartsFarClipping
++                 || d0 <= NGTUtilClient.getMinecraft().playerController.getBlockReachDistance())
++            return this.targetsList.get(i - 1);
+       }
++
++      return Mouse.isButtonDown(1) ? this.hittedParts.get(t) : null;
+    }
+ 
+    private void checkMouseAction(T t) {
+       if (Mouse.isButtonDown(1)) {
+          ActionParts actionparts = this.hittedParts.get(t);

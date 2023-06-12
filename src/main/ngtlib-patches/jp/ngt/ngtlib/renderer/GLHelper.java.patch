@@ -37,3 +37,16 @@
     public static int finishMousePicking() {
        GL11.glMatrixMode(5889);
        GL11.glPopMatrix();
+@@ -304,6 +306,12 @@
+    public static void postMoveTexUV() {
+       GL11.glMatrixMode(5890);
+       GL11.glPopMatrix();
+       GL11.glMatrixMode(5888);
+    }
++
++   public static double getRealDistance(double distance) {
++      double z_n = 2.0 * distance - 1.0;
++      double zFar = NGTUtilClient.getMinecraft().entityRenderer.farPlaneDistance * (double)MathHelper.SQRT_2;
++      return 2.0 * NEAR_CLIP * zFar / (zFar + NEAR_CLIP - z_n * (zFar - NEAR_CLIP));
++   }
+ }
