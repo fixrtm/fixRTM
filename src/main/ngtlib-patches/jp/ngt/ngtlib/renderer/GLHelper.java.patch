@@ -1,18 +1,6 @@
 --- a/jp/ngt/ngtlib/renderer/GLHelper.java
 +++ b/jp/ngt/ngtlib/renderer/GLHelper.java
-@@ -11,10 +11,11 @@
- import jp.ngt.ngtlib.math.NGTMath;
- import jp.ngt.ngtlib.util.Locker;
- import jp.ngt.ngtlib.util.NGTUtilClient;
- import net.minecraft.block.state.IBlockState;
- import net.minecraft.client.Minecraft;
-+import net.minecraft.client.renderer.EntityRenderer;
- import net.minecraft.client.renderer.GLAllocation;
- import net.minecraft.client.renderer.OpenGlHelper;
- import net.minecraft.client.renderer.texture.TextureAtlasSprite;
- import net.minecraft.client.renderer.texture.TextureMap;
- import net.minecraft.init.Blocks;
-@@ -36,10 +37,11 @@
+@@ -36,10 +36,11 @@
     private List<GLObject> deleteGLLists = new ArrayList<>();
     static int nextVBOId = 1;
     private static final IntBuffer VIEWPORT_BUF = GLAllocation.createDirectIntBuffer(16);
@@ -24,7 +12,7 @@
     }
  
     public static void checkGLError(String par1) {
-@@ -272,11 +274,11 @@
+@@ -272,11 +273,11 @@
        GL11.glPushName(0);
        GL11.glMatrixMode(5889);
        GL11.glPushMatrix();
@@ -37,7 +25,7 @@
     public static int finishMousePicking() {
        GL11.glMatrixMode(5889);
        GL11.glPopMatrix();
-@@ -304,6 +306,12 @@
+@@ -304,6 +305,12 @@
     public static void postMoveTexUV() {
        GL11.glMatrixMode(5890);
        GL11.glPopMatrix();
