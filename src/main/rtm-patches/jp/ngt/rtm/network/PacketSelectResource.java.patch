@@ -1,0 +1,27 @@
+--- a/jp/ngt/rtm/network/PacketSelectResource.java
++++ b/jp/ngt/rtm/network/PacketSelectResource.java
+@@ -41,10 +41,14 @@
+       this.data = ByteBufUtils.readTag(buffer);
+    }
+ 
+    public IMessage onMessage(PacketSelectResource message, MessageContext ctx) {
+       EntityPlayer entityplayer = ctx.getServerHandler().player;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, entityplayer));
++      return null;
++   }
++   private void doMessage(PacketSelectResource message, EntityPlayer entityplayer) {
+       World world = entityplayer.world;
+       IResourceSelector iresourceselector = null;
+       if (message.pos[1] >= 0) {
+          try {
+             TileEntity tileentity = BlockUtil.getTileEntity(world, message.pos[0], message.pos[1], message.pos[2]);
+@@ -67,9 +71,7 @@
+             iresourceselector.updateResourceState();
+          } else {
+             iresourceselector.updateResourceState();
+          }
+       }
+-
+-      return null;
+    }
+ }
