@@ -25,6 +25,7 @@ mods:
       - jp.ngt.ngtlib.item.craft.ShapedRecipes55
       - jp.ngt.ngtlib.math.BezierCurve
       - jp.ngt.ngtlib.network.PacketNBT
+      - jp.ngt.ngtlib.network.PacketNBTHandlerServer
       - jp.ngt.ngtlib.protection.ProtectionManager
       - jp.ngt.ngtlib.renderer.GLHelper
       - jp.ngt.ngtlib.renderer.model.ModelLoader

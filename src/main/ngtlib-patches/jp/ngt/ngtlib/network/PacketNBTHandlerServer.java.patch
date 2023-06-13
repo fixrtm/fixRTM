@@ -1,0 +1,15 @@
+--- a/jp/ngt/ngtlib/network/PacketNBTHandlerServer.java
++++ b/jp/ngt/ngtlib/network/PacketNBTHandlerServer.java
+@@ -7,11 +7,11 @@
+ 
+ public class PacketNBTHandlerServer implements IMessageHandler<PacketNBT, IMessage> {
+    public IMessage onMessage(PacketNBT message, MessageContext ctx) {
+       if (!message.nbtData.getBoolean("ToClient")) {
+          World world = ctx.getServerHandler().player.world;
+-         message.onGetPacket(world);
++         com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> message.onGetPacket(world));
+       }
+ 
+       return null;
+    }
+ }
