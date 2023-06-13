@@ -1,0 +1,15 @@
+--- a/jp/ngt/rtm/RTMCore.java
++++ b/jp/ngt/rtm/RTMCore.java
+@@ -23,10 +23,12 @@
+ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+ import net.minecraftforge.fml.common.network.NetworkRegistry;
+ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+ import org.apache.logging.log4j.Level;
+ 
++// marked as modified to check RTM version with patch system
++
+ @Mod(
+    modid = "rtm",
+    name = "RealTrainMod",
+    version = "2.4.23",
+    acceptedMinecraftVersions = "[1.12.2]"

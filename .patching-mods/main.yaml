@@ -43,6 +43,7 @@ mods:
       - jp.ngt.rtm.ClientProxy
       - jp.ngt.rtm.CreativeTabRTM
       - jp.ngt.rtm.RTMBlock
+      - jp.ngt.rtm.RTMCore
       - jp.ngt.rtm.RTMEntity
       - jp.ngt.rtm.RTMItem
       - jp.ngt.rtm.RTMRecipe
