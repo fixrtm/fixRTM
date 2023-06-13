@@ -1,0 +1,22 @@
+--- a/jp/ngt/rtm/network/PacketSignal.java
++++ b/jp/ngt/rtm/network/PacketSignal.java
+@@ -30,14 +30,17 @@
+       super.fromBytes(buffer);
+       this.level = buffer.readInt();
+    }
+ 
+    public IMessage onMessage(PacketSignal message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> doMessage(message));
++      return null;
++   }
++
++   private void doMessage(PacketSignal message) {
+       World world = NGTUtil.getClientWorld();
+       TileEntity tileentity = message.getTileEntity(world);
+       if (tileentity instanceof TileEntitySignal) {
+          ((TileEntitySignal)tileentity).setSignal(message.level);
+       }
+-
+-      return null;
+    }
+ }
