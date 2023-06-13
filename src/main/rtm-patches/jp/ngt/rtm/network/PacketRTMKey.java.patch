@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/network/PacketRTMKey.java
++++ b/jp/ngt/rtm/network/PacketRTMKey.java
+@@ -35,10 +35,13 @@
+       this.sound = ByteBufUtils.readUTF8String(buffer);
+    }
+ 
+    public IMessage onMessage(PacketRTMKey message, MessageContext ctx) {
+       World world = ctx.getServerHandler().player.world;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, world));
++      return null;
++   }
++   private void doMessage(PacketRTMKey message, World world) {
+       EntityPlayer entityplayer = world.getPlayerEntityByName(message.playerName);
+       RTMKeyHandlerServer.INSTANCE.onKeyDown(entityplayer, message.keyId, message.sound);
+-      return null;
+    }
+ }
