@@ -135,6 +135,7 @@ mods:
       - jp.ngt.rtm.modelpack.state.ResourceState
       - jp.ngt.rtm.network.PacketMarkerRPClient
       - jp.ngt.rtm.network.PacketModelPack
+      - jp.ngt.rtm.network.PacketNoticeHandlerClient
       - jp.ngt.rtm.network.PacketNoticeHandlerServer
       - jp.ngt.rtm.network.PacketPlaySound
       - jp.ngt.rtm.network.PacketRTMKey
