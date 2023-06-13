@@ -1,0 +1,5 @@
+# Copyright (c) 2022 anatawa12 and other contributors
+# This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+# See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
+fix-rtm.launch-error.error.rtm-ngtlib-mismatch=RTMかNGTLibのバージョンの不一致を検出しました！\nこのバージョンのfixRTMはRTM %sとNGTLib %sを要求します。\n正確に要求されたバージョンのRTMとNGTLibを使用してください。
