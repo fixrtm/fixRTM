@@ -1,0 +1,21 @@
+--- a/jp/ngt/rtm/network/PacketMarker.java
++++ b/jp/ngt/rtm/network/PacketMarker.java
+@@ -49,14 +49,16 @@
+       }
+ 
+    }
+ 
+    public IMessage onMessage(PacketMarker message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> doMessage(message));
++      return null;
++   }
++   private void doMessage(PacketMarker message) {
+       World world = NGTUtil.getClientWorld();
+       TileEntity tileentity = message.getTileEntity(world);
+       if (tileentity instanceof TileEntityMarker) {
+          ((TileEntityMarker)tileentity).setMarkersPos(message.list);
+       }
+-
+-      return null;
+    }
+ }
