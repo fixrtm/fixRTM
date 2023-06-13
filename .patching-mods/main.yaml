@@ -134,6 +134,7 @@ mods:
       - jp.ngt.rtm.modelpack.state.DataEntryVec
       - jp.ngt.rtm.modelpack.state.DataMap
       - jp.ngt.rtm.modelpack.state.ResourceState
+      - jp.ngt.rtm.network.PacketFormation
       - jp.ngt.rtm.network.PacketMarker
       - jp.ngt.rtm.network.PacketMarkerRPClient
       - jp.ngt.rtm.network.PacketModelPack
