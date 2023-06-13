@@ -1,3 +1,7 @@
+/// Copyright (c) 2023 anatawa12 and other contributors
+/// This file is part of fixRTM, released under GNU LGPL v3 with few exceptions
+/// See LICENSE at https://github.com/fixrtm/fixRTM for more details
+
 @file:JvmName("VersionCheck")
 
 package com.anatawa12.fixRtm.versionCheck
