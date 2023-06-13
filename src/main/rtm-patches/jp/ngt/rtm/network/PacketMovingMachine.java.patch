@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/network/PacketMovingMachine.java
++++ b/jp/ngt/rtm/network/PacketMovingMachine.java
+@@ -57,10 +57,13 @@
+       this.v = buffer.readBoolean();
+    }
+ 
+    public IMessage onMessage(PacketMovingMachine message, MessageContext ctx) {
+       World world = ctx.getServerHandler().player.world;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, world));
++      return null;
++   }
++   private void doMessage(PacketMovingMachine message, World world) {
+       TileEntityMovingMachine tileentitymovingmachine = (TileEntityMovingMachine)message.getTileEntity(world);
+       tileentitymovingmachine.setData(message.w, message.h, message.d, message.x, message.y, message.z, message.s, message.v);
+-      return null;
+    }
+ }
