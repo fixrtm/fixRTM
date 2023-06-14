@@ -32,6 +32,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Fixed
 - Sitting in the driver's seat on the opposite side drives train in reverse `#633`
 - Vec3 DataMap will cause crash `#652`
+- World is accessed from Netty IO Thread `#654`
 
 ### Security
 

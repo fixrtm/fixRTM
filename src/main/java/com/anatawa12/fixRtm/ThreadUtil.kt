@@ -6,15 +6,28 @@ package com.anatawa12.fixRtm
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
+import net.minecraftforge.fml.relauncher.Side
 import java.util.concurrent.ConcurrentLinkedQueue
 
 object ThreadUtil {
-    fun runOnClientThread(block: () -> Unit) {
+    @JvmStatic
+    fun runOnClientThread(block: Action) {
         client.add(block)
     }
 
-    fun runOnServerThread(block: () -> Unit) {
+    @JvmStatic
+    fun runOnServerThread(block: Action) {
         server.add(block)
+    }
+
+    @JvmStatic
+    fun runOnMainThread(side: Side, block: Action) {
+        if (side.isClient) runOnClientThread(block)
+        else runOnServerThread(block)
+    }
+
+    fun interface Action {
+        operator fun invoke()
     }
 
     @SubscribeEvent
@@ -27,6 +40,6 @@ object ThreadUtil {
         while (true) (server.poll() ?: return)()
     }
 
-    private val client = ConcurrentLinkedQueue<() -> Unit>()
-    private val server = ConcurrentLinkedQueue<() -> Unit>()
+    private val client = ConcurrentLinkedQueue<Action>()
+    private val server = ConcurrentLinkedQueue<Action>()
 }

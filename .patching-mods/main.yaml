@@ -25,6 +25,7 @@ mods:
       - jp.ngt.ngtlib.item.craft.ShapedRecipes55
       - jp.ngt.ngtlib.math.BezierCurve
       - jp.ngt.ngtlib.network.PacketNBT
+      - jp.ngt.ngtlib.network.PacketNBTHandlerServer
       - jp.ngt.ngtlib.protection.ProtectionManager
       - jp.ngt.ngtlib.renderer.GLHelper
       - jp.ngt.ngtlib.renderer.model.ModelLoader
@@ -133,8 +134,22 @@ mods:
       - jp.ngt.rtm.modelpack.state.DataEntryVec
       - jp.ngt.rtm.modelpack.state.DataMap
       - jp.ngt.rtm.modelpack.state.ResourceState
+      - jp.ngt.rtm.network.PacketFormation
+      - jp.ngt.rtm.network.PacketMarker
       - jp.ngt.rtm.network.PacketMarkerRPClient
       - jp.ngt.rtm.network.PacketModelPack
+      - jp.ngt.rtm.network.PacketMoveMM
+      - jp.ngt.rtm.network.PacketMovingMachine
+      - jp.ngt.rtm.network.PacketNoticeHandlerClient
+      - jp.ngt.rtm.network.PacketNoticeHandlerServer
+      - jp.ngt.rtm.network.PacketPlaySound
+      - jp.ngt.rtm.network.PacketRTMKey
+      - jp.ngt.rtm.network.PacketSelectResource
+      - jp.ngt.rtm.network.PacketSetTrainState
+      - jp.ngt.rtm.network.PacketSignal
+      - jp.ngt.rtm.network.PacketSignalConverter
+      - jp.ngt.rtm.network.PacketSyncItem
+      - jp.ngt.rtm.network.PacketVehicleMovement
       - jp.ngt.rtm.rail.BlockLargeRailBase
       - jp.ngt.rtm.rail.BlockMarker
       - jp.ngt.rtm.rail.RenderMarkerBlock

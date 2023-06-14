@@ -1,0 +1,27 @@
+--- a/jp/ngt/rtm/network/PacketPlaySound.java
++++ b/jp/ngt/rtm/network/PacketPlaySound.java
+@@ -47,10 +47,14 @@
+       this.volume = buffer.readFloat();
+       this.pitch = buffer.readFloat();
+    }
+ 
+    public IMessage onMessage(PacketPlaySound message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> doMessage(message));
++      return null;
++   }
++   private void doMessage(PacketPlaySound message) {
+       World world = NGTUtil.getClientWorld();
+       if (message.forEntity()) {
+          Entity entity = message.getEntity(world);
+          if (entity != null) {
+             RTMCore.proxy.playSound(entity, message.sound, message.volume, message.pitch);
+@@ -59,9 +63,7 @@
+          TileEntity tileentity = message.getTileEntity(world);
+          if (tileentity != null) {
+             RTMCore.proxy.playSound(tileentity, message.sound, message.volume, message.pitch);
+          }
+       }
+-
+-      return null;
+    }
+ }

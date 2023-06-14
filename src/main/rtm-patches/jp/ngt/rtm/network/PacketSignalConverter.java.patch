@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/network/PacketSignalConverter.java
++++ b/jp/ngt/rtm/network/PacketSignalConverter.java
+@@ -37,10 +37,13 @@
+       this.signal2 = buffer.readInt();
+    }
+ 
+    public IMessage onMessage(PacketSignalConverter message, MessageContext ctx) {
+       World world = ctx.getServerHandler().player.world;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, world));
++      return null;
++   }
++   private void doMessage(PacketSignalConverter message, World world) {
+       TileEntitySignalConverter tileentitysignalconverter = (TileEntitySignalConverter)message.getTileEntity(world);
+       tileentitysignalconverter.setSignalProp(message.signal1, message.signal2, TileEntitySignalConverter.ComparatorType.getType(message.comparatorIndex));
+-      return null;
+    }
+ }

@@ -1,0 +1,20 @@
+--- a/jp/ngt/rtm/network/PacketMoveMM.java
++++ b/jp/ngt/rtm/network/PacketMoveMM.java
+@@ -48,13 +48,15 @@
+       this.moveY = buffer.readDouble();
+       this.moveZ = buffer.readDouble();
+    }
+ 
+    public IMessage onMessage(PacketMoveMM message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> doMessage(message));
++      return null;
++   }
++   private void doMessage(PacketMoveMM message) {
+       World world = NGTUtil.getClientWorld();
+       if (world != null) {
+          EntityMMBoundingBox.handleMMMovement(world, message.entityIds, message.moveX, message.moveY, message.moveZ);
+       }
+-
+-      return null;
+    }
+ }

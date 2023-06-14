@@ -1,0 +1,22 @@
+--- a/jp/ngt/rtm/network/PacketSyncItem.java
++++ b/jp/ngt/rtm/network/PacketSyncItem.java
+@@ -35,14 +35,17 @@
+       this.slotNumber = buffer.readInt();
+    }
+ 
+    public IMessage onMessage(PacketSyncItem message, MessageContext ctx) {
+       World world = ctx.getServerHandler().player.world;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, world));
++      return null;
++   }
++
++   public void doMessage(PacketSyncItem message, World world) {
+       EntityPlayer entityplayer = world.getPlayerEntityByName(message.playerName);
+       if (entityplayer != null) {
+          entityplayer.openContainer.getSlot(message.slotNumber).putStack(message.item);
+          entityplayer.openContainer.detectAndSendChanges();
+       }
+-
+-      return null;
+    }
+ }

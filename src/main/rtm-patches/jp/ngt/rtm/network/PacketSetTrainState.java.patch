@@ -1,0 +1,21 @@
+--- a/jp/ngt/rtm/network/PacketSetTrainState.java
++++ b/jp/ngt/rtm/network/PacketSetTrainState.java
+@@ -36,14 +36,16 @@
+       this.stateData = buffer.readByte();
+    }
+ 
+    public IMessage onMessage(PacketSetTrainState message, MessageContext ctx) {
+       EntityPlayer entityplayer = ctx.getServerHandler().player;
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> doMessage(message, entityplayer));
++      return null;
++   }
++   private void doMessage(PacketSetTrainState message, EntityPlayer entityplayer) {
+       World world = entityplayer.world;
+       Entity entity = message.getEntity(world);
+       if (entity instanceof EntityVehicleBase) {
+          ((EntityVehicleBase)entity).setVehicleState(message.stateId, message.stateData);
+       }
+-
+-      return null;
+    }
+ }

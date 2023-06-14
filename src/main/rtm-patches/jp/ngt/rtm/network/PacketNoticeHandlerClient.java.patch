@@ -1,0 +1,40 @@
+--- a/jp/ngt/rtm/network/PacketNoticeHandlerClient.java
++++ b/jp/ngt/rtm/network/PacketNoticeHandlerClient.java
+@@ -16,10 +16,14 @@
+ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+ 
+ public class PacketNoticeHandlerClient implements IMessageHandler<PacketNotice, IMessage> {
+    public IMessage onMessage(PacketNotice message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> doMessage(message));
++      return null;
++   }
++   private void doMessage(PacketNotice message) {
+       String s = message.notice;
+       if ((message.type & 1) == 1) {
+          World world = NGTUtil.getClientWorld();
+          if (s.equals("setConnected")) {
+             RTMCore.proxy.setConnectionState((byte)1);
+@@ -42,11 +46,11 @@
+                } else {
+                   MacroRecorder.INSTANCE.start(world);
+                }
+             } else if (s.startsWith("DM")) {
+                if (world == null) {
+-                  return null;
++                  return;
+                }
+ 
+                DataMap.receivePacket(s, message, world, true);
+             } else if (s.startsWith("TT")) {
+                TileEntity tileentity1 = message.getTileEntity(world);
+@@ -60,9 +64,7 @@
+             } else if (s.startsWith("speaker")) {
+                SpeakerSounds.getInstance(false).onGetPacket(s, false);
+             }
+          }
+       }
+-
+-      return null;
+    }
+ }

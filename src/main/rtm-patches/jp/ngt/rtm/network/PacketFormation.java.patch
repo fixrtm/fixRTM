@@ -1,0 +1,17 @@
+--- a/jp/ngt/rtm/network/PacketFormation.java
++++ b/jp/ngt/rtm/network/PacketFormation.java
+@@ -31,10 +31,13 @@
+       this.formationId = buffer.readLong();
+       this.data = ByteBufUtils.readTag(buffer);
+    }
+ 
+    public IMessage onMessage(PacketFormation message, MessageContext ctx) {
++      com.anatawa12.fixRtm.ThreadUtil.runOnMainThread(ctx.side, () -> doMessage(message));
++      return null;
++   }
++   private void doMessage(PacketFormation message) {
+       Formation formation = Formation.readFromNBT(message.data, true);
+       FormationManager.getInstance().setFormation(message.formationId, formation);
+-      return null;
+    }
+ }

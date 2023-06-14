@@ -1,15 +1,14 @@
 --- a/jp/ngt/rtm/network/PacketMarkerRPClient.java
 +++ b/jp/ngt/rtm/network/PacketMarkerRPClient.java
-@@ -49,22 +49,28 @@
+@@ -49,22 +49,27 @@
  
     }
  
     public IMessage onMessage(PacketMarkerRPClient message, MessageContext ctx) {
        World world = ctx.getServerHandler().player.world;
 +      net.minecraft.entity.player.EntityPlayerMP player = ctx.getServerHandler().player;
-+      com.anatawa12.fixRtm.ThreadUtil.INSTANCE.runOnServerThread(() -> {
++      com.anatawa12.fixRtm.ThreadUtil.runOnServerThread(() -> {
 +         this.some(message, player, world);
-+         return kotlin.Unit.INSTANCE;
 +      });
 +      return null;
 +   }
