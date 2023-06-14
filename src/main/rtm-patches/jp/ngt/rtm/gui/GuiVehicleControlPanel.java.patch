@@ -14,7 +14,37 @@
                 this.dataValues[j] = k;
              }
           } else if (tab == TabTrainControlPanel.TAB_Formation) {
-@@ -205,10 +206,34 @@
+@@ -177,18 +178,22 @@
+                   }
+                }
+             }
+          }
+ 
+-         this.buttonDoor[0] = new GuiButtonDoor(300, this.guiLeft + this.xSize + 20, this.guiTop + 20, 64, 80);
+-         this.buttonDoor[1] = new GuiButtonDoor(301, this.guiLeft - 84, this.guiTop + 20, 64, 80);
++         GuiButtonDoor door0 = new GuiButtonDoor(300, this.guiLeft + this.xSize + 20, this.guiTop + 20, 64, 80);
++         GuiButtonDoor door1 = new GuiButtonDoor(301, this.guiLeft - 84, this.guiTop + 20, 64, 80);
++         if (this.vehicle.getVehicleState(TrainState.TrainStateType.Direction) == 0) {
++            this.buttonDoor[0] = door0;
++            this.buttonDoor[1] = door1;
++         } else {
++            this.buttonDoor[0] = door1;
++            this.buttonDoor[1] = door0;
++         }
+          int i2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Door);
+-         boolean flag = (i2 & 1) == 1;
+-         boolean flag1 = (i2 & 2) == 2;
+-         boolean flag2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Direction) == 0;
+-         this.buttonDoor[0].opened = flag2 ? flag1 : flag;
+-         this.buttonDoor[1].opened = flag2 ? flag : flag1;
++         this.buttonDoor[0].opened = (i2 & 2) == 2;
++         this.buttonDoor[1].opened = (i2 & 1) == 1;
+          this.buttonList.add(this.buttonDoor[0]);
+          this.buttonList.add(this.buttonDoor[1]);
+          this.currentScroll = 0.0F;
+          this.sendTabPacket(this.selectedTabIndex);
+       }
+@@ -205,10 +210,34 @@
           GL11.glDisable(3042);
        }
  
@@ -49,7 +79,7 @@
           int i = mouseX - this.guiLeft;
           int j = mouseY - this.guiTop;
           TabTrainControlPanel[] atabtraincontrolpanel = TabTrainControlPanel.tabArray;
-@@ -504,11 +529,12 @@
+@@ -504,11 +533,12 @@
  
              if (button.id == 129) {
                 int i2 = this.vehicle.getVehicleState(TrainState.TrainStateType.Announcement);
