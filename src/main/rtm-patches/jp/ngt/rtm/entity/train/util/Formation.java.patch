@@ -102,7 +102,7 @@
  
           this.speed = par1;
        }
-@@ -266,18 +273,20 @@
+@@ -266,34 +273,39 @@
        }
     }
  
@@ -123,9 +123,20 @@
                 formationentry.train.setTrainStateData_NoSync(type, TrainState.Role_Center.data);
              }
           } else if (type == TrainState.TrainStateType.Door) {
-             int i = data & 1;
-             int j = data >> 1;
-@@ -290,10 +299,11 @@
+-            int i = data & 1;
+-            int j = data >> 1;
+-            int k = formationentry.train.getTrainDirection() == 0 ? j << 1 | i : i << 1 | j;
+-            formationentry.train.setTrainStateData_NoSync(type, (byte)k);
++            data &= 3;
++            if (par2.getTrainDirection() != formationentry.train.getTrainDirection()) {
++               // swap bits
++               data = (byte) (((data & 1) << 1) | ((data >> 1) & 1));
++            }
++            formationentry.train.setTrainStateData_NoSync(type, data);
+          } else {
+             formationentry.train.setTrainStateData_NoSync(type, data);
+          }
+       }
  
     }
  
