@@ -1,23 +1,21 @@
 --- a/jp/ngt/rtm/network/PacketVehicleMovement.java
 +++ b/jp/ngt/rtm/network/PacketVehicleMovement.java
-@@ -75,15 +75,20 @@
+@@ -74,16 +74,20 @@
+       this.vehicleRoll = buffer.readFloat();
        this.vehicleSpeed = buffer.readFloat();
     }
  
     public IMessage onMessage(PacketVehicleMovement message, MessageContext ctx) {
-       World world = NGTUtil.getClientWorld();
--      if (world == null) {
--         return null;
--      } else if (message.vehicleY < 0) {
-+      if (world == null) return null;
-+      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> {
-+         this.doMessage(message, world);
-+      });
++      com.anatawa12.fixRtm.ThreadUtil.runOnClientThread(() -> this.doMessage(message));
 +      return null;
 +   }
 +
-+   public void doMessage(PacketVehicleMovement message, World world) {
-+      if (message.vehicleY < 0) {
++   private void doMessage(PacketVehicleMovement message) {
+       World world = NGTUtil.getClientWorld();
+       if (world == null) {
+-         return null;
++         return;
+       } else if (message.vehicleY < 0) {
           this.deleteEntity(world, message.entityId);
 -         return null;
        } else {
@@ -25,7 +23,7 @@
           if (entity != null && !entity.isDead) {
              double d0 = (double)message.vehicleX * 0.03125D;
              double d1 = (double)message.vehicleY * 0.03125D;
-@@ -98,12 +103,10 @@
+@@ -98,12 +102,10 @@
                 ((EntityBogie)entity).setRoll(message.vehicleRoll);
              }
           } else {
