@@ -36,6 +36,14 @@ Thanks to prepare-changelog.sh, we have some macros.
 - syncVehicleState(Door, data) does not work as the setter of getVehicleState(Door) `#660`
   - Previously, to sync door direction between trains, door bit can be swapped.
   - Now, improvements in bits swapping condition is improved.
+- Picking any machine block would pick as fluorescent `#667`
+  - Picking following blocks, which are categorized to machine, would pick as fluorescent is now fixed
+    - Boom barrier for Crossing (CROSSING)
+    - Ticket Gate (TURNSTILE)
+    - Point Lever (POINT)
+    - Ticket Vendor (TICKET_VENDOR)
+    - Light (LIGHT, not a FLUORESCENT)
+    - Speaker (SPEAKER)
 
 ### Security
 
