@@ -252,7 +252,7 @@ jobs:
             --notes-file "$RELEASE_NOTE_PATH" \
             ${{ fromJSON(env.PRERELEASE) && '--prerelease' || '' }} \
             "$ASSET_PATH"
-        with:
+        env:
           GH_TOKEN: ${{ github.token }}
 
       - name: Send message to discord
