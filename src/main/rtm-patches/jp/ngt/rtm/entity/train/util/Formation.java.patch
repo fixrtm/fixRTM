@@ -127,12 +127,12 @@
 -            int j = data >> 1;
 -            int k = formationentry.train.getTrainDirection() == 0 ? j << 1 | i : i << 1 | j;
 -            formationentry.train.setTrainStateData_NoSync(type, (byte)k);
-+            data &= 3;
++            byte value = (byte) (data & 3);
 +            if (par2.getTrainDirection() != formationentry.train.getTrainDirection()) {
 +               // swap bits
-+               data = (byte) (((data & 1) << 1) | ((data >> 1) & 1));
++               value = (byte) (((data & 1) << 1) | ((data >> 1) & 1));
 +            }
-+            formationentry.train.setTrainStateData_NoSync(type, data);
++            formationentry.train.setTrainStateData_NoSync(type, value);
           } else {
              formationentry.train.setTrainStateData_NoSync(type, data);
           }
