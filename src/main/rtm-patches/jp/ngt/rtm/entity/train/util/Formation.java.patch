@@ -102,7 +102,7 @@
  
           this.speed = par1;
        }
-@@ -265,35 +272,47 @@
+@@ -265,35 +272,44 @@
  
        }
     }
@@ -134,13 +134,10 @@
 +         }
 +      } else if (type == TrainState.TrainStateType.Door) {
 +         data &= 3;
++         byte swapped = (byte) (((data & 1) << 1) | ((data >> 1) & 1));
 +         for (FormationEntry formationentry : this.entries) {
 +            if (formationentry == null) continue;
-+            byte value = data;
-+            if (par2.getTrainDirection() != formationentry.train.getTrainDirection()) {
-+               // swap bits
-+               value = (byte) (((data & 1) << 1) | ((data >> 1) & 1));
-+            }
++            byte value = par2.getTrainDirection() != formationentry.train.getTrainDirection() ? swapped : data;
 +            formationentry.train.setTrainStateData_NoSync(type, value);
 +         }
 +      } else {
