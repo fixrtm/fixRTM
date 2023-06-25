@@ -1,6 +1,18 @@
 --- a/jp/ngt/rtm/RTMSound.java
 +++ b/jp/ngt/rtm/RTMSound.java
-@@ -53,21 +53,22 @@
+@@ -36,10 +36,11 @@
+    };
+ 
+    public static void init() {
+    }
+ 
++   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
+    public static void registerSoundDomains() {
+       NGTLog.debug("[RTMSound] Register sound domains");
+       SimpleReloadableResourceManager simplereloadableresourcemanager = (SimpleReloadableResourceManager)NGTUtilClient.getMinecraft().getResourceManager();
+       Set<String> set = simplereloadableresourcemanager.getResourceDomains();
+       List<File> list = new ArrayList<>();
+@@ -53,21 +54,22 @@
                 list.add(file2);
                 set.add(file2.getName());
              }
