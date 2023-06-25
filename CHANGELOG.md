@@ -22,6 +22,8 @@ Thanks to prepare-changelog.sh, we have some macros.
   - If the ActionParts is far from you, the ActionParts will not be clicked / dragged.
   - If you opened any GUI, the ActionParts will not be clicked / dragged.
 - Check for version mismatch error before crash `#653`
+- Make it easier to find which script have produced error `#674`
+  - The line number in your stacktrace can be differed because scripts can be concatenated by `//include` comment statement
 
 ### Changed
 
