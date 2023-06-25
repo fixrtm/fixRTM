@@ -11,11 +11,14 @@ import net.minecraft.client.resources.IResourcePack
 import net.minecraft.client.resources.data.IMetadataSection
 import net.minecraft.client.resources.data.MetadataSerializer
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import java.awt.image.BufferedImage
 import java.io.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
+@SideOnly(Side.CLIENT)
 abstract class FixRTMResourcePack(
         @JvmField protected val domain: String,
         protected val source: File,
