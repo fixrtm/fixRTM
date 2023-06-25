@@ -44,6 +44,7 @@ Thanks to prepare-changelog.sh, we have some macros.
     - Ticket Vendor (TICKET_VENDOR)
     - Light (LIGHT, not a FLUORESCENT)
     - Speaker (SPEAKER)
+- Improved compatbility with CustomNPCs `#675`
 
 ### Security
 
