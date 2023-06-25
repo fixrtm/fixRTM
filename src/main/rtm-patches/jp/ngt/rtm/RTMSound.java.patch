@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/RTMSound.java
 +++ b/jp/ngt/rtm/RTMSound.java
-@@ -53,12 +53,13 @@
+@@ -53,20 +53,23 @@
                 list.add(file2);
                 set.add(file2.getName());
              }
@@ -16,3 +16,14 @@
        }
  
        Map map = getDomainResourceManagers(simplereloadableresourcemanager);
+ 
+       for(File file3 : list) {
+-         RTMResourceManager rtmresourcemanager = new RTMResourceManager(getMetadataSerializer(simplereloadableresourcemanager), file3);
++         net.minecraft.client.resources.FallbackResourceManager rtmresourcemanager =
++                 new net.minecraft.client.resources.FallbackResourceManager(getMetadataSerializer(simplereloadableresourcemanager));
++         rtmresourcemanager.addResourcePack(com.anatawa12.fixRtm.rtm.modelpack.FixRTMResourcePack.createPack(file3.getName(), file3));
+          map.put(file3.getName(), rtmresourcemanager);
+          NGTLog.debug("[RTMSound] Add new domain : " + file3.getName());
+       }
+ 
+    }
