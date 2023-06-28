@@ -46,6 +46,8 @@ Thanks to prepare-changelog.sh, we have some macros.
     - Ticket Vendor (TICKET_VENDOR)
     - Light (LIGHT, not a FLUORESCENT)
     - Speaker (SPEAKER)
+- Unnecessary ABI breaking changes `#676`
+  - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
 
 ### Security
 
