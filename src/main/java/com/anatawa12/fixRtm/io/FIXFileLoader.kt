@@ -46,13 +46,15 @@ object FIXFileLoader {
     }
 
     fun getFiles(): List<File> {
-        return getModsOrJars().flatMap { it.walk().filter(File::isFile) }
+        return getModsOrJars()
     }
 
     fun getModsOrJars(): List<File> {
         val files = mutableListOf<File>()
-        files += minecraftDir.resolve("mods")
-        files += minecraftDir.resolve("jar-mods-cache/v1/mods")
+        files += minecraftDir.resolve("mods").walk().filter(File::isFile)
+        files += minecraftDir.resolve("jar-mods-cache/v1/mods").walk().filter(File::isFile)
+        // to find folder packs
+        files += minecraftDir.resolve("mods").listFiles()?.filter(File::isDirectory).orEmpty()
         if (FMLLaunchHandler.isDeobfuscatedEnvironment()) {
             val loader = FIXFileLoader::class.java.classLoader
             fun zipUrlToFile(loader: ClassLoader, relative: String): File {
