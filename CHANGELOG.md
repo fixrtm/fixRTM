@@ -48,6 +48,7 @@ Thanks to prepare-changelog.sh, we have some macros.
     - Speaker (SPEAKER)
 - Unnecessary ABI breaking changes `#676`
   - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
+- Directory based ModelPacks not working `#677`
 
 ### Security
 
