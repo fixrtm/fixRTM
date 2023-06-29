@@ -9,6 +9,8 @@ import com.anatawa12.fixRtm.MS932
 import com.anatawa12.fixRtm.directoryDigestBaseStream
 import com.anatawa12.fixRtm.minecraftDir
 import com.anatawa12.fixRtm.utils.DigestUtils
+import net.minecraft.launchwrapper.Launch
+import net.minecraft.launchwrapper.LaunchClassLoader
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.relauncher.FMLLaunchHandler
 import java.io.File
@@ -46,13 +48,15 @@ object FIXFileLoader {
     }
 
     fun getFiles(): List<File> {
-        return getModsOrJars().flatMap { it.walk().filter(File::isFile) }
+        return getModsOrJars()
     }
 
     fun getModsOrJars(): List<File> {
         val files = mutableListOf<File>()
-        files += minecraftDir.resolve("mods")
-        files += minecraftDir.resolve("jar-mods-cache/v1/mods")
+        files += minecraftDir.resolve("mods").walk().filter(File::isFile)
+        files += minecraftDir.resolve("jar-mods-cache/v1/mods").walk().filter(File::isFile)
+        // to find folder packs
+        files += minecraftDir.resolve("mods").listFiles()?.filter(File::isDirectory).orEmpty()
         if (FMLLaunchHandler.isDeobfuscatedEnvironment()) {
             val loader = FIXFileLoader::class.java.classLoader
             fun zipUrlToFile(loader: ClassLoader, relative: String): File {
@@ -144,6 +148,9 @@ object FIXFileLoader {
                     domains.add(assetDir.name)
             }
             this.domains = domains
+            if ("minecraft" in domains) {
+                Launch.classLoader.addURL(file.toURI().toURL())
+            }
         }
 
         override fun getFile(location: ResourceLocation): FIXResource? {
