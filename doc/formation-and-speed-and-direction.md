@@ -1,6 +1,10 @@
 # Formation and Speed and Direction
 
-## Original RTM
+## Formation direction properties
+
+The meaning of properties around formation
+
+### Original RTM
 
 ```text
 +--------------------------------------+
@@ -14,7 +18,7 @@
 +-----0------+-----1------+------2-----+ FormationEntry index
 ```
 
-## fixRTM changed
+### fixRTM changed
 
 ```text
 +--------------------------------------+
@@ -27,3 +31,8 @@
 | <=entity== | <=entity== | ==entity=> |<==== this is fixed
 +-----0------+-----1------+------2-----+ FormationEntry index
 ```
+
+## Things we need to when revere train's direction
+
+- negative speed
+- swap door bits
