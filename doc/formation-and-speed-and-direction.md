@@ -36,3 +36,7 @@ The meaning of properties around formation
 
 - negative speed
 - swap door bits
+
+## Things we need to when reverse formation direction
+
+- negative speed
