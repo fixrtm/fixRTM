@@ -50,6 +50,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Directory based ModelPacks not working `#677`
 - Getting onto bogie of moving train may drive train opposite direction `#680`
 - Slow trains will get too slow `#681`
+- Entering world should be prevented while model construction phase `#682`
 
 ### Security
 
