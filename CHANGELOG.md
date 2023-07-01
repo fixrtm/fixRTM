@@ -48,6 +48,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Unnecessary ABI breaking changes `#676`
   - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
 - Directory based ModelPacks not working `#677`
+- Getting onto bogie of moving train may drive train opposite direction `#680`
 
 ### Security
 
