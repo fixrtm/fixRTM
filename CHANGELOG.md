@@ -32,7 +32,6 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
-- Sitting in the driver's seat on the opposite side drives train in reverse `#633`
 - Vec3 DataMap will cause crash `#652`
 - World is accessed from Netty IO Thread `#654`
 - syncVehicleState(Door, data) does not work as the setter of getVehicleState(Door) `#660`
@@ -49,6 +48,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Unnecessary ABI breaking changes `#676`
   - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
 - Directory based ModelPacks not working `#677`
+- Getting onto bogie of moving train may drive train opposite direction `#680`
 
 ### Security
 
