@@ -38,12 +38,12 @@ object BlockOrnamentMain {
     @JvmStatic
     fun getPickBlock(world: World, pos: BlockPos, type: ItemInstalledObject.IstlObjType): ItemStack {
         val tileEntity = world.getTileEntity(pos)
-        if (tileEntity is TileEntityPlaceable && tileEntity is IResourceSelector<*>) {
+        if (tileEntity is IResourceSelector<*>) {
             val itemStack = ItemStack(RTMItem.installedObject)
             itemStack.itemDamage = type.id.toInt()
             (RTMItem.installedObject as ItemInstalledObject).setModelState(itemStack, tileEntity.resourceState)
 
-            if (GuiScreen.isCtrlKeyDown()) {
+            if (GuiScreen.isCtrlKeyDown() && tileEntity is TileEntityPlaceable) {
                 ItemWithModelEx.copyOffsetToItemStack(tileEntity, itemStack)
             }
             return itemStack

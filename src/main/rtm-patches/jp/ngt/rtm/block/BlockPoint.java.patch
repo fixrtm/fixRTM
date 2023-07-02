@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockPoint.java
++++ b/jp/ngt/rtm/block/BlockPoint.java
+@@ -65,6 +65,11 @@
+    }
+ 
+    public boolean canProvidePower(IBlockState state) {
+       return true;
+    }
++
++   @Override
++   public net.minecraft.item.ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, jp.ngt.rtm.item.ItemInstalledObject.IstlObjType.POINT);
++   }
+ }

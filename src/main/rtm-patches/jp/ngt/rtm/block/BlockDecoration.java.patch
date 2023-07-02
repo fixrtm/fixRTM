@@ -1,0 +1,13 @@
+--- a/jp/ngt/rtm/block/BlockDecoration.java
++++ b/jp/ngt/rtm/block/BlockDecoration.java
+@@ -12,6 +12,10 @@
+    }
+ 
+    public TileEntity createNewTileEntity(World world, int meta) {
+       return new TileEntityDecoration();
+    }
++
++   public net.minecraft.item.ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, net.minecraft.util.math.BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockDecorationKt.getPickBlock(world, pos);
++   }
+ }

@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockTurnstile.java
++++ b/jp/ngt/rtm/block/BlockTurnstile.java
+@@ -113,6 +113,11 @@
+    }
+ 
+    public PathNodeType getAiPathNodeType(IBlockState state, IBlockAccess world, BlockPos pos) {
+       return canThrough(world, pos) ? PathNodeType.OPEN : PathNodeType.BLOCKED;
+    }
++
++   @Override
++   public ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.TURNSTILE);
++   }
+ }

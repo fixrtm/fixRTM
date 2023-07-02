@@ -32,3 +32,13 @@
  
     public void dropBlockAsItemWithChance(World world, BlockPos pos, IBlockState state, float chance, int fortune) {
        if (!world.isRemote) {
+@@ -49,8 +51,8 @@
+       }
+ 
+    }
+ 
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+-      return new ItemStack(RTMItem.installedObject, 1, ItemInstalledObject.IstlObjType.TICKET_VENDOR.id);
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.TICKET_VENDOR);
+    }
+ }
