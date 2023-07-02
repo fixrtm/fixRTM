@@ -58,6 +58,7 @@ Thanks to prepare-changelog.sh, we have some macros.
   - Picking of the following blocks doesn't pick block model is now fixed
     - Ticket vendor
     - Rail-road sign
+- Improved compatbility with CustomNPCs `#675`
 
 ### Security
 
