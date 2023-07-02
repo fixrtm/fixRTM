@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockStation.java
++++ b/jp/ngt/rtm/block/BlockStation.java
+@@ -56,6 +56,11 @@
+          int j = pos.getY();
+          int k = pos.getZ();
+       }
+ 
+    }
++
++   @Override
++   protected net.minecraft.item.ItemStack getItem(int damage) {
++      return new net.minecraft.item.ItemStack(this);
++   }
+ }

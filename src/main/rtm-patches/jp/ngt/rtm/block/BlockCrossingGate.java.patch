@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/block/BlockCrossingGate.java
++++ b/jp/ngt/rtm/block/BlockCrossingGate.java
+@@ -46,6 +46,11 @@
+ 
+    private void checkPower(World world, int x, int y, int z) {
+       TileEntityCrossingGate tileentitycrossinggate = (TileEntityCrossingGate)BlockUtil.getTileEntity(world, x, y, z);
+       tileentitycrossinggate.isGettingPower = world.getRedstonePowerFromNeighbors(new BlockPos(x, y, z)) > 0;
+    }
++
++   @Override
++   public ItemStack getPickBlock(IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, net.minecraft.entity.player.EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.CROSSING);
++   }
+ }

@@ -196,3 +196,23 @@
              BlockUtil.setBlock(world, i, j, k, RTMRail.TURNTABLE_CORE, 0, 3);
              TileEntityTurnTableCore tileentityturntablecore = (TileEntityTurnTableCore)BlockUtil.getTileEntity(world, i, j, k);
              tileentityturntablecore.setRailPositions(new RailPosition[]{start, end});
+@@ -379,10 +401,19 @@
+ 
+          return null;
+       }
+    }
+ 
++   @Override
++   protected ItemStack getItem(int damage) {
++      if (com.anatawa12.fixRtm.asm.config.MainConfig.mergeMarker) {
++         return new ItemStack(this, 1, 8);
++      } else {
++         return new ItemStack(this, 1, damage & 4);
++      }
++   }
++
+    public static enum MarkerType {
+       STANDARD(16711680),
+       SWITCH(255);
+ 
+       public final int color;

@@ -1,12 +1,13 @@
 --- a/jp/ngt/rtm/entity/train/EntityTrainBase.java
 +++ b/jp/ngt/rtm/entity/train/EntityTrainBase.java
-@@ -54,28 +54,29 @@
+@@ -54,28 +54,30 @@
  import net.minecraftforge.fml.relauncher.SideOnly;
  
  public abstract class EntityTrainBase extends EntityVehicleBase<ModelSetTrain> implements IChunkLoader {
     private static final DataParameter<Integer> BOGIE_ID0 = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> BOGIE_ID1 = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.VARINT);
 +   private static final DataParameter<Float> TRAIN_SPEED = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.FLOAT);
++   private static final DataParameter<Boolean> CAB_DIRECTION = EntityDataManager.createKey(EntityTrainBase.class, DataSerializers.BOOLEAN);
     public static final short MAX_AIR_COUNT = 2880;
     public static final short MIN_AIR_COUNT = 2480;
     public static final float TRAIN_WIDTH = 2.75F;
@@ -32,19 +33,37 @@
        super(world);
        this.setSize(2.75F, 1.1875F);
        this.noClip = true;
-@@ -92,10 +93,11 @@
+@@ -92,18 +94,21 @@
  
     protected void entityInit() {
        super.entityInit();
        this.getDataManager().register(BOGIE_ID0, 0);
        this.getDataManager().register(BOGIE_ID1, 0);
 +      this.getDataManager().register(TRAIN_SPEED, 0.0f);
++      this.getDataManager().register(CAB_DIRECTION, false);
     }
  
     protected void writeEntityToNBT(NBTTagCompound nbt) {
        super.writeEntityToNBT(nbt);
        NBTTagCompound nbttagcompound = new NBTTagCompound();
-@@ -126,12 +128,15 @@
+       this.writeFormationData(nbttagcompound);
+       nbt.setTag("FormationEntry", nbttagcompound);
+       nbt.setInteger("trainDir", this.getTrainDirection());
++      nbt.setBoolean("cabDir", this.getDataManager().get(CAB_DIRECTION));
+    }
+ 
+    private void writeFormationData(NBTTagCompound nbt) {
+       if (this.formation != null) {
+          FormationEntry formationentry = this.formation.getEntry(this);
+@@ -119,19 +124,23 @@
+    protected void readEntityFromNBT(NBTTagCompound nbt) {
+       super.readEntityFromNBT(nbt);
+       NBTTagCompound nbttagcompound = nbt.getCompoundTag("FormationEntry");
+       this.readFormationData(nbttagcompound);
+       this.setTrainDirection(nbt.getInteger("trainDir"));
++      this.getDataManager().set(CAB_DIRECTION, nbt.getBoolean("cabDir"));
+    }
+ 
     private void readFormationData(NBTTagCompound nbt) {
        long i = nbt.getLong("FormationId");
        byte b0 = nbt.getByte("EntryPos");
@@ -61,7 +80,7 @@
           formation.setTrain(this, b0, b1);
        }
  
-@@ -293,25 +298,25 @@
+@@ -293,25 +302,25 @@
           float f = this.getSpeed();
           int i = this.getNotch();
           Random random = this.world.rand;
@@ -91,7 +110,7 @@
                 double d6 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 double d7 = (random.nextDouble() * 2.0D - 1.0D) * d5;
                 this.world.spawnParticle(enumparticletypes, d2, d3, d4, d6, 0.25D, d7, new int[0]);
-@@ -441,25 +446,34 @@
+@@ -441,25 +450,34 @@
              }
           }
  
@@ -129,7 +148,44 @@
              this.setSpeed(f);
           }
  
-@@ -655,11 +669,11 @@
+@@ -506,11 +524,11 @@
+    public Vec3 getRiderPos(Entity passenger) {
+       return super.getRiderPos(passenger).add(0.0D, this.getMountedYOffset(), 0.0D);
+    }
+ 
+    protected int getRiderPosIndex() {
+-      return this.getTrainDirection();
++      return this.getCabDirection();
+    }
+ 
+    public double getMountedYOffset() {
+       return (double)(this.height + 1.1875F - 0.93F);
+    }
+@@ -593,15 +611,20 @@
+       }
+ 
+    }
+ 
+    private void mountEntityToTrain(Entity entity, int direction) {
+-      if (this.getTrainDirection() != direction) {
+-         this.setSpeed(-this.getSpeed());
++      if (this.isControlCar()) {
++         this.setTrainDirection(direction);
++         if (this.formation != null && this.formation.size() > 1) {
++            byte data = this.getVehicleState(TrainState.TrainStateType.Role);
++            byte newData = this.getCabDirection() == this.getTrainDirection() ? data : (byte) (data ^ 2);
++            this.setTrainStateData_NoSync(TrainState.TrainStateType.Role, newData);
++         }
+       }
+ 
+-      this.setTrainDirection(direction);
++      setCabDirection(direction);
+       entity.startRiding(this);
+    }
+ 
+    protected void removePassengerFromVehicle(Entity passenger) {
+       Entity entity = this.getBogie(this.getTrainDirection());
+@@ -655,11 +678,11 @@
        if (!this.world.isRemote && par2.getTrain() != null) {
           int i = par1.getBogieId();
           int j = par2.getBogieId();
@@ -142,7 +198,7 @@
                 entityplayer = (EntityPlayer)this.getFirstPassenger();
              } else if (par2.getTrain().getFirstPassenger() instanceof EntityPlayer) {
                 entityplayer = (EntityPlayer)par2.getTrain().getFirstPassenger();
-@@ -672,38 +686,38 @@
+@@ -672,38 +695,38 @@
        }
  
     }
@@ -186,7 +242,20 @@
     public boolean existBogies() {
        return this.getBogie(0) != null && this.getBogie(1) != null;
     }
-@@ -760,10 +774,11 @@
+@@ -755,15 +778,24 @@
+ 
+    public void setFormation(Formation par1) {
+       this.formation = par1;
+    }
+ 
++   public int getCabDirection() {
++      return this.getDataManager().get(CAB_DIRECTION) ? 1 : 0;
++   }
++
++   private void setCabDirection(int direction) {
++      this.getDataManager().set(CAB_DIRECTION, direction != 0);
++   }
++
     public int getTrainDirection() {
        return this.getVehicleState(TrainState.TrainStateType.Direction);
     }
@@ -198,7 +267,7 @@
        } else {
           this.formation.setTrainDirection((byte)par1, this);
        }
-@@ -793,33 +808,46 @@
+@@ -793,33 +825,46 @@
     public boolean addNotch(Entity driver, int par2) {
        if (par2 != 0) {
           int i = this.getNotch();
@@ -250,7 +319,7 @@
     }
  
     public void setSignal(int par1) {
-@@ -883,10 +911,11 @@
+@@ -883,10 +928,11 @@
           this.releaseTicket();
        }
  
@@ -262,7 +331,7 @@
     public boolean isChunkLoaderEnable() {
        return this.getVehicleState(TrainState.TrainStateType.ChunkLoader) > 0;
     }
-@@ -903,11 +932,10 @@
+@@ -903,11 +949,10 @@
     private boolean requestTicket() {
        Ticket ticket = RTMChunkManager.INSTANCE.getNewTicket(this.world, Type.ENTITY);
        if (ticket != null) {
@@ -274,7 +343,7 @@
           return true;
        } else {
           NGTLog.debug("[RTM] Failed to get ticket (Chunk Loader)");
-@@ -931,20 +959,26 @@
+@@ -931,20 +976,26 @@
        if (!this.world.isRemote) {
           if (this.ticket == null && !this.requestTicket()) {
              return;

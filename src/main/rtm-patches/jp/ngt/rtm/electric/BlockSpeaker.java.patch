@@ -1,0 +1,14 @@
+--- a/jp/ngt/rtm/electric/BlockSpeaker.java
++++ b/jp/ngt/rtm/electric/BlockSpeaker.java
+@@ -45,6 +45,11 @@
+    }
+ 
+    public boolean canConnect(World world, int x, int y, int z) {
+       return true;
+    }
++
++   @Override
++   public ItemStack getPickBlock(net.minecraft.block.state.IBlockState state, net.minecraft.util.math.RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
++      return com.anatawa12.fixRtm.rtm.block.BlockOrnamentMain.getPickBlock(world, pos, ItemInstalledObject.IstlObjType.SPEAKER);
++   }
+ }

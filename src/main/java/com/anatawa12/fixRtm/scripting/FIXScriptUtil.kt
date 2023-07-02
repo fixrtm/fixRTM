@@ -20,6 +20,8 @@ val scriptRuntime: IScriptRuntime<*, *> = when (MainConfig.scriptingMode) {
     MainConfig.ScriptingMode.UseRtmNormal -> IScriptRuntime.AssertingRuntime
 }
 
+const val SCRIPT_NAME_PROPERTY = "com.anataw12.fix-rtm.scripting.file-name"
+
 fun loadFIXScriptUtil() {}
 
 @Suppress("unused")
@@ -31,7 +33,7 @@ fun getScriptAndDoScript(fileName: String): ScriptEngine {
     return if (MainConfig.useOurScripting) {
         getScriptAndDoScript(scriptRuntime, fileName)
     } else {
-        jp.ngt.ngtlib.io.ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(fileName))
+        jp.ngt.ngtlib.io.ScriptUtil.doScript(ModelPackManager.INSTANCE.getScript(fileName), fileName)
     }
 }
 
@@ -51,6 +53,7 @@ fun <CompiledScript, Engine : ScriptEngine> getScriptAndDoScript(
     val script = runtime.compile(filePath, scriptStr, resource.pack)
 
     val engine = runtime.exec(script)
+    engine.put(SCRIPT_NAME_PROPERTY, fileName)
 
     // add to cache
 

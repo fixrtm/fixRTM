@@ -90,7 +90,7 @@
                 break;
              }
           }
-@@ -241,10 +247,11 @@
+@@ -241,18 +247,23 @@
     }
  
     public void setSpeed(float par1) {
@@ -102,7 +102,19 @@
  
           this.speed = par1;
        }
-@@ -265,35 +272,44 @@
+    }
+ 
+    public void setTrainDirection(byte par1, EntityTrainBase par2) {
++      if (par2.getTrainDirection() != par1) {
++         this.setSpeed(-par2.getSpeed());
++      }
++
+       FormationEntry formationentry = this.getEntry(par2);
+       if (formationentry != null) {
+          this.direction = (byte)(par1 ^ formationentry.dir);
+          byte b0 = 0;
+ 
+@@ -265,35 +276,45 @@
  
        }
     }
@@ -116,7 +128,8 @@
 +            if (formationentry == null) continue;
 +            if (data == TrainState.Role_Front.data || data == TrainState.Role_Back.data) {
                 this.controlCar = par2;
-+               par2.setTrainDirection(par2.getTrainDirection());
++               par2.setTrainStateData_NoSync(type, (par2.getCabDirection() == par2.getTrainDirection()) ? data : (byte) (data ^ 2));
++               par2.setTrainDirection(par2.getCabDirection());
              }
  
              if (par2.equals(formationentry.train)) {

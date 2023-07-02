@@ -22,6 +22,8 @@ Thanks to prepare-changelog.sh, we have some macros.
   - If the ActionParts is far from you, the ActionParts will not be clicked / dragged.
   - If you opened any GUI, the ActionParts will not be clicked / dragged.
 - Check for version mismatch error before crash `#653`
+- Make it easier to find which script have produced error `#674`
+  - The line number in your stacktrace can be differed because scripts can be concatenated by `//include` comment statement
 
 ### Changed
 
@@ -30,20 +32,32 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
-- Sitting in the driver's seat on the opposite side drives train in reverse `#633`
 - Vec3 DataMap will cause crash `#652`
 - World is accessed from Netty IO Thread `#654`
 - syncVehicleState(Door, data) does not work as the setter of getVehicleState(Door) `#660`
   - Previously, to sync door direction between trains, door bit can be swapped.
   - Now, improvements in bits swapping condition is improved.
-- Picking any machine block would pick as fluorescent `#667`
+- Unnecessary ABI breaking changes `#676`
+  - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
+- Directory based ModelPacks not working `#677`
+- Getting onto bogie of moving train may drive train opposite direction `#680`
+- Slow trains will get too slow `#681`
+- Entering world should be prevented while model construction phase `#682`
+- Picking block for many blocks broken `#683`
   - Picking following blocks, which are categorized to machine, would pick as fluorescent is now fixed
     - Boom barrier for Crossing (CROSSING)
     - Ticket Gate (TURNSTILE)
     - Point Lever (POINT)
-    - Ticket Vendor (TICKET_VENDOR)
     - Light (LIGHT, not a FLUORESCENT)
     - Speaker (SPEAKER)
+  - Picking for the following blocks, is now implemented
+    - Station core block
+    - Decoration block
+    - Flags
+    - Mechanism blocks such as gears
+  - Picking of the following blocks doesn't pick block model is now fixed
+    - Ticket vendor
+    - Rail-road sign
 - Improved compatbility with CustomNPCs `#675`
 
 ### Security

@@ -12,8 +12,16 @@
     }
  
     private static void showScripts(ScriptEngineManager mng) {
-@@ -51,11 +50,12 @@
+@@ -47,22 +46,29 @@
+       }
+ 
+    }
+ 
     public static ScriptEngine doScript(String s) {
++      return doScript(s, null);
++   }
++
++   public static ScriptEngine doScript(String s, String fileName) {
        if (SEM == null) {
           init();
        }
@@ -25,4 +33,40 @@
        try {
           scriptengine.eval("load(\"nashorn:mozilla_compat.js\");");
           scriptengine.eval(s);
++         if (fileName != null)
++            scriptengine.put(com.anatawa12.fixRtm.scripting.FIXScriptUtil.SCRIPT_NAME_PROPERTY, fileName);
           return scriptengine;
+       } catch (ScriptException scriptexception) {
+-         throw new RuntimeException("Script exec error", scriptexception);
++         throw new RuntimeException("Script exec error: " + fileName, scriptexception);
+       }
+    }
+ 
+    public static CompiledScript compile(ScriptEngine engine, ResourceLocation resource) {
+       try {
+@@ -79,13 +85,23 @@
+ 
+    public static Object doScriptFunction(ScriptEngine se, String func, Object... args) {
+       try {
+          return ((Invocable)se).invokeFunction(func, args);
+       } catch (NoSuchMethodException nosuchmethodexception) {
+-         throw new RuntimeException("Script exec error : " + func, nosuchmethodexception);
++         throw new RuntimeException("Script exec error : " + func + " in file: " + scriptName(se), nosuchmethodexception);
+       } catch (ScriptException scriptexception) {
+-         throw new RuntimeException("Script exec error : " + func, scriptexception);
++         throw new RuntimeException("Script exec error : " + func + " in file: " + scriptName(se), scriptexception);
++      }
++   }
++
++   private static String scriptName(ScriptEngine engine) {
++      try {
++         Object name = engine.get(com.anatawa12.fixRtm.scripting.FIXScriptUtil.SCRIPT_NAME_PROPERTY);
++         if (name == null) return null;
++         return name.toString();
++      } catch (Throwable t) {
++         return null;
+       }
+    }
+ 
+    public static Object doScriptIgnoreError(ScriptEngine se, String func, Object... args) {
+       try {
