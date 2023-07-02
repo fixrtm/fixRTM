@@ -43,6 +43,21 @@ Thanks to prepare-changelog.sh, we have some macros.
 - Getting onto bogie of moving train may drive train opposite direction `#680`
 - Slow trains will get too slow `#681`
 - Entering world should be prevented while model construction phase `#682`
+- Picking block for many blocks broken `#683`
+  - Picking following blocks, which are categorized to machine, would pick as fluorescent is now fixed
+    - Boom barrier for Crossing (CROSSING)
+    - Ticket Gate (TURNSTILE)
+    - Point Lever (POINT)
+    - Light (LIGHT, not a FLUORESCENT)
+    - Speaker (SPEAKER)
+  - Picking for the following blocks, is now implemented
+    - Station core block
+    - Decoration block
+    - Flags
+    - Mechanism blocks such as gears
+  - Picking of the following blocks doesn't pick block model is now fixed
+    - Ticket vendor
+    - Rail-road sign
 
 ### Security
 
