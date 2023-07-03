@@ -73,7 +73,7 @@ object FIXFileLoader {
             files += zipUrlToFile(loader, "assets/rtm/lang/ja_JP.lang")
             files += zipUrlToFile(loader, "assets/ngtlib/lang/ja_JP.lang")
         }
-        return files
+        return files.filter { it.isDirectory || it.extension == "jar" || it.extension == "zip" }
     }
 
     fun getResource(location: ResourceLocation): FIXResource {
