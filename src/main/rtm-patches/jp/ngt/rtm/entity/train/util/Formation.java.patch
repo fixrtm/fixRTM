@@ -1,23 +1,19 @@
 --- a/jp/ngt/rtm/entity/train/util/Formation.java
 +++ b/jp/ngt/rtm/entity/train/util/Formation.java
-@@ -9,14 +9,15 @@
- import jp.ngt.rtm.network.PacketFormation;
- import net.minecraft.nbt.NBTTagCompound;
- import net.minecraft.nbt.NBTTagList;
+@@ -12,11 +12,11 @@
  import net.minecraftforge.fml.relauncher.Side;
  import net.minecraftforge.fml.relauncher.SideOnly;
-+import org.jetbrains.annotations.Nullable;
  
  public final class Formation {
     public final long id;
 -   public FormationEntry[] entries;
-+   public @Nullable  FormationEntry[] entries;
++   public @org.jetbrains.annotations.Nullable  FormationEntry[] entries;
     private EntityTrainBase controlCar;
     private byte direction;
     private float speed;
  
     public Formation(long par1, int par2) {
-@@ -121,10 +122,11 @@
+@@ -121,10 +121,11 @@
  
     private void reverse() {
        NGTUtil.reverse(this.entries);
@@ -29,7 +25,7 @@
  
     }
  
-@@ -147,29 +149,32 @@
+@@ -147,29 +148,32 @@
        this.entries = aformationentry;
     }
  
@@ -65,7 +61,7 @@
  
           FormationManager.getInstance().removeFormation(par5.id);
        }
-@@ -211,11 +216,11 @@
+@@ -211,11 +215,11 @@
           int i = flag ? formationentry.entryId : formationentry.entryId + 1;
           int j = this.entries.length - i;
           Formation formation = new Formation(FormationManager.getInstance().getNewFormationId(), j);
@@ -78,7 +74,7 @@
  
           formation.reallocation();
           this.trim(0, i - 1);
-@@ -224,10 +229,11 @@
+@@ -224,10 +228,11 @@
     }
  
     private EntityTrainBase getControlCar() {
@@ -90,7 +86,7 @@
                 break;
              }
           }
-@@ -241,18 +247,23 @@
+@@ -241,18 +246,23 @@
     }
  
     public void setSpeed(float par1) {
@@ -114,7 +110,7 @@
           this.direction = (byte)(par1 ^ formationentry.dir);
           byte b0 = 0;
  
-@@ -265,35 +276,45 @@
+@@ -265,35 +275,45 @@
  
        }
     }

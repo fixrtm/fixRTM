@@ -1,32 +1,19 @@
 --- a/jp/ngt/ngtlib/command/CommandPermit.java
 +++ b/jp/ngt/ngtlib/command/CommandPermit.java
-@@ -4,10 +4,15 @@
- import jp.ngt.ngtlib.util.PermissionManager;
- import net.minecraft.command.CommandBase;
- import net.minecraft.command.CommandException;
- import net.minecraft.command.ICommandSender;
- import net.minecraft.server.MinecraftServer;
-+import net.minecraft.util.math.BlockPos;
-+import org.jetbrains.annotations.NotNull;
-+import org.jetbrains.annotations.Nullable;
-+
-+import java.util.List;
- 
- public class CommandPermit extends CommandBase {
-    public int getRequiredPermissionLevel() {
-       return 3;
-    }
-@@ -50,6 +55,13 @@
+@@ -50,6 +50,16 @@
        NGTLog.sendChatMessage(sender, "/permit add <player or -all> <category>");
        NGTLog.sendChatMessage(sender, "/permit remove <player or -all> <category>");
        NGTLog.sendChatMessage(sender, "/permit list");
        NGTLog.sendChatMessage(sender, "/permit myname");
     }
 +
-+   @NotNull
++   @org.jetbrains.annotations.NotNull
 +   @Override
-+   public List<String> getTabCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender,
-+                                         @NotNull String[] args, @Nullable BlockPos targetPos) {
++   public java.util.List<String> getTabCompletions(
++      @org.jetbrains.annotations.NotNull MinecraftServer server,
++      @org.jetbrains.annotations.NotNull ICommandSender sender,
++      @org.jetbrains.annotations.NotNull String[] args,
++      @org.jetbrains.annotations.Nullable net.minecraft.util.math.BlockPos targetPos) {
 +      return com.anatawa12.fixRtm.ngtlib.command.CommandPermitKt.getTabCompletions(server, args);
 +   }
  }

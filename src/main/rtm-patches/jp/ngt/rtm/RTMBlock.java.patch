@@ -1,22 +1,6 @@
 --- a/jp/ngt/rtm/RTMBlock.java
 +++ b/jp/ngt/rtm/RTMBlock.java
-@@ -92,13 +92,15 @@
- import jp.ngt.rtm.rail.TileEntityMarker;
- import jp.ngt.rtm.rail.TileEntityTurnTableCore;
- import net.minecraft.block.Block;
- import net.minecraft.block.material.MapColor;
- import net.minecraft.block.material.Material;
-+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
- import net.minecraft.client.renderer.color.BlockColors;
- import net.minecraft.creativetab.CreativeTabs;
- import net.minecraft.item.Item;
-+import net.minecraftforge.client.model.ModelLoader;
- import net.minecraftforge.fml.client.registry.ClientRegistry;
- import net.minecraftforge.fml.common.registry.GameRegistry;
- import net.minecraftforge.fml.relauncher.Side;
- import net.minecraftforge.fml.relauncher.SideOnly;
- 
-@@ -237,18 +239,20 @@
+@@ -237,18 +237,20 @@
        registerBlockModel(marker, 3, "marker3");
        registerBlockModel(marker, 4, "marker20");
        registerBlockModel(marker, 5, "marker21");
