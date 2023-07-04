@@ -1,19 +1,6 @@
 --- a/jp/ngt/rtm/gui/GuiSignalConverter.java
 +++ b/jp/ngt/rtm/gui/GuiSignalConverter.java
-@@ -11,10 +11,12 @@
- import net.minecraft.client.gui.GuiTextField;
- import net.minecraft.client.resources.I18n;
- import net.minecraftforge.fml.relauncher.Side;
- import net.minecraftforge.fml.relauncher.SideOnly;
- 
-+import java.io.IOException;
-+
- @SideOnly(Side.CLIENT)
- public class GuiSignalConverter extends GuiScreenCustom {
-    private final TileEntitySignalConverter tileEntity;
-    private final SignalConverterType scType;
-    private GuiButton button;
-@@ -41,13 +43,13 @@
+@@ -41,13 +41,13 @@
        }
  
        int[] aint = this.tileEntity.getSignalLevel();
@@ -29,7 +16,7 @@
     }
  
     protected void actionPerformed(GuiButton button) {
-@@ -92,21 +94,15 @@
+@@ -92,21 +92,15 @@
        }
  
        return aint;
@@ -44,7 +31,7 @@
 -         this.currentTextField.textboxKeyTyped(par1, par2);
 -      }
 -
-+   protected void keyTyped(char par1, int par2) throws IOException {
++   protected void keyTyped(char par1, int par2) throws java.io.IOException {
        if (par2 == 28) {
           this.formatSignalLevel();
 +      } else {
