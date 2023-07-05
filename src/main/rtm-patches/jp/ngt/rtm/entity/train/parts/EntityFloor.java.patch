@@ -1,0 +1,29 @@
+--- a/jp/ngt/rtm/entity/train/parts/EntityFloor.java
++++ b/jp/ngt/rtm/entity/train/parts/EntityFloor.java
+@@ -120,6 +120,26 @@
+    @SideOnly(Side.CLIENT)
+    public int getBrightnessForRender() {
+       EntityVehicleBase entityvehiclebase = this.getVehicle();
+       return entityvehiclebase != null ? entityvehiclebase.getBrightnessForRender() : super.getBrightnessForRender();
+    }
++
++   @Override
++   public void updatePassenger(Entity passenger) {
++      super.updatePassenger(passenger);
++
++      if (!this.isPassenger(passenger)) return;
++
++      EntityVehicleBase<?> vehicle = this.getVehicle();
++
++      if (!(passenger instanceof EntityPlayer) || !(vehicle instanceof jp.ngt.rtm.entity.train.EntityTrainBase)) return;
++
++      EntityPlayer player = ((EntityPlayer) passenger);
++
++      float yaw = net.minecraft.util.math.MathHelper.wrapDegrees(vehicle.rotationYaw - vehicle.prevRotationYaw);
++      float pitch = net.minecraft.util.math.MathHelper.wrapDegrees(vehicle.rotationPitch - vehicle.prevRotationPitch);
++
++      player.renderYawOffset -= yaw;
++      player.rotationYaw -= yaw;
++      player.rotationPitch -= pitch;
++   }
+ }
