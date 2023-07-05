@@ -59,6 +59,7 @@ Thanks to prepare-changelog.sh, we have some macros.
     - Ticket vendor
     - Rail-road sign
 - Improved compatbility with CustomNPCs `#675`
+- Player rotation is not updated when train rotates `#687`
 
 ### Security
 
