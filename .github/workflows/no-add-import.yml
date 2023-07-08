@@ -8,7 +8,7 @@ on:
   push:
 
 jobs:
-  releasenote-check:
+  no-add-import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
