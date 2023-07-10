@@ -17,13 +17,6 @@ Thanks to prepare-changelog.sh, we have some macros.
 
 ## [Unreleased]
 ### Added
-- Support placing rail in diagonal direction with rail item `#635`
-- Improve ActionParts `#651`
-  - If the ActionParts is far from you, the ActionParts will not be clicked / dragged.
-  - If you opened any GUI, the ActionParts will not be clicked / dragged.
-- Check for version mismatch error before crash `#653`
-- Make it easier to find which script have produced error `#674`
-  - The line number in your stacktrace can be differed because scripts can be concatenated by `//include` comment statement
 
 ### Changed
 
@@ -32,18 +25,32 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
-- Vec3 DataMap will cause crash `#652`
-- World is accessed from Netty IO Thread `#654`
-- syncVehicleState(Door, data) does not work as the setter of getVehicleState(Door) `#660`
+
+### Security
+
+## [2.0.26] - 2023-07-10
+### Added
+- Support placing rail in diagonal direction with rail item [`#635`](https://github.com/fixrtm/fixRTM/pull/635)
+- Improve ActionParts [`#651`](https://github.com/fixrtm/fixRTM/pull/651)
+  - If the ActionParts is far from you, the ActionParts will not be clicked / dragged.
+  - If you opened any GUI, the ActionParts will not be clicked / dragged.
+- Check for version mismatch error before crash [`#653`](https://github.com/fixrtm/fixRTM/pull/653)
+- Make it easier to find which script have produced error [`#674`](https://github.com/fixrtm/fixRTM/pull/674)
+  - The line number in your stacktrace can be differed because scripts can be concatenated by `//include` comment statement
+
+### Fixed
+- Vec3 DataMap will cause crash [`#652`](https://github.com/fixrtm/fixRTM/pull/652)
+- World is accessed from Netty IO Thread [`#654`](https://github.com/fixrtm/fixRTM/pull/654)
+- syncVehicleState(Door, data) does not work as the setter of getVehicleState(Door) [`#660`](https://github.com/fixrtm/fixRTM/pull/660)
   - Previously, to sync door direction between trains, door bit can be swapped.
   - Now, improvements in bits swapping condition is improved.
-- Unnecessary ABI breaking changes `#676`
+- Unnecessary ABI breaking changes [`#676`](https://github.com/fixrtm/fixRTM/pull/676)
   - we don't need to remove original signature of `RenderElectricalWiring.renderAllWire`
-- Directory based ModelPacks not working `#677`
-- Getting onto bogie of moving train may drive train opposite direction `#680`
-- Slow trains will get too slow `#681`
-- Entering world should be prevented while model construction phase `#682`
-- Picking block for many blocks broken `#683`
+- Directory based ModelPacks not working [`#677`](https://github.com/fixrtm/fixRTM/pull/677)
+- Getting onto bogie of moving train may drive train opposite direction [`#680`](https://github.com/fixrtm/fixRTM/pull/680)
+- Slow trains will get too slow [`#681`](https://github.com/fixrtm/fixRTM/pull/681)
+- Entering world should be prevented while model construction phase [`#682`](https://github.com/fixrtm/fixRTM/pull/682)
+- Picking block for many blocks broken [`#683`](https://github.com/fixrtm/fixRTM/pull/683)
   - Picking following blocks, which are categorized to machine, would pick as fluorescent is now fixed
     - Boom barrier for Crossing (CROSSING)
     - Ticket Gate (TURNSTILE)
@@ -58,10 +65,8 @@ Thanks to prepare-changelog.sh, we have some macros.
   - Picking of the following blocks doesn't pick block model is now fixed
     - Ticket vendor
     - Rail-road sign
-- Improved compatbility with CustomNPCs `#675`
-- Player rotation is not updated when train rotates `#687`
-
-### Security
+- Improved compatbility with CustomNPCs [`#675`](https://github.com/fixrtm/fixRTM/pull/675)
+- Player rotation is not updated when train rotates [`#687`](https://github.com/fixrtm/fixRTM/pull/687)
 
 ## [2.0.25] - 2023-04-13
 ### Fixed
@@ -453,7 +458,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - fix .gitignore [`40ff11e`](https://github.com/fixrtm/fixRTM/commit/40ff11ec23453c374a616437c98fa4081a156d0a)
 - PacketCollisionObjが大きすぎる問題の解決を試した [`7a365db`](https://github.com/fixrtm/fixRTM/commit/7a365db3b528b5be36fc7e9fbb4d75657acf5c66)
 
-[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.25...HEAD
+[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.26...HEAD
+[2.0.26]: https://github.com/fixrtm/fixRTM/compare/2.0.25...2.0.26
 [2.0.25]: https://github.com/fixrtm/fixRTM/compare/2.0.24...2.0.25
 [2.0.24]: https://github.com/fixrtm/fixRTM/compare/2.0.23...2.0.24
 [2.0.23]: https://github.com/fixrtm/fixRTM/compare/2.0.22...2.0.23
