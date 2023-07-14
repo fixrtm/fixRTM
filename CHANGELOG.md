@@ -19,8 +19,6 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Added
 
 ### Changed
-- Upgrade RTM to 2.4.24 `#694`
-  - This also upgrades NGTLib to 2.4.20
 
 ### Deprecated
 
@@ -29,6 +27,11 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Fixed
 
 ### Security
+
+## [2.0.27] - 2023-07-14
+### Changed
+- Upgrade RTM to 2.4.24 [`#694`](https://github.com/fixrtm/fixRTM/pull/694)
+  - This also upgrades NGTLib to 2.4.20
 
 ## [2.0.26] - 2023-07-10
 ### Added
@@ -460,7 +463,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - fix .gitignore [`40ff11e`](https://github.com/fixrtm/fixRTM/commit/40ff11ec23453c374a616437c98fa4081a156d0a)
 - PacketCollisionObjが大きすぎる問題の解決を試した [`7a365db`](https://github.com/fixrtm/fixRTM/commit/7a365db3b528b5be36fc7e9fbb4d75657acf5c66)
 
-[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.26...HEAD
+[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.27...HEAD
+[2.0.27]: https://github.com/fixrtm/fixRTM/compare/2.0.26...2.0.27
 [2.0.26]: https://github.com/fixrtm/fixRTM/compare/2.0.25...2.0.26
 [2.0.25]: https://github.com/fixrtm/fixRTM/compare/2.0.24...2.0.25
 [2.0.24]: https://github.com/fixrtm/fixRTM/compare/2.0.23...2.0.24
