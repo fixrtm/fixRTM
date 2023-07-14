@@ -214,7 +214,7 @@ jobs:
 
           FILE_ID="$(jq '.id' < response.json)"
 
-          echo "file_id=$FILE_ID" >> $GITHUB_STATE
+          echo "file_id=$FILE_ID" >> $GITHUB_OUTPUT
 
         env:
           CURSE_TOKEN: ${{ secrets.CURSE_TOKEN }}
