@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/item/ItemRail.java
 +++ b/jp/ngt/rtm/item/ItemRail.java
-@@ -156,12 +156,12 @@
+@@ -157,12 +157,12 @@
  
     protected ResourceType getModelType(ItemStack itemStack) {
        return RTMResource.RAIL;
@@ -15,7 +15,7 @@
     protected ResourceState getNewState(ItemStack itemStack, ResourceType type) {
        return new ResourceStateRail(type, (Object)null);
     }
-@@ -195,10 +195,11 @@
+@@ -196,10 +196,11 @@
     }
  
     public static ItemStack copyItemFromRail(TileEntityLargeRailCore core) {
@@ -27,7 +27,7 @@
        itemstack.getTagCompound().setString("ShapeName", s);
        return itemstack;
     }
-@@ -206,11 +207,11 @@
+@@ -207,11 +208,11 @@
     private boolean placeRail(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
        List<RailPosition> list = getRPFromItem(stack);
        if (list.isEmpty()) {

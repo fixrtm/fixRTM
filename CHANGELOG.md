@@ -19,6 +19,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Added
 
 ### Changed
+- Upgrade RTM to 2.4.24 `#694`
+  - This also upgrades NGTLib to 2.4.20
 
 ### Deprecated
 
