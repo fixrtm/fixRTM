@@ -1,6 +1,6 @@
 --- a/jp/ngt/rtm/block/tileentity/TileEntityCrossingGate.java
 +++ b/jp/ngt/rtm/block/tileentity/TileEntityCrossingGate.java
-@@ -65,12 +65,13 @@
+@@ -62,12 +62,13 @@
  
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {

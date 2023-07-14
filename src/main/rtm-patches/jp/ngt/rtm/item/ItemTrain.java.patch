@@ -80,7 +80,7 @@
        for(Entity entity : world.getEntitiesWithinAABBExcludingEntity(player, new AxisAlignedBB((double)((float)x - f), (double)(y - 4), (double)((float)z - f), (double)((float)x + f + 1.0F), (double)(y + 8), (double)((float)z + f + 1.0F)))) {
           if (entity instanceof EntityTrainBase || entity instanceof EntityBogie || entity instanceof EntityVehiclePart) {
              double d0 = entity.getDistanceSq((double)x, (double)y, (double)z);
-@@ -169,26 +203,27 @@
+@@ -169,27 +203,28 @@
        default:
           return RTMResource.TRAIN_DC;
        }
@@ -97,6 +97,7 @@
     }
  
 +   @Override
+    @SideOnly(Side.CLIENT)
     protected void addInformation(ItemArgHolder holder, List list, ITooltipFlag flag) {
 -      List<ItemTrain.TrainSet> list = getFormationFromItem(holder.getItemStack());
 -      if (list.isEmpty()) {

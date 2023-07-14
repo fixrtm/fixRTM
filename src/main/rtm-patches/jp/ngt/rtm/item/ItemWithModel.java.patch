@@ -1,10 +1,10 @@
 --- a/jp/ngt/rtm/item/ItemWithModel.java
 +++ b/jp/ngt/rtm/item/ItemWithModel.java
-@@ -16,44 +16,56 @@
- import net.minecraft.item.ItemStack;
- import net.minecraft.nbt.NBTTagCompound;
+@@ -18,45 +18,57 @@
  import net.minecraft.util.ActionResult;
  import net.minecraft.util.text.TextFormatting;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
  
 -public abstract class ItemWithModel<T extends ResourceSet> extends ItemCustom implements IResourceSelector {
 -   private ItemStack selectedItem;
@@ -31,14 +31,15 @@
     }
  
 -   public abstract int getGuiId(ItemStack var1);
-+   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
++   @SideOnly(Side.CLIENT)
 +   protected final net.minecraft.client.gui.GuiScreen newGuiSelectModel(ItemArgHolder holder) {
 +      return new jp.ngt.rtm.gui.GuiSelectModel(holder.getWorld(), new ResourceSelector(holder));
 +   }
 +
-+   @net.minecraftforge.fml.relauncher.SideOnly(net.minecraftforge.fml.relauncher.Side.CLIENT)
++   @SideOnly(Side.CLIENT)
 +   public abstract net.minecraft.client.gui.GuiScreen newGuiScreen(ItemArgHolder holder);
  
+    @SideOnly(Side.CLIENT)
     protected void addInformation(ItemArgHolder holder, List<String> list, ITooltipFlag flag) {
        if (ModelPackManager.INSTANCE.modelLoaded) {
           ResourceState resourcestate = this.getModelState(holder.getItemStack());
@@ -65,7 +66,7 @@
     public ResourceState<T> getModelState(ItemStack itemStack) {
        ResourceType resourcetype = this.getModelType(itemStack);
        if (resourcetype != null) {
-@@ -79,27 +91,36 @@
+@@ -82,27 +94,36 @@
        if (!itemStack.hasTagCompound()) {
           itemStack.setTagCompound(new NBTTagCompound());
        }
