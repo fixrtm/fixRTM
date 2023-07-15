@@ -20,7 +20,7 @@
           return MODS_DIR;
        } else {
 -         MODS_DIR = new ArrayList<>();
-+         java.util.HashSet<File> mods = new java.util.HashSet<>();
++         java.util.LinkedHashSet<File> mods = new java.util.LinkedHashSet<>();
  
 -         try {
 -            File file1 = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath());

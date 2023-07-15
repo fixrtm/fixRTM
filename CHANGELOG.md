@@ -25,6 +25,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
+- Speaker setting is not saved correctly `#697`
 
 ### Security
 
