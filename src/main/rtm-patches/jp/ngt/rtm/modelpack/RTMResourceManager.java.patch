@@ -1,6 +1,32 @@
 --- a/jp/ngt/rtm/modelpack/RTMResourceManager.java
 +++ b/jp/ngt/rtm/modelpack/RTMResourceManager.java
-@@ -50,22 +50,11 @@
+@@ -21,22 +21,23 @@
+ import net.minecraft.util.ResourceLocation;
+ import net.minecraftforge.fml.relauncher.Side;
+ import net.minecraftforge.fml.relauncher.SideOnly;
+ 
+ @SideOnly(Side.CLIENT)
+-public final class RTMResourceManager implements IResourceManager {
++public final class RTMResourceManager extends net.minecraft.client.resources.FallbackResourceManager implements IResourceManager {
+    private final Map<ResourceLocation, IResource> resourceCache = new HashMap();
+    private final MetadataSerializer serializer;
+    private final File domain;
+ 
+    public RTMResourceManager(MetadataSerializer par1, File par2) {
++      super(par1);
+       this.serializer = par1;
+       this.domain = par2;
+    }
+ 
+    public Set getResourceDomains() {
+-      return null;
++      return java.util.Collections.<String>emptySet();
+    }
+ 
+    public IResource getResource(ResourceLocation par1) throws IOException {
+       if (this.domain == null) {
+          throw new FileNotFoundException(par1.toString());
+@@ -50,22 +51,11 @@
              if (!s1.isEmpty()) {
                 String s3 = NGTFileLoader.getArchivePath(s, s1);
                 String s2 = par1.getPath();
