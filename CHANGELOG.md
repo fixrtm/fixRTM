@@ -25,10 +25,13 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
-- Speaker setting is not saved correctly `#697`
-- Some sound pack broken `#701`
 
 ### Security
+
+## [2.0.28] - 2023-07-20
+### Fixed
+- Speaker setting is not saved correctly [`#697`](https://github.com/fixrtm/fixRTM/pull/697)
+- Some sound pack broken [`#701`](https://github.com/fixrtm/fixRTM/pull/701)
 
 ## [2.0.27] - 2023-07-14
 ### Changed
@@ -465,7 +468,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 - fix .gitignore [`40ff11e`](https://github.com/fixrtm/fixRTM/commit/40ff11ec23453c374a616437c98fa4081a156d0a)
 - PacketCollisionObjが大きすぎる問題の解決を試した [`7a365db`](https://github.com/fixrtm/fixRTM/commit/7a365db3b528b5be36fc7e9fbb4d75657acf5c66)
 
-[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.27...HEAD
+[Unreleased]: https://github.com/fixrtm/fixRTM/compare/2.0.28...HEAD
+[2.0.28]: https://github.com/fixrtm/fixRTM/compare/2.0.27...2.0.28
 [2.0.27]: https://github.com/fixrtm/fixRTM/compare/2.0.26...2.0.27
 [2.0.26]: https://github.com/fixrtm/fixRTM/compare/2.0.25...2.0.26
 [2.0.25]: https://github.com/fixrtm/fixRTM/compare/2.0.24...2.0.25
