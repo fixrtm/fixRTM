@@ -62,7 +62,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture
     compileOnly("com.github.sarxos:webcam-capture:0.3.12")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
