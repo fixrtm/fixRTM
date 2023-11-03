@@ -25,6 +25,8 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Removed
 
 ### Fixed
+- Compatibility problem with mtl file with uppercase chars `#708`
+  - If your modelpack has `mtl` file with uppercase, your modelpack will fail to load.
 
 ### Security
 
