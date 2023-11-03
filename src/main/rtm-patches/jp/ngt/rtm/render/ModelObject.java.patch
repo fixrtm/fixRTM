@@ -1,6 +1,20 @@
 --- a/jp/ngt/rtm/render/ModelObject.java
 +++ b/jp/ngt/rtm/render/ModelObject.java
-@@ -92,10 +92,19 @@
+@@ -42,11 +42,12 @@
+    private int program;
+ 
+    public ModelObject(ModelConfig.ModelSource par1, ModelSetBase par2, PartsRenderer par3, Object... args) {
+       String s = par1.modelFile;
+       this.model = ModelPackManager.INSTANCE.loadModel(s, 4, true, par2.getConfig(), par2.md5);
+-      Material[] amaterial = this.getMaterials(this.getTextureMap(par1.textures));
++      boolean objMtlCompatibilityMode = FileType.OBJ.match(s) && !s.equals(s.toLowerCase(java.util.Locale.ROOT));
++      Material[] amaterial = this.getMaterials(this.getTextureMap(par1.textures), objMtlCompatibilityMode);
+       this.textures = new TextureSet[amaterial.length];
+       boolean flag = false;
+       boolean flag1 = false;
+       int i = amaterial.length != par1.textures.length ? 1 : amaterial.length;
+ 
+@@ -92,10 +93,19 @@
        this.alphaBlend = false;
        this.useTexture = true;
        this.renderer = this.getPartsRenderer((String)null, par1);
@@ -20,18 +34,25 @@
           DUMMY = new ModelObject(ModelLoader.loadModel(new ResourceLocationCustom("models/ModelContainer_19g.obj"), VecAccuracy.LOW, new Object[0]), new TextureSet[]{new TextureSet(new Material((byte)0, ModelPackManager.INSTANCE.getResource("textures/container/19g_JRF_0.png")), 0, false, false, new String[0])});
        }
  
-@@ -241,17 +250,17 @@
+@@ -240,18 +250,22 @@
+          this.renderer.render(entity, pass, partialTick);
        }
  
     }
  
-    public Material[] getMaterials(Map<String, String> map) {
+-   public Material[] getMaterials(Map<String, String> map) {
 -      Map<String, Material> map = this.model.getMaterials();
++   public Material[] getMaterials(Map<String, String> map, boolean objMtlCompatibilityMode) {
 +      Map<String, Material> map1 = this.model.getMaterials();
        Material[] amaterial;
 -      if (map.isEmpty()) {
+-         amaterial = new Material[]{new Material((byte)0, ModelPackManager.INSTANCE.getResource(map.get("default")))};
++
 +      if (map1.isEmpty()) {
-          amaterial = new Material[]{new Material((byte)0, ModelPackManager.INSTANCE.getResource(map.get("default")))};
++         amaterial = new Material[]{new Material((byte) 0, ModelPackManager.INSTANCE.getResource(map.get("default")))};
++      } else if (objMtlCompatibilityMode && map.size() == 1 && map.containsKey("default")) {
++         // For compatibility, for default-only material, we think map1 is empty
++         amaterial = new Material[]{new Material((byte) 0, ModelPackManager.INSTANCE.getResource(map.get("default")))};
        } else {
 -         amaterial = new Material[map.size()];
 -         Iterator<Entry<String, Material>> iterator = map.entrySet().iterator();
