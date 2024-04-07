@@ -16,3 +16,26 @@
     }
  
     private void initNP() {
+@@ -107,11 +112,21 @@
+ 
+       for(int l = 0; l < this.split; ++l) {
+          float f2 = (float)l / (float)this.split;
+          int j = 0;
+ 
+-         for(j = 0; j < this.split - 1 && (!(afloat[j] <= f2) || !(f2 <= afloat[j + 1])); ++j) {
++         int searchMin = 0, searchMax = split - 1;
++         int loopTimes = 0;
++         while (!(afloat[j] <= f2 && f2 <= afloat[j + 1])) {
++            j = (searchMax - searchMin) / 2 + searchMin;
++            if (afloat[searchMin] <= f2 && f2 <= afloat[j + 1]){
++               searchMax = j;
++            } else {
++               searchMin = j;
++            }
++            if (++loopTimes >= split - 1)
++               break;
+          }
+ 
+          float f3 = (f2 - afloat[j]) / (afloat[j + 1] - afloat[j]);
+          f3 = ((float)j * (1.0F - f3) + (float)(1 + j) * f3) * (1.0F / (float)this.split);
+          this.normalizedParameters[l] = f3;

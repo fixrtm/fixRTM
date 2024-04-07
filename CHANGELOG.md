@@ -19,6 +19,7 @@ Thanks to prepare-changelog.sh, we have some macros.
 ### Added
 
 ### Changed
+- Improved performance of bezier curve initialization `#713`
 
 ### Deprecated
 
